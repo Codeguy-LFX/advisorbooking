@@ -28,6 +28,7 @@ if (/claudeusercontent\.com$|\.claude\.ai$/.test(location.hostname)) window.__AB
 window.AB_LP = {
   FORM_VERSION: 'ab-pilot-2026-10-19-v2',
   SOURCE: 'advisorbooked-pilot-lp',
+  CONSENT_TEXT_VERSION: '2026-10-19-pilot-b',
   QUESTIONS: { budget: {
     question: 'The founding rate is $3,500 every 4 weeks, with no setup fee. Does that work for you?',
     subcopy: 'Initial term is 3 billing cycles, about 90 days. No per-meeting fees.'
@@ -154,9 +155,9 @@ window.AB_LP = {
                 <div class="lp-err" id="err-ready">Pick one.</div>
               </div>
               <div class="lp-field" id="f-company">
-                <label class="lp-lbl" for="in-company">Firm name</label>
-                <input type="text" id="in-company" placeholder="Your firm" autocomplete="organization">
-                <div class="lp-err" id="err-company">Enter your firm name.</div>
+                <label class="lp-lbl" for="in-company">Firm/Company name</label>
+                <input type="text" id="in-company" placeholder="Your firm or company" autocomplete="organization">
+                <div class="lp-err" id="err-company">Enter your firm or company name.</div>
               </div>
             </div>
 
@@ -165,7 +166,7 @@ window.AB_LP = {
             <div class="lp-consent" id="f-consent">
               <div class="lp-consent__row">
                 <input type="checkbox" id="in-consent">
-                <label for="in-consent" id="consentText"><span id="consentCopy">Text me my call details and booking reminders from Advisor Booked. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help.</span> <a href="privacy.html" data-link="privacy">Privacy Policy</a> &middot; <a href="terms.html" data-link="terms">Terms</a></label>
+                <label for="in-consent" id="consentText"><span id="consentCopy">By checking this box, I agree to receive text messages with my call details and booking reminders from De Jesus Ventures LLC (Advisor Booked) at the mobile number provided. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help.</span> <a href="privacy.html" data-link="privacy">Privacy Policy</a> &middot; <a href="terms.html" data-link="terms">Terms</a></label>
               </div>
               <div class="lp-err" id="err-consent">Check the box. It&rsquo;s how we text you your call details.</div>
             </div>
