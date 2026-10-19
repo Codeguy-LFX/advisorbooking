@@ -324,7 +324,7 @@
         ['sys', 'Connected. Dana accepted the invite'],
         ['out', 'Hi Dana, congrats on the Apex sale. Most owners tell me the tax and succession questions show up in the two years after. Open to a 20-minute call?'],
         ['typing'],
-        ['in', 'Not familiar with your firm, but that is exactly where my head is. Thursday works.'],
+        ['in', 'That is exactly where my head is. Thursday at 2 works.'],
         ['out', 'Booked: Thursday 2:00 PM. The invite is in your inbox.'],
         ['sys', 'Fits your rules: business owner, recent sale']
       ]
@@ -342,7 +342,7 @@
     },
     'li-reply': {
       skin: 'li', out: 'Marcus', inn: 'Dana A.',
-      caption: 'Not-nows and objections get a human answer, in wording you approved. Nothing goes out on autopilot, and nobody gets nagged.',
+      caption: 'Not-nows and objections get a human answer, in wording you approved. Nobody gets nagged.',
       thread: [
         ['in', 'Not now. Maybe Q1.'],
         ['out', 'Understood. I will check back on January 12 and nothing before then.'],
@@ -358,7 +358,7 @@
       skin: 'sms', out: 'Marcus', inn: 'Dana A.',
       caption: 'Confirmation and reminders by text, so the meeting we booked is a meeting that actually happens.',
       thread: [
-        ['out', 'Hi Dana, this is Marcus’s office. You are confirmed for Thursday at 2:00 PM ET. The Google Meet link is in your email. Reply C to confirm.'],
+        ['out', 'Hi Dana, this is Marcus’s office. You are booked for Thursday at 2:00 PM ET. The Google Meet link is in your email. Reply C to confirm.'],
         ['in', 'C'],
         ['sys', 'Confirmed. Reminder set'],
         ['out', 'Reminder: your call with Marcus is today at 2:00 PM ET. See you then.'],
@@ -368,11 +368,11 @@
       ]
     },
     'mail-nurture': {
-      skin: 'mail', subject: 'Three decisions owners face the year after a sale', out: 'Marcus to your list', inn: 'Dana A. to Marcus',
-      caption: 'Weekly or bi-weekly emails that bring value and show the benefits of working with you, so the list warms up before anyone asks for a meeting.',
+      skin: 'mail', subject: 'Three decisions owners face the year after a sale', out: 'From Marcus', inn: 'From Dana A.',
+      caption: 'Weekly or every-other-week emails that bring value and show the benefits of working with you, so the list warms up before anyone asks for a meeting.',
       thread: [
         ['out', 'Three decisions owners face in the year after a sale: when to take the cash, what to do about the key people who stayed, and the tax move most owners miss. Two minutes to read.'],
-        ['sys', 'Opened. Read for 2 minutes'],
+        ['sys', 'Opened'],
         ['typing'],
         ['in', 'This was useful. Can we talk about the second one?'],
         ['out', 'Of course. Here is my calendar.'],
@@ -437,7 +437,15 @@
         var i = 0;
         function next() {
           if (my !== token) return;
-          if (i >= script.length) { timer = setTimeout(function () { if (my === token) play(k); }, 5200); return; }
+          if (i >= script.length) {
+            /* Played through. With auto-advance on, hand over after a hold (polling while paused by hover, focus or being off-screen); otherwise rest on the final state. */
+            timer = setTimeout(function wait() {
+              if (my !== token || !host._onEnd) return;
+              if (host._onEnd()) return;
+              timer = setTimeout(wait, 1500);
+            }, 5200);
+            return;
+          }
           var m = script[i++];
           if (m[0] === 'typing') { thread.appendChild(typing); typing.classList.add('show'); pin(); timer = setTimeout(function () { typing.classList.remove('show'); if (typing.parentNode) typing.parentNode.removeChild(typing); next(); }, 1100); return; }
           var b = make(m, sc);
@@ -447,7 +455,8 @@
         }
         timer = setTimeout(next, 500);
       }
-      host._play = play;
+      /* A pick made before the device has scrolled into view only records the choice; the observer starts it once visible. */
+      host._play = function (k) { if (started) play(k); };
       function start() { if (started) return; started = true; play(host.getAttribute('data-thread') || 'li-new'); }
       if (!('IntersectionObserver' in window)) start();
       else {
@@ -467,7 +476,8 @@
     var subject = $('[data-subject]', wrap);
     if (!tabs.length || !device) return;
     var keys = tabs.map(function (t) { return t.getAttribute('data-key'); });
-    var current = keys[0], auto = null, touched = false, visible = false, hover = false, switching = null;
+    var current = keys[0], touched = false, visible = false, hover = false, focused = false, switching = null;
+    var panel = $('[role="tabpanel"]', wrap);
 
     function apply(k, sc) {
       device.setAttribute('data-skin', sc.skin);
@@ -482,13 +492,15 @@
       if (!sc) return;
       current = k;
       tabs.forEach(function (t) { var on = t.getAttribute('data-key') === k; t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1; });
+      if (panel) panel.setAttribute('aria-labelledby', 'tab-' + k);
       /* On a phone the menu is a swipeable row: keep the active chip centered in it (the row scrolls, not the page). */
       var list = $('.action__list', wrap), active = tabs[keys.indexOf(k)];
       if (list && active && list.scrollWidth > list.clientWidth + 4) {
         var left = Math.max(0, active.offsetLeft - (list.clientWidth - active.offsetWidth) / 2);
         try { list.scrollTo({ left: left, behavior: noMotion ? 'auto' : 'smooth' }); } catch (e) { list.scrollLeft = left; }
       }
-      if (fromUser) { touched = true; stopAuto(); }
+      /* Once the visitor picks, auto-advance stops for good and the caption may announce (never during the self-running cycle). */
+      if (fromUser) { touched = true; stopAuto(); if (caption) caption.setAttribute('aria-live', 'polite'); }
       if (caption) caption.classList.remove('show');
       if (switching) clearTimeout(switching);
       if (noMotion) { apply(k, sc); return; }
@@ -504,16 +516,20 @@
         if (n) { e.preventDefault(); n.focus(); show(n.getAttribute('data-key'), true); }
       });
     });
-    function stopAuto() { if (auto) clearInterval(auto); auto = null; }
+    /* Auto-advance happens when a conversation finishes (the player asks via _onEnd), never on a clock, and waits while the visitor is hovering, focused inside, or away. */
+    function stopAuto() { device._onEnd = null; }
     function startAuto() {
-      if (noMotion || touched || auto) return;
-      auto = setInterval(function () {
-        if (!visible || hover || doc.hidden) return;
+      if (noMotion || touched) return;
+      device._onEnd = function () {
+        if (touched || !visible || hover || focused || doc.hidden) return false;
         show(keys[(keys.indexOf(current) + 1) % keys.length], false);
-      }, 14000);
+        return true;
+      };
     }
     wrap.addEventListener('mouseenter', function () { hover = true; });
     wrap.addEventListener('mouseleave', function () { hover = false; });
+    wrap.addEventListener('focusin', function () { focused = true; });
+    wrap.addEventListener('focusout', function () { focused = false; });
     if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }, { threshold: 0.25 }).observe(wrap);
     else visible = true;
     var first = SCENARIOS[current];
@@ -548,7 +564,7 @@
     function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', function () { measure(); update(); });
-    if (window.fonts && doc.fonts && doc.fonts.ready) doc.fonts.ready.then(function () { measure(); update(); });
+    if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(function () { measure(); update(); });
     measure(); update();
     setTimeout(function () { measure(); update(); }, 600);
   }
