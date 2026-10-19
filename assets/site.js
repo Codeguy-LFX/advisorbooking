@@ -232,8 +232,33 @@
     frame.src = url;
     mount.appendChild(frame);
   }
+  /* Artifact previews block iClosed's script: load the link straight into a frame, swap in a note if frames are blocked
+     too, and offer the real calendar in a new tab either way. */
+  function previewIclosed(mount, url) {
+    var f = doc.createElement('iframe');
+    f.className = 'calendly-frame';
+    f.title = 'Pick a time for your call';
+    f.src = url;
+    mount.appendChild(f);
+    function onBlock(e) {
+      if (String(e.blockedURI || '').indexOf('iclosed.io') === -1) return;
+      doc.removeEventListener('securitypolicyviolation', onBlock);
+      if (!f.parentNode) return;
+      var n = doc.createElement('p');
+      n.className = 'notice';
+      n.textContent = 'This preview blocks the iClosed calendar. On the live site it shows right here.';
+      f.parentNode.replaceChild(n, f);
+    }
+    doc.addEventListener('securitypolicyviolation', onBlock);
+    var o = doc.createElement('a');
+    o.className = 'pill pill--accent mt-16';
+    o.href = url; o.target = '_blank'; o.rel = 'noopener noreferrer';
+    o.textContent = 'Open the real calendar in a new tab';
+    mount.appendChild(o);
+  }
   /* iClosed's inline embed code, built in place so campaign tags ride along: the widget div, then widget.js. */
   function mountIclosed(mount, url) {
+    if (window.__AB_PREVIEW) { previewIclosed(mount, url); return; }
     var w = doc.createElement('div');
     w.className = 'iclosed-widget';
     w.setAttribute('data-url', url);
@@ -246,19 +271,6 @@
       clearInterval(iv);
       if (mount.querySelector('iframe')) return;
       mount.innerHTML = '';
-      if (window.__AB_PREVIEW) {
-        /* Previews block iClosed; offer the real calendar in a new tab instead. */
-        var n = doc.createElement('p');
-        n.className = 'notice';
-        n.textContent = 'Previews block the calendar. On the live site it shows right here.';
-        mount.appendChild(n);
-        var o = doc.createElement('a');
-        o.className = 'pill pill--accent mt-16';
-        o.href = url; o.target = '_blank'; o.rel = 'noopener noreferrer';
-        o.textContent = 'Open the real calendar in a new tab';
-        mount.appendChild(o);
-        return;
-      }
       /* Widget script blocked (ad blocker or network): embed the event link directly, with a plain link under it. */
       var frame = doc.createElement('iframe');
       frame.className = 'calendly-frame';

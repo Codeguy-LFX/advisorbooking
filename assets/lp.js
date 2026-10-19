@@ -27,15 +27,12 @@
     // (the event's embed code, built here so the visitor's details can be prefilled); if the widget script is blocked, a
     // plain iframe of the same link is used instead. The event's confirmation page must be the site's /booked page
     // (forwarding on), which records the booking whether it opens inside the calendar or as its own page.
-    SCHEDULER: AB.scheduler || 'calendly',
+    SCHEDULER: AB.scheduler || 'iclosed',
     ICLOSED_URL: AB.iclosedUrl || '',
     // The iClosed event's own questions, prefilled from this form so the visitor does not answer twice. Keys are each
-    // question's Identifier in iClosed; values must match an iClosed answer option exactly.
-    ICLOSED_QUESTIONS: {
-      company: 'company',
-      budget: { id: 'budget', yes: 'Yes', no: 'Not right now' },
-      ready: { id: 'ready', yes: 'Yes', no: 'No' }
-    },
+    // question's Identifier in iClosed. The answers are sent word for word, so the iClosed answer options must be the same
+    // as this form's ("Yes, that works" / "Not right now", "Yes" / "No").
+    ICLOSED_QUESTIONS: { company: 'company', budget: 'budget', ready: 'ready' },
     // The event's one optional question ("Please share anything...") is prefilled with firm + answers so Nick
     // sees them on the booking. The visitor can edit or clear it.
     PREFILL_NOTES: true,
@@ -507,7 +504,7 @@
   function startOver() {
     wipe();
     if (calIv) { clearInterval(calIv); calIv = null; }
-    var host = $('calendly'); if (host) host.innerHTML = '';
+    var host = $('scheduler'); if (host) host.innerHTML = '';
     answers = {}; sid = null; tier = null; stage = null; bookedFlag = false; botFlag = false; botReason = '';
     firstName = ''; resumed = false; contactSent = false; moreShown = false; unlocked = false; T0 = Date.now();
     attemptedPosts = Object.create(null);
@@ -563,10 +560,10 @@
     var u = base + (base.indexOf('?') > -1 ? '&' : '?');
     u += 'iclosedName=' + encodeURIComponent(answers.name || '') + '&iclosedEmail=' + encodeURIComponent(answers.email || '');
     u += '&iclosedPhone=' + encodeURIComponent(phoneE164(answers.phone) || answers.phone || '');
-    var IQ = LP.ICLOSED_QUESTIONS || {}, Q = LP.QUESTIONS;
-    if (IQ.company && answers.company) u += '&' + IQ.company + '=' + encodeURIComponent(answers.company);
-    if (IQ.budget && answers.budget) u += '&' + IQ.budget.id + '=' + encodeURIComponent(answers.budget === Q.budget.affirmative ? IQ.budget.yes : IQ.budget.no);
-    if (IQ.ready && answers.ready) u += '&' + IQ.ready.id + '=' + encodeURIComponent(answers.ready === Q.ready.affirmative ? IQ.ready.yes : IQ.ready.no);
+    var IQ = LP.ICLOSED_QUESTIONS || {};
+    ['company', 'budget', 'ready'].forEach(function (k) {
+      if (IQ[k] && answers[k]) u += '&' + IQ[k] + '=' + encodeURIComponent(answers[k]);
+    });
     ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(function (k) {
       if (utm[k]) u += '&' + k + '=' + encodeURIComponent(utm[k]);
     });
@@ -595,14 +592,25 @@
     p.appendChild(a);
     host.appendChild(p);
   }
-  /* Artifact previews block iClosed's script and frames. Show the real calendar in a new tab instead, with the same
-     prefilled link, so the prefill can be checked before the site is live. */
+  /* Artifact previews block iClosed's script. Load the same prefilled link straight into a frame instead; if the preview
+     blocks frames too, swap in a note. A button opens the real calendar in a new tab either way. */
   function iclosedPreview(host, url) {
     host.innerHTML = '';
-    var n = doc.createElement('p');
-    n.className = 'notice';
-    n.textContent = 'Previews block the calendar. On the live site it shows right here.';
-    host.appendChild(n);
+    var f = doc.createElement('iframe');
+    f.className = 'lp-sched-frame';
+    f.title = 'Pick a time for your call';
+    f.src = url;
+    host.appendChild(f);
+    function onBlock(e) {
+      if (String(e.blockedURI || '').indexOf('iclosed.io') === -1) return;
+      doc.removeEventListener('securitypolicyviolation', onBlock);
+      if (!f.parentNode) return;
+      var n = doc.createElement('p');
+      n.className = 'notice';
+      n.textContent = 'This preview blocks the iClosed calendar. On the live site it shows right here.';
+      f.parentNode.replaceChild(n, f);
+    }
+    doc.addEventListener('securitypolicyviolation', onBlock);
     var a = doc.createElement('a');
     a.className = 'pill pill--accent lp-btn-block lp-sched-open';
     a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer';
@@ -610,12 +618,13 @@
     host.appendChild(a);
   }
   function openIclosed() {
-    var host = $('calendly');
+    var host = $('scheduler');
     if (!host) return;
     var url = iclosedUrl();
     if (!url) { host.innerHTML = '<p class="notice">The calendar is not connected yet. Email ' + (AB.email || 'info@advisorbooking.com') + ' and we will send you times.</p>'; return; }
     host.innerHTML = '';
     host.classList.add('is-iclosed');
+    if (window.__AB_PREVIEW) { iclosedPreview(host, url); return; }
     var w = doc.createElement('div');
     w.className = 'iclosed-widget';
     w.setAttribute('data-url', url);
@@ -629,7 +638,6 @@
       if (settled) return; settled = true;
       if (calIv) { clearInterval(calIv); calIv = null; }
       if (!w.isConnected || host.querySelector('iframe')) return;
-      if (window.__AB_PREVIEW) { iclosedPreview(host, url); return; }
       iclosedFrame(host, url);
     }
     var s = doc.createElement('script');
@@ -645,7 +653,7 @@
   }
   function openCalendly() {
     loadCalendlyAssets();
-    var host = $('calendly');
+    var host = $('scheduler');
     var waited = 0;
     if (calIv) { clearInterval(calIv); calIv = null; }
     calIv = setInterval(function () {
