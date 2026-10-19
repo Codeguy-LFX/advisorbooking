@@ -482,6 +482,12 @@
       if (!sc) return;
       current = k;
       tabs.forEach(function (t) { var on = t.getAttribute('data-key') === k; t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1; });
+      /* On a phone the menu is a swipeable row: keep the active chip centered in it (the row scrolls, not the page). */
+      var list = $('.action__list', wrap), active = tabs[keys.indexOf(k)];
+      if (list && active && list.scrollWidth > list.clientWidth + 4) {
+        var left = Math.max(0, active.offsetLeft - (list.clientWidth - active.offsetWidth) / 2);
+        try { list.scrollTo({ left: left, behavior: noMotion ? 'auto' : 'smooth' }); } catch (e) { list.scrollLeft = left; }
+      }
       if (fromUser) { touched = true; stopAuto(); }
       if (caption) caption.classList.remove('show');
       if (switching) clearTimeout(switching);
