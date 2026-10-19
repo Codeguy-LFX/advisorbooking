@@ -214,3 +214,4 @@ button.pill--outline.lp-btn-block{border-color:var(--ink)}
 .lp-guar__close{font-weight:600;color:var(--ink)!important;border-top:1px solid var(--line);padding-top:14px}
 @media (max-width:900px){.lp-guar{grid-template-columns:1fr}}
 @media (max-width:560px){.lp-guar__quote,.lp-guar__terms{padding:26px 20px}}
+.lp-hero__team{font-size:13.5px;color:var(--muted);max-width:560px;margin:14px auto 0;line-height:1.55}
