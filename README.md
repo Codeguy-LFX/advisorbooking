@@ -1,6 +1,6 @@
-# AdvisorBooked.com
+# AdvisorBooking.com
 
-Static marketing site for Advisor Booked (De Jesus Ventures LLC). No build step — plain HTML, CSS, and JS, served from the repository root by GitHub Pages.
+Static marketing site for Advisor Booking (De Jesus Ventures LLC). No build step — plain HTML, CSS, and JS, served from the repository root by GitHub Pages.
 
 ## Pages
 
@@ -21,16 +21,16 @@ All numbers, IDs, and contact details live in **`assets/config.js`** — it is t
 
 ## Hosting
 
-Deployed free on GitHub Pages from the `main` branch root. The `CNAME` file pins the custom domain `advisorbooked.com`.
+Deployed free on GitHub Pages from the `main` branch root. The `CNAME` file pins the custom domain `advisorbooking.com`.
 
 ### Connecting the domain
 
-At the DNS provider for advisorbooked.com:
+At the DNS provider for advisorbooking.com:
 
-1. Apex (`advisorbooked.com`) — four **A records**:
+1. Apex (`advisorbooking.com`) — four **A records**:
    - 185.199.108.153
    - 185.199.109.153
    - 185.199.110.153
    - 185.199.111.153
 2. `www` — **CNAME record** pointing to `codeguy-lfx.github.io`
-3. In the repo: Settings → Pages → Custom domain should read `advisorbooked.com`; tick **Enforce HTTPS** once the certificate is issued (can take up to an hour after DNS propagates).
+3. In the repo: Settings → Pages → Custom domain should read `advisorbooking.com`; tick **Enforce HTTPS** once the certificate is issued (can take up to an hour after DNS propagates).

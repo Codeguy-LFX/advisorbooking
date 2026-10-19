@@ -1,4 +1,4 @@
-/* Advisor Booked v7: nav, config, UTM capture and attribution, tracking (off until IDs are set), Calendly embed and booking conversion,
+/* Advisor Booking v7: nav, config, UTM capture and attribution, tracking (off until IDs are set), Calendly embed and booking conversion,
    smooth anchors, and the motion module (reveal on scroll, header state, active anchor, count-up, illustrative conversation threads in LinkedIn, email and text skins, the pinned before/after, FAQ). No dependencies. */
 (function () {
   'use strict';
@@ -185,7 +185,7 @@
     if (!mount) return;
     mount.innerHTML = '';
     var url = calendlyUrl();
-    var email = CFG.email || 'hello@advisorbooked.com';
+    var email = CFG.email || 'hello@advisorbooking.com';
     if (!url) {
       var n = doc.createElement('p');
       n.className = 'notice';
@@ -380,7 +380,7 @@
       ]
     },
     'mail-report': {
-      skin: 'mail', subject: 'Monday report: week 6', out: 'Advisor Booked to you', inn: 'You to Advisor Booked',
+      skin: 'mail', subject: 'Monday report: week 6', out: 'Advisor Booking to you', inn: 'You to Advisor Booking',
       caption: 'Every Monday, one page: messages sent, replies, meetings booked, meetings attended, and what each one cost.',
       thread: [
         ['report', [['Messages sent', 92], ['Replies', 34], ['Meetings booked', 18], ['Meetings attended', 15], ['Cost per meeting', 24]]],

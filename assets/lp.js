@@ -1,4 +1,4 @@
-/* Advisor Booked /meetings landing page (hidden). The gated booking flow, ported from the LendFax buyer lander:
+/* Advisor Booking /meetings landing page (hidden). The gated booking flow, ported from the LendFax buyer lander:
    phone + first + last reveal the rest of the form, two qualifying questions decide the tier, every tier can book,
    ad pixels fire only for tier "qualified". IDs and the Calendly URL come from assets/config.js (window.AB_CONFIG),
    so this file only holds lander-specific settings. No dependencies. */
@@ -18,7 +18,7 @@
     WEBHOOK_URL: AB.ghlWebhookUrl || '',
     // Stamped on every payload so a CRM record can be traced to the page build that sent it.
     FORM_VERSION: 'ab-meetings-2026-10-19-v1',
-    SOURCE: 'advisorbooked-meetings-lp',
+    SOURCE: 'advisorbooking-meetings-lp',
 
     // Calendly: the 20-minute Pipeline Audit event from config.js.
     CALENDLY_URL: AB.calendlyUrl || '',
@@ -62,7 +62,7 @@
     },
 
     // SMS consent label. COUNSEL REVIEW PENDING (Robby Birnbaum) - mirrors transactional wording, not yet approved
-    // for Advisor Booked. true = the box must be checked to Continue.
+    // for Advisor Booking. true = the box must be checked to Continue.
     CONSENT_SMS_REQUIRED: true,
     CONSENT_TEXT_VERSION: '2026-10-19-a',
 
@@ -266,7 +266,7 @@
     f.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
     f.setAttribute('allowfullscreen', '');
     f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
-    f.title = 'Advisor Booked overview video';
+    f.title = 'Advisor Booking overview video';
     f.src = vslSource(url);
     host.appendChild(f);
   }

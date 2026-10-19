@@ -1,4 +1,4 @@
-// Advisor Booked: owner-editable settings. This is the ONLY file to edit for numbers and IDs.
+// Advisor Booking: owner-editable settings. This is the ONLY file to edit for numbers and IDs.
 window.AB_CONFIG = {
   // Calendly 20-minute "Pipeline Audit" event. Set when the event exists.
   calendlyUrl: "https://calendly.com/meridianleads/pipeline-audit",
@@ -18,7 +18,7 @@ window.AB_CONFIG = {
   countersAsOf: "2026-10-18",
   announceEnabled: true,
   // Contact
-  email: "hello@advisorbooked.com",
+  email: "hello@advisorbooking.com",
   entity: "De Jesus Ventures LLC",
   city: "Boca Raton, FL",
   phone: ""

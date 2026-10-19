@@ -1,4 +1,4 @@
-/* Advisor Booked /meetings landing page. Loads AFTER styles.css and only adds the lander-specific pieces:
+/* Advisor Booking /meetings landing page. Loads AFTER styles.css and only adds the lander-specific pieces:
    the gated booking card (two-step progress, growing form, locked calendar, Calendly, booked state),
    the green stats band, the three "how it works" columns, the two cost cards and the final black CTA.
    Everything reuses the design tokens and .pill / .faq / .display classes from styles.css.
