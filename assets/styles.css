@@ -139,7 +139,7 @@ button{font:inherit}
 .rv.in.rv--left,.rv.in.rv--right,.rv.in.rv--scale{transform:none}
 
 /* ---------- Hero ---------- */
-.hero{padding-block:48px 0;overflow:hidden}
+.hero{padding-block:48px 16px;overflow:hidden}
 .hero__grid{display:grid;grid-template-columns:1fr;gap:24px;align-items:center}
 .hero .h1 .line{display:block;overflow:hidden}
 .hero .h1 .line>span{display:inline-block;transform:translateY(110%);transition:transform .9s var(--ease)}
