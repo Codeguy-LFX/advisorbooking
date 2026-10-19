@@ -29,6 +29,13 @@
     // (forwarding on), which records the booking whether it opens inside the calendar or as its own page.
     SCHEDULER: AB.scheduler || 'calendly',
     ICLOSED_URL: AB.iclosedUrl || '',
+    // The iClosed event's own questions, prefilled from this form so the visitor does not answer twice. Keys are each
+    // question's Identifier in iClosed; values must match an iClosed answer option exactly.
+    ICLOSED_QUESTIONS: {
+      company: 'company',
+      budget: { id: 'budget', yes: 'Yes', no: 'Not right now' },
+      ready: { id: 'ready', yes: 'Yes', no: 'No' }
+    },
     // The event's one optional question ("Please share anything...") is prefilled with firm + answers so Nick
     // sees them on the booking. The visitor can edit or clear it.
     PREFILL_NOTES: true,
@@ -556,6 +563,10 @@
     var u = base + (base.indexOf('?') > -1 ? '&' : '?');
     u += 'iclosedName=' + encodeURIComponent(answers.name || '') + '&iclosedEmail=' + encodeURIComponent(answers.email || '');
     u += '&iclosedPhone=' + encodeURIComponent(phoneE164(answers.phone) || answers.phone || '');
+    var IQ = LP.ICLOSED_QUESTIONS || {}, Q = LP.QUESTIONS;
+    if (IQ.company && answers.company) u += '&' + IQ.company + '=' + encodeURIComponent(answers.company);
+    if (IQ.budget && answers.budget) u += '&' + IQ.budget.id + '=' + encodeURIComponent(answers.budget === Q.budget.affirmative ? IQ.budget.yes : IQ.budget.no);
+    if (IQ.ready && answers.ready) u += '&' + IQ.ready.id + '=' + encodeURIComponent(answers.ready === Q.ready.affirmative ? IQ.ready.yes : IQ.ready.no);
     ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(function (k) {
       if (utm[k]) u += '&' + k + '=' + encodeURIComponent(utm[k]);
     });
