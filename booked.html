@@ -23,7 +23,8 @@
 .booked__meta{margin-top:18px;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600}
 .booked__next{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);text-align:left}
 .booked__next p{font-size:14.5px}
-.booked__next ol{margin:10px 0 0;padding-left:20px;color:var(--ink);font-size:14.5px;line-height:1.55}
+.booked__next ol{margin:10px 0 0;padding-left:20px;list-style:decimal;color:var(--ink);font-size:14.5px;line-height:1.55}
+.booked__next li{display:list-item;margin:4px 0}
 body.in-frame .header,body.in-frame .legal-line{display:none}
 body.in-frame .booked{min-height:0;padding:16px 0}
 body.in-frame .booked__card{box-shadow:none}
@@ -99,7 +100,7 @@ body.in-frame .booked__card{box-shadow:none}
 
   /* Opened as a full page: report the booking here. */
   if (lp && !lp.booked) {
-    try { lp.booked = true; lp.stage = 'booked'; localStorage.setItem('ab_lp_v1', JSON.stringify(lp)); } catch (e) {}
+    try { lp.booked = true; lp.stage = 'booked'; lp.firstName = lp.firstName || ((lp.answers && lp.answers.first) || ''); lp.answers = {}; localStorage.setItem('ab_lp_v1', JSON.stringify(lp)); } catch (e) {}
   }
   var url = CFG.ghlWebhookUrl || '';
   if (url) {

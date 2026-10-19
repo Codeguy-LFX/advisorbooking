@@ -29,7 +29,7 @@ if (/claudeusercontent\.com$|\.claude\.ai$/.test(location.hostname)) window.__AB
 window.AB_LP = {
   FORM_VERSION: 'ab-pilot-2026-10-19-v2',
   SOURCE: 'advisorbooking-pilot-lp',
-  CONSENT_TEXT_VERSION: '2026-10-19-pilot-d',
+  CONSENT_TEXT_VERSION: '2026-10-19-pilot-e',
   QUESTIONS: { budget: {
     question: 'The founding rate is $3,500 every 4 weeks, with no setup fee. Does that work for you?',
     subcopy: 'Initial term is 3 billing cycles, about 90 days. No per-meeting fees.'
@@ -162,12 +162,11 @@ window.AB_LP = {
               </div>
             </div>
 
-            <!-- SMS consent. Text from LP.CONSENT_SMS_TEXT. COUNSEL REVIEW PENDING (Robby Birnbaum): this mirrors the
-                 transactional wording approved for LendFax and has not been approved for Advisor Booking yet. -->
+            <!-- SMS consent. The label text is captured verbatim into the CRM record (consent_text); bump CONSENT_TEXT_VERSION in AB_LP (top of this page) whenever it changes. -->
             <div class="lp-consent" id="f-consent">
               <div class="lp-consent__row">
                 <input type="checkbox" id="in-consent">
-                <label for="in-consent" id="consentText"><span id="consentCopy">By entering your information, you consent to your data being saved in accordance with our <a href="terms.html" data-link="terms">Terms</a> &amp; <a href="privacy.html" data-link="privacy">Privacy Policy</a> and to receive text messages from De Jesus Ventures LLC about your call. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help.</span></label>
+                <label for="in-consent" id="consentText"><span id="consentCopy">By entering your information, you consent to your data being saved in accordance with our <a href="terms.html" data-link="terms">Terms</a> &amp; <a href="privacy.html" data-link="privacy">Privacy Policy</a> and to receive text messages from De Jesus Ventures LLC about your call. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help.</span></label>
               </div>
               <div class="lp-err" id="err-consent">Check the box. It&rsquo;s how we text you your call details.</div>
             </div>
@@ -223,7 +222,7 @@ window.AB_LP = {
 
         <!-- status announcements for screen readers (outside the form so it survives the form being hidden) -->
         <div class="sr-only" id="live" aria-live="polite" aria-atomic="true"></div>
-        <div class="lp-card__note">We only use your details to contact you about your call.</div>
+        <div class="lp-card__note">We use your details to set up and follow up on your call, as described in our Privacy Policy.</div>
       </div>
     </div>
   </section>
@@ -324,7 +323,7 @@ window.AB_LP = {
     <div class="lp-sec-head">
       <p class="eyebrow">The meeting guarantee</p>
       <h2 class="display lp-h2" id="guar-h">15 qualified, attended meetings in 90 days, or we keep working at our cost.</h2>
-      <p class="sub">This is a service guarantee, not a marketing slogan.</p>
+      <p class="sub">This is a service guarantee, not a marketing slogan. The full terms are written into your services agreement.</p>
     </div>
     <div class="lp-guar">
       <blockquote class="lp-guar__quote">
@@ -341,7 +340,7 @@ window.AB_LP = {
           <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Have one advisor or owner show up to the weekly working session</li>
           <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Follow the follow-up process we set for booked meetings</li>
         </ul>
-        <p class="lp-guar__close">If you do your part and we still have not hit 15 attended, We keep working for free until you do.</p>
+        <p class="lp-guar__close">If you do your part and we still have not hit 15 attended, we keep working for free until you do.</p>
       </div>
     </div>
     <div class="lp-band">

@@ -143,12 +143,11 @@ if (/claudeusercontent\.com$|\.claude\.ai$/.test(location.hostname)) window.__AB
               </div>
             </div>
 
-            <!-- SMS consent. Text from LP.CONSENT_SMS_TEXT. COUNSEL REVIEW PENDING (Robby Birnbaum): this mirrors the
-                 transactional wording approved for LendFax and has not been approved for Advisor Booking yet. -->
+            <!-- SMS consent. The label text is captured verbatim into the CRM record (consent_text); bump CONSENT_TEXT_VERSION in assets/lp.js whenever it changes. -->
             <div class="lp-consent" id="f-consent">
               <div class="lp-consent__row">
                 <input type="checkbox" id="in-consent">
-                <label for="in-consent" id="consentText"><span id="consentCopy">Text me my call details and booking reminders from Advisor Booking. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help.</span> <a href="privacy.html" data-link="privacy">Privacy Policy</a> &middot; <a href="terms.html" data-link="terms">Terms</a></label>
+                <label for="in-consent" id="consentText"><span id="consentCopy">Text me my call details and booking reminders from De Jesus Ventures LLC. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help.</span> <a href="privacy.html" data-link="privacy">Privacy Policy</a> &middot; <a href="terms.html" data-link="terms">Terms</a></label>
               </div>
               <div class="lp-err" id="err-consent">Check the box. It&rsquo;s how we text you your call details.</div>
             </div>
@@ -204,7 +203,7 @@ if (/claudeusercontent\.com$|\.claude\.ai$/.test(location.hostname)) window.__AB
 
         <!-- status announcements for screen readers (outside the form so it survives the form being hidden) -->
         <div class="sr-only" id="live" aria-live="polite" aria-atomic="true"></div>
-        <div class="lp-card__note">We only use your details to contact you about your call.</div>
+        <div class="lp-card__note">We use your details to set up and follow up on your call, as described in our Privacy Policy.</div>
       </div>
     </div>
   </section>
@@ -214,11 +213,11 @@ if (/claudeusercontent\.com$|\.claude\.ai$/.test(location.hostname)) window.__AB
 <section class="lp-trust" aria-label="About the founder">
   <div class="container">
     <div class="lp-trust__in" role="list">
-      <div class="lp-stat" role="listitem"><b>8 figures</b><span class="su" aria-hidden="true"></span><span>In ad spend the founder has run for financial companies</span></div>
+      <div class="lp-stat" role="listitem"><b>8 figures</b><span class="su" aria-hidden="true"></span><span>In ad spend the team has run for financial companies</span></div>
       <div class="lp-stat" role="listitem"><b>198+</b><span class="su" aria-hidden="true"></span><span>Financial institutions the founder has worked with</span></div>
       <div class="lp-stat" role="listitem"><b>30 days</b><span class="su" aria-hidden="true"></span><span>From start to the first meetings on the calendar</span></div>
     </div>
-    <p class="lp-trust__note">These numbers come from the founder&rsquo;s past work in business lending. They are his own numbers, not audited, and not results for Advisor Booking clients.</p>
+    <p class="lp-trust__note">These numbers come from the founder&rsquo;s and the team&rsquo;s past work in business lending. They are not audited, and not results for Advisor Booking clients.</p>
   </div>
 </section>
 
@@ -312,7 +311,7 @@ if (/claudeusercontent\.com$|\.claude\.ai$/.test(location.hostname)) window.__AB
         <h3>Setup</h3>
         <p class="lp-ratio">One time</p>
         <div class="lp-price"><span class="big">$5K&ndash;$10K</span></div>
-        <p class="lp-plede">Covers the list, the messages, the email setup, and the compliance package.</p>
+        <p class="lp-plede">Covers the list, the messages, the email setup, and the message pack for your compliance officer to review.</p>
         <ul class="lp-plist">
           <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>A list of the exact people you want, or your current list cleaned up</li>
           <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Your ideal client, written down and agreed</li>
@@ -331,7 +330,7 @@ if (/claudeusercontent\.com$|\.claude\.ai$/.test(location.hostname)) window.__AB
           <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>A real person reads and answers every reply</li>
           <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Booking, confirmation, and reminders on your advisor&rsquo;s calendar</li>
           <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>A one-page report every Monday</li>
-          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Compliance review built into every step</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Your compliance officer approves every message before it is sent</li>
         </ul>
         <a href="#book" class="pill pill--outline lp-btn-block">Book my call</a>
       </div>

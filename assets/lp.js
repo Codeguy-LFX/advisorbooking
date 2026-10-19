@@ -1,4 +1,4 @@
-/* Advisor Booking /meetings landing page (hidden). The gated booking flow, ported from the LendFax buyer lander:
+/* Advisor Booking /meetings landing page (hidden). The gated booking flow:
    phone + first + last reveal the rest of the form, two qualifying questions decide the tier, every tier can book,
    ad pixels fire only for tier "qualified". IDs and the Calendly URL come from assets/config.js (window.AB_CONFIG),
    so this file only holds lander-specific settings. No dependencies. */
@@ -62,14 +62,13 @@
     //   Both affirmative        -> tier "qualified": Meta Lead fires on submit, Schedule on booking.
     EXIT_COPY: {
       title: 'Not a fit just yet.',
-      body: 'The system needs about $5K to start: that covers your list, your messages, the email setup and the compliance package. If the budget opens up later, we should talk then. You can also book the call now and we will tell you what to do in the meantime, free.',
+      body: 'The system needs about $5K to start: that covers your list, your messages, the email setup and the message pack for your compliance officer to review. If the budget opens up later, we should talk then. You can also book the call now and we will tell you what to do in the meantime, free.',
       cta: 'Book the call anyway'
     },
 
-    // SMS consent label. COUNSEL REVIEW PENDING (Robby Birnbaum) - mirrors transactional wording, not yet approved
-    // for Advisor Booking. true = the box must be checked to Continue.
+    // SMS consent. true = the box must be checked to Continue. The label text lives in each page's HTML and is captured into consent_text.
     CONSENT_SMS_REQUIRED: true,
-    CONSENT_TEXT_VERSION: '2026-10-19-a',
+    CONSENT_TEXT_VERSION: '2026-10-19-b',
 
     // Bot gate: a Continue faster than this many seconds after page load proceeds visually but the POST is
     // tagged bot_flag=true (same for the honeypot). The CRM decides what to do with flagged records.
