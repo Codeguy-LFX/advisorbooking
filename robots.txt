@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://advisorbooked.com/sitemap.xml
