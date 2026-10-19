@@ -240,20 +240,23 @@
     w.setAttribute('title', 'Pick a time for your call');
     w.style.width = '100%'; w.style.height = '620px';
     mount.appendChild(w);
-    var s = doc.createElement('script');
-    s.type = 'text/javascript'; s.async = true; s.src = 'https://app.iclosed.io/assets/widget.js';
-    doc.body.appendChild(s);
-    var waited = 0;
-    var iv = setInterval(function () {
-      if (mount.querySelector('iframe')) { clearInterval(iv); return; }
-      if ((waited += 250) < 8000) return;
+    var settled = false, waited = 0, iv;
+    function fallback() {
+      if (settled) return; settled = true;
       clearInterval(iv);
+      if (mount.querySelector('iframe')) return;
       mount.innerHTML = '';
       if (window.__AB_PREVIEW) {
+        /* Previews block iClosed; offer the real calendar in a new tab instead. */
         var n = doc.createElement('p');
         n.className = 'notice';
-        n.textContent = 'The calendar loads right here on the live site. It is blocked inside this preview.';
+        n.textContent = 'Previews block the calendar. On the live site it shows right here.';
         mount.appendChild(n);
+        var o = doc.createElement('a');
+        o.className = 'pill pill--accent mt-16';
+        o.href = url; o.target = '_blank'; o.rel = 'noopener noreferrer';
+        o.textContent = 'Open the real calendar in a new tab';
+        mount.appendChild(o);
         return;
       }
       /* Widget script blocked (ad blocker or network): embed the event link directly, with a plain link under it. */
@@ -268,6 +271,14 @@
       a.href = url; a.textContent = 'Calendar not showing? Open it here.';
       p.appendChild(a);
       mount.appendChild(p);
+    }
+    var s = doc.createElement('script');
+    s.type = 'text/javascript'; s.async = true; s.src = 'https://app.iclosed.io/assets/widget.js';
+    s.onerror = fallback;
+    doc.body.appendChild(s);
+    iv = setInterval(function () {
+      if (mount.querySelector('iframe')) { settled = true; clearInterval(iv); return; }
+      if ((waited += 250) >= 8000) fallback();
     }, 250);
   }
 

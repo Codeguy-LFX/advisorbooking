@@ -595,33 +595,52 @@
     p.appendChild(a);
     host.appendChild(p);
   }
+  /* Artifact previews block iClosed's script and frames. Show the real calendar in a new tab instead, with the same
+     prefilled link, so the prefill can be checked before the site is live. */
+  function iclosedPreview(host, url) {
+    host.innerHTML = '';
+    var n = doc.createElement('p');
+    n.className = 'notice';
+    n.textContent = 'Previews block the calendar. On the live site it shows right here.';
+    host.appendChild(n);
+    var a = doc.createElement('a');
+    a.className = 'pill pill--accent lp-btn-block lp-sched-open';
+    a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    a.textContent = 'Open the real calendar in a new tab';
+    host.appendChild(a);
+  }
   function openIclosed() {
     var host = $('calendly');
     if (!host) return;
     var url = iclosedUrl();
     if (!url) { host.innerHTML = '<p class="notice">The calendar is not connected yet. Email ' + (AB.email || 'info@advisorbooking.com') + ' and we will send you times.</p>'; return; }
     host.innerHTML = '';
+    host.classList.add('is-iclosed');
     var w = doc.createElement('div');
     w.className = 'iclosed-widget';
     w.setAttribute('data-url', url);
     w.setAttribute('title', 'Pick a time for your call');
     w.style.width = '100%'; w.style.height = '620px';
     host.appendChild(w);
+    /* The widget puts an iframe on the page within moments. If the script fails or no iframe appears (ad blocker,
+       network), embed the link directly. Skip if "Start over" removed this widget in the meantime. */
+    var settled = false;
+    function fallback() {
+      if (settled) return; settled = true;
+      if (calIv) { clearInterval(calIv); calIv = null; }
+      if (!w.isConnected || host.querySelector('iframe')) return;
+      if (window.__AB_PREVIEW) { iclosedPreview(host, url); return; }
+      iclosedFrame(host, url);
+    }
     var s = doc.createElement('script');
     s.type = 'text/javascript'; s.async = true; s.src = ICLOSED_WIDGET_JS;
+    s.onerror = fallback;
     doc.body.appendChild(s);
-    /* The widget puts an iframe on the page within moments. If none appears (ad blocker, script blocked), embed the link directly. */
     var waited = 0;
     if (calIv) { clearInterval(calIv); calIv = null; }
     calIv = setInterval(function () {
-      if (host.querySelector('iframe')) { clearInterval(calIv); calIv = null; return; }
-      if ((waited += 250) < 8000) return;
-      clearInterval(calIv); calIv = null;
-      if (window.__AB_PREVIEW) {
-        host.innerHTML = '<p class="notice">The calendar loads right here on the live site. It is blocked inside this preview.</p>';
-        return;
-      }
-      iclosedFrame(host, url);
+      if (host.querySelector('iframe')) { settled = true; clearInterval(calIv); calIv = null; return; }
+      if ((waited += 250) >= 8000) fallback();
     }, 250);
   }
   function openCalendly() {
