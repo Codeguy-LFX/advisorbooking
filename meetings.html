@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book more first meetings | Advisor Booked</title>
+<meta name="description" content="For independent RIAs with $50M to $250M AUM. We find HNW and business owners, reach out, and book first meetings on your advisors’ calendars.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://advisorbooked.com/meetings">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Advisor Booked">
+<meta property="og:title" content="Book more first meetings | Advisor Booked">
+<meta property="og:description" content="For independent RIAs with $50M to $250M AUM. We find HNW and business owners, reach out, and book first meetings on your advisors’ calendars.">
+<meta property="og:url" content="https://advisorbooked.com/meetings">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://assets.calendly.com">
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/lp.css">
+<script>/* Artifact previews block the Calendly script; this keeps lp.js from redirecting there. Inert on the live domain. */
+if (/claudeusercontent\.com$|\.claude\.ai$/.test(location.hostname)) window.__AB_PREVIEW = 1;</script>
+</head>
+<body>
+<div class="lp">
+<a class="skip-link" href="#main">Skip to content</a>
+<!-- Landing-page header: the mark and one button. No menu, so the only way forward is the booking card. -->
+<header class="header lp-header">
+  <div class="container">
+    <div class="nav__inner">
+      <span class="nav__brand"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" class="mark__body"/><rect x="6" y="12" width="20" height="14" rx="3" class="mark__page"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" class="mark__page"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" class="mark__page"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booked</span></span>
+      <a class="pill pill--sm pill--accent" href="#book">Book a call</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<div class="lp-top">
+
+  <!-- 1. HERO: a question the button answers, who it is for, what it is. -->
+  <section class="lp-hero" id="top">
+    <div class="container">
+      <div class="lp-hero__copy">
+        <!-- NEW COPY -->
+        <h1 class="display h1">Want HNW and business owners booked on <span class="ul">your advisors&rsquo; calendars?</span></h1>
+        <p class="lp-hero__sub2">For independent RIAs with <span class="nowrap">$50M to $250M AUM</span></p>
+      </div>
+      <!-- Video slot, empty for now. assets/lp.js removes the slot (and nothing else) while LP.VSL_OPENER_URL and
+           LP.VSL_OPENER_EMBED_HTML are both empty; the headline, description and CTA stay. Paste a video URL or
+           embed into lp.js later and the slot comes back. -->
+      <div class="lp-vsl" id="vslOpener"></div>
+      <div class="lp-hero__desc">
+        <!-- NEW COPY: built from the home page lead. .emk = a fact (black bold), .em = the one payoff (green). -->
+        <p>Advisor Booked is built for <b class="emk">independent RIAs with 2 to 10 advisors.</b> We find HNW and business owners who fit your firm and reach out by email and LinkedIn with messages your compliance officer approves. When someone says yes, <b class="em">we put the first meeting on your advisor&rsquo;s calendar. You just take the meeting.</b></p>
+      </div>
+      <div class="lp-cta-row"><a href="#book" class="pill pill--lg pill--accent">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+    </div>
+  </section>
+
+  <!-- 2. BOOK: the gated booking card -->
+  <section class="lp-book" aria-label="Book your call">
+    <div class="container lp-book__grid">
+      <div class="lp-card" id="book">
+
+        <!-- two-dot progress header -->
+        <div class="lp-card__hd">
+          <ol class="lp-steps" aria-label="Progress">
+            <li class="lp-stp on" id="stp1" aria-current="step"><i class="dot" aria-hidden="true"></i>Your details</li>
+            <li class="lp-stp" id="stp2"><i class="dot" aria-hidden="true"></i>Book your call</li>
+          </ol>
+          <p class="lp-steps-line" id="stepsLine">Two quick steps, then you pick a time.</p>
+        </div>
+
+        <!-- the form -->
+        <div class="lp-form" id="formGlass">
+          <h2 class="lp-card__title">Book your call</h2>
+          <p class="lp-fsub">Fill this out first. Then pick your time.</p>
+          <p class="lp-finc"><svg width="13" height="13" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> 20 minutes on Google Meet. It ends with a yes or a no.</p>
+
+          <!-- ONE growing form: Mobile first, then First + Last name. The moment all three are in, the rest (#more) fades in
+               below with no click and without moving focus. The consent box, Continue and the privacy line are always last. -->
+          <form id="leadForm" novalidate>
+
+            <!-- Mobile, with a static "+1" prefix box (US numbers only) -->
+            <div class="lp-field" id="f-phone">
+              <label class="lp-lbl" for="in-phone">Mobile</label>
+              <div class="lp-tel">
+                <span class="lp-tel__cc" aria-hidden="true" title="United States (+1)">+1</span>
+                <input type="tel" id="in-phone" placeholder="(561) 555-0147" autocomplete="tel-national" inputmode="tel" maxlength="20" aria-describedby="hint-phone">
+              </div>
+              <p class="lp-hint" id="hint-phone">For your call details and reminders.</p>
+              <div class="lp-err" id="err-phone">Enter a valid mobile number.</div>
+            </div>
+
+            <!-- First + Last name side by side -->
+            <div class="lp-name-row">
+              <div class="lp-field" id="f-first">
+                <label class="lp-lbl" for="in-first">First name</label>
+                <input type="text" id="in-first" placeholder="First name" autocomplete="given-name">
+                <div class="lp-err" id="err-first">Enter your first name.</div>
+              </div>
+              <div class="lp-field" id="f-last">
+                <label class="lp-lbl" for="in-last">Last name</label>
+                <input type="text" id="in-last" placeholder="Last name" autocomplete="family-name">
+                <div class="lp-err" id="err-last">Enter your last name.</div>
+              </div>
+            </div>
+
+            <!-- THE REST: hidden until mobile + first + last are in; revealed once, never re-hidden -->
+            <div class="lp-more" id="more" hidden>
+              <div class="lp-field" id="f-email">
+                <label class="lp-lbl" for="in-email">Work email</label>
+                <input type="email" id="in-email" placeholder="you@yourfirm.com" autocomplete="email" aria-describedby="hint-email">
+                <p class="lp-hint" id="hint-email">Your calendar invite and Google Meet link go here.</p>
+                <div class="lp-err" id="err-email">Enter a valid email.</div>
+              </div>
+              <!-- Budget question: text and options render from LP.QUESTIONS.budget in assets/lp.js -->
+              <div class="lp-field" id="f-budget">
+                <label class="lp-lbl" for="in-budget" id="budgetQ">Getting started takes about $5K to invest in marketing. Does that work for you?</label>
+                <select id="in-budget" required aria-describedby="budgetSub">
+                  <option value="" disabled selected>Select one</option>
+                </select>
+                <p class="lp-hint" id="budgetSub"></p>
+                <div class="lp-err" id="err-budget">Pick one.</div>
+              </div>
+              <!-- Timing question: text and options render from LP.QUESTIONS.ready -->
+              <div class="lp-field" id="f-ready">
+                <label class="lp-lbl" for="in-ready" id="readyQ">Are you ready to start today?</label>
+                <select id="in-ready" required aria-describedby="readySub">
+                  <option value="" disabled selected>Select one</option>
+                </select>
+                <p class="lp-hint" id="readySub"></p>
+                <div class="lp-err" id="err-ready">Pick one.</div>
+              </div>
+              <div class="lp-field" id="f-company">
+                <label class="lp-lbl" for="in-company">Firm name</label>
+                <input type="text" id="in-company" placeholder="Your firm" autocomplete="organization">
+                <div class="lp-err" id="err-company">Enter your firm name.</div>
+              </div>
+            </div>
+
+            <!-- SMS consent. Text from LP.CONSENT_SMS_TEXT. COUNSEL REVIEW PENDING (Robby Birnbaum): this mirrors the
+                 transactional wording approved for LendFax and has not been approved for Advisor Booked yet. -->
+            <div class="lp-consent" id="f-consent">
+              <div class="lp-consent__row">
+                <input type="checkbox" id="in-consent">
+                <label for="in-consent" id="consentText"><span id="consentCopy">Text me my call details and booking reminders from Advisor Booked. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help.</span> <a href="privacy.html" data-link="privacy">Privacy Policy</a> &middot; <a href="terms.html" data-link="terms">Terms</a></label>
+              </div>
+              <div class="lp-err" id="err-consent">Check the box. It&rsquo;s how we text you your call details.</div>
+            </div>
+            <div class="lp-hp" aria-hidden="true"><input type="text" id="in-hpx" name="ab_hpx" tabindex="-1" autocomplete="off" data-1p-ignore="true" data-lpignore="true" data-bwignore="true" data-form-type="other"></div>
+            <!-- the ONLY submit button; its label switches to "Continue to pick your time" when both answers qualify -->
+            <button type="submit" class="pill pill--accent lp-btn-block" id="btnGo"><span id="btnGoLabel">Continue</span> <span class="arr" aria-hidden="true">&rarr;</span></button>
+            <p class="lp-priv">By continuing you agree to our <a href="privacy.html" data-link="privacy">Privacy Policy</a> and <a href="terms.html" data-link="terms">Terms</a>.</p>
+            <p class="lp-restart" id="restartWrap" hidden><button type="button" class="lp-linkbtn" id="startOver">Start over</button></p>
+
+          </form>
+        </div>
+
+        <!-- locked calendar preview (unlocks after the form) -->
+        <div class="lp-cal-lock" id="calLock" aria-hidden="true">
+          <div class="lp-veil">
+            <div class="lp-mc-head"><b>Choose a day</b><span class="lp-mc-arrows"><span></span><span></span></span></div>
+            <div class="lp-mc-dow"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+            <div class="lp-mc-grid">
+              <div class="d">13</div><div class="d on">14</div><div class="d">15</div><div class="d on">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div>
+              <div class="d">20</div><div class="d">21</div><div class="d on">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div>
+            </div>
+          </div>
+          <div class="lp-tooltip"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><rect x="2.5" y="5.4" width="7" height="4.6" rx="1" stroke="#fff" stroke-width="1.2"/><path d="M4 5.4V4a2 2 0 0 1 4 0v1.4" stroke="#fff" stroke-width="1.2"/></svg> Fill out the form first to pick your time</div>
+        </div>
+
+        <!-- Not-a-fit panel (tier "disqualified"). Title and body come from LP.EXIT_COPY, picked by dq_reason; the button
+             books the same call (no ad pixels for this tier). -->
+        <div class="lp-exit" id="exit" hidden>
+          <h3 id="exitH" tabindex="-1"></h3>
+          <p id="exitP"></p>
+          <button type="button" class="pill pill--accent lp-btn-block" id="exitCta">That works. Pick a time</button>
+          <div class="lp-exit__links"><button type="button" class="lp-linkbtn" id="exitBack">&larr; Change my answer</button><button type="button" class="lp-linkbtn" id="startOver4">Start over</button></div>
+        </div>
+
+        <!-- inline Calendly (loads after the form is submitted; every tier lands here) -->
+        <div class="lp-sched" id="sched">
+          <div class="lp-sched__top">
+            <div class="lp-avatar" id="schedAvatar">A</div>
+            <div><h3 id="schedHi" tabindex="-1">Pick a time</h3></div>
+          </div>
+          <p class="lp-sched__meta">20 min &middot; Google Meet &middot; <span class="lp-ok">Pipeline Audit</span> &middot; <button type="button" class="lp-linkbtn" id="startOver2">Not you? Start over</button></p>
+          <div class="calendly-inline-widget lp-calendly" id="calendly" data-auto-load="false"></div>
+          <p class="lp-expect">A 20-minute Google Meet. We look at your ideal client, your list, your advisors&rsquo; time and how your compliance officer handles outreach. Then we tell you if this will work for your firm or not.</p>
+        </div>
+
+        <!-- booked state -->
+        <div class="lp-booked" id="booked">
+          <span class="lp-chk"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M6 13.5L11 18.5 20 8" stroke="#0F7A62" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <h3 id="bookedName" tabindex="-1">You&rsquo;re booked.</h3>
+          <p>Check your email for the invite and the Google Meet link.</p>
+          <button type="button" class="lp-linkbtn" id="startOver3">Not you? Start over</button>
+        </div>
+
+        <!-- status announcements for screen readers (outside the form so it survives the form being hidden) -->
+        <div class="sr-only" id="live" aria-live="polite" aria-atomic="true"></div>
+        <div class="lp-card__note">We only use your details to contact you about your call.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- 3. STATS: the same three numbers and the same note as the home page -->
+<section class="lp-trust" aria-label="About the founder">
+  <div class="container">
+    <div class="lp-trust__in" role="list">
+      <div class="lp-stat" role="listitem"><b>8 figures</b><span class="su" aria-hidden="true"></span><span>In ad spend the founder has run for financial companies</span></div>
+      <div class="lp-stat" role="listitem"><b>198+</b><span class="su" aria-hidden="true"></span><span>Financial institutions the founder has worked with</span></div>
+      <div class="lp-stat" role="listitem"><b>30 days</b><span class="su" aria-hidden="true"></span><span>From start to the first meetings on the calendar</span></div>
+    </div>
+    <p class="lp-trust__note">These numbers come from the founder&rsquo;s past work in business lending. They are his own numbers, not audited, and not results for Advisor Booked clients.</p>
+  </div>
+</section>
+
+<!-- 4. HOW IT WORKS: three plain columns, "#n:" titles, one green payoff each. Optional images: LP.HOW_IMAGES. -->
+<section class="lp-sec lp-sec--alt" id="how" aria-labelledby="how-h">
+  <div class="container">
+    <div class="lp-sec-head">
+      <h2 class="display lp-h2" id="how-h">How it works</h2>
+      <!-- NEW COPY -->
+      <p class="sub">Up and running in 30 days. One person on our side, one on yours. No meetings in the first two weeks, and we say so up front.</p>
+    </div>
+    <div class="lp-steps3">
+      <div class="lp-step">
+        <p class="lp-step__when">Days 1 to 14</p>
+        <h3>#1: We build your list and your messages</h3>
+        <figure class="lp-step__img" data-how="0"></figure>
+        <p>We build your list or clean up your CRM, then write 3 to 5 short messages. <b class="em">Your compliance officer signs off on every one.</b></p>
+      </div>
+      <div class="lp-step">
+        <p class="lp-step__when">Days 14 to 30</p>
+        <h3>#2: We launch and answer every reply</h3>
+        <figure class="lp-step__img" data-how="1"></figure>
+        <p>We start with the names already in your CRM, because they answer fastest. Then we reach new people. <b class="em">A real person handles every reply.</b></p>
+      </div>
+      <div class="lp-step">
+        <p class="lp-step__when">Every week after</p>
+        <h3>#3: Your advisors take the meetings</h3>
+        <figure class="lp-step__img" data-how="2"></figure>
+        <p>First meetings land on your advisor&rsquo;s calendar. <b class="em">Every Monday you get one page</b> that shows what each meeting cost.</p>
+      </div>
+    </div>
+    <div class="lp-cta-row lp-cta-row--steps"><a href="#book" class="pill pill--lg pill--accent">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+  </div>
+</section>
+
+<!-- 5. QUESTIONS (black): the home page answers, word for word -->
+<section class="faq-sec on-dark" id="faq" aria-labelledby="faq-h">
+  <div class="container center">
+    <h2 class="display lp-h2" id="faq-h">Questions people ask</h2>
+    <p class="sub narrow">Plain answers. If yours is not here, ask on the call.</p>
+    <div class="faq left">
+      <details open>
+        <summary>What do you actually do?<span class="chev" aria-hidden="true"></span></summary>
+        <div class="a"><div><p>Three things, every week. We build a list of the right people. We send them a short, plain message your compliance officer has approved. We follow up until a real person answers. Then a real person on our team checks the reply and books the meeting on your calendar. We measure one thing: what each meeting cost.</p></div></div>
+      </details>
+      <details>
+        <summary>Who is this NOT for?<span class="chev" aria-hidden="true"></span></summary>
+        <div class="a"><div><ul><li>Firms under $25M in assets, or firms that only charge by the hour</li><li>Firms with no list and no budget to build one</li><li>Firms whose compliance team says no to all outreach</li><li>Firms that want one campaign, not a system</li><li>Firms with no advisor who has time for 8 or more new meetings a month</li></ul><p>These are not judgments. They are the conditions the system needs to produce meetings.</p></div></div>
+      </details>
+      <details>
+        <summary>How do you handle compliance?<span class="chev" aria-hidden="true"></span></summary>
+        <div class="a"><div><p>Every message goes to your compliance officer before it is sent. We never make claims about investment results. We never contact anyone for your firm without approved copy. Your compliance team keeps a copy of every message we send. If they say no to all outreach, we are not a fit, and we will tell you that on the call.</p></div></div>
+      </details>
+      <details>
+        <summary>What does it cost?<span class="chev" aria-hidden="true"></span></summary>
+        <div class="a"><div><p>Setup is $5,000 to $10,000, depending on whether we build your list or clean yours. After that it is a monthly fee plus a fee for each meeting that happens. You get exact numbers on the call, once we know your list and your goal.</p></div></div>
+      </details>
+      <details>
+        <summary>Will we get a lot of bad meetings?<span class="chev" aria-hidden="true"></span></summary>
+        <div class="a"><div><p>No. Before we start, you tell us what a good fit looks like: how much they have, what job they hold, and what is going on in their life. A real person reads every reply. People who do not fit get a polite no. You only pay the meeting fee when the person fits your rules and shows up.</p></div></div>
+      </details>
+      <details>
+        <summary>We have tried marketing agencies before.<span class="chev" aria-hidden="true"></span></summary>
+        <div class="a"><div><p>So have most of the firms we talk to. Agencies sell things like a campaign, a website, or ad views. We sell meetings that happen, and we report one number every week. If the number is bad, you see it in week two, not month six.</p></div></div>
+      </details>
+      <details>
+        <summary>Do you have case studies yet?<span class="chev" aria-hidden="true"></span></summary>
+        <div class="a"><div><p>Not yet. Advisor Booked is new. Each case study will be published when that client passes day 90, with the same numbers every time: meetings per month, show-up rate, and what each meeting cost. Nothing on this site will be a guess.</p></div></div>
+      </details>
+      <details>
+        <summary>What do you need from us?<span class="chev" aria-hidden="true"></span></summary>
+        <div class="a"><div><p>One kickoff call. Access to your CRM or your list. Your compliance officer reviewing messages within 5 business days. And advisors who show up to the meetings we book.</p></div></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- 6. WHAT IT COSTS: two cards (setup, then monthly) and the "exact numbers on the call" band. Prices match the home page. -->
+<section class="lp-sec lp-sec--alt" id="cost" aria-labelledby="cost-h">
+  <div class="container">
+    <div class="lp-sec-head">
+      <p class="eyebrow">What it costs</p>
+      <!-- NEW COPY -->
+      <h2 class="display lp-h2" id="cost-h">Set it up once. Then pay for meetings that happen.</h2>
+      <p class="sub">Exact numbers depend on your list and your goal.</p>
+    </div>
+    <div class="lp-prods">
+
+      <div class="lp-prod lp-prod--feat">
+        <span class="lp-ribbon">Start here</span>
+        <h3>Setup</h3>
+        <p class="lp-ratio">One time</p>
+        <div class="lp-price"><span class="big">$5K&ndash;$10K</span></div>
+        <p class="lp-plede">Covers the list, the messages, the email setup, and the compliance package.</p>
+        <ul class="lp-plist">
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>A list of the exact people you want, or your current list cleaned up</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Your ideal client, written down and agreed</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>3 to 5 short email and LinkedIn messages, approved by your compliance officer</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Email setup so messages land in the inbox, not spam</li>
+        </ul>
+        <a href="#book" class="pill pill--accent lp-btn-block">Book my call</a>
+      </div>
+
+      <div class="lp-prod">
+        <h3>Monthly</h3>
+        <p class="lp-ratio">Every month after</p>
+        <div class="lp-price"><span class="big">Monthly</span><span class="per">+ a fee per meeting</span></div>
+        <p class="lp-plede">You only pay the meeting fee when the person fits your rules and shows up.</p>
+        <ul class="lp-plist">
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>A real person reads and answers every reply</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Booking, confirmation, and reminders on your advisor&rsquo;s calendar</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>A one-page report every Monday</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Compliance review built into every step</li>
+        </ul>
+        <a href="#book" class="pill pill--outline lp-btn-block">Book my call</a>
+      </div>
+
+    </div>
+
+    <div class="lp-band">
+      <div class="lp-band__txt">
+        <span class="lp-band__tag">On the call</span>
+        <h3>Exact numbers, not a PDF</h3>
+        <p>They depend on your list and your goal. We give them to you on the call and tell you if this will work for your firm or not.</p>
+      </div>
+      <a href="#book" class="pill pill--accent">Book my call <span class="arr" aria-hidden="true">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- 7. FINAL CTA (black) -->
+<section class="lp-final" aria-labelledby="final-h">
+  <div class="container">
+    <!-- NEW COPY -->
+    <h2 class="display lp-h2" id="final-h">Ready for more first meetings?</h2>
+    <p>It starts with a 20-minute call. We tell you if this will work for your firm or not. No sales deck.</p>
+    <a href="#book" class="pill pill--lg pill--accent">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a>
+    <p class="fine">Advisor Booked is a marketing and appointment-setting company. We are not an investment adviser.</p>
+  </div>
+</section>
+</main>
+<div class="legal-line"><a href="privacy.html" target="_blank" rel="noopener">Privacy</a><span aria-hidden="true">&middot;</span><a href="terms.html" target="_blank" rel="noopener">Terms</a></div>
+<script src="assets/config.js"></script>
+<script src="assets/lp.js" defer></script>
+</div>
+</body>
+</html>

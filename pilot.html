@@ -18,265 +18,345 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://assets.calendly.com">
 <link rel="stylesheet" href="assets/styles.css">
-<link rel="stylesheet" href="assets/pilot.css">
+<link rel="stylesheet" href="assets/lp.css">
+<script>/* Artifact previews block the Calendly script; this keeps lp.js from redirecting there. Inert on the live domain. */
+if (/claudeusercontent\.com$|\.claude\.ai$/.test(location.hostname)) window.__AB_PREVIEW = 1;</script>
+<script>
+/* Page-specific settings read by assets/lp.js (merged over its defaults). */
+window.AB_LP = {
+  FORM_VERSION: 'ab-pilot-2026-10-19-v2',
+  SOURCE: 'advisorbooked-pilot-lp',
+  QUESTIONS: { budget: {
+    question: 'The founding rate is $3,500 every 4 weeks, with no setup fee. Does that work for you?',
+    subcopy: 'Initial term is 3 billing cycles, about 90 days. No per-meeting fees.'
+  } },
+  EXIT_COPY: {
+    title: 'Not a fit just yet.',
+    body: 'The founding pilot is $3,500 every 4 weeks for three cycles. That covers the lists, the messages, the sending setup, reply handling, and booking. If the budget opens up later, we should talk then. You can also book the call now and we will tell you what to do in the meantime, free.',
+    cta: 'Book the call anyway'
+  }
+};
+</script>
 </head>
 <body>
+<div class="lp">
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="header">
-  <nav class="nav container" aria-label="Primary">
+<!-- Landing-page header: the mark and one button. No menu, so the only way forward is the booking card. -->
+<header class="header lp-header">
+  <div class="container">
     <div class="nav__inner">
-      <a class="nav__brand" href="pilot.html"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" class="mark__body"/><rect x="6" y="12" width="20" height="14" rx="3" class="mark__page"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" class="mark__page"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" class="mark__page"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booked</span></a>
-      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-panel" aria-label="Menu">
-        <span class="nav__bar"></span><span class="nav__bar"></span><span class="nav__bar"></span>
-      </button>
-      <div class="nav__panel" id="nav-panel">
-        <ul class="nav__links">
-          <li><a href="#how">How it works</a></li>
-          <li><a href="#offer">The offer</a></li>
-          <li><a href="#guarantee">Guarantee</a></li>
-          <li><a href="#faq">FAQ</a></li>
-        </ul>
-        <a class="nav__phone" href="#" data-config="phone" hidden>Phone</a>
-        <a class="pill pill--sm nav__cta" href="book.html" data-src="pilot-nav">Get More Booked Meetings</a>
-      </div>
+      <span class="nav__brand"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" class="mark__body"/><rect x="6" y="12" width="20" height="14" rx="3" class="mark__page"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" class="mark__page"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" class="mark__page"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booked</span></span>
+      <a class="pill pill--sm pill--accent" href="#book">Book a call</a>
     </div>
-  </nav>
+  </div>
 </header>
 
 <main id="main">
+<div class="lp-top">
 
-<!-- 1. Hero -->
-<section class="hero" id="top">
-  <div class="container">
-    <div class="hero__grid">
-      <div>
-        <p class="eyebrow"><span>Founding offer &middot; independent RIAs with <span class="nowrap">$50M to $250M AUM</span></span></p>
+  <!-- 1. HERO: a question the button answers, who it is for, what it is. -->
+  <section class="lp-hero" id="top">
+    <div class="container">
+      <div class="lp-hero__copy">
         <!-- NEW COPY -->
-        <h1 class="display h1"><span class="line"><span>Fill your advisors&rsquo; calendars with</span></span><span class="line"><span>qualified HNW and business-owner</span></span><span class="line"><span><span class="ul">meetings in 90 days.</span></span></span></h1>
-        <p class="rate"><strong>Founding rate: $3,500 every 4 weeks.</strong> No per-meeting fees.</p>
-        <!-- NEW COPY -->
-        <p class="lead">One RIA. One pipeline system. We build and run your <b>outbound, LinkedIn, and list reactivation</b> so your team spends their time in real conversations, not chasing cold leads.</p>
-        <div class="cta">
-          <a class="pill pill--lg" href="book.html" data-src="pilot-hero">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a>
-          <!-- NEW COPY -->
-          <p class="small">15 qualified, attended meetings in your first 90 days, or I keep working at my cost until you have them.</p>
+        <h1 class="display h1">Fill your advisors&rsquo; calendars with qualified HNW and business-owner <span class="ul">meetings in 90 days.</span></h1>
+        <p class="lp-hero__sub2">Founding offer &middot; independent RIAs with <span class="nowrap">$50M to $250M AUM</span></p>
+        <p class="lp-rate"><strong>Founding rate: $3,500 every 4 weeks.</strong> No per-meeting fees.</p>
+      </div>
+      <!-- Video slot, empty for now. assets/lp.js removes the slot (and nothing else) while LP.VSL_OPENER_URL and
+           LP.VSL_OPENER_EMBED_HTML are both empty; the headline, description and CTA stay. Paste a video URL or
+           embed into lp.js later and the slot comes back. -->
+      <div class="lp-vsl" id="vslOpener"></div>
+      <div class="lp-hero__desc">
+        <!-- NEW COPY: built from the home page lead. .emk = a fact (black bold), .em = the one payoff (green). -->
+        <p><b class="emk">One RIA. One pipeline system.</b> We build and run your outbound, LinkedIn, list creation and reactivation so your team spends their time in <b class="em">real conversations, not chasing cold leads.</b></p>
+      </div>
+      <div class="lp-cta-row"><a href="#book" class="pill pill--lg pill--accent">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+    </div>
+  </section>
+
+  <!-- 2. BOOK: the gated booking card -->
+  <section class="lp-book" aria-label="Book your call">
+    <div class="container lp-book__grid">
+      <div class="lp-card" id="book">
+
+        <!-- two-dot progress header -->
+        <div class="lp-card__hd">
+          <ol class="lp-steps" aria-label="Progress">
+            <li class="lp-stp on" id="stp1" aria-current="step"><i class="dot" aria-hidden="true"></i>Your details</li>
+            <li class="lp-stp" id="stp2"><i class="dot" aria-hidden="true"></i>Book your call</li>
+          </ol>
+          <p class="lp-steps-line" id="stepsLine">Two quick steps, then you pick a time.</p>
         </div>
-      </div>
-      <div class="rv rv--scale" style="--i:2">
-        <div class="phone-col">
-          <div class="phone-wrap ">
-  <figure class="phone" data-thread="li-new" role="img" aria-label="Example LinkedIn message thread of an advisor reaching out and booking a meeting. The names are not real.">
-    <div class="phone__notch" aria-hidden="true"></div>
-    <div class="phone__screen">
-      <div class="phone__bar"><i class="li-mark" aria-hidden="true">in</i><span class="av">DA</span><div><b>Dana A.</b><span>Business owner<span class="sep"> &middot; </span><span class="fit">fits your rules</span></span></div></div>
-      <div class="thread" aria-hidden="true"></div>
-      <div class="phone__foot" aria-hidden="true"><span></span><i></i></div>
-    </div>
-  </figure>
-</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- 2. Trust / stats -->
-<section class="section section--tight center" aria-labelledby="trust-h">
-  <div class="container">
-    <div class="rv">
-      <div class="spot"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18M8.5 15.5l2.5 2.5 4.5-5"/></svg></div>
-      <!-- NEW COPY -->
-      <h2 class="display h2 narrow narrow--wide" id="trust-h">Built for firms with <span class="nowrap">2 to 10</span> advisors and <span class="nowrap nowrap--wide">$50M to $250M</span> in assets</h2>
-    </div>
-    <div class="statband rv" role="list">
-      <div class="stat" role="listitem"><p class="stat__num"><span data-count="8">8</span> figures</p><p class="stat__label">In ad spend the team has run for financial companies</p></div>
-      <div class="stat stat--accent" role="listitem"><p class="stat__num"><span data-count="198" data-suffix="+">198+</span></p><p class="stat__label">Financial institutions the founder has worked with</p></div>
-      <div class="stat" role="listitem"><p class="stat__num"><span data-count="30">30</span> days</p><p class="stat__label">Within 30 days of start you will have meetings on the calendar</p></div>
-    </div>
-  </div>
-</section>
+        <!-- the form -->
+        <div class="lp-form" id="formGlass">
+          <h2 class="lp-card__title">Book your call</h2>
+          <p class="lp-fsub">Fill this out first. Then pick your time.</p>
+          <p class="lp-finc"><svg width="13" height="13" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> 20 minutes on Google Meet. It ends with a yes or a no.</p>
 
-<!-- 3. The problem: today vs with us -->
-<section class="section" id="about" aria-label="Your firm today and with Advisor Booked">
-  <div class="container">
-    <div class="pin" data-pin>
-    <div class="pin__stick rv">
-    <div class="pair pair--pin" style="margin-top:0">
-      <div class="pane pane--grey">
-        <!-- NEW COPY -->
-        <span class="kicker">What your pain point is today</span>
-        <h3 class="h3">Your firm&rsquo;s growth depends on unpredictable referrals or just one channel</h3>
-        <ul class="row-list">
-          <li><span class="mk mk--bad" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></span><span>New clients come from referrals and whoever the owner has time to call.</span></li>
-          <li><span class="mk mk--bad" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></span><span>Your CRM has 1,000 to 5,000 names nobody at your firm has reached in years.</span></li>
-          <li><span class="mk mk--bad" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></span><span>Marketing money goes to a new website and a newsletter that rarely books meetings.</span></li>
-          <li><span class="mk mk--bad" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></span><span>Advisors have open time on their calendars they wish was filled with clients.</span></li>
-          <li><span class="mk mk--bad" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></span><span>Business owners near you sell companies, and HNW individuals retire and switch advisors. Nobody from your firm knows them or is reaching them with purpose.</span></li>
-        </ul>
-      </div>
-      <div class="pane pane--green">
-        <!-- NEW COPY -->
-        <span class="kicker">What your tomorrow looks like with AdvisorBooked.com</span>
-        <h3 class="h3">Your firm&rsquo;s growth runs on a system you control</h3>
-        <ul class="row-list">
-          <li><span class="mk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>New clients still come from the channels you use today, plus Advisor Booked&rsquo;s channels, so your marketing risk is spread out instead of resting on one source.</span></li>
-          <li><span class="mk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>Your CRM and database are reached and re-engaged with our proprietary LinkedIn and email automations that provide value and earn your prospects&rsquo; trust.</span></li>
-          <li><span class="mk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>Marketing money goes to a reliable channel that can be scaled, so every dollar you spend on marketing is a dollar that truly helps your firm grow. Not in a year. In a week or a month, with the immediate results we can provide.</span></li>
-          <li><span class="mk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>The business owners near you who sell companies, and the HNW individuals who retire and switch advisors: you stay in front of them with our proprietary data and marketing approach.</span></li>
-        </ul>
-        <a class="pill" href="book.html" data-src="pilot-problem">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a>
-      </div>
-    </div>
-    </div>
-    </div>
-  </div>
-</section>
+          <!-- ONE growing form: Mobile first, then First + Last name. The moment all three are in, the rest (#more) fades in
+               below with no click and without moving focus. The consent box, Continue and the privacy line are always last. -->
+          <form id="leadForm" novalidate>
 
-<!-- 4. See it in action -->
-<section class="section" id="how" aria-labelledby="how-h">
-  <div class="container">
-    <div class="center rv">
-      <div class="spot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/><path d="M8 12h.01M12 12h.01M16 12h.01"/></svg></div>
-      <h2 class="display h2" id="how-h">See it in action</h2>
-      <!-- NEW COPY -->
-      <p class="sub narrow">LinkedIn, email, and text, the way your prospects actually see them. Pick one and watch what we do.</p>
-    </div>
-    <div class="stage stage--action mt-48 rv rv--scale on-dark" data-action>
-      <div class="stage__grid">
-        <aside class="howcard action__menu">
-          <h3 class="h3">See it in action&hellip;</h3>
-          <div class="action__list" role="tablist" aria-label="What we do, by channel">
-            <button type="button" role="tab" id="tab-li-new" aria-controls="action-panel" aria-selected="true" data-key="li-new"><b>Reach new HNW prospects on LinkedIn</b><span>Check it out</span></button>
-            <button type="button" role="tab" id="tab-mail-crm" aria-controls="action-panel" aria-selected="false" tabindex="-1" data-key="mail-crm"><b>Re-engage the names already in your CRM</b><span>Check it out</span></button>
-            <button type="button" role="tab" id="tab-li-reply" aria-controls="action-panel" aria-selected="false" tabindex="-1" data-key="li-reply"><b>A real person answers every reply</b><span>Check it out</span></button>
-            <button type="button" role="tab" id="tab-sms-book" aria-controls="action-panel" aria-selected="false" tabindex="-1" data-key="sms-book"><b>Book it, confirm it, remind them by text</b><span>Check it out</span></button>
-            <button type="button" role="tab" id="tab-mail-nurture" aria-controls="action-panel" aria-selected="false" tabindex="-1" data-key="mail-nurture"><b>Nurture with emails that earn trust</b><span>Check it out</span></button>
-            <button type="button" role="tab" id="tab-mail-report" aria-controls="action-panel" aria-selected="false" tabindex="-1" data-key="mail-report"><b>One report every Monday</b><span>Check it out</span></button>
-          </div>
-          <div class="action__cta"><a class="pill" href="book.html" data-src="pilot-how">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a></div>
-        </aside>
-        <div class="action__stage" id="action-panel" role="tabpanel" aria-labelledby="tab-li-new">
-          <p class="action__caption" data-caption></p>
-          <figure class="device" data-device data-thread="li-new" data-skin="li" role="img" aria-label="Example conversations on LinkedIn, email, and text: outreach, replies, booking, reminders, and the Monday report.">
-            <div class="device__frame">
-              <div class="device__notch" aria-hidden="true"></div>
-              <div class="device__screen">
-                <div class="hd hd--li" aria-hidden="true"><span class="li-mark">in</span><span class="av">DA</span><div><b>Dana A.</b><small>Founder, Apex Logistics &middot; 1st</small></div></div>
-                <div class="hd hd--sms" aria-hidden="true"><span class="av">DA</span><b>Dana A.</b><small>Text message &middot; SMS</small></div>
-                <div class="hd hd--mail" aria-hidden="true"><span class="win__dots"><i></i><i></i><i></i></span><span class="win__tab">Inbox</span><span class="win__subject" data-subject></span></div>
-                <div class="thread" aria-hidden="true"></div>
-                <div class="device__foot" aria-hidden="true"><span></span><i></i></div>
+            <!-- Mobile, with a static "+1" prefix box (US numbers only) -->
+            <div class="lp-field" id="f-phone">
+              <label class="lp-lbl" for="in-phone">Mobile</label>
+              <div class="lp-tel">
+                <span class="lp-tel__cc" aria-hidden="true" title="United States (+1)">+1</span>
+                <input type="tel" id="in-phone" placeholder="(561) 555-0147" autocomplete="tel-national" inputmode="tel" maxlength="20" aria-describedby="hint-phone">
+              </div>
+              <p class="lp-hint" id="hint-phone">For your call details and reminders.</p>
+              <div class="lp-err" id="err-phone">Enter a valid mobile number.</div>
+            </div>
+
+            <!-- First + Last name side by side -->
+            <div class="lp-name-row">
+              <div class="lp-field" id="f-first">
+                <label class="lp-lbl" for="in-first">First name</label>
+                <input type="text" id="in-first" placeholder="First name" autocomplete="given-name">
+                <div class="lp-err" id="err-first">Enter your first name.</div>
+              </div>
+              <div class="lp-field" id="f-last">
+                <label class="lp-lbl" for="in-last">Last name</label>
+                <input type="text" id="in-last" placeholder="Last name" autocomplete="family-name">
+                <div class="lp-err" id="err-last">Enter your last name.</div>
               </div>
             </div>
-          </figure>
+
+            <!-- THE REST: hidden until mobile + first + last are in; revealed once, never re-hidden -->
+            <div class="lp-more" id="more" hidden>
+              <div class="lp-field" id="f-email">
+                <label class="lp-lbl" for="in-email">Work email</label>
+                <input type="email" id="in-email" placeholder="you@yourfirm.com" autocomplete="email" aria-describedby="hint-email">
+                <p class="lp-hint" id="hint-email">Your calendar invite and Google Meet link go here.</p>
+                <div class="lp-err" id="err-email">Enter a valid email.</div>
+              </div>
+              <!-- Budget question: text and options render from LP.QUESTIONS.budget in assets/lp.js -->
+              <div class="lp-field" id="f-budget">
+                <label class="lp-lbl" for="in-budget" id="budgetQ">The founding rate is $3,500 every 4 weeks, with no setup fee. Does that work for you?</label>
+                <select id="in-budget" required aria-describedby="budgetSub">
+                  <option value="" disabled selected>Select one</option>
+                </select>
+                <p class="lp-hint" id="budgetSub"></p>
+                <div class="lp-err" id="err-budget">Pick one.</div>
+              </div>
+              <!-- Timing question: text and options render from LP.QUESTIONS.ready -->
+              <div class="lp-field" id="f-ready">
+                <label class="lp-lbl" for="in-ready" id="readyQ">Are you ready to start today?</label>
+                <select id="in-ready" required aria-describedby="readySub">
+                  <option value="" disabled selected>Select one</option>
+                </select>
+                <p class="lp-hint" id="readySub"></p>
+                <div class="lp-err" id="err-ready">Pick one.</div>
+              </div>
+              <div class="lp-field" id="f-company">
+                <label class="lp-lbl" for="in-company">Firm name</label>
+                <input type="text" id="in-company" placeholder="Your firm" autocomplete="organization">
+                <div class="lp-err" id="err-company">Enter your firm name.</div>
+              </div>
+            </div>
+
+            <!-- SMS consent. Text from LP.CONSENT_SMS_TEXT. COUNSEL REVIEW PENDING (Robby Birnbaum): this mirrors the
+                 transactional wording approved for LendFax and has not been approved for Advisor Booked yet. -->
+            <div class="lp-consent" id="f-consent">
+              <div class="lp-consent__row">
+                <input type="checkbox" id="in-consent">
+                <label for="in-consent" id="consentText"><span id="consentCopy">Text me my call details and booking reminders from Advisor Booked. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help.</span> <a href="privacy.html" data-link="privacy">Privacy Policy</a> &middot; <a href="terms.html" data-link="terms">Terms</a></label>
+              </div>
+              <div class="lp-err" id="err-consent">Check the box. It&rsquo;s how we text you your call details.</div>
+            </div>
+            <div class="lp-hp" aria-hidden="true"><input type="text" id="in-hpx" name="ab_hpx" tabindex="-1" autocomplete="off" data-1p-ignore="true" data-lpignore="true" data-bwignore="true" data-form-type="other"></div>
+            <!-- the ONLY submit button; its label switches to "Continue to pick your time" when both answers qualify -->
+            <button type="submit" class="pill pill--accent lp-btn-block" id="btnGo"><span id="btnGoLabel">Continue</span> <span class="arr" aria-hidden="true">&rarr;</span></button>
+            <p class="lp-priv">By continuing you agree to our <a href="privacy.html" data-link="privacy">Privacy Policy</a> and <a href="terms.html" data-link="terms">Terms</a>.</p>
+            <p class="lp-restart" id="restartWrap" hidden><button type="button" class="lp-linkbtn" id="startOver">Start over</button></p>
+
+          </form>
         </div>
+
+        <!-- locked calendar preview (unlocks after the form) -->
+        <div class="lp-cal-lock" id="calLock" aria-hidden="true">
+          <div class="lp-veil">
+            <div class="lp-mc-head"><b>Choose a day</b><span class="lp-mc-arrows"><span></span><span></span></span></div>
+            <div class="lp-mc-dow"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+            <div class="lp-mc-grid">
+              <div class="d">13</div><div class="d on">14</div><div class="d">15</div><div class="d on">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div>
+              <div class="d">20</div><div class="d">21</div><div class="d on">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div>
+            </div>
+          </div>
+          <div class="lp-tooltip"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><rect x="2.5" y="5.4" width="7" height="4.6" rx="1" stroke="#fff" stroke-width="1.2"/><path d="M4 5.4V4a2 2 0 0 1 4 0v1.4" stroke="#fff" stroke-width="1.2"/></svg> Fill out the form first to pick your time</div>
+        </div>
+
+        <!-- Not-a-fit panel (tier "disqualified"). Title and body come from LP.EXIT_COPY, picked by dq_reason; the button
+             books the same call (no ad pixels for this tier). -->
+        <div class="lp-exit" id="exit" hidden>
+          <h3 id="exitH" tabindex="-1"></h3>
+          <p id="exitP"></p>
+          <button type="button" class="pill pill--accent lp-btn-block" id="exitCta">That works. Pick a time</button>
+          <div class="lp-exit__links"><button type="button" class="lp-linkbtn" id="exitBack">&larr; Change my answer</button><button type="button" class="lp-linkbtn" id="startOver4">Start over</button></div>
+        </div>
+
+        <!-- inline Calendly (loads after the form is submitted; every tier lands here) -->
+        <div class="lp-sched" id="sched">
+          <div class="lp-sched__top">
+            <div class="lp-avatar" id="schedAvatar">A</div>
+            <div><h3 id="schedHi" tabindex="-1">Pick a time</h3></div>
+          </div>
+          <p class="lp-sched__meta">20 min &middot; Google Meet &middot; <span class="lp-ok">Pipeline Audit</span> &middot; <button type="button" class="lp-linkbtn" id="startOver2">Not you? Start over</button></p>
+          <div class="calendly-inline-widget lp-calendly" id="calendly" data-auto-load="false"></div>
+          <p class="lp-expect">A 20-minute Google Meet. We look at your ideal client, your list, your advisors&rsquo; time, and whether your firm has run outreach before. Then we tell you if this will work for your firm or not.</p>
+        </div>
+
+        <!-- booked state -->
+        <div class="lp-booked" id="booked">
+          <span class="lp-chk"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M6 13.5L11 18.5 20 8" stroke="#0F7A62" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <h3 id="bookedName" tabindex="-1">You&rsquo;re booked.</h3>
+          <p>Check your email for the invite and the Google Meet link.</p>
+          <button type="button" class="lp-linkbtn" id="startOver3">Not you? Start over</button>
+        </div>
+
+        <!-- status announcements for screen readers (outside the form so it survives the form being hidden) -->
+        <div class="sr-only" id="live" aria-live="polite" aria-atomic="true"></div>
+        <div class="lp-card__note">We only use your details to contact you about your call.</div>
       </div>
     </div>
+  </section>
+</div>
+
+<!-- 3. STATS: the same three numbers and the same note as the home page -->
+<section class="lp-trust" aria-label="About the founder">
+  <div class="container">
+    <div class="lp-trust__in" role="list">
+      <div class="lp-stat" role="listitem"><b>8 figures</b><span class="su" aria-hidden="true"></span><span>In ad spend the team has run for financial companies</span></div>
+      <div class="lp-stat" role="listitem"><b>198+</b><span class="su" aria-hidden="true"></span><span>Financial institutions the founder has worked with</span></div>
+      <div class="lp-stat" role="listitem"><b>30 days</b><span class="su" aria-hidden="true"></span><span>Within 30 days of start you will have meetings on the calendar</span></div>
+    </div>
+    
   </div>
 </section>
 
-<!-- 5. The steps -->
-<section class="section center" id="process" aria-labelledby="process-h">
+<!-- 4. HOW IT WORKS: three plain columns, "#n:" titles, one green payoff each. Optional images: LP.HOW_IMAGES. -->
+<section class="lp-sec lp-sec--alt" id="how" aria-labelledby="how-h">
   <div class="container">
-    <div class="rv">
-      <div class="spot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4v-5h4v-5h4V5h4"/></svg></div>
+    <div class="lp-sec-head">
+      <h2 class="display lp-h2" id="how-h">How it works</h2>
       <!-- NEW COPY -->
-      <h2 class="display h2" id="process-h">Three steps to up and running<br>within 30 days.</h2>
+      <p class="sub">Up and running within 30 days. Fifteen qualified, attended meetings within 90.</p>
     </div>
-    <div class="grid grid-3 mt-64 left">
-      <div class="tile3 rv scene-wrap" style="--i:0"><div class="scene scene--grid" aria-hidden="true"><div class="rows">
-<div class="row"><i></i><s></s><s></s></div><div class="row"><i></i><s></s><s></s></div><div class="row"><i></i><s></s><s></s></div><div class="row"><i></i><s></s><s></s></div><div class="row"><i></i><s></s><s></s></div></div></div><span class="step">Step 1</span><h3 class="h4">Build</h3><p>We build your list and/or clean up your CRM. We write the messages. We set up your LinkedIn and email so outreach looks and feels like you, not a robot.</p></div>
-      <div class="tile3 rv scene-wrap" style="--i:1"><div class="scene" aria-hidden="true"><div class="rows">
-<div class="row"><s></s><em>Approved</em></div><div class="row"><s></s><em>Approved</em></div><div class="row"><s></s><em>Approved</em></div><div class="row"><s></s><em>Sent</em></div></div></div><span class="step">Step 2</span><h3 class="h4">Launch</h3><p>We start with the names already in your CRM, because they answer fastest, and reach new people alongside them. A real person handles every reply, every day. The first meetings get booked.</p></div>
-      <div class="tile3 rv scene-wrap" style="--i:2"><div class="scene scene--cal" aria-hidden="true"><div class="cal"><div class="d"><b>Mon</b><span class="slot b"></span><span class="slot"></span><span class="slot"></span></div><div class="d"><b>Tue</b><span class="slot"></span><span class="slot b"></span><span class="slot"></span></div><div class="d"><b>Wed</b><span class="slot b"></span><span class="slot"></span><span class="slot b"></span></div><div class="d"><b>Thu</b><span class="slot"></span><span class="slot b"></span><span class="slot"></span></div><div class="d"><b>Fri</b><span class="slot b"></span><span class="slot"></span><span class="slot"></span></div></div></div><span class="step">Step 3</span><h3 class="h4">Grow</h3><p>Every Monday you get one report: messages sent, replies, meetings booked, meetings attended, and what each one cost. If the cost per meeting is off, we change the list, messaging, or volume before we ask you to spend more.</p></div>
+    <div class="lp-steps3">
+      <div class="lp-step">
+        <p class="lp-step__when">Step 1</p>
+        <h3>#1: We build your list and your messages</h3>
+        <figure class="lp-step__img" data-how="0"></figure>
+        <p>We build new outreach lists of HNW individuals and business owners who match your ideal client, and clean up your CRM. We write the messages and set up your LinkedIn and email so <b class="em">outreach looks and feels like you, not a robot.</b></p>
+      </div>
+      <div class="lp-step">
+        <p class="lp-step__when">Step 2</p>
+        <h3>#2: We launch and answer every reply</h3>
+        <figure class="lp-step__img" data-how="1"></figure>
+        <p>We start with the names already in your CRM, because they answer fastest, and reach new people alongside them. <b class="em">A real person handles every reply, every day.</b></p>
+      </div>
+      <div class="lp-step">
+        <p class="lp-step__when">Step 3</p>
+        <h3>#3: Your advisors take the meetings</h3>
+        <figure class="lp-step__img" data-how="2"></figure>
+        <p>Qualified prospects land on your advisors&rsquo; calendars with reminders and no-show follow-up. <b class="em">Every week you get one report.</b> If the cost per meeting is off, we change the list, messaging, or volume before we ask you to spend more.</p>
+      </div>
     </div>
-    <div class="btn-row mt-48 rv">
-      <a class="pill pill--lg" href="book.html" data-src="pilot-process">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a>
+    <div class="lp-cta-row lp-cta-row--steps"><a href="#book" class="pill pill--lg pill--accent">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+  </div>
+</section>
+
+<!-- 5. THE FOUNDING OFFER: what you get and the price, side by side -->
+<section class="lp-sec" id="offer" aria-labelledby="offer-h">
+  <div class="container">
+    <div class="lp-sec-head">
+      <p class="eyebrow">What you get</p>
+      <h2 class="display lp-h2" id="offer-h">The Founding Offer</h2>
+      <p class="sub">For independent RIAs with $50M to $250M AUM and 2 to 10 advisors.</p>
+    </div>
+    <div class="lp-prods lp-prods--offer">
+
+      <div class="lp-prod lp-prod--feat">
+        <span class="lp-ribbon">Included</span>
+        <h3>The Advisor Pipeline</h3>
+        <p class="lp-ratio">Built and run for you, start to finish</p>
+        <ul class="lp-plist">
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Strategy and positioning for your HNW or business-owner niche</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>New outreach lists of HNW individuals and business owners who match your ideal client</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>List cleanup and enrichment for at least 1,000 contacts in your CRM</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>New outbound and reactivation campaigns across email and LinkedIn</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Reply handling and qualification, so your advisors only see real opportunities</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Calendar booking with reminders, reschedules, and no-show follow-up</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>A weekly pipeline report and working session with me to tune messaging and lists</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Full ownership of all domains, copy, templates, and data</li>
+        </ul>
+        <a href="#book" class="pill pill--accent lp-btn-block">Book my call</a>
+      </div>
+
+      <div class="lp-prod">
+        <h3>Price and term</h3>
+        <p class="lp-ratio">Founding firms only</p>
+        <div class="lp-price"><span class="big">$3,500</span><span class="per">every 4 weeks</span></div>
+        <p class="lp-plede">No setup fee. No per-meeting fees. Billed to a card on file.</p>
+        <ul class="lp-plist">
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Initial term is 3 billing cycles, about 90 days</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>After that, simple 4-week renewals</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Billing runs every 4 weeks, so a year is 13 cycles rather than 12 monthly invoices</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Your founding rate stays locked for as long as you stay</li>
+        </ul>
+        <a href="#book" class="pill pill--outline lp-btn-block">Book my call</a>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- 7. The founding offer -->
-<section class="section center" id="offer" aria-labelledby="offer-h">
+<!-- 6. THE MEETING GUARANTEE: the commitment in Nick's words, the conditions beside it, the founding-rate note -->
+<section class="lp-sec lp-sec--alt" id="guarantee" aria-labelledby="guar-h">
   <div class="container">
-    <div class="rv">
-      <div class="spot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8 12 3 3 8l9 5 9-5zM3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg></div>
-      <h2 class="display h2" id="offer-h">The Founding Offer</h2>
-      <p class="sub narrow">For independent RIAs with $50M to $250M AUM and 2 to 10 advisors.</p>
+    <div class="lp-sec-head">
+      <p class="eyebrow">The meeting guarantee</p>
+      <h2 class="display lp-h2" id="guar-h">15 qualified, attended meetings in 90 days, or I keep working at my cost.</h2>
+      <p class="sub">This is a service guarantee, not a marketing slogan.</p>
     </div>
-    <div class="pair offer-pair">
-      <div class="pane pane--grey rv">
-        <span class="kicker">You get</span>
-        <ul class="row-list">
-          <li><span class="mk mk--good" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>Strategy and positioning for your HNW or business-owner niche</span></li>
-          <li><span class="mk mk--good" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>New outreach lists of HNW individuals and business owners who match your ideal client</span></li>
-          <li><span class="mk mk--good" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>List cleanup and enrichment for at least 1,000 contacts in your CRM</span></li>
-          <li><span class="mk mk--good" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>New outbound and reactivation campaigns across email and LinkedIn</span></li>
-          <li><span class="mk mk--good" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>Reply handling and qualification, so your advisors only see real opportunities</span></li>
-          <li><span class="mk mk--good" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>Calendar booking with reminders, reschedules, and no-show follow-up</span></li>
-          <li><span class="mk mk--good" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>A weekly pipeline report and working session with me to tune messaging and lists</span></li>
-          <li><span class="mk mk--good" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>Full ownership of all domains, copy, templates, and data</span></li>
-        </ul>
-      </div>
-      <div class="pane pane--green rv" style="--i:1">
-        <span class="kicker">Price and term</span>
-        <h3 class="h3">$3,500 every 4 weeks. No setup fee. No per-meeting fees.</h3>
-        <ul class="row-list">
-          <li><span class="mk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>$3,500 every 4 weeks, billed to a card on file</span></li>
-          <li><span class="mk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>Initial term is 3 billing cycles, about 90 days</span></li>
-          <li><span class="mk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>After that, simple 4-week renewals</span></li>
-        </ul>
-        <p class="pane__note">Billing runs every 4 weeks, so a year is 13 cycles rather than 12 monthly invoices.</p>
-        <a class="pill" href="book.html" data-src="pilot-offer">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 7b. The meeting guarantee -->
-<section class="section center" id="guarantee" aria-labelledby="guarantee-h">
-  <div class="container">
-    <div class="rv">
-      <div class="spot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
-      <h2 class="display h2" id="guarantee-h">The Meeting Guarantee</h2>
-      <p class="sub narrow">This is a service guarantee, not a marketing slogan.</p>
-    </div>
-    <div class="guarantee rv">
-      <blockquote class="guarantee__quote">
+    <div class="lp-guar">
+      <blockquote class="lp-guar__quote">
         <p>&ldquo;In the first 90 days, I am committing to a minimum of 15 qualified, attended prospect meetings from our system.</p>
         <p>Qualified means: fits your stated AUM and niche, is a decision maker or co-decision maker, and knows they are meeting about moving or adding assets.</p>
         <p>If we are short of 15 by day 90, I keep working at my cost until your team has taken at least 15 qualified, attended meetings from this pipeline.&rdquo;</p>
         <footer>Nick De Jesus, founder</footer>
       </blockquote>
-      <div class="guarantee__terms">
-        <h3 class="h3">Conditions, so it stays fair on both sides</h3>
+      <div class="lp-guar__terms">
+        <h3>Conditions, so it stays fair on both sides</h3>
         <p>You agree to:</p>
-        <ul class="row-list">
-          <li><span class="mk mk--good" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>Review and sign off on the ideal client profile and messaging in week 1</span></li>
-          <li><span class="mk mk--good" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>Have one advisor or owner show up to the weekly working session</span></li>
-          <li><span class="mk mk--good" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>Follow the follow-up process we set for booked meetings</span></li>
+        <ul class="lp-plist">
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Review and sign off on the ideal client profile and messaging in week 1</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Have one advisor or owner show up to the weekly working session</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Follow the follow-up process we set for booked meetings</li>
         </ul>
-        <p class="guarantee__close">If you do your part and we still have not hit 15 attended, I stay on the field for free until we do.</p>
+        <p class="lp-guar__close">If you do your part and we still have not hit 15 attended, I stay on the field for free until we do.</p>
       </div>
     </div>
-    <div class="founding rv">
-      <span class="kicker">Founding firms pricing</span>
-      <p>This $3,500 every-4-weeks structure is for the first few firms only. Later, the standard rate will be $7,000 every 4 weeks for the same system, once the case studies are public. Early clients keep their founding rate as long as they stay.</p>
+    <div class="lp-band">
+      <div class="lp-band__txt">
+        <span class="lp-band__tag">Founding firms pricing</span>
+        <h3>$3,500 every 4 weeks is for the first few firms only</h3>
+        <p>Later, the standard rate will be $7,000 every 4 weeks for the same system, once the case studies are public. Early clients keep their founding rate as long as they stay.</p>
+      </div>
+      <a href="#book" class="pill pill--accent">Book my call <span class="arr" aria-hidden="true">&rarr;</span></a>
     </div>
   </div>
 </section>
 
-<!-- 8. Questions (black) -->
+<!-- 7. FAQ (black) -->
 <section class="faq-sec on-dark" id="faq" aria-labelledby="faq-h">
   <div class="container center">
-    <div class="rv">
-      <div class="spot"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .8-1 1.5v.2M12 17h.01"/></svg></div>
-      <!-- NEW COPY -->
-      <h2 class="display h2" id="faq-h">FAQ</h2>
-    </div>
-    <div class="faq rv left">
-      <!-- NEW COPY -->
+    <h2 class="display lp-h2" id="faq-h">FAQ</h2>
+    <div class="faq left">
       <details open>
         <summary>What do you actually do?<span class="chev" aria-hidden="true"></span></summary>
         <div class="a"><div><p>The same work, every week. We build a list of the right people. We send them marketing on your behalf that you have approved. We follow up until a real person answers. Then a real person on our team checks the reply, qualifies the prospect, and books the meeting on your calendar. We nurture them so they show up. We build automations and a system that lets you track and convert meetings at the highest rate. We measure one thing: what each meeting cost.</p></div></div>
@@ -302,13 +382,22 @@
         <div class="a"><div><p>One demo call where we determine if we are a good fit. We work out who your ideal client is and how we will get them booked with you. We build you a list and/or you give us access to your CRM data so we can enrich your list. We transform your marketing and social pages with our proven systems and copywriting. Meetings get booked with your qualified dream clients. And your advisors show up with the biggest smile to the meetings we book.</p></div></div>
       </details>
     </div>
-    <div class="stack mt-48 rv"><a class="pill pill--lg pill--accent" href="book.html" data-src="pilot-faq">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+  </div>
+</section>
+
+<!-- 7. FINAL CTA (black) -->
+<section class="lp-final" aria-labelledby="final-h">
+  <div class="container">
+    <!-- NEW COPY -->
+    <h2 class="display lp-h2" id="final-h">Ready for more first meetings?</h2>
+    <p>15 qualified, attended meetings in your first 90 days, or I keep working at my cost until you have them. It starts with a 20-minute call.</p>
+    <a href="#book" class="pill pill--lg pill--accent">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a>
   </div>
 </section>
 </main>
-<div class="sticky-cta" data-sticky hidden><a class="pill pill--accent" href="book.html" data-src="pilot-sticky">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a></div>
-<div class="legal-line"><a href="privacy.html">Privacy</a><span aria-hidden="true">&middot;</span><a href="terms.html">Terms</a></div>
+<div class="legal-line"><a href="privacy.html" target="_blank" rel="noopener">Privacy</a><span aria-hidden="true">&middot;</span><a href="terms.html" target="_blank" rel="noopener">Terms</a></div>
 <script src="assets/config.js"></script>
-<script src="assets/site.js" defer></script>
+<script src="assets/lp.js" defer></script>
+</div>
 </body>
 </html>
