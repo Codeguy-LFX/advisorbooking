@@ -1,5 +1,5 @@
 /* Advisor Booked v7: nav, config, UTM capture and attribution, tracking (off until IDs are set), Calendly embed and booking conversion,
-   smooth anchors, and the motion module (reveal on scroll, header state, active anchor, count-up, illustrative phone threads, tabs, FAQ, ticker). No dependencies. */
+   smooth anchors, and the motion module (reveal on scroll, header state, active anchor, count-up, illustrative conversation threads in LinkedIn, email and text skins, the pinned before/after, FAQ). No dependencies. */
 (function () {
   'use strict';
 
@@ -193,7 +193,7 @@
       var a = doc.createElement('a');
       a.href = 'mailto:' + email; a.textContent = email;
       n.appendChild(a);
-      n.appendChild(doc.createTextNode(' and we will send you times for the 20-minute audit.'));
+      n.appendChild(doc.createTextNode(' and we will send you times for the 20-minute call.'));
       mount.appendChild(n);
       return;
     }
@@ -315,56 +315,122 @@
     nums.forEach(function (el) { io.observe(el); });
   }
 
-  /* 9. Phone thread player (illustrative conversations; names are fictional) --- */
-  var THREADS = {
-    outbound: [
-      ['out', 'Hi Dana, Marcus at _____ Advisors. I work with owners in the two years after a sale, when succession and tax questions show up. Open to a 20-minute call?'],
-      ['typing'],
-      ['in', 'Not familiar with your firm. But that is on my mind. Thursday works.'],
-      ['out', 'Booked: Thursday 2:00 PM. Invite is in your inbox.'],
-      ['sys', 'Fits your rules: business owner, sold a company recently']
-    ],
-    reactivation: [
-      ['out', 'Hi Dana, Marcus at _____. We spoke in 2023 about the buyout. Where did that land?'],
-      ['typing'],
-      ['in', 'Closed in March. Happy to catch up.'],
-      ['out', 'Great. Here is my calendar. 20 minutes, your pick.'],
-      ['sys', 'From your own CRM: a contact from 2023']
-    ],
-    replies: [
-      ['in', 'Not now. Maybe Q1.'],
-      ['out', 'Understood. I will check back on January 12 and nothing before then.'],
-      ['sys', 'Follow-up set for Jan 12. No more messages until then.'],
-      ['in', 'Appreciate that.']
-    ],
-    booking: [
-      ['out', 'Confirmed for Thursday 2:00 PM. You will get a reminder before the call.'],
-      ['sys', 'Note sent to your advisor: who they are and why they replied'],
-      ['typing'],
-      ['in', 'Thanks. See you Thursday.'],
-      ['sys', 'Meeting happened. It counts toward your monthly goal.']
-    ]
+  /* 9. Conversation player: illustrative threads, rendered in LinkedIn, email, and text skins ---------- */
+  var SCENARIOS = {
+    'li-new': {
+      skin: 'li', out: 'Marcus', inn: 'Dana A.',
+      caption: 'A short note about something true in their world. No pitch, no deck. The ask is 20 minutes.',
+      thread: [
+        ['sys', 'Connected. Dana accepted the invite'],
+        ['out', 'Hi Dana, congrats on the Apex sale. Most owners tell me the tax and succession questions show up in the two years after. Open to a 20-minute call?'],
+        ['typing'],
+        ['in', 'Not familiar with your firm, but that is exactly where my head is. Thursday works.'],
+        ['out', 'Booked: Thursday 2:00 PM. The invite is in your inbox.'],
+        ['sys', 'Fits your rules: business owner, recent sale']
+      ]
+    },
+    'mail-crm': {
+      skin: 'mail', subject: 'Where did the buyout land?', out: 'Marcus to Dana A.', inn: 'Dana A. to Marcus',
+      caption: 'We start with your own list, because those names answer fastest. One line, no attachment, a reply the same day.',
+      thread: [
+        ['out', 'Hi Dana, we spoke in 2023 about the buyout. Where did that land?'],
+        ['typing'],
+        ['in', 'Closed in March. Happy to catch up.'],
+        ['out', 'Great. Here is my calendar. 20 minutes, your pick.'],
+        ['sys', 'From your CRM: a contact from 2023']
+      ]
+    },
+    'li-reply': {
+      skin: 'li', out: 'Marcus', inn: 'Dana A.',
+      caption: 'Not-nows and objections get a human answer, in wording you approved. Nothing goes out on autopilot, and nobody gets nagged.',
+      thread: [
+        ['in', 'Not now. Maybe Q1.'],
+        ['out', 'Understood. I will check back on January 12 and nothing before then.'],
+        ['sys', 'Follow-up set for Jan 12. No messages until then'],
+        ['in', 'Appreciate that.'],
+        ['sys', 'January 12'],
+        ['out', 'Hi Dana, it is January 12. Still a good time to talk?'],
+        ['typing'],
+        ['in', 'Yes. Let’s do it.']
+      ]
+    },
+    'sms-book': {
+      skin: 'sms', out: 'Marcus', inn: 'Dana A.',
+      caption: 'Confirmation and reminders by text, so the meeting we booked is a meeting that actually happens.',
+      thread: [
+        ['out', 'Hi Dana, this is Marcus’s office. You are confirmed for Thursday at 2:00 PM ET. The Google Meet link is in your email. Reply C to confirm.'],
+        ['in', 'C'],
+        ['sys', 'Confirmed. Reminder set'],
+        ['out', 'Reminder: your call with Marcus is today at 2:00 PM ET. See you then.'],
+        ['typing'],
+        ['in', 'Thanks, see you at 2.'],
+        ['sys', 'Meeting happened. It counts toward your monthly goal']
+      ]
+    },
+    'mail-nurture': {
+      skin: 'mail', subject: 'Three decisions owners face the year after a sale', out: 'Marcus to your list', inn: 'Dana A. to Marcus',
+      caption: 'Weekly or bi-weekly emails that bring value and show the benefits of working with you, so the list warms up before anyone asks for a meeting.',
+      thread: [
+        ['out', 'Three decisions owners face in the year after a sale: when to take the cash, what to do about the key people who stayed, and the tax move most owners miss. Two minutes to read.'],
+        ['sys', 'Opened. Read for 2 minutes'],
+        ['typing'],
+        ['in', 'This was useful. Can we talk about the second one?'],
+        ['out', 'Of course. Here is my calendar.'],
+        ['sys', 'Booked from a nurture email']
+      ]
+    },
+    'mail-report': {
+      skin: 'mail', subject: 'Monday report: week 6', out: 'Advisor Booked to you', inn: 'You to Advisor Booked',
+      caption: 'Every Monday, one page: messages sent, replies, meetings booked, meetings attended, and what each one cost.',
+      thread: [
+        ['report', [['Messages sent', 92], ['Replies', 34], ['Meetings booked', 18], ['Meetings attended', 15], ['Cost per meeting', 24]]],
+        ['sys', 'Sent every Monday at 8:00 AM'],
+        ['typing'],
+        ['in', 'Clear. Thanks.']
+      ]
+    }
   };
 
-  function initPhones() {
-    var phones = $all('[data-thread]');
-    if (!phones.length) return;
-    phones.forEach(function (ph) {
-      var thread = $('.thread', ph);
+  function initThreads() {
+    var hosts = $all('[data-thread]');
+    if (!hosts.length) return;
+    hosts.forEach(function (host) {
+      var thread = $('.thread', host);
       if (!thread) return;
-      var key = ph.getAttribute('data-thread') || 'outbound';
       var timer = null, token = 0, started = false;
       function clear() { if (timer) clearTimeout(timer); timer = null; thread.innerHTML = ''; }
       /* Keep the newest message in view, like a real chat, when the thread is taller than the screen. */
       function pin() { if (thread.scrollHeight > thread.clientHeight) { if (noMotion || !thread.scrollTo) thread.scrollTop = thread.scrollHeight; else thread.scrollTo({ top: thread.scrollHeight, behavior: 'smooth' }); } }
+      function make(m, sc) {
+        var b = doc.createElement('div');
+        if (m[0] === 'report') {
+          b.className = 'bub bub--out bub--report';
+          var t = doc.createElement('b'); t.textContent = sc.subject || 'Monday report'; b.appendChild(t);
+          var rep = doc.createElement('div'); rep.className = 'rep';
+          m[1].forEach(function (r) {
+            var row = doc.createElement('div'); var l = doc.createElement('span'); l.textContent = r[0];
+            var bar = doc.createElement('i'); bar.style.setProperty('--w', r[1] + '%');
+            row.appendChild(l); row.appendChild(bar); rep.appendChild(row);
+          });
+          b.appendChild(rep);
+          if (sc.out) b.setAttribute('data-from', sc.out);
+          return b;
+        }
+        b.className = 'bub bub--' + m[0];
+        b.textContent = m[1];
+        if (m[0] === 'out' && sc.out) b.setAttribute('data-from', sc.out);
+        if (m[0] === 'in' && sc.inn) b.setAttribute('data-from', sc.inn);
+        return b;
+      }
       function play(k) {
         token++;
         var my = token;
         clear();
-        var script = THREADS[k] || THREADS.outbound;
+        var sc = SCENARIOS[k] || SCENARIOS['li-new'];
+        var script = sc.thread;
         var typing = doc.createElement('div'); typing.className = 'typing'; typing.innerHTML = '<i></i><i></i><i></i>';
         if (noMotion) {
-          script.forEach(function (m) { if (m[0] === 'typing') return; var b = doc.createElement('div'); b.className = 'bub bub--' + m[0] + ' show'; b.textContent = m[1]; thread.appendChild(b); });
+          script.forEach(function (m) { if (m[0] === 'typing') return; var b = make(m, sc); b.classList.add('show'); thread.appendChild(b); });
           pin();
           return;
         }
@@ -374,36 +440,111 @@
           if (i >= script.length) { timer = setTimeout(function () { if (my === token) play(k); }, 5200); return; }
           var m = script[i++];
           if (m[0] === 'typing') { thread.appendChild(typing); typing.classList.add('show'); pin(); timer = setTimeout(function () { typing.classList.remove('show'); if (typing.parentNode) typing.parentNode.removeChild(typing); next(); }, 1100); return; }
-          var b = doc.createElement('div'); b.className = 'bub bub--' + m[0]; b.textContent = m[1];
+          var b = make(m, sc);
           thread.appendChild(b);
           requestAnimationFrame(function () { requestAnimationFrame(function () { b.classList.add('show'); pin(); }); });
-          timer = setTimeout(next, m[0] === 'sys' ? 1300 : 1700);
+          timer = setTimeout(next, m[0] === 'sys' ? 1300 : (m[0] === 'report' ? 2400 : 1700));
         }
         timer = setTimeout(next, 500);
       }
-      ph._play = play;
-      function start() { if (started) return; started = true; play(key); }
+      host._play = play;
+      function start() { if (started) return; started = true; play(host.getAttribute('data-thread') || 'li-new'); }
       if (!('IntersectionObserver' in window)) start();
       else {
-        var io = new IntersectionObserver(function (entries) { entries.forEach(function (en) { if (en.isIntersecting) { start(); io.unobserve(ph); } }); }, { threshold: 0.3 });
-        io.observe(ph);
+        var io = new IntersectionObserver(function (entries) { entries.forEach(function (en) { if (en.isIntersecting) { start(); io.unobserve(host); } }); }, { threshold: 0.3 });
+        io.observe(host);
       }
     });
   }
 
-  function initHowTabs() {
-    var list = $('.howlist');
-    if (!list) return;
-    var phone = $('.stage [data-thread]');
-    var btns = $all('button', list);
-    btns.forEach(function (b) {
-      b.addEventListener('click', function () {
-        btns.forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
-        b.setAttribute('aria-pressed', 'true');
-        var k = b.getAttribute('data-key');
-        if (phone && phone._play) { phone.setAttribute('data-thread', k); phone._play(k); }
+  /* "See it in action": the menu picks a scenario; the device swaps skin, caption, and thread. Cycles on its own until the visitor picks one. */
+  function initAction() {
+    var wrap = $('[data-action]');
+    if (!wrap) return;
+    var tabs = $all('[role="tab"]', wrap);
+    var device = $('[data-device]', wrap);
+    var caption = $('[data-caption]', wrap);
+    var subject = $('[data-subject]', wrap);
+    if (!tabs.length || !device) return;
+    var keys = tabs.map(function (t) { return t.getAttribute('data-key'); });
+    var current = keys[0], auto = null, touched = false, visible = false, hover = false, switching = null;
+
+    function apply(k, sc) {
+      device.setAttribute('data-skin', sc.skin);
+      device.setAttribute('data-thread', k);
+      if (subject) subject.textContent = sc.subject || '';
+      if (caption) { caption.textContent = sc.caption || ''; requestAnimationFrame(function () { caption.classList.add('show'); }); }
+      if (device._play) device._play(k);
+      device.classList.remove('is-switching');
+    }
+    function show(k, fromUser) {
+      var sc = SCENARIOS[k];
+      if (!sc) return;
+      current = k;
+      tabs.forEach(function (t) { var on = t.getAttribute('data-key') === k; t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1; });
+      if (fromUser) { touched = true; stopAuto(); }
+      if (caption) caption.classList.remove('show');
+      if (switching) clearTimeout(switching);
+      if (noMotion) { apply(k, sc); return; }
+      device.classList.add('is-switching');
+      switching = setTimeout(function () { apply(k, sc); }, 240);
+    }
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () { show(t.getAttribute('data-key'), true); });
+      t.addEventListener('keydown', function (e) {
+        var i = tabs.indexOf(t), n = null;
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') n = tabs[(i + 1) % tabs.length];
+        if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') n = tabs[(i - 1 + tabs.length) % tabs.length];
+        if (n) { e.preventDefault(); n.focus(); show(n.getAttribute('data-key'), true); }
       });
     });
+    function stopAuto() { if (auto) clearInterval(auto); auto = null; }
+    function startAuto() {
+      if (noMotion || touched || auto) return;
+      auto = setInterval(function () {
+        if (!visible || hover || doc.hidden) return;
+        show(keys[(keys.indexOf(current) + 1) % keys.length], false);
+      }, 14000);
+    }
+    wrap.addEventListener('mouseenter', function () { hover = true; });
+    wrap.addEventListener('mouseleave', function () { hover = false; });
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }, { threshold: 0.25 }).observe(wrap);
+    else visible = true;
+    var first = SCENARIOS[current];
+    if (first) {
+      if (subject) subject.textContent = first.subject || '';
+      if (caption) { caption.textContent = first.caption || ''; caption.classList.add('show'); }
+    }
+    startAuto();
+  }
+
+  /* Pinned before/after: while the track is pinned, scroll progress (--p) carries the green pane up and over the grey one into place. */
+  function initPin() {
+    var pin = $('[data-pin]');
+    if (!pin) return;
+    var stick = $('.pin__stick', pin);
+    var mq = window.matchMedia ? window.matchMedia('(min-width: 861px)') : { matches: true };
+    var ticking = false;
+    function measure() {
+      if (!stick) return;
+      pin.style.setProperty('--ph', stick.offsetHeight + 'px');
+      pin.classList.toggle('pin--static', stick.offsetHeight + 96 > window.innerHeight);
+    }
+    function update() {
+      ticking = false;
+      if (noMotion || !mq.matches || !stick || pin.classList.contains('pin--static')) { pin.style.setProperty('--p', '1'); return; }
+      var total = pin.offsetHeight - stick.offsetHeight;
+      if (total <= 0) { pin.style.setProperty('--p', '1'); return; }
+      var travelled = stick.getBoundingClientRect().top - pin.getBoundingClientRect().top;
+      var p = Math.min(1, Math.max(0, travelled / total));
+      pin.style.setProperty('--p', p.toFixed(4));
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', function () { measure(); update(); });
+    if (window.fonts && doc.fonts && doc.fonts.ready) doc.fonts.ready.then(function () { measure(); update(); });
+    measure(); update();
+    setTimeout(function () { measure(); update(); }, 600);
   }
 
   /* 10. FAQ: animate open/close height on native details ---------------------- */
@@ -464,7 +605,7 @@
     renderCalendly();
     initCalendlyListener();
     initAnchors();
-    initTicker(); initReveal(); initHeader(); initActiveAnchor(); initCountUp(); initPhones(); initHowTabs(); initFaq(); initSticky();
+    initTicker(); initReveal(); initHeader(); initActiveAnchor(); initCountUp(); initThreads(); initAction(); initPin(); initFaq(); initSticky();
   }
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', init); else init();
 })();
