@@ -1,0 +1,24 @@
+/* Pilot landing page additions. Loaded only by pilot.html; the home page does not use this file. */
+.hero .h1{font-size:clamp(34px,5.2vw,62px)}
+.rate{display:inline-block;margin-top:22px;background:var(--accent-tint);color:var(--accent-hover);border:1px solid var(--accent-tint-deep);border-radius:999px;padding:10px 18px;font-size:15px;font-weight:600;line-height:1.3}
+.rate strong{color:var(--accent);font-weight:700}
+.hero .lead{margin-top:22px}
+.mk--good,.pane--grey .mk--good{background:var(--accent-tint);color:var(--accent)}
+.mk--good svg,.pane--grey .mk--good svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.offer-pair{text-align:left}
+.pane--green .h3{font-size:22px}
+.pane--green .pane__note{color:var(--accent-pale);font-size:14px;line-height:1.5;margin:0}
+.guarantee{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;margin-top:48px;align-items:stretch;text-align:left}
+@media (max-width:860px){.guarantee{grid-template-columns:1fr}}
+.guarantee__quote{margin:0;background:var(--ink);color:#fff;border-radius:var(--radius-lg);padding:40px 36px;display:flex;flex-direction:column;gap:16px;font-size:18px;line-height:1.55}
+.guarantee__quote p{margin:0}
+.guarantee__quote footer{margin-top:auto;padding-top:16px;font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-bright)}
+.guarantee__terms{background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);padding:40px 36px;display:flex;flex-direction:column;gap:16px}
+.guarantee__terms .h3{margin:0}
+.guarantee__terms>p{color:var(--muted);margin:0}
+.guarantee__terms .row-list li{border-top-color:var(--line)}
+.guarantee__close{font-weight:600;color:var(--ink)!important;border-top:1px solid var(--line);padding-top:16px}
+.founding{max-width:760px;margin:40px auto 0;background:var(--accent-tint);border:1px solid var(--accent-tint-deep);border-radius:var(--radius-lg);padding:28px 32px;text-align:center}
+.founding .kicker{display:block;font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--accent);margin-bottom:10px}
+.founding p{margin:0;color:var(--ink);font-size:16px;line-height:1.55}
+@media (max-width:480px){.guarantee__quote,.guarantee__terms{padding:28px 20px}.founding{padding:24px 18px}}
