@@ -18,10 +18,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://app.iclosed.io">
 <link rel="preconnect" href="https://assets.calendly.com">
 <link rel="stylesheet" href="assets/styles.css">
 <link rel="stylesheet" href="assets/lp.css">
-<script>/* Artifact previews block the Calendly script; this keeps lp.js from redirecting there. Inert on the live domain. */
+<script>/* Artifact previews block the scheduler script; this keeps lp.js from redirecting there. Inert on the live domain. */
 if (/claudeusercontent\.com$|\.claude\.ai$/.test(location.hostname)) window.__AB_PREVIEW = 1;</script>
 </head>
 <body>
@@ -182,13 +183,13 @@ if (/claudeusercontent\.com$|\.claude\.ai$/.test(location.hostname)) window.__AB
           <div class="lp-exit__links"><button type="button" class="lp-linkbtn" id="exitBack">&larr; Change my answer</button><button type="button" class="lp-linkbtn" id="startOver4">Start over</button></div>
         </div>
 
-        <!-- inline Calendly (loads after the form is submitted; every tier lands here) -->
+        <!-- inline scheduler (iClosed or Calendly per config.js; loads after the form is submitted; every tier lands here) -->
         <div class="lp-sched" id="sched">
           <div class="lp-sched__top">
             <div class="lp-avatar" id="schedAvatar">A</div>
             <div><h3 id="schedHi" tabindex="-1">Pick a time</h3></div>
           </div>
-          <p class="lp-sched__meta">20 min &middot; Google Meet &middot; <span class="lp-ok">Pipeline Audit</span> &middot; <button type="button" class="lp-linkbtn" id="startOver2">Not you? Start over</button></p>
+          <p class="lp-sched__meta"><span data-config="eventLength">20 min</span> &middot; Google Meet &middot; <span class="lp-ok" data-config="eventName">Pipeline Audit</span> &middot; <button type="button" class="lp-linkbtn" id="startOver2">Not you? Start over</button></p>
           <div class="calendly-inline-widget lp-calendly" id="calendly" data-auto-load="false"></div>
           <p class="lp-expect">A 20-minute Google Meet. We look at your ideal client, your list, your advisors&rsquo; time and how your compliance officer handles outreach. Then we tell you if this will work for your firm or not.</p>
         </div>

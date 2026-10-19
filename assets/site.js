@@ -179,13 +179,26 @@
     if (source) u.searchParams.set('utm_content', source);
     return u.toString();
   }
+  /* The booking page embeds whichever provider config.js names. iClosed is a plain iframe of the event link with
+     campaign tags passed through; the event's confirmation page (the site's /booked page) reports the booking back. */
+  function schedulerUrl() {
+    if (CFG.scheduler !== 'iclosed') return calendlyUrl();
+    var base = String(CFG.iclosedUrl || '').trim();
+    if (!base) return '';
+    var u;
+    try { u = new URL(base); } catch (e) { return ''; }
+    var extra = utmOnly();
+    Object.keys(extra).forEach(function (k) { u.searchParams.set(k, extra[k]); });
+    if (source) u.searchParams.set('utm_content', source);
+    return u.toString();
+  }
   function renderCalendly() {
     var panel = $('#calendar');
     if (!panel) return;
     var mount = $('.calendly-mount', panel);
     if (!mount) return;
     mount.innerHTML = '';
-    var url = calendlyUrl();
+    var url = schedulerUrl();
     var email = CFG.email || 'info@advisorbooking.com';
     if (!url) {
       var n = doc.createElement('p');
@@ -198,7 +211,7 @@
       mount.appendChild(n);
       return;
     }
-    if (CFG.calendlyMode === 'link') {
+    if (CFG.scheduler !== 'iclosed' && CFG.calendlyMode === 'link') {
       var btn = doc.createElement('a');
       btn.className = 'pill pill--hero'; btn.href = url; btn.target = '_blank'; btn.rel = 'noopener';
       btn.appendChild(doc.createTextNode('Open the calendar to pick a time'));
@@ -212,7 +225,7 @@
     }
     var frame = doc.createElement('iframe');
     frame.className = 'calendly-frame';
-    frame.title = 'Pick a time for your 20-minute call';
+    frame.title = 'Pick a time for your call';
     frame.setAttribute('loading', 'lazy');
     frame.src = url;
     mount.appendChild(frame);
@@ -221,13 +234,15 @@
   /* 6. Booking confirmed (Calendly postMessage) --------------------------- */
   function initCalendlyListener() {
     window.addEventListener('message', function (e) {
-      if (!e.data || e.data.event !== 'calendly.event_scheduled') return;
-      if (e.origin && !/(^|\.)calendly\.com$/.test(String(e.origin).replace(/^https?:\/\//, ''))) return;
+      var d = e.data || {};
+      var fromCalendly = d.event === 'calendly.event_scheduled' && (!e.origin || /(^|\.)calendly\.com$/.test(String(e.origin).replace(/^https?:\/\//, '')));
+      var fromBookedPage = d.event === 'iclosed.booked' && e.origin === location.origin;
+      if (!fromCalendly && !fromBookedPage) return;
       if (typeof window.fbq === 'function') { try { window.fbq('track', 'Schedule'); } catch (err) { /* ignore */ } }
       if (typeof window.lintrk === 'function' && CFG.linkedinConversionId) {
         try { window.lintrk('track', { conversion_id: CFG.linkedinConversionId }); } catch (err) { /* ignore */ }
       }
-      postWebhook({ event: 'booked', source: source, utm: utm, page: location.pathname, ts: new Date().toISOString() });
+      postWebhook({ event: 'booked', scheduler: fromCalendly ? 'calendly' : 'iclosed', booking: (fromBookedPage && d.payload && d.payload.forwarded) || null, source: source, utm: utm, page: location.pathname, ts: new Date().toISOString() });
     });
   }
 

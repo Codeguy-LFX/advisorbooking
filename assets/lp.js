@@ -23,6 +23,11 @@
     // Calendly: the 20-minute Pipeline Audit event from config.js.
     CALENDLY_URL: AB.calendlyUrl || '',
     CALENDLY_EMBED_PARAMS: 'hide_gdpr_banner=1&hide_event_type_details=1&primary_color=0f7a62&text_color=0e0e0e',
+    // Scheduling provider and the iClosed scheduler link, both from config.js. iClosed is embedded as a plain iframe of the
+    // event link with the visitor's details prefilled; the event's confirmation page must be the site's /booked page
+    // (forwarding on), which reports the booking back to this page.
+    SCHEDULER: AB.scheduler || 'calendly',
+    ICLOSED_URL: AB.iclosedUrl || '',
     // The event's one optional question ("Please share anything...") is prefilled with firm + answers so Nick
     // sees them on the booking. The visitor can edit or clear it.
     PREFILL_NOTES: true,
@@ -474,7 +479,7 @@
       sched.classList.add('show');
       announce('Calendar unlocked. Pick a time that works.');
       focusEl($('schedHi'));
-      openCalendly();
+      openScheduler();
     };
     if (immediate || REDUCED) { finish(); return; }
     glass.style.transition = 'opacity .3s, transform .3s'; glass.style.opacity = '0'; glass.style.transform = 'scale(.98)';
@@ -545,6 +550,35 @@
     });
     return u;
   }
+  function iclosedUrl() {
+    var base = String(LP.ICLOSED_URL || '').trim();
+    if (!base) return '';
+    var u = base + (base.indexOf('?') > -1 ? '&' : '?');
+    u += 'iclosedName=' + encodeURIComponent(answers.name || '') + '&iclosedEmail=' + encodeURIComponent(answers.email || '');
+    u += '&iclosedPhone=' + encodeURIComponent(phoneE164(answers.phone) || answers.phone || '');
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(function (k) {
+      if (utm[k]) u += '&' + k + '=' + encodeURIComponent(utm[k]);
+    });
+    return u;
+  }
+  function openScheduler() {
+    if (LP.SCHEDULER === 'iclosed') { openIclosed(); return; }
+    openCalendly();
+  }
+  function openIclosed() {
+    var host = $('calendly');
+    if (!host) return;
+    var url = iclosedUrl();
+    if (!url) { host.innerHTML = '<p class="notice">The calendar is not connected yet. Email ' + (AB.email || 'info@advisorbooking.com') + ' and we will send you times.</p>'; return; }
+    host.innerHTML = '';
+    var f = doc.createElement('iframe');
+    f.className = 'lp-sched-frame';
+    f.title = 'Pick a time for your call';
+    f.setAttribute('loading', 'eager');
+    f.setAttribute('allow', 'payment *; clipboard-write');
+    f.src = url;
+    host.appendChild(f);
+  }
   function openCalendly() {
     loadCalendlyAssets();
     var host = $('calendly');
@@ -563,8 +597,8 @@
       } else if ((waited += 250) >= 10000) {
         clearInterval(calIv); calIv = null;
         if (window.__AB_PREVIEW) {
-          /* preview build: the sandbox blocks Calendly's script, so show a note instead of redirecting */
-          if (host) host.innerHTML = '<p class="notice">The Calendly calendar loads right here on the live site. It is blocked inside this preview.</p>';
+          /* preview build: the sandbox blocks the scheduler's script, so show a note instead of redirecting */
+          if (host) host.innerHTML = '<p class="notice">The calendar loads right here on the live site. It is blocked inside this preview.</p>';
           return;
         }
         /* ad blocker or CDN blocked: hosted booking page with the same prefill */
@@ -575,17 +609,23 @@
   }
 
   /* ---------- booking confirmed ---------- */
-  function initCalendlyListener() {
+  function initBookedListener() {
     window.addEventListener('message', function (e) {
-      if (!e || e.origin !== 'https://calendly.com') return;
-      var d = e.data;
-      if (!d || typeof d.event !== 'string' || d.event !== 'calendly.event_scheduled') return;
+      if (!e) return;
+      var d = e.data || {};
+      var fromCalendly = e.origin === 'https://calendly.com' && typeof d.event === 'string' && d.event === 'calendly.event_scheduled';
+      var fromBookedPage = e.origin === location.origin && d && d.event === 'iclosed.booked';
+      if (!fromCalendly && !fromBookedPage) return;
       if (bookedFlag) return;
-      var p = d.payload || {};
-      send('booked', {
-        calendly_event_uri: (p.event && p.event.uri) || '',
-        calendly_invitee_uri: (p.invitee && p.invitee.uri) || ''
-      });
+      var extra = { scheduler: fromCalendly ? 'calendly' : 'iclosed' };
+      if (fromCalendly) {
+        var p = d.payload || {};
+        extra.calendly_event_uri = (p.event && p.event.uri) || '';
+        extra.calendly_invitee_uri = (p.invitee && p.invitee.uri) || '';
+      } else if (d.payload && d.payload.forwarded) {
+        extra.booking = d.payload.forwarded;   /* what iClosed forwarded to /booked: event, host, time zone, UTMs */
+      }
+      send('booked', extra);
       if (!botFlag && tier === 'qualified') {
         fbqSingle('Schedule', { eventID: (sid || EVENT_ID) + '-booked' });
         if (typeof window.lintrk === 'function' && AB.linkedinConversionId) {
@@ -597,6 +637,11 @@
       save();
       showBooked(firstName);
     });
+  }
+  /* Labels beside the calendar come from config.js (event name and length). */
+  function fillEventLabels() {
+    var els = doc.querySelectorAll('[data-config]');
+    for (var i = 0; i < els.length; i++) { var k = els[i].getAttribute('data-config'); if (AB[k]) els[i].textContent = String(AB[k]); }
   }
 
   /* ---------- returning visitor ---------- */
@@ -633,7 +678,7 @@
     renderHowImages();
     renderQuestions();
     initLinks();
-    initCalendlyListener();
+    initBookedListener(); fillEventLabels();
 
     form.addEventListener('input', function (ev) {
       var t = ev.target; if (!t || !t.closest) return;

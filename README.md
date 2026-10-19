@@ -49,18 +49,21 @@ In Namecheap: **Domain List → Manage → Advanced DNS**. Delete the parking re
 
 Then back in GitHub: Settings → Pages → Custom domain `advisorbooking.com` → Save. GitHub checks the DNS (usually within minutes, sometimes up to an hour), issues the certificate, and the **Enforce HTTPS** box becomes available. Tick it. `www.advisorbooking.com` redirects to the apex automatically.
 
-### 3. Email at the domain
+### 3. Email at the domain (Google Workspace)
 
-`info@advisorbooking.com` is on every page, so the mailbox must exist before launch. Two reasonable options:
+`info@advisorbooking.com` is on every page, so the mailbox must exist before launch. Sign up for Google Workspace with `advisorbooking.com`, create `info@advisorbooking.com`, and add Google's records in Namecheap Advanced DNS: the single `MX` record Google now issues (host `@`, value `smtp.google.com.`, priority 1) plus the `TXT` verification record Google shows during setup. MX and TXT records sit alongside the A and CNAME records above; they do not conflict. Namecheap also has a one-click "Google Workspace" preset under Mail Settings that adds the MX record for you.
 
-- **Namecheap Private Email** (cheapest; Namecheap adds the MX records for you when you buy it on the same domain).
-- **Google Workspace** (if you want Gmail and a Google Calendar on the new domain, which also lets Calendly send invites from it). Add Google's MX records in Advanced DNS.
+### 4. Scheduling (iClosed)
 
-MX records sit alongside the A and CNAME records above; they do not conflict.
+The booking pages embed whichever provider `assets/config.js` names. Set it up for iClosed:
 
-### 4. Calendly
+1. In iClosed, create the event (20 minutes, Google Meet, hosted on the `info@advisorbooking.com` Google Calendar).
+2. **AI Scheduler → Events → the event → Embed**: copy the scheduler link (the `https://app.iclosed.io/e/...` URL). In `assets/config.js` set `scheduler: "iclosed"` and paste it into `iclosedUrl`. Update `eventName` and `eventLength` if they differ.
+3. **Confirmation page**: set the event's confirmation to redirect to `https://advisorbooking.com/booked` with forwarding **on**. That page records the booking (CRM webhook, ad conversions) and shows the confirmation. Without this step bookings still happen but are not detected by the site.
+4. **Prefill**: the booking pages pass the visitor's name, email, and mobile as `iclosedName`, `iclosedEmail`, `iclosedPhone` plus the UTM tags. Confirm those parameter names in the event's settings; if your account uses `iclosed_name`-style names instead, change the three names in `assets/lp.js` (`function iclosedUrl`).
+5. **Webhook (optional, recommended)**: Settings → Developers → add a webhook for `call.booked`, `call.rescheduled`, `call.cancelled` pointing at the GoHighLevel inbound webhook URL, so the CRM also hears about reschedules and cancellations.
 
-The site embeds the **Pipeline Audit** event (`https://calendly.com/meridianleads/pipeline-audit`). Invites are sent from the calendar connected to the Calendly account. To have them come from the new domain, connect `info@advisorbooking.com` (a Google Workspace or Microsoft 365 mailbox) as a calendar in Calendly, set the event to use it, and update the event's name and description if you want them to say Advisor Booking. If you change the Calendly URL slug, update `calendlyUrl` in `assets/config.js`.
+Calendly remains available as a fallback (`scheduler: "calendly"`, `calendlyUrl`).
 
 ### 5. Before driving traffic
 

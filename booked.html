@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>You are booked | Advisor Booking</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+<style>
+/* Booking confirmation. iClosed sends people here after they book (the event's confirmation page, with forwarding on).
+   Inside the scheduler iframe it shows a compact card and tells the page around it; opened on its own it is a full page. */
+.booked{min-height:60vh;display:flex;align-items:center;justify-content:center;padding:48px 0}
+.booked__card{max-width:560px;width:100%;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);padding:40px 32px;text-align:center;box-shadow:var(--shadow)}
+.booked__chk{width:64px;height:64px;border-radius:16px;background:var(--accent-tint);display:inline-flex;align-items:center;justify-content:center;margin-bottom:18px}
+.booked__card h1{font-family:var(--font-display);font-weight:800;font-size:clamp(26px,4vw,36px);letter-spacing:-.04em;line-height:1.05;margin:0 0 10px;color:var(--ink)}
+.booked__card p{color:var(--muted);font-size:16px;line-height:1.55;margin:0}
+.booked__meta{margin-top:18px;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.booked__next{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);text-align:left}
+.booked__next p{font-size:14.5px}
+.booked__next ol{margin:10px 0 0;padding-left:20px;color:var(--ink);font-size:14.5px;line-height:1.55}
+body.in-frame .header,body.in-frame .legal-line{display:none}
+body.in-frame .booked{min-height:0;padding:16px 0}
+body.in-frame .booked__card{box-shadow:none}
+</style>
+</head>
+<body>
+<header class="header">
+  <nav class="nav container" aria-label="Primary">
+    <div class="nav__inner">
+      <a class="nav__brand" href="/"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" class="mark__body"/><rect x="6" y="12" width="20" height="14" rx="3" class="mark__page"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" class="mark__page"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" class="mark__page"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></a>
+    </div>
+  </nav>
+</header>
+<main id="main" class="booked">
+  <div class="container">
+    <div class="booked__card">
+      <span class="booked__chk"><svg width="30" height="30" viewBox="0 0 26 26" aria-hidden="true"><path d="M6 13.5L11 18.5 20 8" stroke="#0F7A62" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <h1 id="bookedH">You&rsquo;re booked.</h1>
+      <p>Check your email for the calendar invite and the Google Meet link.</p>
+      <p class="booked__meta" id="bookedMeta" hidden></p>
+      <div class="booked__next">
+        <p><b>Three things to know before the call:</b></p>
+        <ol>
+          <li>Your rough close rate on first meetings. A guess is fine.</li>
+          <li>The average size of a new client from the last 12 months.</li>
+          <li>Whether your firm has run email or LinkedIn outreach before, and who decides if it can.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</main>
+<div class="legal-line"><a href="/privacy">Privacy</a><span aria-hidden="true">&middot;</span><a href="/terms">Terms</a></div>
+<script src="/assets/config.js"></script>
+<script src="/assets/site.js" defer></script>
+<script>
+(function () {
+  'use strict';
+  var CFG = window.AB_CONFIG || {};
+  var q = {};
+  try { new URLSearchParams(location.search).forEach(function (v, k) { q[k] = v; }); } catch (e) {}
+  var inFrame = false;
+  try { inFrame = window.self !== window.top; } catch (e) { inFrame = true; }
+  if (inFrame) document.body.className += ' in-frame';
+
+  /* The scheduler forwards booking details; show the ones a visitor would want to see. */
+  var when = q.start_time || q.startTime || q.date || '';
+  var tz = q.timezone || q.timeZone || '';
+  var meta = document.getElementById('bookedMeta');
+  if (meta && (when || tz)) { meta.textContent = [when, tz].filter(Boolean).join(' · '); meta.hidden = false; }
+  var name = q.name || q.iclosedName || q.first_name || q.firstName || '';
+  if (name) { var h = document.getElementById('bookedH'); if (h) h.textContent = 'You’re booked, ' + String(name).split(/\s+/)[0] + '.'; }
+
+  /* Attribution kept by the site's scripts during the visit. */
+  var utm = {};
+  try { utm = JSON.parse(sessionStorage.getItem('ab_utm') || '{}') || {}; } catch (e) {}
+  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(function (k) { if (q[k]) utm[k] = q[k]; });
+
+  /* The landing page's saved form state, if this booking came from one. */
+  var lp = null;
+  try { lp = JSON.parse(localStorage.getItem('ab_lp_v1') || 'null'); } catch (e) {}
+
+  var payload = {
+    event: 'booked', stage: 'booked', provider: 'iclosed', source: q.src || (lp && lp.sid ? 'lp' : 'book'),
+    sid: (lp && lp.sid) || '', tier: (lp && lp.tier) || '', utm: utm, page: location.pathname,
+    forwarded: q, ts: new Date().toISOString()
+  };
+
+  if (inFrame) {
+    /* Inside the scheduler iframe on a booking page: hand the booking to that page, which owns the CRM post and tracking. */
+    try { window.parent.postMessage({ event: 'iclosed.booked', payload: payload }, location.origin); } catch (e) {}
+    return;
+  }
+
+  /* Opened as a full page: report the booking here. */
+  if (lp && !lp.booked) {
+    try { lp.booked = true; lp.stage = 'booked'; localStorage.setItem('ab_lp_v1', JSON.stringify(lp)); } catch (e) {}
+  }
+  var url = CFG.ghlWebhookUrl || '';
+  if (url) {
+    var body = JSON.stringify(payload);
+    try {
+      if (navigator.sendBeacon && navigator.sendBeacon(url, new Blob([body], { type: 'application/json' }))) { /* queued */ }
+      else fetch(url, { method: 'POST', mode: 'no-cors', keepalive: true, body: body }).catch(function () {});
+    } catch (e) {}
+  }
+  function fire() {
+    if (navigator.globalPrivacyControl) return;
+    if (typeof window.fbq === 'function') { try { window.fbq('track', 'Schedule'); } catch (e) {} }
+    if (typeof window.lintrk === 'function' && CFG.linkedinConversionId) { try { window.lintrk('track', { conversion_id: CFG.linkedinConversionId }); } catch (e) {} }
+  }
+  /* site.js loads the tags (deferred); give it a moment, then fire the conversion once. */
+  if (document.readyState === 'complete') setTimeout(fire, 800); else window.addEventListener('load', function () { setTimeout(fire, 800); });
+})();
+</script>
+</body>
+</html>
