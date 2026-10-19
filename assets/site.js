@@ -179,8 +179,9 @@
     if (source) u.searchParams.set('utm_content', source);
     return u.toString();
   }
-  /* The booking page embeds whichever provider config.js names. iClosed is a plain iframe of the event link with
-     campaign tags passed through; the event's confirmation page (the site's /booked page) reports the booking back. */
+  /* The booking page embeds whichever provider config.js names. iClosed uses its own inline widget built from the event
+     link, with campaign tags passed through (a plain iframe if the widget script is blocked); the event's confirmation
+     page (the site's /booked page) records the booking. */
   function schedulerUrl() {
     if (CFG.scheduler !== 'iclosed') return calendlyUrl();
     var base = String(CFG.iclosedUrl || '').trim();
@@ -223,12 +224,51 @@
       mount.appendChild(btn);
       return;
     }
+    if (CFG.scheduler === 'iclosed') { mountIclosed(mount, url); return; }
     var frame = doc.createElement('iframe');
     frame.className = 'calendly-frame';
     frame.title = 'Pick a time for your call';
     frame.setAttribute('loading', 'lazy');
     frame.src = url;
     mount.appendChild(frame);
+  }
+  /* iClosed's inline embed code, built in place so campaign tags ride along: the widget div, then widget.js. */
+  function mountIclosed(mount, url) {
+    var w = doc.createElement('div');
+    w.className = 'iclosed-widget';
+    w.setAttribute('data-url', url);
+    w.setAttribute('title', 'Pick a time for your call');
+    w.style.width = '100%'; w.style.height = '620px';
+    mount.appendChild(w);
+    var s = doc.createElement('script');
+    s.type = 'text/javascript'; s.async = true; s.src = 'https://app.iclosed.io/assets/widget.js';
+    doc.body.appendChild(s);
+    var waited = 0;
+    var iv = setInterval(function () {
+      if (mount.querySelector('iframe')) { clearInterval(iv); return; }
+      if ((waited += 250) < 8000) return;
+      clearInterval(iv);
+      mount.innerHTML = '';
+      if (window.__AB_PREVIEW) {
+        var n = doc.createElement('p');
+        n.className = 'notice';
+        n.textContent = 'The calendar loads right here on the live site. It is blocked inside this preview.';
+        mount.appendChild(n);
+        return;
+      }
+      /* Widget script blocked (ad blocker or network): embed the event link directly, with a plain link under it. */
+      var frame = doc.createElement('iframe');
+      frame.className = 'calendly-frame';
+      frame.title = 'Pick a time for your call';
+      frame.src = url;
+      mount.appendChild(frame);
+      var p = doc.createElement('p');
+      p.className = 'small mt-16 center';
+      var a = doc.createElement('a');
+      a.href = url; a.textContent = 'Calendar not showing? Open it here.';
+      p.appendChild(a);
+      mount.appendChild(p);
+    }, 250);
   }
 
   /* 6. Booking confirmed (Calendly postMessage) --------------------------- */

@@ -1,9 +1,10 @@
 // Advisor Booking: owner-editable settings. This is the ONLY file to edit for numbers and IDs.
 window.AB_CONFIG = {
   // Scheduling provider: "iclosed" (iClosed.io) or "calendly". The matching URL below must be filled in.
-  scheduler: "calendly",
-  // iClosed: the event's scheduler link (AI Scheduler -> Events -> the event -> Embed). Visitors book inside it.
-  iclosedUrl: "",
+  scheduler: "iclosed",
+  // iClosed: the event link from the event's inline embed code (the data-url value). The booking pages build iClosed's
+  // inline widget from it, with the visitor's name, email and mobile added so they do not type them twice.
+  iclosedUrl: "https://app.iclosed.io/e/advisorbooking/strategy-call",
   // iClosed: set the event's confirmation page to this URL with forwarding on, so bookings are detected and reported.
   bookedUrl: "https://advisorbooking.com/booked",
   // Calendly (legacy): the 20-minute event URL, and whether book.html embeds it or links out to it.

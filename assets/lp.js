@@ -23,9 +23,10 @@
     // Calendly: the 20-minute Pipeline Audit event from config.js.
     CALENDLY_URL: AB.calendlyUrl || '',
     CALENDLY_EMBED_PARAMS: 'hide_gdpr_banner=1&hide_event_type_details=1&primary_color=0f7a62&text_color=0e0e0e',
-    // Scheduling provider and the iClosed scheduler link, both from config.js. iClosed is embedded as a plain iframe of the
-    // event link with the visitor's details prefilled; the event's confirmation page must be the site's /booked page
-    // (forwarding on), which reports the booking back to this page.
+    // Scheduling provider and the iClosed event link, both from config.js. iClosed is embedded with its own inline widget
+    // (the event's embed code, built here so the visitor's details can be prefilled); if the widget script is blocked, a
+    // plain iframe of the same link is used instead. The event's confirmation page must be the site's /booked page
+    // (forwarding on), which records the booking whether it opens inside the calendar or as its own page.
     SCHEDULER: AB.scheduler || 'calendly',
     ICLOSED_URL: AB.iclosedUrl || '',
     // The event's one optional question ("Please share anything...") is prefilled with firm + answers so Nick
@@ -564,11 +565,10 @@
     if (LP.SCHEDULER === 'iclosed') { openIclosed(); return; }
     openCalendly();
   }
-  function openIclosed() {
-    var host = $('calendly');
-    if (!host) return;
-    var url = iclosedUrl();
-    if (!url) { host.innerHTML = '<p class="notice">The calendar is not connected yet. Email ' + (AB.email || 'info@advisorbooking.com') + ' and we will send you times.</p>'; return; }
+  /* iClosed's inline embed code, built in place: <div class="iclosed-widget" data-url="..."> plus widget.js. The script is
+     added after the div exists so it finds it; a fresh script tag runs it again after "Start over". */
+  var ICLOSED_WIDGET_JS = 'https://app.iclosed.io/assets/widget.js';
+  function iclosedFrame(host, url) {
     host.innerHTML = '';
     var f = doc.createElement('iframe');
     f.className = 'lp-sched-frame';
@@ -577,6 +577,41 @@
     f.setAttribute('allow', 'payment *; clipboard-write');
     f.src = url;
     host.appendChild(f);
+    var p = doc.createElement('p');
+    p.className = 'lp-sched-alt';
+    var a = doc.createElement('a');
+    a.href = url; a.textContent = 'Calendar not showing? Open it here.';
+    p.appendChild(a);
+    host.appendChild(p);
+  }
+  function openIclosed() {
+    var host = $('calendly');
+    if (!host) return;
+    var url = iclosedUrl();
+    if (!url) { host.innerHTML = '<p class="notice">The calendar is not connected yet. Email ' + (AB.email || 'info@advisorbooking.com') + ' and we will send you times.</p>'; return; }
+    host.innerHTML = '';
+    var w = doc.createElement('div');
+    w.className = 'iclosed-widget';
+    w.setAttribute('data-url', url);
+    w.setAttribute('title', 'Pick a time for your call');
+    w.style.width = '100%'; w.style.height = '620px';
+    host.appendChild(w);
+    var s = doc.createElement('script');
+    s.type = 'text/javascript'; s.async = true; s.src = ICLOSED_WIDGET_JS;
+    doc.body.appendChild(s);
+    /* The widget puts an iframe on the page within moments. If none appears (ad blocker, script blocked), embed the link directly. */
+    var waited = 0;
+    if (calIv) { clearInterval(calIv); calIv = null; }
+    calIv = setInterval(function () {
+      if (host.querySelector('iframe')) { clearInterval(calIv); calIv = null; return; }
+      if ((waited += 250) < 8000) return;
+      clearInterval(calIv); calIv = null;
+      if (window.__AB_PREVIEW) {
+        host.innerHTML = '<p class="notice">The calendar loads right here on the live site. It is blocked inside this preview.</p>';
+        return;
+      }
+      iclosedFrame(host, url);
+    }, 250);
   }
   function openCalendly() {
     loadCalendlyAssets();

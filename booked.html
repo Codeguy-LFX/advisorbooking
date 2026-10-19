@@ -69,12 +69,26 @@ body.in-frame .booked__card{box-shadow:none}
   try { inFrame = window.self !== window.top; } catch (e) { inFrame = true; }
   if (inFrame) document.body.className += ' in-frame';
 
-  /* The scheduler forwards booking details; show the ones a visitor would want to see. */
-  var when = q.start_time || q.startTime || q.date || '';
-  var tz = q.timezone || q.timeZone || '';
+  /* The scheduler forwards booking details. iClosed's key names vary in case (Invitee_email, timeZone, event_start_time),
+     so look them up case-insensitively and show the ones a visitor would want to see. */
+  var qi = {};
+  Object.keys(q).forEach(function (k) { qi[k.toLowerCase().replace(/[^a-z0-9]/g, '')] = q[k]; });
+  function pick() { for (var i = 0; i < arguments.length; i++) { var v = qi[arguments[i]]; if (v) return String(v); } return ''; }
+  var when = pick('eventstarttime', 'starttime', 'start', 'date');
+  var tz = pick('timezone', 'inviteetimezone', 'tz');
+  var shown = when;
+  if (when) {
+    var d = new Date(when);
+    if (!isNaN(d.getTime())) {
+      var o = { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' };
+      try { shown = d.toLocaleString('en-US', tz ? Object.assign({ timeZone: tz, timeZoneName: 'short' }, o) : o); }
+      catch (e) { shown = d.toLocaleString('en-US', o); }
+      tz = shown === when ? tz : '';
+    }
+  }
   var meta = document.getElementById('bookedMeta');
-  if (meta && (when || tz)) { meta.textContent = [when, tz].filter(Boolean).join(' · '); meta.hidden = false; }
-  var name = q.name || q.iclosedName || q.first_name || q.firstName || '';
+  if (meta && (shown || tz)) { meta.textContent = [shown, tz].filter(Boolean).join(' · '); meta.hidden = false; }
+  var name = pick('inviteefirstname', 'firstname', 'iclosedname', 'inviteefullname', 'inviteename', 'fullname', 'name');
   if (name) { var h = document.getElementById('bookedH'); if (h) h.textContent = 'You’re booked, ' + String(name).split(/\s+/)[0] + '.'; }
 
   /* Attribution kept by the site's scripts during the visit. */
@@ -98,8 +112,13 @@ body.in-frame .booked__card{box-shadow:none}
     return;
   }
 
-  /* Opened as a full page: report the booking here. */
-  if (lp && !lp.booked) {
+  /* Opened as a full page (iClosed sends the whole window here): report the booking once, not again on a refresh. */
+  var seenKey = 'ab_booked_seen';
+  var seen = false;
+  try { seen = sessionStorage.getItem(seenKey) === location.search; sessionStorage.setItem(seenKey, location.search); } catch (e) {}
+  if (lp && lp.booked) seen = true;
+  if (seen) return;
+  if (lp) {
     try { lp.booked = true; lp.stage = 'booked'; lp.firstName = lp.firstName || ((lp.answers && lp.answers.first) || ''); lp.answers = {}; localStorage.setItem('ab_lp_v1', JSON.stringify(lp)); } catch (e) {}
   }
   var url = CFG.ghlWebhookUrl || '';
@@ -112,6 +131,8 @@ body.in-frame .booked__card{box-shadow:none}
   }
   function fire() {
     if (navigator.globalPrivacyControl) return;
+    /* Same rule as the landing pages: only a qualified request counts as an ad conversion. */
+    if (lp && lp.tier && lp.tier !== 'qualified') return;
     if (typeof window.fbq === 'function') { try { window.fbq('track', 'Schedule'); } catch (e) {} }
     if (typeof window.lintrk === 'function' && CFG.linkedinConversionId) { try { window.lintrk('track', { conversion_id: CFG.linkedinConversionId }); } catch (e) {} }
   }

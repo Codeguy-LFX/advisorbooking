@@ -7,9 +7,10 @@ Static marketing site for Advisor Booking (De Jesus Ventures LLC). No build step
 | File | URL | Purpose |
 | --- | --- | --- |
 | `index.html` | `/` | Home page |
-| `book.html` | `/book` | Booking page (Calendly inline embed) |
-| `pilot.html` | `/pilot` | Hidden founding-offer landing page for email and LinkedIn outreach (gated form, then Calendly). `noindex`, not linked from the nav. |
+| `book.html` | `/book` | Booking page (iClosed inline widget) |
+| `pilot.html` | `/pilot` | Hidden founding-offer landing page for email and LinkedIn outreach (gated form, then the iClosed calendar). `noindex`, not linked from the nav. |
 | `meetings.html` | `/meetings` | Hidden v1 landing page, kept for later use. `noindex`. |
+| `booked.html` | `/booked` | Booking confirmation. iClosed sends people here after they book; it records the booking. `noindex`. |
 | `privacy.html`, `terms.html` | `/privacy`, `/terms` | Privacy Policy and Terms of Use |
 | `404.html` | | Not-found page |
 
@@ -19,7 +20,7 @@ GitHub Pages serves `page.html` at `/page`, so the clean URLs above work without
 
 Numbers, IDs, and contact details live in **`assets/config.js`**. It is the only file to edit for:
 
-- the Calendly event URL and mode (`embed` shows the calendar inline)
+- the scheduler (`iclosed` or `calendly`) and its event link
 - the GoHighLevel inbound webhook URL (empty = bookings and form submissions are not posted anywhere)
 - Meta Pixel and LinkedIn tag IDs (empty = the tags are not loaded; they are also never loaded when a browser sends a Global Privacy Control signal)
 - the contact email (`info@advisorbooking.com`), entity, city
@@ -55,13 +56,16 @@ Then back in GitHub: Settings → Pages → Custom domain `advisorbooking.com` �
 
 ### 4. Scheduling (iClosed)
 
-The booking pages embed whichever provider `assets/config.js` names. Set it up for iClosed:
+The booking pages are connected to the iClosed event `https://app.iclosed.io/e/advisorbooking/strategy-call` (`assets/config.js`: `scheduler: "iclosed"`, `iclosedUrl`). They build iClosed's own inline widget (the event's embed code: a `div.iclosed-widget` with that link as `data-url`, plus `https://app.iclosed.io/assets/widget.js`). On `/pilot` and `/meetings` the link carries the visitor's name, email, and mobile (`iclosedName`, `iclosedEmail`, `iclosedPhone`) and their UTM tags; on `/book` it carries the UTM tags. If the widget script is blocked, the pages fall back to a plain iframe of the same link with an "Open it here" link under it.
 
-1. In iClosed, create the event (20 minutes, Google Meet, hosted on the `info@advisorbooking.com` Google Calendar).
-2. **AI Scheduler → Events → the event → Embed**: copy the scheduler link (the `https://app.iclosed.io/e/...` URL). In `assets/config.js` set `scheduler: "iclosed"` and paste it into `iclosedUrl`. Update `eventName` and `eventLength` if they differ.
-3. **Confirmation page**: set the event's confirmation to redirect to `https://advisorbooking.com/booked` with forwarding **on**. That page records the booking (CRM webhook, ad conversions) and shows the confirmation. Without this step bookings still happen but are not detected by the site.
-4. **Prefill**: the booking pages pass the visitor's name, email, and mobile as `iclosedName`, `iclosedEmail`, `iclosedPhone` plus the UTM tags. Confirm those parameter names in the event's settings; if your account uses `iclosed_name`-style names instead, change the three names in `assets/lp.js` (`function iclosedUrl`).
-5. **Webhook (optional, recommended)**: Settings → Developers → add a webhook for `call.booked`, `call.rescheduled`, `call.cancelled` pointing at the GoHighLevel inbound webhook URL, so the CRM also hears about reschedules and cancellations.
+Still to do in iClosed:
+
+1. **Confirmation page**: on the event, set the confirmation to **External URL** `https://advisorbooking.com/booked` and turn **Forward Parameters to External URL** on. That page records the booking (CRM webhook, ad conversions) whether iClosed opens it inside the calendar or as the whole page. Without this step bookings still happen but the site does not see them.
+2. **Event name and length**: the pages show `eventName` and `eventLength` from `assets/config.js` beside the calendar ("Pipeline Audit", "20 min"). Rename the iClosed event to match, or change those two values.
+3. **Prefill check**: after filling the form on `/pilot`, the calendar should open with name, email, and mobile already filled. If not, your account uses `iclosed_name`-style names; change the three names in `assets/lp.js` (`function iclosedUrl`).
+4. **CRM notifications for reschedules and cancellations (optional)**: native webhooks may not be on the Startup plan. Zapier (included on Startup) has Call Booked, Call Rescheduled, and Call Cancelled triggers that can update GoHighLevel.
+
+Testing the booking end to end needs the site live on `advisorbooking.com`, because the confirmation page must be on the same domain as the booking page.
 
 Calendly remains available as a fallback (`scheduler: "calendly"`, `calendlyUrl`).
 
