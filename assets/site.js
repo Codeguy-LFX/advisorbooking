@@ -117,6 +117,7 @@
 
   /* 4. Tracking ----------------------------------------------------------- */
   function initTracking() {
+    if (navigator.globalPrivacyControl) return;   /* honor GPC: no advertising pixels for this visit */
     if (CFG.metaPixelId) {
       /* Standard Meta Pixel base code */
       !function (f, b, e, v, n, t, s) {
@@ -185,7 +186,7 @@
     if (!mount) return;
     mount.innerHTML = '';
     var url = calendlyUrl();
-    var email = CFG.email || 'hello@advisorbooking.com';
+    var email = CFG.email || 'info@advisorbooking.com';
     if (!url) {
       var n = doc.createElement('p');
       n.className = 'notice';

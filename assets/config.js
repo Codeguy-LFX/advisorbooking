@@ -18,7 +18,7 @@ window.AB_CONFIG = {
   countersAsOf: "2026-10-18",
   announceEnabled: true,
   // Contact
-  email: "hello@advisorbooking.com",
+  email: "info@advisorbooking.com",
   entity: "De Jesus Ventures LLC",
   city: "Boca Raton, FL",
   phone: ""

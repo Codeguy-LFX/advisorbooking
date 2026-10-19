@@ -114,6 +114,7 @@
   /* ---------- tracking (loaded only when the IDs exist in config.js) ----------
      Meta events use trackSingle so a second pixel added to the site later never receives lander events. */
   function bootstrapPixels() {
+    if (navigator.globalPrivacyControl) return;   /* honor GPC: no advertising pixels for this visit */
     if (AB.metaPixelId) {
       try {
         if (typeof window.fbq !== 'function') {
