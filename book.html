@@ -21,65 +21,42 @@
 if (/claudeusercontent\.com$|\.claude\.ai$/.test(location.hostname)) window.__AB_PREVIEW = 1;</script>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles.css">
+<style>
+/* Booking page: the iClosed scheduler on its own, full width, like the iClosed booking link. */
+.book-full{padding:8px 0 28px}
+.page-book .container{max-width:1120px}
+.book-full .calendly-mount{text-align:center}
+.book-full .iclosed-widget,.book-full .calendly-frame{display:block;width:100%;border:0;border-radius:12px;
+  height:calc(100vh - 150px);height:calc(100dvh - 150px);min-height:660px}
+.book-full .notice{text-align:left;max-width:640px;margin:24px auto 0}
+.book-foot{padding:4px 20px 22px;text-align:center}
+.book-foot .fine{max-width:640px;margin:0 auto}
+</style>
 </head>
-<body>
+<body class="page-book">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="header">
   <nav class="nav container" aria-label="Primary">
     <div class="nav__inner">
       <a class="nav__brand" href="index.html"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" class="mark__body"/><rect x="6" y="12" width="20" height="14" rx="3" class="mark__page"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" class="mark__page"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" class="mark__page"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></a>
-      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-panel" aria-label="Menu">
-        <span class="nav__bar"></span><span class="nav__bar"></span><span class="nav__bar"></span>
-      </button>
-      <div class="nav__panel" id="nav-panel">
-        <ul class="nav__links">
-          <li><a href="index.html#how">How it works</a></li>
-          <li><a href="index.html#pricing">What it costs</a></li>
-          <li><a href="index.html#faq">FAQ</a></li>
-        </ul>
-        <a class="nav__phone" href="#" data-config="phone" hidden>Phone</a>
-        <a class="pill pill--sm nav__cta" href="book.html" data-src="nav">Get More Booked Meetings</a>
-      </div>
     </div>
   </nav>
 </header>
 
-<main id="main" class="book">
+<main id="main" class="book-full">
+  <h1 class="sr-only">Book your 20-minute call</h1>
   <div class="container">
-    <div class="book__card rv in">
-      <aside class="book__side">
-        <p class="host">Nick De Jesus</p>
-        <!-- NEW COPY -->
-        <h1>A 20-minute call</h1>
-        <ul class="book__meta">
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>20 minutes</span></li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3z"/></svg><span>A Google Meet link comes with your confirmation.</span></li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span>Times show in your time zone.</span></li>
-        </ul>
-        <div class="book__prep">
-          <!-- NEW COPY -->
-          <p><b>Three things to know before the call:</b></p>
-          <ol>
-            <li>Your rough close rate on first meetings. A guess is fine.</li>
-            <li>The average size of a new client from the last 12 months.</li>
-            <li>Whether your firm has run email or LinkedIn outreach before, and who at the firm decides if it can.</li>
-          </ol>
-          <p class="mt-16">That is all the prep. The call is 20 minutes and ends with a yes or a no.</p>
-          <p class="small mt-16">Not sure you are a fit? <a href="index.html#faq">Read who this is not for</a> before you book.</p>
-        </div>
-      </aside>
-      <section class="book__main" id="calendar" aria-labelledby="cal-h">
-        <h2 id="cal-h">Pick a date and time</h2>
-        <div class="calendly-mount">
-          <p class="notice">Loading the calendar. If it does not appear, email <a href="mailto:info@advisorbooking.com" data-config="email">info@advisorbooking.com</a> and we will send you times.</p>
-        </div>
-      </section>
-    </div>
-    <!-- NEW COPY -->
-    <p class="fine mt-16 center">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Your details go to our CRM and the calendar booking.</p>
+    <section id="calendar" aria-label="Pick a time for your call">
+      <!-- The iClosed scheduler fills this box (assets/site.js, mountIclosed). data-fill: it takes the screen height. -->
+      <div class="calendly-mount" data-fill>
+        <p class="notice">Loading the calendar. If it does not appear, email <a href="mailto:info@advisorbooking.com" data-config="email">info@advisorbooking.com</a> and we will send you times.</p>
+      </div>
+    </section>
   </div>
 </main>
-<div class="sticky-cta" data-sticky hidden><a class="pill pill--accent" href="book.html" data-src="sticky">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+<footer class="book-foot">
+  <p class="fine">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Your details go to our CRM and the calendar booking.</p>
+</footer>
 <div class="legal-line"><a href="privacy.html">Privacy</a><span aria-hidden="true">&middot;</span><a href="terms.html">Terms</a></div>
 <script src="assets/config.js"></script>
 <script src="assets/site.js" defer></script>

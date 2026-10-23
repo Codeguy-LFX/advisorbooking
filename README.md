@@ -7,7 +7,7 @@ Static marketing site for Advisor Booking (De Jesus Ventures LLC). No build step
 | File | URL | Purpose |
 | --- | --- | --- |
 | `index.html` | `/` | Home page |
-| `book.html` | `/book` | Booking page (iClosed inline widget) |
+| `book.html` | `/book` | Booking page for every home-page button: the logo and the iClosed scheduler full width, nothing else (the pilot lander is the other path to test) |
 | `pilot.html` | `/pilot` | Hidden founding-offer landing page for email and LinkedIn outreach (gated form, then the iClosed calendar). `noindex`, not linked from the nav. |
 | `meetings.html` | `/meetings` | Hidden v1 landing page, kept for later use. `noindex`. |
 | `booked.html` | `/booked` | Booking confirmation. iClosed sends people here after they book; it records the booking. `noindex`. |

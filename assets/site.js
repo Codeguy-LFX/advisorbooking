@@ -263,7 +263,8 @@
     w.className = 'iclosed-widget';
     w.setAttribute('data-url', url);
     w.setAttribute('title', 'Pick a time for your call');
-    w.style.width = '100%'; w.style.height = '620px';
+    w.style.width = '100%';
+    if (!mount.hasAttribute('data-fill')) w.style.height = '620px';   /* data-fill: the page's CSS sets the height */
     mount.appendChild(w);
     var settled = false, waited = 0, iv;
     function fallback() {
