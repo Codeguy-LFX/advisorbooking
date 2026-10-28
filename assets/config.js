@@ -8,7 +8,7 @@ window.AB_CONFIG = {
   // iClosed: set the event's confirmation page to this URL with forwarding on, so bookings are detected and reported.
   bookedUrl: "https://advisorbooking.com/booked",
   // Calendly (legacy): the 20-minute event URL, and whether book.html embeds it or links out to it.
-  calendlyUrl: "https://calendly.com/meridianleads/pipeline-audit",
+  calendlyUrl: "",
   calendlyMode: "embed",
   // Shown beside the calendar on the booking pages.
   eventName: "Pipeline Audit",

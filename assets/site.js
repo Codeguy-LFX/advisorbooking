@@ -176,7 +176,7 @@
     u.searchParams.set('hide_gdpr_banner', '1');
     var extra = utmOnly();
     Object.keys(extra).forEach(function (k) { u.searchParams.set(k, extra[k]); });
-    if (source) u.searchParams.set('utm_content', source);
+    if (source && !u.searchParams.has('utm_content')) u.searchParams.set('utm_content', source);
     return u.toString();
   }
   /* The booking page embeds whichever provider config.js names. iClosed uses its own inline widget built from the event
@@ -190,7 +190,7 @@
     try { u = new URL(base); } catch (e) { return ''; }
     var extra = utmOnly();
     Object.keys(extra).forEach(function (k) { u.searchParams.set(k, extra[k]); });
-    if (source) u.searchParams.set('utm_content', source);
+    if (source && !u.searchParams.has('utm_content')) u.searchParams.set('utm_content', source);
     return u.toString();
   }
   function renderCalendly() {
