@@ -542,3 +542,8 @@ main section[id]{scroll-margin-top:24px}
   .pair--pin .pane--grey{transform:translateX(calc((50% + 12px)*(1 - var(--p,0)))) scale(calc(.9 + .1*var(--p,0)))}
   .pair--pin .pane--green{position:relative;z-index:2;transform:translate(calc((-50% - 12px)*(1 - var(--p,0))),calc(90vh*(1 - var(--p,0)))) rotate(calc(-6deg*(1 - var(--p,0))));box-shadow:0 30px 60px -30px rgba(0,0,0,.35)}
 }
+
+/* Home hero button: the biggest control on the page (owner request, 2026-10-29). */
+.hero .cta .pill{min-height:96px;padding:0 60px;font-size:20px;letter-spacing:.08em;gap:16px}
+@media (max-width:980px){.hero .cta .pill{min-height:88px;font-size:18px}}
+@media (max-width:480px){.hero .cta .pill{width:100%;max-width:none;min-height:84px;font-size:clamp(14px,4vw,16px);padding:24px 20px;white-space:normal;line-height:1.2}}
