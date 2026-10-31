@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Advisor Booked Founding Sprint</title>
+<title>Founding Sprint | Advisor Booking</title>
 <meta name="robots" content="noindex, nofollow">
+<meta name="description" content="For independent RIAs with $50M to $250M AUM: at least 15 attended, qualified first meetings in your first 90 days from launch, or we keep working at our cost.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,12 +19,9 @@
   --muted: #56616A;
   --rule: #D3D9D5;
   --busy: #E4E8E5;
-  --accent: #1E5A49;
+  --accent: #0F7A62;
   --accent-ink: #FFFFFF;
-  --accent-soft: #E2ECE7;
-  --slot-bg: #FFF1B8;
-  --slot-ink: #5A4500;
-  --slot-rule: #D9B12A;
+  --accent-soft: #E8F4EF;
   --font-display: "Newsreader", "Iowan Old Style", Georgia, serif;
   --font-body: "Public Sans", "Helvetica Neue", Arial, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
@@ -33,14 +31,14 @@
   :root:not([data-theme="light"]) {
     --paper: #0F1519; --surface: #161E23; --ink: #E6EBE8; --muted: #9DA8A3; --rule: #2B353A;
     --busy: #222C31; --accent: #7CC6AC; --accent-ink: #0C1714; --accent-soft: #18302A;
-    --slot-bg: #3A3212; --slot-ink: #F2D777; --slot-rule: #8A7224;
+   
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --paper: #0F1519; --surface: #161E23; --ink: #E6EBE8; --muted: #9DA8A3; --rule: #2B353A;
   --busy: #222C31; --accent: #7CC6AC; --accent-ink: #0C1714; --accent-soft: #18302A;
-  --slot-bg: #3A3212; --slot-ink: #F2D777; --slot-rule: #8A7224;
+ 
   color-scheme: dark;
 }
 
@@ -62,11 +60,6 @@ strong { font-weight: 650; }
 .mono { font-family: var(--font-mono); }
 .num { font-variant-numeric: tabular-nums; }
 
-.banner {
-  background: var(--ink); color: var(--paper); font-family: var(--font-mono); font-size: 0.8rem;
-  padding: 10px 16px; text-align: center; line-height: 1.5;
-}
-.banner .slot { margin-left: 6px; }
 .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
 .col { max-width: 680px; display: flex; flex-direction: column; gap: 18px; }
 section { padding: 72px 0; border-top: 1px solid var(--rule); }
@@ -75,24 +68,10 @@ section { padding: 72px 0; border-top: 1px solid var(--rule); }
   font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
   color: var(--muted); display: flex; align-items: center; gap: 10px;
 }
-.tag {
-  display: inline-grid; place-items: center; width: 22px; height: 22px; border: 1px solid var(--rule);
-  border-radius: 4px; color: var(--ink); font-size: 0.72rem;
-}
 .lede { font-size: 1.2rem; color: var(--ink); }
 .muted { color: var(--muted); }
 .small { font-size: 0.9rem; }
 
-/* placeholders */
-.slot {
-  background: var(--slot-bg); color: var(--slot-ink); border: 1px dashed var(--slot-rule);
-  border-radius: 4px; padding: 1px 6px; font-family: var(--font-mono); font-size: 0.8em; line-height: 1.5;
-  -webkit-box-decoration-break: clone; box-decoration-break: clone;
-}
-.slot-block {
-  display: block; background: var(--slot-bg); color: var(--slot-ink); border: 1px dashed var(--slot-rule);
-  border-radius: 6px; padding: 12px 14px; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.5;
-}
 
 /* buttons */
 .btn {
@@ -102,7 +81,18 @@ section { padding: 72px 0; border-top: 1px solid var(--rule); }
 }
 .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px -8px var(--accent); }
 @media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:hover { transform: none; } }
+.btn-sm { padding: 9px 16px; font-size: 0.92rem; }
+.btn-ghost { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); }
+.btn-ghost:hover { box-shadow: none; background: var(--accent-soft); }
 .btn-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; }
+
+/* top bar: the mark and one button, like the other landing pages */
+.topbar { border-bottom: 1px solid var(--rule); background: var(--paper); }
+.topbar-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-top: 14px; padding-bottom: 14px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.05rem; }
+.mark { width: 28px; height: 28px; flex: 0 0 28px; }
+.mark__body { fill: var(--ink); }
+.mark__page { fill: var(--paper); }
 
 /* hero */
 .hero { padding: 64px 0 72px; border-top: 0; }
@@ -175,6 +165,7 @@ table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 0.9
 th, td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--rule); }
 thead th { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 500; }
 tbody th { font-weight: 650; width: 150px; }
+thead th:first-child, tbody th { position: sticky; left: 0; background: var(--paper); z-index: 1; }
 .hl { background: var(--accent-soft); }
 thead .hl { color: var(--ink); font-weight: 600; }
 
@@ -206,6 +197,12 @@ thead .hl { color: var(--ink); font-weight: 600; }
 .recap td:last-child, .recap th:last-child { text-align: right; white-space: nowrap; }
 .recap tfoot td { font-weight: 700; border-bottom: 0; }
 
+.suboffer { border: 1px solid var(--rule); border-radius: 10px; padding: 28px; background: var(--surface); display: flex; flex-direction: column; gap: 12px; }
+.price-sm { font-family: var(--font-display); font-size: 1.6rem; font-weight: 600; }
+.cite { font-size: 0.82rem; color: var(--muted); }
+.scroll-hint { display: none; }
+@media (max-width: 800px) { .scroll-hint { display: block; } }
+
 /* cta */
 .cta { background: var(--accent-soft); border-radius: 10px; padding: 32px; display: flex; flex-direction: column; gap: 16px; }
 .cta h2, .cta h3 { max-width: 30ch; }
@@ -220,11 +217,6 @@ thead .hl { color: var(--ink); font-weight: 600; }
 .proof-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 @media (max-width: 640px) { .proof-grid { grid-template-columns: 1fr; } }
 
-/* editor notes */
-.notes { border: 1.5px dashed var(--slot-rule); border-radius: 10px; padding: 28px; display: flex; flex-direction: column; gap: 16px; background: var(--surface); }
-.notes h3 { font-family: var(--font-body); font-size: 1rem; font-weight: 700; }
-.notes ol, .notes ul { margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 8px; font-size: 0.95rem; }
-
 footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.85rem; color: var(--muted); }
 
 @media (max-width: 900px) {
@@ -238,24 +230,29 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
   .bonuses { grid-template-columns: 1fr; }
   section { padding: 56px 0; }
   .wrap { padding: 0 18px; }
-  .cta, .guarantee, .price-card, .notes { padding: 22px; }
+  .cta, .guarantee, .price-card, .suboffer { padding: 22px; }
 }
 </style>
 </head>
 <body>
 
-<div class="banner">DEMO DRAFT for review. Hidden page, not linked from the site. The rest of the site is unchanged. <span class="slot">Yellow = placeholder to fill before launch</span></div>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <span class="brand"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" class="mark__body"/><rect x="6" y="12" width="20" height="14" rx="3" class="mark__page"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" class="mark__page"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" class="mark__page"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span>
+    <a class="btn btn-sm" href="book.html">Book a call</a>
+  </div>
+</header>
 
-<!-- A. HEADLINE -->
-<header class="hero" id="top">
+<!-- HEADLINE -->
+<div class="hero" id="top">
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <p class="eyebrow"><span class="tag">A</span> Advisor Booked · For independent RIAs, $50M to $250M AUM</p>
+      <p class="eyebrow">For independent RIAs, $50M to $250M AUM</p>
       <h1>We build and run an outbound system that puts qualified first meetings on your advisors' calendars.</h1>
       <p class="sub"><strong>At least 15 attended, qualified meetings</strong> with HNW individuals and business owners in your first 90 days from launch, or we keep working at our cost until you get them.</p>
       <p class="cco-line">Every message is approved by your compliance officer before it's sent.</p>
       <div class="btn-row">
-        <a class="btn" href="#book">Book the 20-minute fit call</a>
+        <a class="btn" href="book.html">Book the 20-minute fit call</a>
         <span class="muted small">Founding rate: $3,500 every 4 weeks. No setup fee.</span>
       </div>
     </div>
@@ -289,19 +286,19 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
         </div>
       </div>
       <figcaption class="legend">
-        <span><i class="sw first"></i>Booked by Advisor Booked</span>
+        <span><i class="sw first"></i>Booked by Advisor Booking</span>
         <span><i class="sw busy"></i>Your existing calendar</span>
       </figcaption>
     </figure>
   </div>
-</header>
+</div>
 
 <main>
 
-<!-- B. CALL-OUT -->
+<!-- CALL-OUT -->
 <section id="callout">
   <div class="wrap col">
-    <p class="eyebrow"><span class="tag">B</span> Who this is for</p>
+    <p class="eyebrow">Who this is for</p>
     <h2>Read this only if three things are true.</h2>
     <ol class="numbered">
       <li>You run an independent RIA with $50M to $250M in AUM.</li>
@@ -312,21 +309,20 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
     <p>If it is, here's an uncomfortable question:</p>
     <p class="pull">How many names in your CRM has nobody contacted in over a year?</p>
     <p>Old prospects. Seminar attendees. Referrals who "weren't ready yet." Business owners who said "call me after the sale."</p>
-    <span class="slot-block">[PROOF INSERT: STAT. Typical number of dormant contacts in an RIA CRM. Use a cited industry source or the average from your own discovery calls.]</span>
     <p>You paid to get every one of those names. Right now they're doing nothing.</p>
     <p>Meanwhile, your advisors have open time on their calendars.</p>
     <p><strong>The gap between names you already have and meetings you aren't getting is the whole problem. Closing it is all we do.</strong></p>
   </div>
 </section>
 
-<!-- C. FUTURE PACING -->
+<!-- FUTURE PACING -->
 <section id="future">
   <div class="wrap col">
-    <p class="eyebrow"><span class="tag">C</span> 90 days from launch</p>
+    <p class="eyebrow">90 days from launch</p>
     <h2>Picture a Monday about 90 days after launch.</h2>
     <p>You open one email. It's a one-page report: what went out last week, who replied, who qualified, who booked, who showed up, and what each attended meeting cost.</p>
     <p>You read it in two minutes. Nothing surprises you, because you've had one like it every week since launch.</p>
-    <p>Then you look at your advisors' calendars. There are first meetings on them that nobody in your office chased. A business owner <span class="slot">[EXAMPLE: 18 months from selling]</span>. A <span class="slot">[EXAMPLE: recently retired executive]</span>. A 2023 referral who finally wrote back.</p>
+    <p>Then you look at your advisors' calendars. There are first meetings on them that nobody in your office chased. A business owner 18 months from selling. A recently retired executive. A 2023 referral who finally wrote back.</p>
     <p>Each one was screened against criteria you wrote down. Each one got a confirmation and reminders. Your advisor walks in knowing who they're meeting and why.</p>
     <p>Your CCO is relaxed. They approved every message before it went out, and every reply is logged where they can see it.</p>
     <p>Your advisors spend their week advising and running first meetings. Nobody is writing LinkedIn posts or making cold calls they hate.</p>
@@ -337,10 +333,10 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
   </div>
 </section>
 
-<!-- D. WHY STUCK -->
+<!-- WHY STUCK -->
 <section id="stuck">
   <div class="wrap col">
-    <p class="eyebrow"><span class="tag">D</span> Why you're stuck</p>
+    <p class="eyebrow">Why you're stuck</p>
     <h2>It isn't your advisors, and it isn't your service.</h2>
     <p>Firms your size usually stall for four reasons.</p>
     <div class="reasons">
@@ -379,11 +375,11 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
   </div>
 </section>
 
-<!-- E. MECHANISM -->
+<!-- MECHANISM -->
 <section id="system">
   <div class="wrap" style="display:flex;flex-direction:column;gap:28px">
     <div class="col">
-      <p class="eyebrow"><span class="tag">E</span> The Advisor Pipeline System</p>
+      <p class="eyebrow">The Advisor Pipeline System</p>
       <h2>Three sources of first meetings. One number.</h2>
       <p class="lede">The Advisor Pipeline System pulls first meetings from three sources and delivers them to your advisors' calendars. We build it, run it and report on it every week.</p>
     </div>
@@ -411,16 +407,15 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
         <h3>The one number</h3>
         <p>Everything rolls up into one weekly figure: <strong>cost per attended, qualified first meeting.</strong></p>
         <p>We don't report opens, clicks or "engagement." If the number is bad, you'll see it in week two rather than month six, and we'll fix it together on the weekly huddle.</p>
-        <span class="slot-block">[PROOF INSERT: LOOM WALKTHROUGH. 3-minute screen-share of the build using demo data, clearly labeled "demo".]</span>
       </div>
-      <div class="report" aria-label="Sample weekly report layout">
-        <div class="report-head"><span>Weekly pipeline report</span><span>Sample layout</span></div>
-        <div class="report-row"><span>Messages sent</span><span class="slot num">[#]</span></div>
-        <div class="report-row"><span>Replies</span><span class="slot num">[#]</span></div>
-        <div class="report-row"><span>Qualified</span><span class="slot num">[#]</span></div>
-        <div class="report-row"><span>Meetings booked</span><span class="slot num">[#]</span></div>
-        <div class="report-row"><span>Meetings attended</span><span class="slot num">[#]</span></div>
-        <div class="report-row"><span>Cost per attended, qualified meeting</span><span class="slot num">[$#]</span></div>
+      <div class="report" aria-label="What the weekly report shows">
+        <div class="report-head"><span>Weekly pipeline report</span><span>One page</span></div>
+        <div class="report-row"><span>Messages sent</span></div>
+        <div class="report-row"><span>Replies</span></div>
+        <div class="report-row"><span>Qualified</span></div>
+        <div class="report-row"><span>Meetings booked</span></div>
+        <div class="report-row"><span>Meetings attended</span></div>
+        <div class="report-row"><span>Cost per attended, qualified meeting</span><span>The one number</span></div>
       </div>
     </div>
 
@@ -433,7 +428,6 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
         <li><span class="mono">Day 60</span><strong>Quality review</strong><p>Who booked, who showed, and calendar capacity against target.</p></li>
         <li><span class="mono">Day 90</span><strong>Full cadence</strong><p>Guarantee checkpoint. We decide the next step together.</p></li>
       </ol>
-      <p class="small muted" style="margin-top:14px">Target cadence at full ramp: <span class="slot">[CONFIRM: 6 to 8]</span> attended, qualified meetings per month. That's a target, not a promise. The promise is in the guarantee below.</p>
     </div>
 
     <div class="wide-grid">
@@ -442,16 +436,16 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
         <ul class="plain">
           <li>One 60-minute kickoff</li>
           <li>Access to your CRM and advisor calendars</li>
-          <li>CCO approvals within <span class="slot">[X]</span> business days</li>
+          <li>Timely CCO approvals, so launch stays on schedule</li>
           <li>Room for 8 or more first meetings a month across your advisors</li>
           <li>One decision-maker on a 20-minute weekly huddle</li>
           <li>Advisors who show up to meetings and follow up afterward</li>
         </ul>
         <p>That's it.</p>
       </div>
-      <!-- K. CTA 3: QUALIFIER -->
+      <!-- CTA 3: QUALIFIER -->
       <div class="cta" id="fit">
-        <p class="eyebrow"><span class="tag">K</span> Fit check</p>
+        <p class="eyebrow">Fit check</p>
         <h3>Is your firm a fit? Check all five.</h3>
         <ul class="checks">
           <li>Independent RIA, $50M to $250M AUM</li>
@@ -460,18 +454,18 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
           <li>Compliance is open to outbound</li>
           <li>Your advisors have room for 8+ first meetings a month</li>
         </ul>
-        <div><a class="btn" href="#book">I checked all five. Book my call</a></div>
+        <div><a class="btn" href="book.html">I checked all five. Book my call</a></div>
         <p class="fine">Missing one? Book anyway. We'll tell you exactly what's missing and whether a smaller project makes more sense.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- F. DIFFERENT -->
+<!-- DIFFERENT -->
 <section id="different">
   <div class="wrap" style="display:flex;flex-direction:column;gap:24px">
     <div class="col">
-      <p class="eyebrow"><span class="tag">F</span> What makes this different</p>
+      <p class="eyebrow">What makes this different</p>
       <h2>We're not an agency. We're a booked-meeting operator.</h2>
       <p>Agencies sell campaigns, content and impressions. We install a system you can watch working in your calendar and your CRM, week by week.</p>
       <ul class="plain">
@@ -486,10 +480,11 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
         <li><strong>The guarantee is in the contract, not just on this page.</strong></li>
       </ul>
     </div>
+    <p class="small muted scroll-hint">Swipe the table sideways to compare.</p>
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th></th><th>Typical agency</th><th>Lead vendor</th><th>In-house hire</th><th class="hl">Advisor Booked</th></tr>
+          <tr><th></th><th>Typical agency</th><th>Lead vendor</th><th>In-house hire</th><th class="hl">Advisor Booking</th></tr>
         </thead>
         <tbody>
           <tr><th>You pay for</th><td>Content and activity</td><td>Names</td><td>Salary and ramp time</td><td class="hl">A running system that produces attended meetings</td></tr>
@@ -500,40 +495,30 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
         </tbody>
       </table>
     </div>
-    <div class="col" style="max-width:none">
-      <h3>Proof</h3>
-      <p class="small muted">Hide this block until each item is real.</p>
-      <div class="proof-grid">
-        <span class="slot-block">[PROOF INSERT: FOUNDER TRACK RECORD STAT]</span>
-        <span class="slot-block">[PROOF INSERT: RIA QUOTE ABOUT MEETING QUALITY]</span>
-        <span class="slot-block">[PROOF INSERT: CHART: MEETINGS / SHOW RATE / COST PER MEETING]</span>
-        <span class="slot-block">[PROOF INSERT: COMPLIANCE OFFICER COMMENT]</span>
-      </div>
-    </div>
   </div>
 </section>
 
-<!-- G. VALUE STACK -->
+<!-- VALUE STACK -->
 <section id="stack">
   <div class="wrap col">
-    <p class="eyebrow"><span class="tag">G</span> What's included</p>
-    <h2>Everything in the Advisor Pipeline Founding Sprint</h2>
+    <p class="eyebrow">What's included</p>
+    <h2>Everything in the Founding Sprint</h2>
 
     <div class="stack-group">
       <span class="mono">Core: Advisor Pipeline Build and Run (90 days)</span>
       <ol class="stack">
         <li><span class="n">01</span><div class="body"><strong>Ideal Client Profile, documented and signed off</strong><p>Who we target, what qualifies and what disqualifies, written down before a single message goes out.</p><p class="rep">Replaces: guessing, and arguing later about whether a meeting "counted."</p>
-          <p class="why"><span class="chip">More certain</span> Everyone agrees on what counts before launch, so day 90 holds no surprises.</p><span class="slot">[PROOF INSERT: SAMPLE ICP DOCUMENT. Redacted template.]</span></div></li>
+          <p class="why"><span class="chip">More certain</span> Everyone agrees on what counts before launch, so day 90 holds no surprises.</p></div></li>
         <li><span class="n">02</span><div class="body"><strong>New outreach list plus CRM cleanup (1,000+ contacts)</strong><p>A fresh list of HNW individuals and business owners who match your profile, plus a cleaned and segmented CRM.</p><p class="rep">Replaces: buying data you can't trust, and a CRM nobody touches.</p>
           <p class="why"><span class="chip">Faster</span> Outreach starts with people who already know your firm, while the new list warms up.</p></div></li>
         <li><span class="n">03</span><div class="body"><strong>3 to 5 CCO-approved sequences (email and LinkedIn)</strong><p>Separate sequences for new prospects, dormant contacts and referral-source contacts, in your firm's voice.</p><p class="rep">Replaces: a copywriter plus weeks of back-and-forth with compliance.</p>
-          <p class="why"><span class="chip">Easier</span> Your compliance officer reviews 3 to 5 sequences up front instead of one-off messages every week.</p><span class="slot">[PROOF INSERT: SAMPLE SEQUENCE. One redacted email, labeled "example".]</span></div></li>
+          <p class="why"><span class="chip">Easier</span> Your compliance officer reviews 3 to 5 sequences up front instead of one-off messages every week.</p></div></li>
         <li><span class="n">04</span><div class="body"><strong>Sending setup: domains, inboxes and warmup, wired to your CRM and calendars</strong><p>Dedicated sending infrastructure protects your main domain's reputation.</p><p class="rep">Replaces: a deliverability consultant and a weekend of DNS settings.</p>
           <p class="why"><span class="chip">Safer</span> Your main domain stays out of the sending, so day-to-day client email is protected.</p></div></li>
         <li><span class="n">05</span><div class="body"><strong>Human reply handling, qualification and booking</strong><p>Every reply read, screened against your written rules and booked onto advisor calendars, with confirmations and reminders.</p><p class="rep">Replaces: the part-time SDR you'd otherwise hire, train and manage.</p>
           <p class="why"><span class="chip">Faster</span> A real person answers within 1 business day, while the prospect is still interested.</p></div></li>
         <li><span class="n">06</span><div class="body"><strong>Weekly one-page pipeline report</strong><p>Sent, replies, qualified, booked, attended, and cost per attended, qualified meeting.</p><p class="rep">Replaces: 20-page agency decks that never answer "did it work?"</p>
-          <p class="why"><span class="chip">More certain</span> You see cost per attended, qualified meeting every week and can act in week two.</p><span class="slot">[PROOF INSERT: SAMPLE WEEKLY REPORT. Screenshot with demo data, labeled "sample".]</span></div></li>
+          <p class="why"><span class="chip">More certain</span> You see cost per attended, qualified meeting every week and can act in week two.</p></div></li>
       </ol>
     </div>
 
@@ -558,11 +543,11 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
   </div>
 </section>
 
-<!-- H. BONUSES -->
+<!-- BONUSES -->
 <section id="bonuses">
   <div class="wrap" style="display:flex;flex-direction:column;gap:24px">
     <div class="col">
-      <p class="eyebrow"><span class="tag">H</span> Bonuses</p>
+      <p class="eyebrow">Bonuses</p>
       <h2>Four bonuses. Each one makes it faster, easier or safer.</h2>
     </div>
     <div class="bonuses">
@@ -570,35 +555,31 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
         <span class="chip">Easier</span>
         <h3>Bonus 1: Advisor Follow-Up Kit</h3>
         <p>First-meeting agenda templates, a pre-meeting email and a post-meeting follow-up sequence. A booked meeting is only worth what happens after it. Sales process only; investment conversations stay with your advisors.</p>
-        <span class="slot">[VALUE: $X]</span>
       </div>
       <div class="bonus">
         <span class="chip">Safer and faster</span>
         <h3>Bonus 2: CCO Ready Pack</h3>
         <p>A pre-drafted outreach policy template, a books-and-records checklist and sample language your CCO can adapt for your manual. Faster approvals mean a faster launch.</p>
         <p class="small muted">Templates for your CCO to adapt. Not legal or compliance advice.</p>
-        <span class="slot">[VALUE: $X]</span>
       </div>
       <div class="bonus">
         <span class="chip">Faster</span>
         <h3>Bonus 3: Dormant List Monetization Map</h3>
         <p>A one-page map of your CRM: its segments, the message angle for each and a reactivation schedule. You keep it whether or not you continue with us.</p>
-        <span class="slot">[VALUE: $X]</span>
       </div>
       <div class="bonus">
         <span class="chip">Safer</span>
         <h3>Bonus 4: Day-60 Meeting Quality Review</h3>
         <p>One working session with your principal: who booked, who showed up, whether they matched your criteria, and capacity against target. Course-correct at the halfway point, not at day 90.</p>
-        <span class="slot">[VALUE: $X]</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- I. GUARANTEE -->
+<!-- GUARANTEE -->
 <section id="guarantee">
   <div class="wrap col">
-    <p class="eyebrow"><span class="tag">I</span> The guarantee</p>
+    <p class="eyebrow">Guarantee</p>
     <div class="guarantee">
       <h2>The 15-Meeting Guarantee</h2>
       <blockquote>In your first 90 days from launch, we commit to at least 15 attended, qualified meetings that match your written criteria. If we're short, we keep working at our cost (no operating fee) until you've taken 15 such meetings.</blockquote>
@@ -607,69 +588,59 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
 
     <h3>What counts as an attended, qualified meeting</h3>
     <ol class="numbered">
-      <li>The prospect meets the criteria you set in writing, for example <span class="slot">[EDIT TO MATCH SCHEDULE A: investable assets of $X or more, in your service area, not an existing client or household]</span>.</li>
+      <li>The prospect meets the criteria you set in writing before launch, such as minimum investable assets, your service area, and not already being a client.</li>
       <li>We booked them onto an advisor's calendar.</li>
       <li>They actually attended the first meeting.</li>
     </ol>
     <p><strong>These don't count:</strong> no-shows, existing clients and anyone outside your written criteria. They don't count for us either.</p>
 
     <h3>Your side of the deal</h3>
-    <p>The guarantee holds as long as you complete the kickoff, turn around CCO approvals within <span class="slot">[X]</span> business days, keep first-meeting slots open and have your advisors attend the meetings.</p>
+    <p>The guarantee holds as long as you complete the kickoff, turn around CCO approvals on the schedule in your agreement, keep first-meeting slots open and have your advisors attend the meetings.</p>
 
     <h3>What we don't promise</h3>
     <p>We don't promise new clients, assets or revenue. Those depend on your advisors, and no honest vendor can promise them. We promise the part we control: qualified people sitting across from your advisors.</p>
     <p class="pull">If we fall short, we pay for it, not you.</p>
 
-    <!-- K. CTA 2: RISK REVERSAL -->
+    <!-- CTA 2: RISK REVERSAL -->
     <div class="cta">
-      <p class="eyebrow"><span class="tag">K</span> Founding spots</p>
+      <p class="eyebrow">Founding spots</p>
       <h3>15 attended, qualified meetings in your first 90 days, or we keep working at our cost.</h3>
-      <div><a class="btn" href="#book">Claim a Founding Sprint spot</a></div>
+      <div><a class="btn" href="book.html">Claim a Founding Sprint spot</a></div>
       <p class="fine">$3,500 every 4 weeks · No setup fee · Guarantee written into the agreement</p>
     </div>
   </div>
 </section>
 
-<!-- J. PRICING -->
+<!-- PRICING -->
 <section id="pricing">
   <div class="wrap" style="display:flex;flex-direction:column;gap:28px">
     <div class="col">
-      <p class="eyebrow"><span class="tag">J</span> Pricing</p>
+      <p class="eyebrow">Pricing</p>
       <h2>What this would cost to build yourself</h2>
-      <p><strong>Hiring in-house:</strong> an SDR salary of <span class="slot">[$X]</span>, plus benefits, data, sending tools, deliverability setup, compliance training and management time. Expect <span class="slot">[3 to 6]</span> months before they're productive, and you carry the risk if they leave.</p>
-      <span class="slot-block">[PROOF INSERT: STAT. Loaded annual cost of an SDR or marketing coordinator, from a cited source.]</span>
+      <p><strong>Hiring in-house:</strong> a sales development rep earns about $80,000 a year at target, and takes about 3 months to ramp. That's before benefits, data, sending tools, compliance training and your management time, and you carry the risk if they leave.</p>
+      <p class="cite">Source: The Bridge Group, 2025 SDR Metrics Report (median on-target earnings and ramp time).</p>
       <p><strong>Our standard rate:</strong> once we have case studies, the Advisor Pipeline will be <strong>$7,000 every 4 weeks</strong>, or <strong>$21,000 for a 90-day sprint</strong>.</p>
     </div>
 
     <div class="wide-grid">
-      <div class="table-wrap" style="margin:0">
-        <table class="recap">
-          <thead><tr><th>The stack</th><th>Value</th></tr></thead>
-          <tbody>
-            <tr><td>Advisor Pipeline Build and Run (90 days)</td><td class="num">$21,000 <span class="muted small">standard rate</span></td></tr>
-            <tr><td>Supporting assets (Blueprint, copy library, wiring)</td><td><span class="slot">[$X]</span></td></tr>
-            <tr><td>Bonus 1: Advisor Follow-Up Kit</td><td><span class="slot">[$X]</span></td></tr>
-            <tr><td>Bonus 2: CCO Ready Pack</td><td><span class="slot">[$X]</span></td></tr>
-            <tr><td>Bonus 3: Dormant List Monetization Map</td><td><span class="slot">[$X]</span></td></tr>
-            <tr><td>Bonus 4: Day-60 Meeting Quality Review</td><td><span class="slot">[$X]</span></td></tr>
-          </tbody>
-          <tfoot><tr><td>Total value</td><td><span class="slot">[$X]</span></td></tr></tfoot>
-        </table>
-      </div>
-
       <div class="price-card">
         <p class="eyebrow">Founding Sprint price</p>
-        <p class="muted small"><span class="strike num">$7,000 every 4 weeks</span> standard rate</p>
-        <p class="price num">$3,500<small>every 4 weeks</small></p>
+        <p class="price num">$3,500 <small>every 4 weeks</small></p>
         <p><strong>Founding rate: $3,500 every 4 weeks, no setup fee, no per-meeting fees during the 90-day sprint.</strong></p>
         <ul class="plain">
-          <li>Initial term: 3 billing cycles from launch (about 90 days), so <strong class="num">$10,500</strong> total</li>
-          <li><strong>No setup fee</strong></li>
-          <li><strong>No per-meeting fees</strong></li>
+          <li>3 billing cycles from launch, about 90 days: <strong class="num">$10,500 total</strong></li>
           <li>The 15-Meeting Guarantee, written into the agreement</li>
         </ul>
         <p class="small"><strong>Optional add-on:</strong> Extra Advisor Calendar Setup, $1,000 one-time per additional advisor, added during onboarding.</p>
-        <div><a class="btn" href="#book">Book the 20-minute fit call</a></div>
+        <div><a class="btn" href="book.html">Book the 20-minute fit call</a></div>
+      </div>
+
+      <div class="suboffer">
+        <p class="eyebrow">Not ready for full outbound?</p>
+        <h3>Dormant List Reactivation</h3>
+        <p class="price-sm num">$7,500 one-time</p>
+        <p>A 60-day project on the contacts you already have: CRM cleanup, segmentation, reactivation campaigns, reply handling, booking and reporting. No new list build.</p>
+        <div><a class="btn btn-ghost" href="book.html">Ask about it on the call</a></div>
       </div>
     </div>
 
@@ -680,20 +651,20 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
         <p>The most you pay per attended, qualified first meeting during the Founding Sprint: $10,500 ÷ 15 meetings.*</p>
       </div>
       <p>What does your firm pay per first meeting from seminars, ads or events today?</p>
-      <span class="slot-block">[PROOF INSERT: COMPARISON. The prospect's own cost per first meeting, collected on the fit call.]</span>
-      <p><strong>Your own economics (illustrative only):</strong> suppose your average new household brings <span class="slot">$[1.5M]</span> at a <span class="slot">[1.0%]</span> fee. That's <span class="slot">$[15,000]</span> a year in revenue, and more over the life of the relationship, so a single new household could cover the whole sprint fee. This is math on your own numbers, not a promise. Your close rate is yours.</p>
-      <p><strong>Why the founding rate is half the standard rate:</strong> we don't have RIA case studies yet. You're taking a chance by going first, so we've priced that in and put the guarantee in writing. In exchange, we ask <span class="slot">[DECIDE: e.g., for an honest review and a case study or reference call if you're happy with the results]</span>.</p>
+      <p><strong>Your own economics (illustrative only):</strong> the median advisory fee is about 1% up to $1 million and about 0.9% at $2 million. At 0.9% on a $1.5 million household, that's $13,500 a year in fees, more than the full $10,500 sprint. This is math, not a promise. Your close rate is yours.</p>
+      <p class="cite">Source: Kitces Research advisor fee study (median AUM fees by household size).</p>
+      <p><strong>Why the founding rate is half the standard rate:</strong> we don't have RIA case studies yet. You're taking a chance by going first, so we've priced that in and put the guarantee in writing.</p>
       <p>We're taking 5 founding firms. Delivery is hands-on, and we won't stretch it thinner than that.</p>
       <p class="small muted">*Subject to the terms of your agreement.</p>
     </div>
   </div>
 </section>
 
-<!-- K. CTA 1: DIRECT -->
+<!-- CTA 1: DIRECT -->
 <section id="book">
   <div class="wrap col">
     <div class="cta">
-      <p class="eyebrow"><span class="tag">K</span> Next step</p>
+      <p class="eyebrow">Next step</p>
       <h2>Find out in 20 minutes whether this fits your firm.</h2>
       <p>We'll look at your AUM, advisor capacity, CRM size and how you win clients today. Then we'll run the meetings-to-clients math on your numbers.</p>
       <p>The call ends with a simple yes or no, from both sides.</p>
@@ -705,10 +676,10 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
   </div>
 </section>
 
-<!-- L. FAQ -->
+<!-- FAQ -->
 <section id="faq">
   <div class="wrap col">
-    <p class="eyebrow"><span class="tag">L</span> Questions</p>
+    <p class="eyebrow">FAQ</p>
     <h2>Frequently asked questions</h2>
     <dl class="faq">
       <dt>Will our compliance team allow outbound to HNW prospects?</dt>
@@ -721,7 +692,7 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
       <dd><p>We keep working at our cost, with no operating fee, until your team has taken 15 attended, qualified meetings. That holds as long as you've done your part on approvals, calendar availability and attendance.</p></dd>
 
       <dt>You have no RIA case studies. Why should I trust you?</dt>
-      <dd><p>You shouldn't trust us blindly. That's why the founding price is half our standard rate, the guarantee is in the contract, and you see the real numbers every week from launch. If it isn't working, you'll know long before you've spent much.</p><span class="slot-block">[PROOF INSERT: FOUNDER BACKGROUND. Nick's track record building and running outbound and appointment systems. Label any non-RIA results as non-RIA.]</span></dd>
+      <dd><p>You shouldn't trust us blindly. That's why the founding price is half our standard rate, the guarantee is in the contract, and you see the real numbers every week from launch. If it isn't working, you'll know long before you've spent much.</p></dd>
 
       <dt>Won't cold outreach make our firm look desperate?</dt>
       <dd><p>Not the way we run it. Volume is low and messages are plain text in your firm's voice. They read like a note from an advisor, not an ad. Every email includes an opt-out, and dedicated sending domains protect your main domain.</p></dd>
@@ -736,22 +707,16 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
       <dd><p>A 60-minute kickoff, CCO review time mostly in the first three weeks, then 20 minutes a week. Your advisors' job is to run the meetings.</p></dd>
 
       <dt>What happens after 90 days?</dt>
-      <dd><p>Three options. <strong>Continue</strong> at <span class="slot">[DECIDE: founding rate held for X months, or the standard rate]</span>. <strong>Expand</strong> with Advisor Pipeline Plus: a second niche or office, a higher meeting target and more advisor calendars, at $7,000 every 4 weeks. Or <strong>stop</strong>, and keep your data, approved copy, ICP Blueprint and Dormant List Map.</p></dd>
+      <dd><p>Three options. <strong>Continue</strong> running the system. <strong>Expand</strong> with Advisor Pipeline Plus: a second niche or office, a higher meeting target and more advisor calendars, at $7,000 every 4 weeks. Or <strong>stop</strong>, and keep your data, approved copy, ICP Blueprint and Dormant List Map.</p></dd>
 
       <dt>Can we cancel?</dt>
-      <dd><p>The initial term is 3 billing cycles from launch, about 90 days. After that, <span class="slot">[CONFIRM: notice terms, e.g., 30 days' written notice]</span>.</p></dd>
+      <dd><p>The initial term is 3 billing cycles from launch, about 90 days.</p></dd>
 
       <dt>Why "every 4 weeks" instead of monthly?</dt>
       <dd><p>Billing matches our work cycles. So there are no surprises: that's 13 billing cycles a year, not 12.</p></dd>
 
       <dt>We have several advisors. Can meetings go to all of them?</dt>
-      <dd><p>Yes. The sprint includes <span class="slot">[CONFIRM: X]</span> advisor calendars. Each additional calendar is $1,000 one-time, set up during onboarding.</p></dd>
-
-      <dt>Which CRMs do you work with?</dt>
-      <dd><p><span class="slot">[LIST: e.g., Redtail, Wealthbox, Salesforce]</span>. If yours isn't listed, ask on the call.</p></dd>
-
-      <dt>We're not ready for full outbound. Is there a smaller option?</dt>
-      <dd><p>Yes: <strong>Dormant List Reactivation</strong>, a 60-day project for $7,500 one-time. It covers CRM cleanup, segmentation, reactivation campaigns, reply handling, booking and reporting. No new list build.</p></dd>
+      <dd><p>Yes. Each additional advisor calendar is $1,000 one-time, set up during onboarding.</p></dd>
 
       <dt>Do you ever discuss investments or performance with prospects?</dt>
       <dd><p>No. We confirm fit against your criteria and book the meeting. Everything about investments happens with your advisor. We're paid a flat fee as a marketing vendor and never share in your fees or assets.</p></dd>
@@ -760,58 +725,30 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
       <dd><p>You do, under the IP terms in the agreement.</p></dd>
 
       <dt>Who will I actually work with?</dt>
-      <dd><p>Nick De Jesus, founder, runs your weekly huddle personally.</p><span class="slot-block">[PROOF INSERT: FOUNDER PHOTO + 3-LINE BIO]</span></dd>
+      <dd><p>Nick De Jesus, founder, runs your weekly huddle personally.</p></dd>
     </dl>
   </div>
 </section>
 
 <section id="disclaimer" style="padding:40px 0">
   <div class="wrap col">
-    <p class="small muted">Advisor Booked is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
-  </div>
-</section>
-
-<!-- EDITOR NOTES -->
-<section id="notes">
-  <div class="wrap col">
-    <div class="notes">
-      <p class="eyebrow">Editor notes. Not part of the page.</p>
-      <h3>Assumptions in this demo</h3>
-      <ul>
-        <li>Pricing: Founding Sprint $3,500 every 4 weeks, anchored to the standard 7K service at $7,000 every 4 weeks (confirmed Oct 31).</li>
-        <li>"5 founding firms" comes from the pilot seat count in the site settings (pilotSeatsTotal: 5).</li>
-        <li>Brand: this page says Advisor Booked (per the Oct 18 brief). The rest of this site says Advisor Booking at advisorbooking.com. Pick one before launch.</li>
-        <li>Guarantee and pricing lines use your locked wording. The agreement must say the same thing.</li>
-        <li>Client delivery channels on this page: email and LinkedIn only. Seminars and bought leads appear only as things prospects already tried.</li>
-        <li>Section letters A to L match the sales page brief. Remove them at launch.</li>
-        <li>The hero calendar is an illustration, not client data.</li>
-      </ul>
-      <h3>Before this goes live</h3>
-      <ol>
-        <li>No client agreement exists yet. Draft it from the guarantee and pricing lines on this page, word for word, with the "qualified" criteria as a schedule.</li>
-        <li>Fill in the "qualified" definition from Schedule A. It's the line most likely to cause a dispute.</li>
-        <li>Decide what founding clients pay after 90 days.</li>
-        <li>Check /pilot and the home page against this page so pricing, guarantee and seat counts match.</li>
-        <li>Use scarcity numbers only if they're true.</li>
-        <li>Use real proof only. Label demo and non-RIA proof. Hide case-study slots until the first result exists.</li>
-        <li>Have counsel review the "flat fee marketing vendor" language and the CCO Ready Pack disclaimer.</li>
-      </ol>
-      <h3>Alternate headlines to test</h3>
-      <ol>
-        <li><strong>You have the advisors, the process, and a CRM full of names. We add the meetings.</strong> Sub: Advisor Booked turns your dormant CRM and a targeted outbound list into attended, qualified first meetings. Your CCO approves every message before it goes out.</li>
-        <li><strong>Stop buying leads. Start measuring meetings.</strong> Sub: We run your outbound and report one number every week: what each attended, qualified first meeting cost you. Under the founding guarantee, that's never more than $700.*</li>
-        <li><strong>Referrals built your firm. They can't be your only growth plan.</strong> Sub: Add a second source of HNW and business-owner first meetings. We build it and run it, your CCO approves it, and you see the numbers every week.</li>
-        <li><strong>The Advisor Pipeline Founding Sprint: 15 qualified meetings in 90 days, written into the contract.</strong> Sub: $3,500 every 4 weeks, half our planned standard rate, for a small group of independent RIAs willing to go first. No setup fee. No per-meeting fees.</li>
-      </ol>
-    </div>
+    <p class="small muted">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
   </div>
 </section>
 
 </main>
 
 <footer>
-  <div class="wrap">Advisor Booked, a De Jesus Ventures LLC company. Demo draft, October 31, 2026. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></div>
+  <div class="wrap">© 2026 Advisor Booking, a De Jesus Ventures LLC company. Boca Raton, FL. info@advisorbooking.com · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></div>
 </footer>
+
+<script>
+// Carry UTM tags from this page to the booking page.
+(function () {
+  if (!location.search) return;
+  document.querySelectorAll('a[href="book.html"]').forEach(function (a) { a.href = "book.html" + location.search; });
+})();
+</script>
 
 </body>
 </html>
