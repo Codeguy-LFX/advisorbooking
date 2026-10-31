@@ -124,6 +124,11 @@ section { padding: 72px 0; border-top: 1px solid var(--rule); }
 .sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
 .sw.first { background: var(--accent); } .sw.busy { background: var(--busy); border: 1px solid var(--rule); }
 
+.glance { list-style: none; margin: 48px 0 0; padding: 22px 0 0; border-top: 1px solid var(--rule); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.glance li { display: flex; flex-direction: column; gap: 6px; font-size: 0.98rem; }
+.glance-k { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); font-weight: 500; }
+@media (max-width: 900px) { .glance { grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 36px; } }
+
 /* lists */
 .checks { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
 .checks li { display: grid; grid-template-columns: 26px 1fr; gap: 8px; }
@@ -134,6 +139,8 @@ section { padding: 72px 0; border-top: 1px solid var(--rule); }
 .plain { padding-left: 1.1em; margin: 0; display: flex; flex-direction: column; gap: 8px; }
 
 .pull { font-family: var(--font-display); font-size: 1.45rem; line-height: 1.3; font-weight: 500; border-left: 3px solid var(--accent); padding-left: 18px; }
+
+.subhead { margin-top: 22px; padding-top: 26px; border-top: 1px solid var(--rule); }
 
 /* reasons */
 .reasons { display: grid; gap: 22px; }
@@ -177,10 +184,11 @@ thead .hl { color: var(--ink); font-weight: 600; }
 .stack .n { font-family: var(--font-mono); color: var(--accent); font-size: 0.9rem; padding-top: 2px; }
 .stack .body { display: flex; flex-direction: column; gap: 6px; }
 .stack .rep { font-size: 0.9rem; color: var(--muted); }
+.stack .rep strong { color: var(--ink); }
 
 .bonuses { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 8px; }
 .bonus { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 22px; display: flex; flex-direction: column; gap: 10px; }
-.chip { align-self: flex-start; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid var(--accent); color: var(--accent); border-radius: 999px; padding: 2px 10px; }
+.chip { font-weight: 600; align-self: flex-start; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid var(--accent); color: var(--accent); border-radius: 999px; padding: 2px 10px; }
 
 /* guarantee */
 .guarantee { border: 2px solid var(--accent); border-radius: 10px; padding: 28px; background: var(--surface); display: flex; flex-direction: column; gap: 14px; }
@@ -198,6 +206,8 @@ thead .hl { color: var(--ink); font-weight: 600; }
 .recap tfoot td { font-weight: 700; border-bottom: 0; }
 
 .suboffer { border: 1px solid var(--rule); border-radius: 10px; padding: 28px; background: var(--surface); display: flex; flex-direction: column; gap: 12px; }
+.std-rate { font-size: 0.98rem; color: var(--muted); padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
+.std-rate strong { color: var(--ink); }
 .price-sm { font-family: var(--font-display); font-size: 1.6rem; font-weight: 600; }
 .cite { font-size: 0.82rem; color: var(--muted); }
 .scroll-hint { display: none; }
@@ -291,6 +301,13 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
       </figcaption>
     </figure>
   </div>
+  <div class="wrap">
+    <ul class="glance" aria-label="At a glance">
+      <li><span class="glance-k">Who it's for</span><span>Independent RIAs with $50M to $250M AUM and 2 to 10 advisors.</span></li>
+      <li><span class="glance-k">What we do</span><span>Run outbound and dormant CRM reactivation, and book attended, qualified first meetings on your advisors' calendars.</span></li>
+      <li><span class="glance-k">What you get</span><span>At least 15 attended, qualified meetings in your first 90 days from launch, or we keep working at our cost. $3,500 every 4 weeks, no setup fee.</span></li>
+    </ul>
+  </div>
 </div>
 
 <main>
@@ -358,7 +375,7 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
       </div>
     </div>
 
-    <h3 style="margin-top:18px">What you've probably already tried</h3>
+    <h3 class="subhead">What you've probably already tried</h3>
     <ul class="plain">
       <li><strong>A marketing agency.</strong> You got content, a website refresh, social posts and a monthly report full of impressions. You still can't say whether any of it put a meeting on a calendar.</li>
       <li><strong>Seminars and events.</strong> They're expensive and slow, and half the room came for the dinner.</li>
@@ -368,7 +385,7 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
     </ul>
     <p>The pattern is the same every time: a tactic with no system behind it and nobody running it day to day.</p>
 
-    <h3 style="margin-top:18px">Why this matters now</h3>
+    <h3 class="subhead">Why this matters now</h3>
     <p>Since the SEC Marketing Rule took effect, your CCO has to defend every claim your firm makes. Most agencies still sell vanity metrics and vague "brand" work, and you carry the risk.</p>
     <p>Meanwhile, business owners sell their companies and HNW families review their advisors every week. They're taking first meetings with somebody.</p>
     <p><strong>The fix isn't another tactic. It's a system someone owns, with one number you watch every week and your CCO's approval built in.</strong></p>
@@ -507,17 +524,17 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
     <div class="stack-group">
       <span class="mono">Core: Advisor Pipeline Build and Run (90 days)</span>
       <ol class="stack">
-        <li><span class="n">01</span><div class="body"><strong>Ideal Client Profile, documented and signed off</strong><p>Who we target, what qualifies and what disqualifies, written down before a single message goes out.</p><p class="rep">Replaces: guessing, and arguing later about whether a meeting "counted."</p>
+        <li><span class="n">01</span><div class="body"><strong>Ideal Client Profile, documented and signed off</strong><p>Who we target, what qualifies and what disqualifies, written down before a single message goes out.</p><p class="rep"><strong>Replaces:</strong> guessing, and arguing later about whether a meeting "counted."</p>
           <p class="why"><span class="chip">More certain</span> Everyone agrees on what counts before launch, so day 90 holds no surprises.</p></div></li>
-        <li><span class="n">02</span><div class="body"><strong>New outreach list plus CRM cleanup (1,000+ contacts)</strong><p>A fresh list of HNW individuals and business owners who match your profile, plus a cleaned and segmented CRM.</p><p class="rep">Replaces: buying data you can't trust, and a CRM nobody touches.</p>
+        <li><span class="n">02</span><div class="body"><strong>New outreach list plus CRM cleanup (1,000+ contacts)</strong><p>A fresh list of HNW individuals and business owners who match your profile, plus a cleaned and segmented CRM.</p><p class="rep"><strong>Replaces:</strong> buying data you can't trust, and a CRM nobody touches.</p>
           <p class="why"><span class="chip">Faster</span> Outreach starts with people who already know your firm, while the new list warms up.</p></div></li>
-        <li><span class="n">03</span><div class="body"><strong>3 to 5 CCO-approved sequences (email and LinkedIn)</strong><p>Separate sequences for new prospects, dormant contacts and referral-source contacts, in your firm's voice.</p><p class="rep">Replaces: a copywriter plus weeks of back-and-forth with compliance.</p>
+        <li><span class="n">03</span><div class="body"><strong>3 to 5 CCO-approved sequences (email and LinkedIn)</strong><p>Separate sequences for new prospects, dormant contacts and referral-source contacts, in your firm's voice.</p><p class="rep"><strong>Replaces:</strong> a copywriter plus weeks of back-and-forth with compliance.</p>
           <p class="why"><span class="chip">Easier</span> Your compliance officer reviews 3 to 5 sequences up front instead of one-off messages every week.</p></div></li>
-        <li><span class="n">04</span><div class="body"><strong>Sending setup: domains, inboxes and warmup, wired to your CRM and calendars</strong><p>Dedicated sending infrastructure protects your main domain's reputation.</p><p class="rep">Replaces: a deliverability consultant and a weekend of DNS settings.</p>
+        <li><span class="n">04</span><div class="body"><strong>Sending setup: domains, inboxes and warmup, wired to your CRM and calendars</strong><p>Dedicated sending infrastructure protects your main domain's reputation.</p><p class="rep"><strong>Replaces:</strong> a deliverability consultant and a weekend of DNS settings.</p>
           <p class="why"><span class="chip">Safer</span> Your main domain stays out of the sending, so day-to-day client email is protected.</p></div></li>
-        <li><span class="n">05</span><div class="body"><strong>Human reply handling, qualification and booking</strong><p>Every reply read, screened against your written rules and booked onto advisor calendars, with confirmations and reminders.</p><p class="rep">Replaces: the part-time SDR you'd otherwise hire, train and manage.</p>
+        <li><span class="n">05</span><div class="body"><strong>Human reply handling, qualification and booking</strong><p>Every reply read, screened against your written rules and booked onto advisor calendars, with confirmations and reminders.</p><p class="rep"><strong>Replaces:</strong> the part-time SDR you'd otherwise hire, train and manage.</p>
           <p class="why"><span class="chip">Faster</span> A real person answers within 1 business day, while the prospect is still interested.</p></div></li>
-        <li><span class="n">06</span><div class="body"><strong>Weekly one-page pipeline report</strong><p>Sent, replies, qualified, booked, attended, and cost per attended, qualified meeting.</p><p class="rep">Replaces: 20-page agency decks that never answer "did it work?"</p>
+        <li><span class="n">06</span><div class="body"><strong>Weekly one-page pipeline report</strong><p>Sent, replies, qualified, booked, attended, and cost per attended, qualified meeting.</p><p class="rep"><strong>Replaces:</strong> 20-page agency decks that never answer "did it work?"</p>
           <p class="why"><span class="chip">More certain</span> You see cost per attended, qualified meeting every week and can act in week two.</p></div></li>
       </ol>
     </div>
@@ -619,16 +636,17 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
       <h2>What this would cost to build yourself</h2>
       <p><strong>Hiring in-house:</strong> a sales development rep earns about $80,000 a year at target, and takes about 3 months to ramp. That's before benefits, data, sending tools, compliance training and your management time, and you carry the risk if they leave.</p>
       <p class="cite">Source: The Bridge Group, 2025 SDR Metrics Report (median on-target earnings and ramp time).</p>
-      <p><strong>Our standard rate:</strong> once we have case studies, the Advisor Pipeline will be <strong>$7,000 every 4 weeks</strong>, or <strong>$21,000 for a 90-day sprint</strong>.</p>
     </div>
 
     <div class="wide-grid">
       <div class="price-card">
-        <p class="eyebrow">Founding Sprint price</p>
+        <p class="std-rate">Standard rate: <strong class="num">$7,000 every 4 weeks</strong> ($21,000 per 90-day sprint), coming after we have RIA case studies.</p>
+        <p class="eyebrow">Founding rate</p>
         <p class="price num">$3,500 <small>every 4 weeks</small></p>
         <p><strong>Founding rate: $3,500 every 4 weeks, no setup fee, no per-meeting fees during the 90-day sprint.</strong></p>
         <ul class="plain">
           <li>3 billing cycles from launch, about 90 days: <strong class="num">$10,500 total</strong></li>
+          <li>Founding firms keep this rate as long as they stay</li>
           <li>The 15-Meeting Guarantee, written into the agreement</li>
         </ul>
         <p class="small"><strong>Optional add-on:</strong> Extra Advisor Calendar Setup, $1,000 one-time per additional advisor, added during onboarding.</p>
@@ -654,7 +672,7 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
       <p><strong>Your own economics (illustrative only):</strong> the median advisory fee is about 1% up to $1 million and about 0.9% at $2 million. At 0.9% on a $1.5 million household, that's $13,500 a year in fees, more than the full $10,500 sprint. This is math, not a promise. Your close rate is yours.</p>
       <p class="cite">Source: Kitces Research advisor fee study (median AUM fees by household size).</p>
       <p><strong>Why the founding rate is half the standard rate:</strong> we don't have RIA case studies yet. You're taking a chance by going first, so we've priced that in and put the guarantee in writing.</p>
-      <p>We're taking 5 founding firms. Delivery is hands-on, and we won't stretch it thinner than that.</p>
+      <p>We're taking 5 founding firms this quarter. Delivery is hands-on, and we won't stretch it thinner than that.</p>
       <p class="small muted">*Subject to the terms of your agreement.</p>
     </div>
   </div>
@@ -707,10 +725,10 @@ footer { padding: 40px 0 56px; border-top: 1px solid var(--rule); font-size: 0.8
       <dd><p>A 60-minute kickoff, CCO review time mostly in the first three weeks, then 20 minutes a week. Your advisors' job is to run the meetings.</p></dd>
 
       <dt>What happens after 90 days?</dt>
-      <dd><p>Three options. <strong>Continue</strong> running the system. <strong>Expand</strong> with Advisor Pipeline Plus: a second niche or office, a higher meeting target and more advisor calendars, at $7,000 every 4 weeks. Or <strong>stop</strong>, and keep your data, approved copy, ICP Blueprint and Dormant List Map.</p></dd>
+      <dd><p>Three options. <strong>Continue</strong> at your founding rate: founding firms keep $3,500 every 4 weeks as long as they stay. <strong>Expand</strong> with Advisor Pipeline Plus: a second niche or office, a higher meeting target and more advisor calendars, at $7,000 every 4 weeks. Or <strong>stop</strong>, and keep your data, approved copy, ICP Blueprint and Dormant List Map.</p></dd>
 
       <dt>Can we cancel?</dt>
-      <dd><p>The initial term is 3 billing cycles from launch, about 90 days.</p></dd>
+      <dd><p>The initial term is 3 billing cycles from launch, about 90 days. After that, it renews every 4 weeks.</p></dd>
 
       <dt>Why "every 4 weeks" instead of monthly?</dt>
       <dd><p>Billing matches our work cycles. So there are no surprises: that's 13 billing cycles a year, not 12.</p></dd>
