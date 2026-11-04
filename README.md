@@ -8,7 +8,6 @@ Static marketing site for Advisor Booking (De Jesus Ventures LLC). No build step
 | --- | --- | --- |
 | `index.html` | `/` | Home page |
 | `book.html` | `/book` | Booking page for every home-page button: the logo and the iClosed scheduler full width, nothing else (the pilot lander is the other path to test) |
-| `newsletter.html` | `/newsletter` | Advisor Pipeline Minute sign-up: first name, last name, work email. Sends to `newsletterWebhookUrl` (or `ghlWebhookUrl`) in `assets/config.js`; with both empty it asks people to email instead. |
 | `pilot.html` | `/pilot` | Hidden founding-offer landing page for email and LinkedIn outreach (gated form, then the iClosed calendar). `noindex`, not linked from the nav. |
 | `meetings.html` | `/meetings` | Hidden v1 landing page, kept for later use. `noindex`. |
 | `founding-sprint.html` | `/founding-sprint` | Founding Sprint sales page (hidden lander for outreach). `noindex`, not linked from the nav, not in the sitemap. |

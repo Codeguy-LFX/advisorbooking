@@ -15,8 +15,6 @@ window.AB_CONFIG = {
   eventLength: "20 min",
   // GoHighLevel inbound webhook URL. Empty = submissions are not sent anywhere (they still route the visitor).
   ghlWebhookUrl: "",
-  // Newsletter sign-ups (/newsletter). Empty = they go to ghlWebhookUrl; both empty = the page asks people to email instead.
-  newsletterWebhookUrl: "",
   // Tracking. Empty = the tag is not loaded.
   metaPixelId: "",
   linkedinPartnerId: "",
