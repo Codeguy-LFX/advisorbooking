@@ -4,256 +4,919 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Advisor Booking | We book first meetings for independent RIAs</title>
-<meta name="description" content="For independent RIAs with $50M to $250M AUM. We find HNW individuals and business owners, reach out, and book first meetings on financial advisors’ calendars.">
+<meta name="description" content="For independent RIAs with $50M to $250M+ AUM. We put 8–15 HNWI and business owner meetings on financial advisors’ calendars every month.">
 <link rel="canonical" href="https://advisorbooking.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Advisor Booking">
 <meta property="og:title" content="Advisor Booking | We book first meetings for independent RIAs">
-<meta property="og:description" content="For independent RIAs with $50M to $250M AUM. We find HNW individuals and business owners, reach out, and book first meetings on financial advisors’ calendars.">
+<meta property="og:description" content="For independent RIAs with $50M to $250M+ AUM. We put 8–15 HNWI and business owner meetings on financial advisors’ calendars every month.">
 <meta property="og:url" content="https://advisorbooking.com/">
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+/* Layout: one centered column on a white page, a floating pill nav, pinned scroll moments for the
+   two-pane story and the three steps, card grids with dotted wells, one dark band for the FAQ.
+   A light page by choice, like the live site, so colors are set explicitly here. */
+:root{
+  --bg:#ffffff; --ink:#0d0f0e; --ink-2:#2a2f2d; --muted:#646c68; --faint:#b9c1bd;
+  --line:#e6eae8; --well:#f4f6f5; --dot:#cfd8d4;
+  --accent:#0f7a62; --accent-hover:#0b6551; --accent-soft:#e7f3ee; --accent-bright:#2fbf8f;
+  --bad:#d4483b; --night:#0a0c0b; --night-2:#141816; --night-line:#232a27; --night-ink:#f2f5f4; --night-muted:#99a39f;
+  --f-sans:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.16,1,.3,1); --ease-snap:cubic-bezier(.22,1,.36,1);
+  --gutter:16px; --nav-h:64px;
+  --shadow-soft:0 1px 2px rgba(10,30,22,.04),0 10px 30px -12px rgba(10,30,22,.12),0 0 0 1px rgba(10,30,22,.06);
+  --shadow-float:0 14px 44px -14px rgba(10,30,22,.28),0 0 0 1px rgba(10,30,22,.06);
+  color-scheme:light;
+}
+@media (min-width:700px){:root{--gutter:28px}}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--f-sans);letter-spacing:-.006em;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
+h1,h2,h3,p,ul,ol,figure{margin:0}
+ul,ol{padding:0;list-style:none}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+.wrap{width:100%;max-width:1200px;margin-inline:auto;padding-left:max(var(--gutter),env(safe-area-inset-left,0px));padding-right:max(var(--gutter),env(safe-area-inset-right,0px))}
+.center{text-align:center}
+.mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* Type scale */
+.h-display{font-weight:500;font-size:clamp(42px,7.4vw,100px);line-height:.98;letter-spacing:-.048em;text-wrap:balance}
+.h2{font-weight:500;font-size:clamp(34px,4.8vw,64px);line-height:1.02;letter-spacing:-.042em;text-wrap:balance}
+.h3{font-weight:500;font-size:clamp(24px,2.4vw,32px);line-height:1.12;letter-spacing:-.03em;text-wrap:balance}
+.h2 .soft,.h3 .soft{color:var(--faint)}
+.lead{font-size:clamp(17px,1.4vw,19px);line-height:1.55;color:var(--muted);max-width:60ch}
+
+/* Buttons: sentence case, an arrow chip that slides on hover */
+.btn{--b:var(--ink);--c:#fff;display:inline-flex;align-items:center;gap:14px;min-height:48px;padding:6px 6px 6px 20px;border-radius:12px;background:var(--b);color:var(--c);text-decoration:none;font-weight:500;font-size:15.5px;letter-spacing:-.01em;line-height:1.2;border:0;cursor:pointer;
+  transition:transform .3s var(--ease-snap),box-shadow .3s var(--ease-snap),background-color .15s ease}
+.btn__chip{flex:0 0 auto;width:36px;height:36px;border-radius:9px;display:grid;place-items:center;background:rgba(255,255,255,.14);transition:transform .3s var(--ease-snap)}
+.btn__chip svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn:hover{transform:translateY(-1px)}
+.btn:hover .btn__chip{transform:translateX(3px)}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn--accent{--b:var(--accent);box-shadow:0 14px 36px -12px rgba(15,122,98,.65),0 0 70px -16px rgba(47,191,143,.55)}
+.btn--accent:hover{--b:var(--accent-hover);box-shadow:0 18px 44px -12px rgba(15,122,98,.7),0 0 90px -14px rgba(47,191,143,.6)}
+.btn--xl{min-height:64px;padding:8px 8px 8px 28px;font-size:18px;border-radius:16px;gap:18px}
+.btn--xl .btn__chip{width:48px;height:48px;border-radius:12px}
+.btn--light{--b:#fff;--c:var(--ink)}
+.btn--light .btn__chip{background:var(--well)}
+.btn--sm{min-height:40px;padding:4px 4px 4px 16px;font-size:14.5px;gap:10px;border-radius:10px}
+.btn--sm .btn__chip{width:32px;height:32px;border-radius:8px}
+
+/* Floating pill nav */
+.nav{position:fixed;z-index:50;top:calc(env(safe-area-inset-top,0px) + 12px);left:max(var(--gutter),env(safe-area-inset-left,0px));right:max(var(--gutter),env(safe-area-inset-right,0px));max-width:1000px;margin-inline:auto}
+.nav__pill{display:flex;align-items:center;justify-content:space-between;gap:12px;height:var(--nav-h);padding:0 10px 0 22px;border-radius:999px;background:rgba(255,255,255,.72);
+  -webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6);box-shadow:0 0 0 1px rgba(10,30,22,.06);transition:box-shadow .5s var(--ease),background-color .5s var(--ease)}
+.nav.is-scrolled .nav__pill{background:rgba(255,255,255,.86);box-shadow:var(--shadow-float)}
+.brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:600;font-size:17px;letter-spacing:-.035em;white-space:nowrap}
+.brand svg{width:26px;height:26px}
+.nav__links{display:flex;gap:4px}
+.nav__links a{text-decoration:none;font-size:14.5px;color:var(--muted);padding:8px 12px;border-radius:999px;transition:color .15s,background-color .15s}
+.nav__links a:hover{color:var(--ink);background:var(--well)}
+@media (max-width:860px){.nav__links{display:none}}
+.nav .btn--sm{white-space:nowrap}
+@media (max-width:480px){.nav__pill{padding-left:16px}.nav .brand span{display:none}.nav .btn--sm{font-size:13.5px;padding-left:14px}}
+
+/* Hero */
+.hero{position:relative;padding-block:calc(var(--nav-h) + 110px) 72px;overflow:hidden;isolation:isolate}
+.hero__dots{position:absolute;inset:0 0 auto 0;width:100%;height:620px;z-index:-1;pointer-events:none;
+  -webkit-mask-image:radial-gradient(ellipse 62% 92% at 50% 0%,#000 28%,transparent 74%);mask-image:radial-gradient(ellipse 62% 92% at 50% 0%,#000 28%,transparent 74%)}
+.hero__in{display:flex;flex-direction:column;align-items:center;text-align:center;gap:28px}
+.chip{display:inline-flex;align-items:center;gap:9px;padding:7px 14px 7px 10px;border-radius:999px;background:rgba(255,255,255,.8);box-shadow:0 0 0 1px var(--line);font-size:clamp(12.5px,3.3vw,14px);text-align:center;color:var(--ink-2);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.chip__dot{flex:0 0 auto;width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.hero .h-display{max-width:14em;font-size:clamp(38px,6.2vw,86px)}
+.hero__sub{font-size:clamp(17px,1.5vw,20px);line-height:1.5;color:var(--muted);max-width:46ch;margin-top:-4px}
+.hero__note{font-size:15px;color:var(--muted);max-width:46ch;line-height:1.5}
+.hero__cta{padding-top:6px}
+
+/* Manifesto: the hero paragraph, lit word by word as it scrolls past */
+.manifesto{padding-block:clamp(56px,9vw,120px)}
+.words{font-weight:500;font-size:clamp(24px,3.1vw,40px);line-height:1.2;letter-spacing:-.03em;max-width:28em;margin-inline:auto;text-wrap:pretty}
+.words .w{transition:color .45s var(--ease)}
+.js .words .w{color:var(--faint)}
+.js .words .w.on{color:var(--ink)}
+
+/* Stats */
+.stats{padding-block:clamp(64px,9vw,120px) clamp(32px,5vw,64px);border-top:1px solid var(--line)}
+.stats .h2{max-width:16em;margin-inline:auto}
+.stats__row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:clamp(40px,6vw,72px);border-top:1px solid var(--line)}
+.stat{padding:32px 24px 8px;display:grid;gap:12px;justify-items:center;text-align:center}
+.stat + .stat{border-left:1px solid var(--line)}
+.stat__num{font-family:var(--f-sans);font-weight:500;font-size:clamp(52px,6.4vw,84px);line-height:1;letter-spacing:-.05em;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.stat__num .u{font-family:var(--f-sans);font-weight:500;font-size:.4em;letter-spacing:-.03em;color:var(--ink-2)}
+.stat__label{font-size:15px;color:var(--muted);max-width:24ch;line-height:1.45}
+@media (max-width:700px){.stats__row{grid-template-columns:1fr}.stat + .stat{border-left:0;border-top:1px solid var(--line)}.stat{padding:28px 8px}}
+
+/* Today and tomorrow: the green pane rolls up over the grey one */
+.pairsec{padding-block:clamp(40px,6vw,80px) 0}
+.pin{position:relative}
+.pin__stick{position:relative}
+.pair{display:grid;gap:20px;max-width:1040px;margin-inline:auto}
+.pane{border-radius:28px;padding:clamp(28px,4vw,52px);display:grid;gap:22px;align-content:start}
+.pane--today{background:var(--well);box-shadow:inset 0 0 0 1px var(--line)}
+.pane--next{background:var(--accent);color:#fff;position:relative;overflow:hidden}
+.pane--next::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(255,255,255,.16) 1.1px,transparent 1.4px) 0 0/14px 14px;
+  -webkit-mask-image:linear-gradient(160deg,#000,transparent 55%);mask-image:linear-gradient(160deg,#000,transparent 55%);pointer-events:none}
+.pane > *{position:relative}
+.pane__eyebrow{color:var(--muted)}
+.pane--next .pane__eyebrow{color:rgba(255,255,255,.72)}
+.pane ul{display:grid;gap:14px}
+.pane li{display:grid;grid-template-columns:26px minmax(0,1fr);gap:12px;align-items:start;font-size:clamp(16px,1.35vw,18px);line-height:1.5}
+.pane--today li{color:var(--ink-2)}
+.mk{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;margin-top:-1px}
+.mk svg{width:13px;height:13px;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.mk--bad{background:#fbe9e7}.mk--bad svg{stroke:var(--bad)}
+.mk--ok{background:rgba(255,255,255,.18)}.mk--ok svg{stroke:#fff}
+.pane__cta{padding-top:6px}
+@media screen and (min-width:900px) and (min-height:660px) and (prefers-reduced-motion:no-preference){
+  .pin.is-live{height:150vh}
+  .pin.is-live .pin__stick{position:sticky;top:calc(var(--nav-h) + 40px);height:calc(100vh - var(--nav-h) - 72px);display:grid;align-items:center}
+  .pin.is-live .pair{grid-template-columns:1fr}
+  .pin.is-live .pane{grid-area:1/1;min-height:min(560px,calc(100vh - var(--nav-h) - 120px))}
+  .pin.is-live .pane--today{transform:scale(calc(1 - var(--p,0) * .06));opacity:calc(1 - var(--p,0) * .35);transform-origin:50% 0}
+  .pin.is-live .pane--next{transform:translateY(calc((1 - var(--p,0)) * 108%));box-shadow:0 -24px 60px -30px rgba(10,30,22,.45)}
+}
+
+/* See it in action */
+.action{padding-block:clamp(56px,7vw,96px)}
+.action__head{display:grid;gap:16px;justify-items:center;text-align:center;margin-bottom:clamp(36px,5vw,64px)}
+.action__grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,4vw,56px);align-items:start;max-width:1100px;margin-inline:auto}
+.tabs{display:grid;gap:6px}
+.tab{display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;gap:14px;width:100%;text-align:left;padding:14px 16px;border-radius:16px;background:transparent;border:0;cursor:pointer;color:var(--muted);
+  transition:background-color .3s var(--ease),color .3s var(--ease),box-shadow .3s var(--ease)}
+.tab:hover{color:var(--ink);background:var(--well)}
+.tab[aria-selected="true"]{color:var(--ink);background:#fff;box-shadow:var(--shadow-soft)}
+.tab__ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--well);color:var(--ink-2);font-family:var(--f-mono);font-size:11px;font-weight:500}
+.tab[aria-selected="true"] .tab__ic{background:var(--accent);color:#fff}
+.tab__t{font-size:16px;font-weight:500;letter-spacing:-.015em;line-height:1.3}
+.tab__go{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);transition:color .3s}
+.tab[aria-selected="true"] .tab__go{color:var(--accent)}
+.action__cta{margin-top:18px;padding-left:16px}
+.device{border-radius:28px;background:#fff;box-shadow:var(--shadow-soft);overflow:hidden;position:relative}
+.device__bar{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.device__logo{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-weight:700;font-size:14px;color:#fff;background:var(--ink);flex:0 0 auto}
+.device__who{min-width:0;display:grid;line-height:1.25}
+.device__who b{font-weight:600;font-size:15px;letter-spacing:-.015em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.device__who span{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.device__tag{margin-left:auto;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:5px 9px;border-radius:999px;background:var(--well);flex:0 0 auto}
+.thread{height:440px;padding:18px;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;overflow:hidden;background:linear-gradient(#fff,#fafbfa)}
+.bub{max-width:84%;padding:11px 14px;border-radius:18px;font-size:14.5px;line-height:1.45;animation:bubIn .55s var(--ease) both}
+.bub--out{align-self:flex-end;background:var(--ink);color:#fff;border-bottom-right-radius:6px}
+.bub--in{align-self:flex-start;background:var(--well);color:var(--ink);border-bottom-left-radius:6px}
+.bub--sys{align-self:center;max-width:100%;padding:6px 12px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-family:var(--f-mono);font-size:11.5px;letter-spacing:.02em;display:inline-flex;gap:7px;align-items:center}
+.bub--sys::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.skin-sms .bub--out{background:var(--accent)}
+.skin-mail .bub--out,.skin-mail .bub--in{max-width:100%;align-self:stretch;border-radius:14px;background:#fff;color:var(--ink);box-shadow:0 0 0 1px var(--line)}
+.skin-mail .bub--in{background:var(--well);box-shadow:none}
+.bub__from{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;font-weight:500}
+.typing{align-self:flex-start;display:inline-flex;gap:5px;padding:14px 16px;border-radius:18px;background:var(--well);animation:bubIn .4s var(--ease) both}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:blink 1.2s infinite both}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+.rep{display:grid;gap:9px;margin-top:10px}
+.rep div{display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr);gap:12px;align-items:center;font-size:13px;color:var(--muted)}
+.rep i{height:8px;border-radius:999px;background:var(--accent);width:var(--w);animation:grow 1s var(--ease) both}
+.action__caption{margin-top:16px;font-size:15px;color:var(--muted);min-height:3em;transition:opacity .3s}
+@keyframes bubIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+@keyframes grow{from{width:0}}
+@media (max-width:900px){.action__grid{grid-template-columns:1fr}.thread{height:400px}.tab__go{display:none}}
+
+/* What changes: one short comparison, today against with Advisor Booking */
+.change{padding-block:clamp(56px,7vw,96px) clamp(64px,8vw,110px)}
+.cmp{max-width:1040px;margin:clamp(28px,4vw,48px) auto 0;border-radius:24px;background:#fff;box-shadow:var(--shadow-soft);overflow:hidden}
+.cmp table{width:100%;border-collapse:collapse;table-layout:fixed}
+.cmp th,.cmp td{padding:20px 24px;text-align:left;vertical-align:top;font-size:16px;line-height:1.5}
+.cmp thead th{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--muted);padding-block:18px 14px}
+.cmp thead th:last-child{color:var(--accent)}
+.cmp thead td{width:22%}
+.cmp tbody tr{border-top:1px solid var(--line)}
+.cmp tbody th{font-weight:500;color:var(--ink);letter-spacing:-.015em}
+.cmp tbody td{color:var(--muted)}
+.cmp td{display:table-cell}
+.cmp td > span:last-child{display:block;padding-left:36px;margin-top:-25px}
+.cmp tbody td:last-child,.cmp thead th:last-child{background:var(--accent-soft)}
+.cmp tbody td:last-child{color:var(--ink)}
+.mk--yes{background:var(--accent)}.mk--yes svg{stroke:#fff}
+.change__cta{display:flex;justify-content:center;margin-top:clamp(28px,4vw,44px)}
+@media (max-width:760px){
+  .cmp thead{display:none}
+  .cmp table,.cmp tbody,.cmp tr,.cmp th,.cmp td{display:block;width:100%}
+  .cmp tbody tr:first-child{border-top:0}
+  .cmp tbody th{padding:20px 20px 6px}
+  .cmp tbody td{padding:8px 20px 12px;background:none!important}
+  .cmp tbody td:last-child{padding-bottom:20px}
+  .cmp td::before{content:attr(data-l);display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .cmp td:last-child::before{color:var(--accent)}
+}
+
+/* How it works: steps light up while the loop's marker travels */
+.how{padding-block:clamp(64px,8vw,110px);background:linear-gradient(var(--bg),var(--well) 30%,var(--well) 70%,var(--bg))}
+.how__head{text-align:center;margin-bottom:clamp(24px,6vw,72px)}
+.how__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(24px,5vw,72px);max-width:1140px;margin-inline:auto}
+.step{min-height:48vh;display:grid;align-content:center;gap:16px;padding-block:24px;transition:opacity .6s var(--ease)}
+.js .how.is-live .step{opacity:.28}
+.js .how.is-live .step.on{opacity:1}
+.step__k{color:var(--accent)}
+.step .h3{font-size:clamp(34px,3.6vw,48px);letter-spacing:-.04em}
+.step p{font-size:17px;color:var(--muted);max-width:46ch;line-height:1.6}
+.step__vis{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.pill{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px var(--line);font-size:13px;color:var(--ink-2)}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.pill--muted::before{background:var(--faint)}
+.how__visual{position:relative}
+.loop{position:sticky;top:calc(var(--nav-h) + 56px);aspect-ratio:13/9;width:100%;max-width:100%}
+.loop svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.loop__tag{position:absolute;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:7px;white-space:nowrap;padding:6px 11px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px var(--line),0 4px 14px -6px rgba(10,30,22,.15);font-size:12.5px;font-weight:500;color:var(--muted);transition:color .4s var(--ease),box-shadow .4s var(--ease)}
+.loop__tag::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--faint);transition:background-color .4s var(--ease),box-shadow .4s var(--ease)}
+.loop__tag.on{color:var(--ink)}
+.loop__tag.on::before{background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.loop__core{position:absolute;inset:30% 24%;display:grid;place-content:center;justify-items:center;text-align:center;gap:6px}
+.loop__n{font-family:var(--f-sans);font-weight:500;font-size:clamp(56px,7vw,96px);line-height:.9;letter-spacing:-.05em;color:var(--ink);font-variant-numeric:tabular-nums}
+.loop__l{font-size:15px;color:var(--muted)}
+.how__cta{display:grid;justify-items:center;gap:16px;text-align:center;margin-top:clamp(32px,5vw,64px)}
+.how__next{font-size:17px;color:var(--ink-2)}
+@media (max-width:600px){.loop__tag{font-size:11.5px;padding:5px 9px}}
+@media (max-width:900px){
+  .how__grid{grid-template-columns:1fr}
+  .how__visual{order:-1;position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--nav-h) + 18px);z-index:2;background:var(--well);padding-block:8px 14px;
+    -webkit-mask-image:linear-gradient(#000 85%,transparent);mask-image:linear-gradient(#000 85%,transparent)}
+  .loop{position:relative;top:0;max-width:440px;margin-inline:auto}
+  .step{min-height:36vh}
+}
+@media (max-width:900px) and (max-height:620px){.how__visual{position:relative;top:0}.js .how.is-live .step{opacity:1}}
+
+/* Everything you get */
+.gets{padding-block:clamp(64px,8vw,110px)}
+.gets .h2{max-width:14em;margin-inline:auto}
+.gets .h2 em{font-style:normal;color:var(--accent)}
+.grid6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px;margin-top:clamp(40px,6vw,72px)}
+.feat{grid-column:span 2;border-radius:22px;background:#fff;box-shadow:var(--shadow-soft);padding:8px;display:grid;grid-template-rows:auto 1fr;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.feat:nth-child(10),.feat:nth-child(11){grid-column:span 3}
+.feat:hover{transform:translateY(-3px);box-shadow:0 2px 4px rgba(10,30,22,.04),0 24px 48px -20px rgba(10,30,22,.22),0 0 0 1px rgba(10,30,22,.07)}
+.feat__well{height:118px;border-radius:16px;background:var(--well);position:relative;overflow:hidden;display:flex;align-items:flex-end;justify-content:space-between;padding:14px 16px}
+.feat__well::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,var(--dot) 1.1px,transparent 1.5px) 0 0/12px 12px;
+  -webkit-mask-image:radial-gradient(ellipse at 85% 10%,#000 10%,transparent 70%);mask-image:radial-gradient(ellipse at 85% 10%,#000 10%,transparent 70%)}
+.feat__n{position:relative;font-family:var(--f-sans);font-weight:500;font-size:46px;line-height:.85;letter-spacing:-.05em;color:var(--ink)}
+.feat__body{padding:18px 14px 16px;display:grid;gap:8px;align-content:start}
+.feat h3{font-size:18.5px;font-weight:500;letter-spacing:-.025em;line-height:1.25}
+.feat p{font-size:15px;color:var(--muted);line-height:1.55}
+@media (max-width:980px){.grid6{grid-template-columns:repeat(2,minmax(0,1fr))}.feat,.feat:nth-child(10){grid-column:span 1}.feat:nth-child(11){grid-column:span 2}}
+@media (max-width:620px){.feat__well{height:76px}.feat__n{font-size:38px}.grid6{grid-template-columns:1fr}.feat,.feat:nth-child(10),.feat:nth-child(11){grid-column:span 1}}
+
+/* What it costs */
+.cost{padding-top:clamp(72px,9vw,120px)}
+.cost__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:clamp(28px,4vw,48px);align-items:stretch}
+.price{border-radius:22px;background:#fff;box-shadow:var(--shadow-soft);padding:28px;display:grid;gap:14px;align-content:start}
+.price p{font-size:16.5px;line-height:1.6;color:var(--muted)}
+.price p b{color:var(--ink);font-weight:600}
+.price--feat{position:relative;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(160deg,var(--accent-bright),var(--accent) 45%,rgba(15,122,98,.15)) border-box;border:1.5px solid transparent;
+  box-shadow:0 30px 60px -30px rgba(15,122,98,.45),0 0 0 1px rgba(15,122,98,.04)}
+.price .mono{color:var(--ink)}
+@media (max-width:900px){.cost__grid{grid-template-columns:1fr}}
+
+/* Everything you get: 11 deliverables grouped under the three steps */
+.gets__list{display:grid;gap:16px;max-width:1080px;margin:clamp(36px,5vw,60px) auto 0}
+.grp{display:grid;grid-template-columns:minmax(0,.34fr) minmax(0,1fr);gap:clamp(20px,4vw,48px);border-radius:24px;background:#fff;box-shadow:var(--shadow-soft);padding:clamp(24px,3.4vw,40px)}
+.grp__h{display:grid;gap:8px;align-content:start}
+.grp__h .mono{color:var(--accent)}
+.gi{list-style:none;margin:0;padding:0;display:grid}
+.gi li{display:grid;grid-template-columns:36px minmax(0,1fr);column-gap:14px;row-gap:4px;padding-block:16px;border-top:1px solid var(--line)}
+.gi li:first-child{border-top:0;padding-top:2px}
+.gi li:last-child{padding-bottom:0}
+.gi__n{grid-row:span 2;font-family:var(--f-mono);font-size:12px;letter-spacing:.04em;color:var(--muted);padding-top:3px}
+.gi h4{margin:0;font-size:17px;font-weight:500;letter-spacing:-.02em;line-height:1.3;color:var(--ink)}
+.gi p{font-size:15.5px;line-height:1.55;color:var(--muted);max-width:62ch}
+@media (max-width:760px){.grp{grid-template-columns:1fr}.gi li{grid-template-columns:30px minmax(0,1fr)}}
+
+/* What it costs (setup, then a monthly retainer plus a fee per qualified, attended meeting) and the 90-day commitment */
+.cost__head{display:grid;gap:14px;justify-items:center;text-align:center}
+.cost__grid{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
+.price .price__big{font-weight:500;font-size:clamp(40px,4.4vw,56px);line-height:1;letter-spacing:-.05em;color:var(--ink)}
+.price .price__big span{font-size:.36em;letter-spacing:-.02em;color:var(--muted)}
+.price .price__lead{color:var(--ink);font-weight:500}
+.either{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:stretch}
+.opt{border-radius:16px;background:var(--well);padding:18px;display:grid;gap:6px;align-content:start}
+.opt b{font-weight:500;font-size:clamp(32px,3.4vw,44px);line-height:1;letter-spacing:-.05em;color:var(--ink)}
+.opt span{font-size:14.5px;color:var(--muted);line-height:1.4}
+.either__or{align-self:center;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.price .price__fine{font-size:14.5px}
+.examples{margin-top:16px;border-radius:22px;background:#fff;box-shadow:var(--shadow-soft);padding:24px 28px;display:grid;gap:14px}
+.ex{display:grid}
+.ex li{display:grid;grid-template-columns:minmax(0,180px) minmax(0,1fr) auto;gap:20px;align-items:center;padding-block:14px;border-top:1px solid var(--line)}
+.ex li:first-child{border-top:0}
+.ex p{font-size:16px;color:var(--ink-2)}
+.ex b{font-weight:500;font-size:22px;letter-spacing:-.03em}
+.ex__dots{height:12px;background:radial-gradient(circle,var(--accent) 4.5px,transparent 5px) 0 50%/15px 12px repeat-x;width:calc(var(--n) * 15px);max-width:100%}
+.ex__dots--slow{background-image:radial-gradient(circle,var(--faint) 4.5px,transparent 5px)}
+.examples__note{font-size:16px;color:var(--accent);font-weight:500}
+.commit{margin-top:16px;border-radius:26px;background:var(--accent);color:#fff;padding:clamp(28px,4vw,48px);display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:clamp(24px,4vw,56px);align-items:center;position:relative;overflow:hidden}
+.commit::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(255,255,255,.14) 1.1px,transparent 1.4px) 0 0/14px 14px;-webkit-mask-image:linear-gradient(120deg,#000,transparent 50%);mask-image:linear-gradient(120deg,#000,transparent 50%);pointer-events:none}
+.commit > *{position:relative}
+.commit__num{display:grid;gap:8px}
+.commit__num b{font-weight:500;font-size:clamp(84px,10vw,140px);line-height:.85;letter-spacing:-.06em}
+.commit__num span{font-size:15px;color:rgba(255,255,255,.8);max-width:18ch;line-height:1.4}
+.commit__body{display:grid;gap:12px}
+.commit__body p{font-size:16.5px;line-height:1.6;color:rgba(255,255,255,.88)}
+@media (max-width:900px){.commit{grid-template-columns:1fr}.cost__grid{grid-template-columns:1fr}}
+@media (max-width:640px){.either{grid-template-columns:1fr}.either__or{justify-self:center}.ex li{grid-template-columns:1fr auto;gap:8px 16px}.ex__dots{grid-column:1/-1}.examples{padding:20px}}
+
+/* FAQ: the dark band */
+.faq{margin-top:clamp(24px,3vw,40px);background:var(--night);color:var(--night-ink);padding-block:clamp(64px,8vw,110px) 0;border-radius:36px 36px 0 0;position:relative;overflow:hidden}
+.faq__grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);gap:clamp(28px,5vw,72px);align-items:start}
+.faq__side{position:sticky;top:calc(var(--nav-h) + 56px);display:grid;gap:26px;justify-items:start}
+.faq__side .h2{font-size:clamp(48px,6vw,84px)}
+.qa{display:grid;gap:10px}
+.qa details{border-radius:18px;background:#fff;color:var(--ink);overflow:hidden}
+.qa summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 24px;font-size:17.5px;font-weight:500;letter-spacing:-.02em}
+.qa summary::-webkit-details-marker{display:none}
+.qa__x{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:var(--well);position:relative;transition:transform .45s var(--ease),background-color .3s}
+.qa__x::before,.qa__x::after{content:"";position:absolute;left:50%;top:50%;width:11px;height:1.6px;background:var(--ink);border-radius:2px;transform:translate(-50%,-50%)}
+.qa__x::after{transform:translate(-50%,-50%) rotate(90deg)}
+.qa details[open] .qa__x{transform:rotate(45deg);background:var(--accent-soft)}
+.qa__a{overflow:hidden}
+.qa__a > div{padding:0 24px 24px;display:grid;gap:12px;color:var(--muted);font-size:16px;line-height:1.65;max-width:62ch}
+.qa__a ul{display:grid;gap:8px}
+.qa__a li{display:grid;grid-template-columns:16px minmax(0,1fr);gap:10px}
+.qa__a li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);margin-top:.65em}
+@media (max-width:900px){.faq__grid{grid-template-columns:1fr}.faq__side{position:relative;top:0}}
+
+/* Closing band and footer */
+.close{position:relative;padding-block:clamp(80px,10vw,140px);display:grid;justify-items:center;text-align:center;gap:22px;isolation:isolate}
+.close::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle,rgba(47,191,143,.5) 1.2px,transparent 1.6px) 0 0/13px 13px;
+  -webkit-mask-image:radial-gradient(ellipse 46% 60% at 50% 55%,#000 5%,transparent 70%);mask-image:radial-gradient(ellipse 46% 60% at 50% 55%,#000 5%,transparent 70%)}
+.close::after{content:"";position:absolute;left:50%;top:55%;width:min(620px,90vw);height:260px;transform:translate(-50%,-50%);z-index:-1;background:radial-gradient(closest-side,rgba(15,122,98,.55),transparent);filter:blur(30px)}
+.close p{color:var(--night-muted);font-size:15px}
+.foot{border-top:1px solid var(--night-line);padding-block:28px calc(28px + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;color:var(--night-muted);font-size:14px}
+.foot .brand{color:var(--night-ink)}
+.foot .brand svg .mb{fill:var(--night-ink)}.foot .brand svg .mp{fill:var(--night)}
+.foot nav{display:flex;flex-wrap:wrap;gap:6px 18px}
+.foot a{text-decoration:none;transition:color .15s}
+.foot a:hover{color:var(--night-ink)}
+
+/* Smooth scrolling (Lenis) */
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-stopped{overflow:hidden}
+
+/* Journey strip under the hero: one example prospect, start to booked */
+.journey{width:min(1320px,calc(100vw - 48px));margin-top:clamp(36px,6vw,72px);text-align:left}
+.journey__row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.jstep{display:grid;grid-template-rows:auto 1fr;gap:12px;animation:jIn .9s var(--ease) both;animation-delay:calc(var(--i) * .14s + .35s)}
+.jstep__h{display:flex;align-items:center;gap:10px;font-size:14px;line-height:1.25;font-weight:500;color:var(--ink-2);min-width:0;min-height:2.6em}
+.jstep__h::after{content:"";flex:1 1 16px;min-width:16px;height:1px;background:linear-gradient(90deg,var(--accent) 0 50%,var(--line) 50% 100%) 100% 0/200% 100% no-repeat;animation:jLine 1s var(--ease) both;animation-delay:calc(var(--i) * .14s + .7s)}
+.jic{flex:0 0 auto;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);font:700 11px/1 var(--f-sans)}
+.jic svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.jcard{min-height:104px;border-radius:16px;background:#fff;box-shadow:var(--shadow-soft);padding:14px;display:grid;gap:10px;align-content:start;font-size:13.5px;transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
+.jstep.is-on .jcard{transform:translateY(-4px);box-shadow:0 0 0 1.5px var(--accent),0 18px 40px -18px rgba(15,122,98,.45)}
+.jwho{display:flex;align-items:center;gap:10px;min-width:0}
+.jwho > span:nth-child(2){display:grid;min-width:0;line-height:1.3}
+.jwho b{font-weight:600;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.jwho small{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.jav{flex:0 0 auto;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--well);font-size:11px;font-weight:600;color:var(--ink-2)}
+.jtag{display:inline-flex;align-items:center;gap:6px;justify-self:start;padding:3px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.02em;white-space:nowrap}
+.jwho .jtag{margin-left:auto}
+.jmsg{color:var(--ink-2);line-height:1.45}
+.jmsg--in{justify-self:start;background:var(--well);padding:8px 11px;border-radius:12px 12px 12px 4px}
+.jchk{display:grid;gap:6px;font-size:13px;color:var(--ink-2)}
+.jchk li{display:flex;align-items:flex-start;gap:8px;line-height:1.35}
+.jchk li::before{content:"";flex:0 0 auto;width:14px;height:14px;margin-top:1px;border-radius:50%;background:var(--accent-soft) url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 12 12%27%3E%3Cpath d=%27M3 6.2L5 8.2 9 3.8%27 fill=%27none%27 stroke=%27%230f7a62%27 stroke-width=%271.8%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E") center/10px no-repeat}
+.jcap{font-size:12.5px;line-height:1.4;color:var(--muted)}
+.jby{font-family:var(--f-mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);margin-bottom:-5px}
+.jmsg--out{justify-self:start;background:var(--accent-soft);color:var(--ink);padding:8px 11px;border-radius:12px 12px 12px 4px}
+.jcard .jtag{justify-self:start}
+.jcal{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:12px}
+.jcal > span:last-child{display:grid;gap:3px;min-width:0;line-height:1.3}
+.jcal b{font-weight:600}
+.jcal small{font-size:12px;color:var(--muted)}
+.jic{font-size:12px;font-weight:600}
+.jsys{justify-self:start;font-family:var(--f-mono);font-size:11px;color:var(--accent)}
+.jcard--cal{grid-template-columns:auto minmax(0,1fr);align-items:center;gap:14px}
+.jcard--cal > span:last-child{display:grid;gap:4px;min-width:0;line-height:1.3}
+.jcard--cal b{font-weight:600}
+.jcard--cal small{font-size:12px;color:var(--muted)}
+.jdate{display:grid;justify-items:center;padding:8px 12px;border-radius:12px;background:var(--accent);color:#fff;line-height:1.1}
+.jdate small{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;color:rgba(255,255,255,.8)}
+.jdate b{font-family:var(--f-sans);font-weight:600;font-size:20px;letter-spacing:-.03em;color:#fff}
+.journey__note{margin-top:14px;text-align:center;font-size:13px;color:var(--muted)}
+@keyframes jIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes jLine{from{background-position:100% 0}to{background-position:0 0}}
+@media (max-width:1180px){
+  .journey{width:100%}
+  .journey__row{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(232px,72%);overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 16px;scrollbar-width:none}
+  .journey__row::-webkit-scrollbar{display:none}
+  .jstep{scroll-snap-align:start}
+}
+
+/* Stat icons */
+.stat__ic{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);margin-bottom:4px}
+.stat__ic svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* Step 3: the Monday report card */
+.mr{margin-top:8px;max-width:460px;border-radius:18px;background:#fff;box-shadow:var(--shadow-soft);padding:18px 18px 20px;display:grid;gap:11px}
+.mr__head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:4px}
+.mr__head b{font-weight:600;font-size:15px;letter-spacing:-.015em}
+.mr__row{display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr);gap:14px;align-items:center;font-size:13.5px;color:var(--muted)}
+.mr__row i{height:9px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-bright));width:var(--w);transition:width 1.1s var(--ease);transition-delay:var(--dl,0s)}
+.js .how.is-live .step:not(.on) .mr__row i{width:0}
+@media (prefers-reduced-motion:reduce){.jstep,.jstep__h::after{animation:none}}
+
+/* Reveal on scroll: only for things below the first screen, and only once the script is running */
+.js [data-rv].pre{opacity:0;transform:translateY(18px);filter:blur(6px)}
+.js [data-rv]{transition:opacity .9s var(--ease),transform .9s var(--ease),filter .9s var(--ease);transition-delay:var(--d,0s)}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .js [data-rv].pre{opacity:1;transform:none;filter:none}
+}
+</style>
 </head>
 <body>
-<a class="skip-link" href="#main">Skip to content</a>
-<header class="header">
-  <nav class="nav container" aria-label="Primary">
-    <div class="nav__inner">
-      <a class="nav__brand" href="index.html"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" class="mark__body"/><rect x="6" y="12" width="20" height="14" rx="3" class="mark__page"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" class="mark__page"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" class="mark__page"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></a>
-      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-panel" aria-label="Menu">
-        <span class="nav__bar"></span><span class="nav__bar"></span><span class="nav__bar"></span>
-      </button>
-      <div class="nav__panel" id="nav-panel">
-        <ul class="nav__links">
-          <li><a href="#how">How it works</a></li>
-          <li><a href="#pricing">What it costs</a></li>
-          <li><a href="#faq">FAQ</a></li>
-        </ul>
-        <a class="nav__phone" href="#" data-config="phone" hidden>Phone</a>
-        <a class="pill pill--sm nav__cta" href="book.html" data-src="nav">Get More Booked Meetings</a>
-      </div>
-    </div>
-  </nav>
+<header class="nav" id="nav">
+  <div class="nav__pill">
+    <a class="brand" href="#top" aria-label="Advisor Booking, back to top"><svg viewBox="0 0 32 32" aria-hidden="true"><rect class="mb" x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect class="mp" x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect class="mp" x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect class="mp" x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></a>
+    <nav class="nav__links" aria-label="Sections">
+      <a href="#how">How it works</a>
+      <a href="#pricing">What it costs</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn--sm" href="book.html" data-src="nav">Get More Booked Meetings<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+  </div>
 </header>
 
-<main id="main">
-
-<!-- 1. Hero -->
-<section class="hero" id="top">
-  <div class="container">
-    <div class="hero__grid">
-      <div>
-        <p class="eyebrow"><span>For independent RIAs with <span class="nowrap">$50M to $250M+ AUM</span></span></p>
-        <!-- NEW COPY -->
-        <h1 class="display h1"><span class="line"><span>We book HNW individuals</span></span><span class="line"><span>and business owners on</span></span><span class="line"><span><span class="ul">financial advisors&rsquo; calendars.</span></span></span></h1>
-        <!-- NEW COPY -->
-        <p class="lead">We set up and manage <b>the entire system</b> for you. We find HNW individuals and business owners who are the ideal clients for your firm. We curate and enrich a list of these prospective clients from our database and/or your CRM. We write strategic messaging that addresses your ideal clients&rsquo; problems and generates intent. We nurture that intent, get them to qualify, and book a meeting on financial advisors&rsquo; calendars. You just take the meeting. No ads to babysit. No elaborate social media content or editing. Every week we focus on getting you the meetings, and you focus on serving more clients.</p>
-        <div class="cta">
-          <a class="pill pill--lg" href="book.html" data-src="hero">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a>
-          <!-- NEW COPY -->
-          <p class="small">See how AdvisorBooking.com will transform your LinkedIn and email outreach methods into a lead generation system. Even if you are not technically savvy.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 2. Trust / stats -->
-<section class="section section--tight center" aria-labelledby="trust-h">
-  <div class="container">
-    <div class="rv">
-      <div class="spot"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18M8.5 15.5l2.5 2.5 4.5-5"/></svg></div>
-      <!-- NEW COPY -->
-      <h2 class="display h2 narrow narrow--wide" id="trust-h">Built for firms with <span class="nowrap">2 to 10</span> advisors and <span class="nowrap nowrap--wide">$50M to $250M</span> in assets</h2>
-    </div>
-    <div class="statband rv" role="list">
-      <div class="stat" role="listitem"><p class="stat__num"><span data-count="8">8</span> figures</p><p class="stat__label">In ad spend the team has run for financial companies</p></div>
-      <div class="stat stat--accent" role="listitem"><p class="stat__num"><span data-count="198" data-suffix="+">198+</span></p><p class="stat__label">Financial institutions the founder has worked with</p></div>
-      <div class="stat" role="listitem"><p class="stat__num"><span data-count="30">30</span> days</p><p class="stat__label">Within 30 days of start you will have meetings on the calendar</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- 3. The problem: today vs with us -->
-<section class="section" id="about" aria-label="Your firm today and with Advisor Booking">
-  <div class="container">
-    <div class="pin" data-pin>
-    <div class="pin__stick rv">
-    <div class="pair pair--pin" style="margin-top:0">
-      <div class="pane pane--grey">
-        <!-- NEW COPY -->
-        <span class="kicker">What your pain point is today</span>
-        <h3 class="h3">Your firm&rsquo;s growth depends on unpredictable referrals or just one channel</h3>
-        <ul class="row-list">
-          <li><span class="mk mk--bad" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></span><span>New clients come from referrals and whoever the owner has time to call.</span></li>
-          <li><span class="mk mk--bad" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></span><span>Your CRM has 1,000 to 5,000 names nobody at your firm has reached in years.</span></li>
-          <li><span class="mk mk--bad" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></span><span>Marketing money goes to a new website and a newsletter that rarely books meetings.</span></li>
-          <li><span class="mk mk--bad" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></span><span>Advisors have open time on their calendars they wish was filled with clients.</span></li>
-          <li><span class="mk mk--bad" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></span><span>Business owners near you sell companies, and HNW individuals retire and switch advisors. Nobody from your firm knows them or is reaching them with purpose.</span></li>
-        </ul>
-      </div>
-      <div class="pane pane--green">
-        <!-- NEW COPY -->
-        <span class="kicker">What your tomorrow looks like with AdvisorBooking.com</span>
-        <h3 class="h3">Your firm&rsquo;s growth runs on a system you control</h3>
-        <ul class="row-list">
-          <li><span class="mk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>New clients still come from the channels you use today, plus Advisor Booking&rsquo;s channels, so your marketing risk is spread out instead of resting on one source.</span></li>
-          <li><span class="mk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>Your CRM and database are reached and re-engaged with our proprietary LinkedIn and email automations that provide value and earn your prospects&rsquo; trust.</span></li>
-          <li><span class="mk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>Marketing money goes to a reliable channel that can be scaled, so every dollar you spend on marketing is a dollar that truly helps your firm grow. Not in a year. In a week or a month, with the immediate results we can provide.</span></li>
-          <li><span class="mk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span>The business owners near you who sell companies, and the HNW individuals who retire and switch advisors: you stay in front of them with our proprietary data and marketing approach.</span></li>
-        </ul>
-        <a class="pill" href="book.html" data-src="problem">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a>
-      </div>
-    </div>
-    </div>
-    </div>
-  </div>
-</section>
-
-<!-- 4. See it in action -->
-<section class="section" id="how" aria-labelledby="how-h">
-  <div class="container">
-    <div class="center rv">
-      <div class="spot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/><path d="M8 12h.01M12 12h.01M16 12h.01"/></svg></div>
-      <h2 class="display h2" id="how-h">See it in action</h2>
-      <!-- NEW COPY -->
-      <p class="sub narrow">LinkedIn, email, and text, the way your prospects actually see them. Pick one and watch what we do.</p>
-    </div>
-    <div class="stage stage--action mt-48 rv rv--scale on-dark" data-action>
-      <div class="stage__grid">
-        <aside class="howcard action__menu">
-          <h3 class="h3">See it in action&hellip;</h3>
-          <div class="action__list" role="tablist" aria-label="What we do, by channel">
-            <button type="button" role="tab" id="tab-li-new" aria-controls="action-panel" aria-selected="true" data-key="li-new"><b>Reach new HNW prospects on LinkedIn</b><span>Check it out</span></button>
-            <button type="button" role="tab" id="tab-mail-crm" aria-controls="action-panel" aria-selected="false" tabindex="-1" data-key="mail-crm"><b>Re-engage the names already in your CRM</b><span>Check it out</span></button>
-            <button type="button" role="tab" id="tab-li-reply" aria-controls="action-panel" aria-selected="false" tabindex="-1" data-key="li-reply"><b>A real person answers every reply</b><span>Check it out</span></button>
-            <button type="button" role="tab" id="tab-sms-book" aria-controls="action-panel" aria-selected="false" tabindex="-1" data-key="sms-book"><b>Book it, confirm it, remind them by text</b><span>Check it out</span></button>
-            <button type="button" role="tab" id="tab-mail-nurture" aria-controls="action-panel" aria-selected="false" tabindex="-1" data-key="mail-nurture"><b>Nurture with emails that earn trust</b><span>Check it out</span></button>
-            <button type="button" role="tab" id="tab-mail-report" aria-controls="action-panel" aria-selected="false" tabindex="-1" data-key="mail-report"><b>One report every Monday</b><span>Check it out</span></button>
-          </div>
-          <div class="action__cta"><a class="pill" href="book.html" data-src="how">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a></div>
-        </aside>
-        <div class="action__stage" id="action-panel" role="tabpanel" aria-labelledby="tab-li-new">
-          <p class="action__caption" data-caption></p>
-          <figure class="device" data-device data-thread="li-new" data-skin="li" role="img" aria-label="Example conversations on LinkedIn, email, and text: outreach, replies, booking, reminders, and the Monday report.">
-            <div class="device__frame">
-              <div class="device__notch" aria-hidden="true"></div>
-              <div class="device__screen">
-                <div class="hd hd--li" aria-hidden="true"><span class="li-mark">in</span><span class="av">DA</span><div><b>Dana A.</b><small>Founder, Apex Logistics &middot; 1st</small></div></div>
-                <div class="hd hd--sms" aria-hidden="true"><span class="av">DA</span><b>Dana A.</b><small>Text message &middot; SMS</small></div>
-                <div class="hd hd--mail" aria-hidden="true"><span class="win__dots"><i></i><i></i><i></i></span><span class="win__tab">Inbox</span><span class="win__subject" data-subject></span></div>
-                <div class="thread" aria-hidden="true"></div>
-                <div class="device__foot" aria-hidden="true"><span></span><i></i></div>
-              </div>
+<main id="top">
+  <section class="hero" aria-labelledby="hero-h">
+    <canvas class="hero__dots" id="dots" aria-hidden="true"></canvas>
+    <div class="wrap hero__in">
+      <h1 class="h-display" id="hero-h">We put 8–15 HNWI and business owner meetings on financial advisors’ calendars every month</h1>
+      <p class="hero__sub">For independent RIAs with $50M to $250M+ AUM who want a predictable pipeline of business owners and high-net-worth families, not just “more marketing.”</p>
+      <div class="hero__cta"><a class="btn btn--accent btn--xl" href="book.html" data-src="hero">Get More Booked Meetings<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
+      <p class="hero__note">See the exact outbound and reactivation system we’ll run for your firm.</p>
+      <div class="journey" aria-label="Example: one prospect, from first message to a booked meeting">
+        <ol class="journey__row">
+          <li class="jstep" style="--i:0">
+            <p class="jstep__h"><span class="jic" aria-hidden="true">1</span>List creation and enrichment</p>
+            <div class="jcard">
+              <p class="jcap">We build you a new list and clean up the one you have.</p>
+              <p class="jby">New list</p>
+              <div class="jwho"><span class="jav" aria-hidden="true">DA</span><span><b>Dana A.</b><small>Founder, Apex Logistics</small></span><span class="jtag">Ideal client</span></div>
+              <ul class="jchk"><li>Business owners and HNWIs who match your ideal client, from our database</li></ul>
+              <p class="jby">Your CRM</p>
+              <ul class="jchk"><li>De-duped, cleaned, and organized</li><li>Better emails and phone numbers added where available</li></ul>
             </div>
-          </figure>
+          </li>
+          <li class="jstep" style="--i:1">
+            <p class="jstep__h"><span class="jic" aria-hidden="true">2</span>We message them on LinkedIn</p>
+            <div class="jcard">
+              <p class="jcap">A short, personal note. No sales pitch.</p>
+              <p class="jby">Your firm</p>
+              <p class="jmsg jmsg--out">Hi Dana, congrats on selling your company. Open to a quick 20-minute call?</p>
+              <span class="jtag">Dana connected</span>
+            </div>
+          </li>
+          <li class="jstep" style="--i:2">
+            <p class="jstep__h"><span class="jic" aria-hidden="true">3</span>We email new prospects and past contacts</p>
+            <div class="jcard">
+              <p class="jcap">Personal emails to new people on your list and to contacts already in your CRM.</p>
+              <p class="jby">Your firm</p>
+              <p class="jmsg jmsg--out">Hi Dana, following up on my LinkedIn note. Many owners have planning questions in the year after a sale. Worth a short call?</p>
+              <p class="jby">Dana</p>
+              <p class="jmsg jmsg--in">Maybe. What would we talk about?</p>
+            </div>
+          </li>
+          <li class="jstep" style="--i:3">
+            <p class="jstep__h"><span class="jic" aria-hidden="true">4</span>A real person handles every reply</p>
+            <div class="jcard">
+              <p class="jcap">Not a bot. A real person answers their questions and books the time.</p>
+              <p class="jby">Your firm</p>
+              <p class="jmsg jmsg--out">The tax and planning questions most owners have after a sale. Does Thursday at 2 work?</p>
+              <p class="jby">Dana</p>
+              <p class="jmsg jmsg--in">Thursday at 2 works.</p>
+            </div>
+          </li>
+          <li class="jstep" style="--i:4">
+            <p class="jstep__h"><span class="jic" aria-hidden="true">5</span>The meeting goes on your calendar</p>
+            <div class="jcard">
+              <p class="jcap">Only when they fit your rules.</p>
+              <div class="jcal">
+                <span class="jdate" aria-hidden="true"><small>THU</small><b>2:00</b><small>PM</small></span>
+                <span><b>Dana A. meets your advisor</b><small>Google Meet invite sent</small></span>
+              </div>
+              <span class="jtag">Fits your rules</span>
+            </div>
+          </li>
+        </ol>
+        <p class="journey__note">Example: one prospect, from first message to booked meeting</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats" aria-labelledby="stats-h">
+    <div class="wrap center">
+      <h2 class="h2" id="stats-h" data-rv>Built for firms with 2 to 10 advisors <span class="soft">and $50M to $250M+ in assets</span></h2>
+      <div class="stats__row">
+        <div class="stat" data-rv><span class="stat__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><p class="stat__num">8<span class="u"> figures</span></p><p class="stat__label">In ad spend the team has run for financial companies</p></div>
+        <div class="stat" data-rv style="--d:.08s"><span class="stat__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10M19 21V10M9.5 21V10M14.5 21V10M2 10l10-6 10 6z"/></svg></span><p class="stat__num"><span data-count="198">198</span>+</p><p class="stat__label">Financial institutions the founder has worked with</p></div>
+        <div class="stat" data-rv style="--d:.16s"><span class="stat__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></span><p class="stat__num"><span data-count="30">30</span><span class="u"> days</span></p><p class="stat__label">Within 30 days of start you will have meetings on the calendar</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how" id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <div class="how__head"><h2 class="h2" id="how-h" data-rv>Three steps. <span class="soft">Up and running within 30 days.</span></h2></div>
+      <div class="how__grid">
+        <div class="how__steps" id="steps">
+          <article class="step" data-step="0">
+            <p class="mono step__k">Step 1 · Weeks 1 to 2</p>
+            <h3 class="h3">Build</h3>
+            <p>We build your list of ideal clients and clean up your CRM. We write the messages, and you approve every one before anything is sent. We set up your LinkedIn and email so every message sounds like you, not a robot.</p>
+            <div class="step__vis" aria-hidden="true"><span class="pill">List built</span><span class="pill">CRM cleaned</span><span class="pill">Messages approved by you</span></div>
+          </article>
+          <article class="step" data-step="1">
+            <p class="mono step__k">Step 2 · Weeks 3 to 4</p>
+            <h3 class="h3">Launch</h3>
+            <p>We contact the people already in your CRM first, because they answer fastest. New prospects start getting messages the same week. A real person answers every reply, every day, and books the first meetings onto your calendar.</p>
+            <div class="step__vis" aria-hidden="true"><span class="pill">CRM contacts first</span><span class="pill">New prospects</span><span class="pill">Every reply answered</span><span class="pill">First meetings booked</span></div>
+          </article>
+          <article class="step" data-step="2">
+            <p class="mono step__k">Step 3 · Every week after</p>
+            <h3 class="h3">Grow</h3>
+            <p>Every Monday you get one simple report: messages sent, replies, meetings booked, meetings attended, and what each meeting cost. If a number is off, we fix the list, the messages, or the volume before we ask you to spend more.</p>
+            <div class="mr" aria-hidden="true">
+              <div class="mr__head"><b>Monday report: week 6</b><span class="device__tag">Example</span></div>
+              <div class="mr__row"><span>Messages sent</span><i style="--w:92%"></i></div>
+              <div class="mr__row"><span>Replies</span><i style="--w:34%;--dl:.08s"></i></div>
+              <div class="mr__row"><span>Meetings booked</span><i style="--w:18%;--dl:.16s"></i></div>
+              <div class="mr__row"><span>Meetings attended</span><i style="--w:15%;--dl:.24s"></i></div>
+              <div class="mr__row"><span>Cost per meeting</span><i style="--w:24%;--dl:.32s"></i></div>
+            </div>
+          </article>
+        </div>
+        <div class="how__visual" aria-hidden="true">
+          <div class="loop" id="loop">
+            <svg viewBox="0 0 520 360" id="loopSvg">
+              <defs>
+                <pattern id="dotPat" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="3.5" cy="3.5" r="1.35" fill="#0f7a62" fill-opacity=".3"/></pattern>
+                <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+              </defs>
+              <path id="track" d="M170 40 H350 A130 130 0 0 1 480 170 V190 A130 130 0 0 1 350 320 H170 A130 130 0 0 1 40 190 V170 A130 130 0 0 1 170 40 Z" fill="none" stroke="url(#dotPat)" stroke-width="30"/>
+              <path id="trackDone" d="M170 40 H350 A130 130 0 0 1 480 170 V190 A130 130 0 0 1 350 320 H170 A130 130 0 0 1 40 190 V170 A130 130 0 0 1 170 40 Z" fill="none" stroke="#0f7a62" stroke-width="3" stroke-linecap="round"/>
+              <circle id="markGlow" r="14" fill="#2fbf8f" fill-opacity=".45" filter="url(#glow)"/>
+              <circle id="mark" r="8" fill="#0f7a62" stroke="#fff" stroke-width="3"/>
+            </svg>
+            <span class="loop__tag" data-at="0">List built</span>
+            <span class="loop__tag" data-at=".17">Messages written</span>
+            <span class="loop__tag" data-at=".34">Launch</span>
+            <span class="loop__tag" data-at=".5">Every reply handled</span>
+            <span class="loop__tag" data-at=".67">Meetings booked</span>
+            <span class="loop__tag" data-at=".84">Monday report</span>
+            <div class="loop__core"><span class="loop__n" id="loopN">01</span><span class="loop__l" id="loopL">Build</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="how__cta"><p class="how__next">Your first step is a 20-minute call to see if your firm is a fit.</p><a class="btn btn--accent btn--xl" href="book.html" data-src="how">Get More Booked Meetings<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
+    </div>
+  </section>
+
+  <section class="gets" aria-labelledby="gets-h">
+    <div class="wrap">
+      <h2 class="h2 center" id="gets-h" data-rv>Everything you get with the <em>Advisor Pipeline system</em></h2>
+      <div class="gets__list">
+        <section class="grp" data-rv>
+          <div class="grp__h"><p class="mono">Weeks 1 to 2</p><h3 class="h3">We build it</h3></div>
+          <ol class="gi" start="1">
+            <li><span class="gi__n" aria-hidden="true">01</span><h4>Strategy and targets</h4><p>A 90-minute kickoff to agree on your ideal client, your area, and what counts as a qualified meeting. Then a monthly meeting target for each advisor, reported every Monday.</p></li>
+            <li><span class="gi__n" aria-hidden="true">02</span><h4>New outreach lists, plus CRM cleanup and enrichment</h4><p>New lists of HNWIs and business owners who fit your ideal client. Your CRM de-duped and cleaned, with better emails and phone numbers added where available.</p></li>
+            <li><span class="gi__n" aria-hidden="true">03</span><h4>A message pack you own</h4><p>Every email, LinkedIn message, follow-up, and reminder we send, written for your firm and kept in one doc your team owns.</p></li>
+            <li><span class="gi__n" aria-hidden="true">04</span><h4>LinkedIn profile tune-up</h4><p>We rewrite one or two advisor profiles with a clear headline, a focused About section, and a book-a-call button.</p></li>
+            <li><span class="gi__n" aria-hidden="true">05</span><h4>Email and tracking setup</h4><p>Separate sending domains and inboxes, warmed up before the first email goes out. Connected to your CRM and calendar so every reply and booking is tracked.</p></li>
+          </ol>
+        </section>
+        <section class="grp" data-rv>
+          <div class="grp__h"><p class="mono">From week 3, every day</p><h3 class="h3">We run it</h3></div>
+          <ol class="gi" start="6">
+            <li><span class="gi__n" aria-hidden="true">06</span><h4>Daily outreach</h4><p>Emails and LinkedIn messages go out every day to your new list and your past contacts, using only messages you approved.</p></li>
+            <li><span class="gi__n" aria-hidden="true">07</span><h4>Referral campaigns to CPAs and law firms</h4><p>We contact CPAs and attorneys near you to set up intro calls about shared clients. A second source of HNWI clients beyond cold outreach.</p></li>
+            <li><span class="gi__n" aria-hidden="true">08</span><h4>Reply handling and qualification</h4><p>A real person reads every reply, answers basic questions, and checks each person against your rules before booking.</p></li>
+            <li><span class="gi__n" aria-hidden="true">09</span><h4>Booking, reminders, and no-show follow-up</h4><p>Qualified people go straight onto your advisors’ calendars with a short note on why you are meeting. Reminders go out before each call, and no-shows get a follow-up.</p></li>
+          </ol>
+        </section>
+        <section class="grp" data-rv>
+          <div class="grp__h"><p class="mono">Every week</p><h3 class="h3">We report on it</h3></div>
+          <ol class="gi" start="10">
+            <li><span class="gi__n" aria-hidden="true">10</span><h4>Monday report and weekly call</h4><p>Messages sent, replies, meetings booked, and meetings held, plus a 20-to-30-minute call to decide what to do more of and what to cut.</p></li>
+            <li><span class="gi__n" aria-hidden="true">11</span><h4>You own everything</h4><p>Domains, inboxes, lists, and messages live in your accounts. If you bring it in-house, your team keeps running it.</p></li>
+          </ol>
+        </section>
+      </div>
+
+      <div class="cost" id="pricing">
+        <div class="cost__head">
+          <h3 class="h2" data-rv>What it costs</h3>
+          <p class="lead" data-rv style="--d:.06s">One setup fee, then a monthly retainer plus $750 for each qualified meeting that shows.</p>
+        </div>
+        <div class="cost__grid">
+          <div class="price" data-rv>
+            <p class="mono">Setup</p>
+            <p class="price__big">$10,000 <span>one time.</span></p>
+            <p>This covers list build and enrichment, CRM cleanup, LinkedIn profile tune-up, domains and inboxes, message packs, and the full system setup before a single campaign goes live.</p>
+          </div>
+          <div class="price price--feat" data-rv style="--d:.06s">
+            <p class="mono">Ongoing</p>
+            <p class="price__lead">Each month you pay:</p>
+            <div class="either">
+              <div class="opt"><b>$5,000</b><span>monthly retainer</span></div>
+              <span class="either__or">plus</span>
+              <div class="opt"><b>$750</b><span>per qualified, attended meeting</span></div>
+            </div>
+            <p class="price__fine">A qualified meeting is with a business owner or HNWI who fits your agreed AUM minimum, niche, and geography, and attends the call live.</p>
+          </div>
+        </div>
+        <div class="examples" data-rv>
+          <p class="mono">Examples</p>
+          <ul class="ex">
+            <li><span class="ex__dots" aria-hidden="true" style="--n:8"></span><p>If we deliver 8 qualified, attended meetings in a month, you pay $5,000 + 8 × $750 = $11,000.</p><b>$11,000</b></li>
+            <li><span class="ex__dots" aria-hidden="true" style="--n:12"></span><p>If we deliver 12, you pay $5,000 + 12 × $750 = $14,000.</p><b>$14,000</b></li>
+            <li><span class="ex__dots" aria-hidden="true" style="--n:4"></span><p>If a month is slow and only 4 meetings happen, you pay $5,000 + 4 × $750 = $8,000.</p><b>$8,000</b></li>
+          </ul>
+          <p class="examples__note">Your spend rises only when real people who fit your rules show up to talk with your advisors.</p>
+        </div>
+      </div>
+
+      <div class="commit" data-rv>
+        <div class="commit__num" aria-hidden="true"><b>24</b><span>qualified, attended meetings in your first 90 days</span></div>
+        <div class="commit__body">
+          <h3 class="h3">Our 90-day commitment</h3>
+          <p>In your first 90 days, our target is at least 24 qualified, attended meetings.</p>
+          <p>If we fall short of that target, we keep running the system and managing campaigns at no additional management fee until we hit 24. You still cover any hard costs, but we do not charge extra for our time until that number is met.</p>
+          <p>This keeps us focused on the same thing you care about: real HNWI and business-owner conversations, not vanity metrics.</p>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 5. The steps -->
-<section class="section center" id="process" aria-labelledby="process-h">
-  <div class="container">
-    <div class="rv">
-      <div class="spot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4v-5h4v-5h4V5h4"/></svg></div>
-      <!-- NEW COPY -->
-      <h2 class="display h2" id="process-h">Three steps to up and running<br>within 30 days.</h2>
+  <section class="faq" id="faq" aria-labelledby="faq-h">
+    <div class="wrap">
+      <div class="faq__grid">
+        <div class="faq__side">
+          <h2 class="h2" id="faq-h">FAQ</h2>
+          <a class="btn btn--light" href="book.html" data-src="faq">Get More Booked Meetings<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        </div>
+        <div class="qa">
+          <details open><summary>What do you actually do?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>The same work, every week. We build a list of the right people. We send them marketing on your behalf that you have approved. We follow up until a real person answers. Then a real person on our team checks the reply, qualifies the prospect, and books the meeting on your calendar. We nurture them so they show up. We build automations and a system that lets you track and convert meetings at the highest rate. We measure one thing: what each meeting cost.</p></div></div></details>
+          <details><summary>Who is this NOT for?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><ul><li>Firms under $25M in assets, or firms that only charge by the hour</li><li>Firms with no CRM data and no budget to build a list of their ideal clients</li><li>Firms whose compliance team says no to all outreach</li><li>Firms that want one campaign, not a system</li><li>Firms with no advisor who has time for 8 or more new meetings a month</li></ul><p>These are not judgments. They are the conditions the system needs to produce meetings.</p></div></div></details>
+          <details><summary>What does it cost?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>Setup is $10,000, one time. It covers list build and enrichment, CRM cleanup, a LinkedIn profile tune-up, domains and inboxes, message packs, and the full system setup before a single campaign goes live.</p><p>After setup, you pay a $5,000 monthly retainer plus $750 for each qualified, attended meeting. A qualified meeting is with a business owner or HNWI who fits your agreed AUM minimum, niche, and geography, and attends the call live.</p><p>In your first 90 days, our target is at least 24 qualified, attended meetings. If we fall short, we keep running the system at no additional management fee until we hit 24.</p></div></div></details>
+          <details><summary>Will we get a lot of bad meetings?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>No. Before we start, we ask you questions so you can tell us what a good fit looks like: how much they have, what job or situation they are in, where they are located, and what is going on in their life. A real person reads every reply. People who do not fit get a polite no. You only pay the meeting fee when the person fits your rules and shows up.</p></div></div></details>
+          <details><summary>We have tried marketing agencies before.<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>So have most of the firms we talk to. Agencies sell things like a campaign, a website, or ad views. We sell what actually drives revenue: qualified meetings that happen, and the clients that come with them. We report one number every week. If the number is bad, there is no hiding. Our incentives are aligned with yours.</p></div></div></details>
+          <details><summary>What do you need from us?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>One demo call where we determine if we are a good fit. We work out who your ideal client is and how we will get them booked with you. We build you a list and/or you give us access to your CRM data so we can enrich your list. We transform your marketing and social pages with our proven systems and copywriting. Meetings get booked with your qualified dream clients. And your advisors show up with the biggest smile to the meetings we book.</p></div></div></details>
+        </div>
+      </div>
+      <div class="close">
+        <a class="btn btn--accent btn--xl" href="book.html" data-src="close">Get More Booked Meetings<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      </div>
+      <footer class="foot">
+        <a class="brand" href="#top"><svg viewBox="0 0 32 32" aria-hidden="true"><rect class="mb" x="3" y="5" width="26" height="24" rx="6"/><rect class="mp" x="6" y="12" width="20" height="14" rx="3"/><rect class="mp" x="9.5" y="2" width="3" height="7" rx="1.5"/><rect class="mp" x="19.5" y="2" width="3" height="7" rx="1.5"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></a>
+        <nav aria-label="Footer"><a href="#how">How it works</a><a href="#pricing">What it costs</a><a href="#faq">FAQ</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+      </footer>
     </div>
-    <div class="grid grid-3 mt-64 left">
-      <div class="tile3 rv scene-wrap" style="--i:0"><div class="scene scene--grid" aria-hidden="true"><div class="rows">
-<div class="row"><i></i><s></s><s></s></div><div class="row"><i></i><s></s><s></s></div><div class="row"><i></i><s></s><s></s></div><div class="row"><i></i><s></s><s></s></div><div class="row"><i></i><s></s><s></s></div></div></div><span class="step">Step 1</span><h3 class="h4">Build</h3><p>We build your list and/or clean up your CRM. We write the messages. We set up your LinkedIn and email so outreach looks and feels like you, not a robot.</p></div>
-      <div class="tile3 rv scene-wrap" style="--i:1"><div class="scene" aria-hidden="true"><div class="rows">
-<div class="row"><s></s><em>Approved</em></div><div class="row"><s></s><em>Approved</em></div><div class="row"><s></s><em>Approved</em></div><div class="row"><s></s><em>Sent</em></div></div></div><span class="step">Step 2</span><h3 class="h4">Launch</h3><p>We start with the names already in your CRM, because they answer fastest, and reach new people alongside them. A real person handles every reply, every day. The first meetings get booked.</p></div>
-      <div class="tile3 rv scene-wrap" style="--i:2"><div class="scene scene--cal" aria-hidden="true"><div class="cal"><div class="d"><b>Mon</b><span class="slot b"></span><span class="slot"></span><span class="slot"></span></div><div class="d"><b>Tue</b><span class="slot"></span><span class="slot b"></span><span class="slot"></span></div><div class="d"><b>Wed</b><span class="slot b"></span><span class="slot"></span><span class="slot b"></span></div><div class="d"><b>Thu</b><span class="slot"></span><span class="slot b"></span><span class="slot"></span></div><div class="d"><b>Fri</b><span class="slot b"></span><span class="slot"></span><span class="slot"></span></div></div></div><span class="step">Step 3</span><h3 class="h4">Grow</h3><p>Every Monday you get one report: messages sent, replies, meetings booked, meetings attended, and what each one cost. If the cost per meeting is off, we change the list, messaging, or volume before we ask you to spend more.</p></div>
-    </div>
-    <div class="btn-row mt-48 rv">
-      <a class="pill pill--lg" href="book.html" data-src="process">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- 7. What you get -->
-<section class="section center" id="package" aria-labelledby="package-h">
-  <div class="container">
-    <div class="rv">
-      <!-- NEW COPY -->
-      <h2 class="display h2" id="package-h">Everything you get with the <span class="nowrap">$7K Advisor Pipeline</span></h2>
-    </div>
-    <ul class="offers">
-<!-- NEW COPY -->
-<li class="rv" style="--i:0"><span class="num">01</span><h3>Strategy and targets</h3><p>A 90-minute kickoff locks your niche, geography, offer, and the rules for what counts as a qualified meeting. Then a clear monthly target of qualified, attended meetings per advisor.</p></li>
-<li class="rv" style="--i:1"><span class="num">02</span><h3>A message pack you own</h3><p>Cold email sequences for new prospects. Reactivation sequences for old prospects and past clients. LinkedIn connection and follow-up scripts. Short reply, bump, and reminder scripts. All of it in one clean doc your team controls.</p></li>
-<li class="rv" style="--i:2"><span class="num">03</span><h3>New outreach lists, plus CRM cleanup and enrichment</h3><p>We build you new outreach lists of HNW individuals and business owners who match your ideal client, from our database. Then we pull, de-dupe, and clean your own CRM and prospect lists, fix bad records and known bounces, and add better emails and phone numbers where available, so more conversations start.</p></li>
-<li class="rv" style="--i:3"><span class="num">04</span><h3>LinkedIn profile tune-up</h3><p>We rewrite one or two advisor profiles to match the outreach: a new headline, a tighter About focused on your niche and promise, and a clear book-a-call button, so profile views turn into booked meetings.</p></li>
-<li class="rv" style="--i:4"><span class="num">05</span><h3>Referral campaigns to CPAs and law firms</h3><p>From our in-house database we find the CPAs and attorneys around your geography and niche, then run campaigns to book compare-notes calls on mutual clients and be-our-go-to intro calls. A second pipeline: HNW clients through trusted professionals, not just cold outreach.</p></li>
-<li class="rv" style="--i:5"><span class="num">06</span><h3>System setup</h3><p>Dedicated sending domains and inboxes, set up and warmed. Basic integration with your CRM and calendar so replies and bookings are tracked. A simple pipeline view: contacted, replied, qualified, booked, held.</p></li>
-<li class="rv" style="--i:6"><span class="num">07</span><h3>Daily outbound and reactivation</h3><p>An agreed daily volume of email from your dedicated inboxes to the right segments. LinkedIn outreach from advisor profiles using approved scripts. Periodic reactivation pushes to dormant leads and past intro calls.</p></li>
-<li class="rv" style="--i:7"><span class="num">08</span><h3>Reply handling and qualification</h3><p>We read and triage every reply, qualify with your rules on fit, assets, role, and timing, handle the basic questions, and only pass along meetings that match what we agreed.</p></li>
-<li class="rv" style="--i:8"><span class="num">09</span><h3>Booking, reminders, and no-show follow-up</h3><p>Qualified prospects go straight onto advisor calendars through your scheduler, with a short why-we-are-meeting note so it is not a naked invite. Reminders before each meeting, and simple no-show follow-up so a good prospect is not lost after one miss.</p></li>
-<li class="rv" style="--i:9"><span class="num">10</span><h3>Weekly numbers and tweaks</h3><p>A simple weekly scorecard: emails sent, positive replies, qualified meetings booked, meetings held, and which messages and segments are working. A 20-to-30-minute call each week to decide what to send more of and what to cut.</p></li>
-<li class="rv" style="--i:10"><span class="num">11</span><h3>You own the assets</h3><p>Domains, inboxes, lists, scripts, and systems live in your accounts. If you ever bring it in-house, your team keeps running exactly what we built.</p></li>
-    </ul>
-    <div id="pricing" class="pricing-wrap">
-    <h3 class="h3 mt-64 rv">What it costs</h3>
-    <!-- NEW COPY -->
-    <div class="pricing rv">
-      <div class="card"><b>Setup</b><span>$5K to $10K, one time, depending on firm size and outreach needs. This covers the list and enrichment, the LinkedIn transformation, message management, the email infrastructure setup and management, and the copywriting and weekly reporting package.</span></div>
-      <div class="card"><b>Monthly</b><span>Most firms invest a flat monthly retainer in the $7,000 range, plus a fee for each qualified meeting that happens. You only pay for a meeting when the person fits your criteria and shows up.</span></div>
-      <div class="card"><b>Example</b><span>$7,000/month + $500 per qualified, attended meeting, capped at 20 per month. On the demo we run your numbers so the math makes sense.</span></div>
-    </div>
-    </div>
-  </div>
-</section>
-
-<!-- 8. Questions (black) -->
-<section class="faq-sec on-dark" id="faq" aria-labelledby="faq-h">
-  <div class="container center">
-    <div class="rv">
-      <div class="spot"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .8-1 1.5v.2M12 17h.01"/></svg></div>
-      <!-- NEW COPY -->
-      <h2 class="display h2" id="faq-h">FAQ</h2>
-    </div>
-    <div class="faq rv left">
-      <!-- NEW COPY -->
-      <details open>
-        <summary>What do you actually do?<span class="chev" aria-hidden="true"></span></summary>
-        <div class="a"><div><p>The same work, every week. We build a list of the right people. We send them marketing on your behalf that you have approved. We follow up until a real person answers. Then a real person on our team checks the reply, qualifies the prospect, and books the meeting on your calendar. We nurture them so they show up. We build automations and a system that lets you track and convert meetings at the highest rate. We measure one thing: what each meeting cost.</p></div></div>
-      </details>
-      <details>
-        <summary>Who is this NOT for?<span class="chev" aria-hidden="true"></span></summary>
-        <div class="a"><div><ul><li>Firms under $25M in assets, or firms that only charge by the hour</li><li>Firms with no CRM data and no budget to build a list of their ideal clients</li><li>Firms whose compliance team says no to all outreach</li><li>Firms that want one campaign, not a system</li><li>Firms with no advisor who has time for 8 or more new meetings a month</li></ul><p>These are not judgments. They are the conditions the system needs to produce meetings.</p></div></div>
-      </details>
-      <details>
-        <summary>What does it cost?<span class="chev" aria-hidden="true"></span></summary>
-        <div class="a"><div><p>Setup is $5,000 to $10,000, depending on two things:</p><ol><li>Whether we build you a list, enrich your list, or both.</li><li>How much marketing volume we will run, based on your advisor count and the size of your prospect list.</li></ol><p>Once those numbers are agreed and setup is complete, there is a monthly fee plus a fee for each meeting that happens. You get exact numbers right after the demo call, once we know your list and your goal.</p></div></div>
-      </details>
-      <details>
-        <summary>Will we get a lot of bad meetings?<span class="chev" aria-hidden="true"></span></summary>
-        <div class="a"><div><p>No. Before we start, we ask you questions so <b>you</b> can tell us what a good fit looks like: how much they have, what job or situation they are in, where they are located, and what is going on in their life. A real person reads every reply. People who do not fit get a polite no. You only pay the meeting fee when the person fits your rules and shows up.</p></div></div>
-      </details>
-      <details>
-        <summary>We have tried marketing agencies before.<span class="chev" aria-hidden="true"></span></summary>
-        <div class="a"><div><p>So have most of the firms we talk to. Agencies sell things like a campaign, a website, or ad views. We sell what actually drives revenue: qualified meetings that happen, and the clients that come with them. We report one number every week. If the number is bad, there is no hiding. Our incentives are aligned with yours.</p></div></div>
-      </details>
-      <details>
-        <summary>What do you need from us?<span class="chev" aria-hidden="true"></span></summary>
-        <div class="a"><div><p>One demo call where we determine if we are a good fit. We work out who your ideal client is and how we will get them booked with you. We build you a list and/or you give us access to your CRM data so we can enrich your list. We transform your marketing and social pages with our proven systems and copywriting. Meetings get booked with your qualified dream clients. And your advisors show up with the biggest smile to the meetings we book.</p></div></div>
-      </details>
-    </div>
-    <div class="stack mt-48 rv"><a class="pill pill--lg pill--accent" href="book.html" data-src="faq">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a></div>
-  </div>
-</section>
+  </section>
 </main>
-<div class="sticky-cta" data-sticky hidden><a class="pill pill--accent" href="book.html" data-src="sticky">Get More Booked Meetings <span class="arr" aria-hidden="true">&rarr;</span></a></div>
-<div class="legal-line"><a href="privacy.html">Privacy</a><span aria-hidden="true">&middot;</span><a href="terms.html">Terms</a></div>
+
 <script src="assets/config.js"></script>
-<script src="assets/site.js" defer></script>
+<script src="assets/vendor/lenis.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* Attribution and tracking: the same rules as assets/site.js on the other pages. Campaign tags are kept for the
+     visit and added, with a src label, to every link to book.html. Ad tags load only when their IDs are set in
+     assets/config.js, and never for a visitor whose browser sends Global Privacy Control. */
+  var CFG = window.AB_CONFIG || {};
+  var UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'fbclid'];
+  (function attribution() {
+    var stored = {};
+    try { var raw = sessionStorage.getItem('ab_utm'); var parsed = raw ? JSON.parse(raw) : {}; stored = parsed && typeof parsed === 'object' ? parsed : {}; } catch (e) { stored = {}; }
+    var params = new URLSearchParams(location.search), found = false;
+    UTM_KEYS.forEach(function (k) { var v = params.get(k); if (v) { stored[k] = v; found = true; } });
+    if (found) { try { sessionStorage.setItem('ab_utm', JSON.stringify(stored)); } catch (e) {} }
+    var keys = Object.keys(stored);
+    Array.prototype.slice.call(document.querySelectorAll('a[href]')).forEach(function (a) {
+      var href = a.getAttribute('href'), url;
+      if (!href || /^(mailto:|tel:|#|javascript:)/i.test(href)) return;
+      try { url = new URL(href, location.href); } catch (e) { return; }
+      if (!/(^|\/)book\.html$/.test(url.pathname)) return;
+      var changed = false;
+      keys.forEach(function (k) { if (!url.searchParams.has(k)) { url.searchParams.set(k, stored[k]); changed = true; } });
+      var src = (a.getAttribute('data-src') || '').trim();
+      if (src && !url.searchParams.has('src')) { url.searchParams.set('src', src); changed = true; }
+      if (!changed) return;
+      var hashAt = href.indexOf('#'), hash = hashAt > -1 ? href.slice(hashAt) : '';
+      a.setAttribute('href', (hashAt > -1 ? href.slice(0, hashAt) : href).split('?')[0] + '?' + url.searchParams.toString() + hash);
+    });
+  })();
+  (function tracking() {
+    if (navigator.globalPrivacyControl) return;
+    if (CFG.metaPixelId) {
+      !function (f, b, e, v, n, t, s) {
+        if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+        if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = [];
+        t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+      }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+      window.fbq('init', String(CFG.metaPixelId)); window.fbq('track', 'PageView');
+    }
+    if (CFG.linkedinPartnerId) {
+      window._linkedin_partner_id = String(CFG.linkedinPartnerId);
+      window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+      window._linkedin_data_partner_ids.push(window._linkedin_partner_id);
+      if (!window.lintrk) { window.lintrk = function (a, b) { window.lintrk.q.push([a, b]); }; window.lintrk.q = []; }
+      var s0 = document.getElementsByTagName('script')[0], li = document.createElement('script');
+      li.type = 'text/javascript'; li.async = true; li.src = 'https://snap.licdn.com/li.lms-analytics/insight.min.js';
+      s0.parentNode.insertBefore(li, s0);
+    }
+  })();
+  var doc = document, root = doc.documentElement;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  root.classList.add('js');
+  function $(s, c) { return (c || doc).querySelector(s); }
+  function $$(s, c) { return Array.prototype.slice.call((c || doc).querySelectorAll(s)); }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+
+  /* Nav: a stronger shadow once the page moves */
+  var nav = $('#nav');
+  function onNav() { nav.classList.toggle('is-scrolled', window.scrollY > 8); }
+  window.addEventListener('scroll', onNav, { passive: true }); onNav();
+
+
+  /* Smooth scrolling: Lenis eases wheel and trackpad scrolling; touch keeps native scrolling */
+  var lenis = null;
+  if (window.Lenis && !reduce) {
+    try {
+      lenis = new window.Lenis({ duration: 0.9, easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
+      var lr = function (t) { lenis.raf(t); requestAnimationFrame(lr); }; requestAnimationFrame(lr);
+    } catch (err) { lenis = null; }
+  }
+  doc.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href^="#"]') : null; if (!a) return;
+    var id = a.getAttribute('href').slice(1), t = id ? doc.getElementById(id) : null; if (!t) return;
+    e.preventDefault();
+    var off = id === 'top' ? 0 : -($('#nav').offsetHeight + 36);
+    if (lenis) lenis.scrollTo(id === 'top' ? 0 : t, { offset: off });
+    else window.scrollTo({ top: id === 'top' ? 0 : t.getBoundingClientRect().top + window.scrollY + off, behavior: reduce ? 'auto' : 'smooth' });
+  });
+
+  /* Journey strip: after the cards arrive, a highlight walks from first message to booked meeting */
+  (function journey() {
+    var steps = $$('.jstep'); if (!steps.length || reduce) return;
+    var i = -1, iv = null, vis = true;
+    function next() { if (!vis) return; i = (i + 1) % steps.length; steps.forEach(function (s, k) { s.classList.toggle('is-on', k === i); }); }
+    setTimeout(function () { next(); iv = setInterval(next, 2200); }, 1700);
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { vis = es[0].isIntersecting; }).observe($('.journey'));
+  })();
+
+  /* Reveal: only items below the first screen start hidden */
+  var rv = $$('[data-rv]');
+  if ('IntersectionObserver' in window && !reduce) {
+    var vh0 = window.innerHeight;
+    rv.forEach(function (el) { if (el.getBoundingClientRect().top > vh0 * 0.92) el.classList.add('pre'); });
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.remove('pre'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    rv.forEach(function (el) { if (el.classList.contains('pre')) io.observe(el); });
+  }
+
+  /* Count up the dot-matrix numbers once */
+  var counts = $$('[data-count]');
+  if ('IntersectionObserver' in window && !reduce) {
+    var cio = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return; cio.unobserve(e.target);
+        var el = e.target, to = +el.getAttribute('data-count'), t0 = null, D = 1400;
+        (function step(t) { if (!t0) t0 = t; var k = clamp((t - t0) / D, 0, 1); k = 1 - Math.pow(1 - k, 4); el.textContent = Math.round(to * k); if (k < 1) requestAnimationFrame(step); })(performance.now());
+      });
+    }, { threshold: 0.6 });
+    counts.forEach(function (el) { el.textContent = '0'; cio.observe(el); });
+  }
+
+  /* Hero: a slow field of green dots behind the headline */
+  (function dots() {
+    var c = $('#dots'); if (!c || !c.getContext) return;
+    var ctx = c.getContext('2d'), W = 0, H = 0, dpr = Math.min(2, window.devicePixelRatio || 1), run = true, last = 0;
+    function size() { var r = c.getBoundingClientRect(); W = r.width; H = r.height; c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    function draw(t) {
+      var s = W < 600 ? 10 : 12, cx = W / 2, time = t / 1000;
+      ctx.clearRect(0, 0, W, H); ctx.fillStyle = '#0f7a62'; ctx.beginPath();
+      for (var y = s / 2; y < H; y += s) {
+        for (var x = s / 2; x < W; x += s) {
+          var dx = (x - cx) / (W * 0.55), dy = y / H;
+          var fall = Math.max(0, 1 - Math.sqrt(dx * dx * 0.9 + dy * dy * 1.6));
+          var wave = 0.5 + 0.5 * Math.sin(x * 0.011 + time * 0.35) * Math.cos(y * 0.019 - time * 0.27 + x * 0.003);
+          var r = fall * (0.35 + wave * 0.9) * (s * 0.2);
+          if (r > 0.35) { ctx.moveTo(x + r, y); ctx.arc(x, y, r, 0, 6.2832); }
+        }
+      }
+      ctx.globalAlpha = 0.5; ctx.fill(); ctx.globalAlpha = 1;
+    }
+    function loop(t) { if (!run) return; if (t - last > 33) { draw(t); last = t; } requestAnimationFrame(loop); }
+    size(); window.addEventListener('resize', function () { size(); if (reduce) draw(0); });
+    if (reduce || !('IntersectionObserver' in window)) { draw(0); return; }
+    new IntersectionObserver(function (es) { var v = es[0].isIntersecting; if (v && !run) { run = true; requestAnimationFrame(loop); } else if (!v) run = false; }).observe(c);
+    requestAnimationFrame(loop);
+  })();
+
+  /* Manifesto: words light up as the paragraph scrolls through the middle of the screen */
+  (function words() {
+    var p = $('#words'); if (!p) return;
+    var parts = p.textContent.split(/(\s+)/), frag = doc.createDocumentFragment(), spans = [];
+    parts.forEach(function (w) { if (/^\s+$/.test(w) || !w) { frag.appendChild(doc.createTextNode(w)); return; } var s = doc.createElement('span'); s.className = 'w'; s.textContent = w; frag.appendChild(s); spans.push(s); });
+    p.textContent = ''; p.appendChild(frag);
+    if (reduce) { spans.forEach(function (s) { s.classList.add('on'); }); return; }
+    var lit = -1, ticking = false;
+    function upd() {
+      ticking = false;
+      var r = p.getBoundingClientRect(), vh = window.innerHeight;
+      var k = clamp((vh * 0.78 - r.top) / (r.height + vh * 0.25), 0, 1);
+      var n = Math.round(k * spans.length);
+      if (n === lit) return;
+      for (var i = 0; i < spans.length; i++) spans[i].classList.toggle('on', i < n);
+      lit = n;
+    }
+    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });
+    window.addEventListener('resize', upd); upd();
+  })();
+
+  /* How it works: the marker follows scroll through the three steps */
+  (function how() {
+    var sec = $('#how'), steps = $$('.step'), wrap = $('#steps'), track = $('#track'), done = $('#trackDone'), mark = $('#mark'), glow = $('#markGlow'), tags = $$('.loop__tag'), loopEl = $('#loop');
+    if (!sec || !track || !track.getTotalLength) return;
+    var L = track.getTotalLength(), names = ['Build', 'Launch', 'Grow'], target = 0, curP = 0, raf = 0, active = -1;
+    done.style.strokeDasharray = L; done.style.strokeDashoffset = L;
+    function placeTags() {
+      var W = loopEl.clientWidth, H = loopEl.clientHeight;
+      tags.forEach(function (t) {
+        var a = +t.getAttribute('data-at'), pt = track.getPointAtLength(a * L), w = t.offsetWidth;
+        t.style.left = clamp(pt.x / 520 * W, w / 2 + 2, W - w / 2 - 2) + 'px'; t.style.top = (pt.y / 360 * H) + 'px';
+      });
+    }
+    placeTags(); window.addEventListener('resize', placeTags);
+    if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(placeTags);
+    function place(p) {
+      var pt = track.getPointAtLength(clamp(p, 0, 0.9999) * L);
+      mark.setAttribute('cx', pt.x); mark.setAttribute('cy', pt.y); glow.setAttribute('cx', pt.x); glow.setAttribute('cy', pt.y);
+      done.style.strokeDashoffset = L * (1 - p);
+      tags.forEach(function (t) { t.classList.toggle('on', p + 0.001 >= +t.getAttribute('data-at')); });
+      var s = clamp(Math.floor(p * 3 - 0.0001), 0, 2);
+      if (p <= 0) s = 0;
+      if (s !== active) { active = s; steps.forEach(function (st, i) { st.classList.toggle('on', i === s); }); $('#loopN').textContent = '0' + (s + 1); $('#loopL').textContent = names[s]; }
+    }
+    function measure() {
+      var r = wrap.getBoundingClientRect(), vh = window.innerHeight;
+      target = clamp((vh * 0.55 - r.top) / Math.max(1, r.height - vh * 0.35), 0, 1);
+    }
+    function tick() {
+      raf = 0; curP += (target - curP) * (reduce ? 1 : 0.12);
+      if (Math.abs(target - curP) < 0.0005) curP = target;
+      place(curP);
+      if (curP !== target) raf = requestAnimationFrame(tick);
+    }
+    function onScroll() { measure(); if (!raf) raf = requestAnimationFrame(tick); }
+    sec.classList.add('is-live');
+    window.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', onScroll);
+    measure(); curP = target; place(curP);
+  })();
+
+  /* FAQ: smooth open and close */
+  $$('.qa details').forEach(function (d) {
+    var sum = $('summary', d), body = $('.qa__a', d), anim = null;
+    sum.addEventListener('click', function (e) {
+      if (reduce || !body.animate) return;
+      e.preventDefault();
+      if (anim) anim.cancel();
+      if (d.open) {
+        var h = body.offsetHeight;
+        anim = body.animate([{ height: h + 'px', opacity: 1 }, { height: '0px', opacity: 0 }], { duration: 420, easing: 'cubic-bezier(.16,1,.3,1)' });
+        anim.onfinish = function () { d.open = false; anim = null; };
+      } else {
+        d.open = true; var h2 = body.offsetHeight;
+        anim = body.animate([{ height: '0px', opacity: 0 }, { height: h2 + 'px', opacity: 1 }], { duration: 520, easing: 'cubic-bezier(.16,1,.3,1)' });
+        anim.onfinish = function () { anim = null; };
+      }
+    });
+  });
+})();
+</script>
 </body>
 </html>

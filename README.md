@@ -26,6 +26,8 @@ Numbers, IDs, and contact details live in **`assets/config.js`**. It is the only
 - Meta Pixel and LinkedIn tag IDs (empty = the tags are not loaded; they are also never loaded when a browser sends a Global Privacy Control signal)
 - the contact email (`info@advisorbooking.com`), entity, city
 
+The home page (`index.html`) carries its own styles and script inline, plus `assets/vendor/lenis.min.js` (Lenis 1.1.13, MIT, license in `assets/vendor/LENIS-LICENSE.txt`) for smooth wheel scrolling. It keeps the same attribution rules as `assets/site.js`: campaign tags are stored for the visit and added, with a `src` label, to every link to `book.html`, and ad tags load only when their IDs are set. The other pages still use `assets/styles.css` and `assets/site.js`.
+
 The landing pages read page-specific settings (fit questions, exit copy, form version) from a `window.AB_LP` block at the top of each page; `assets/lp.js` merges it over its defaults.
 
 ## Launch checklist
