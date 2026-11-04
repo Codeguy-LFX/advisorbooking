@@ -93,8 +93,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
 
 /* Hero */
 .hero{position:relative;padding-block:calc(var(--nav-h) + 110px) 72px;overflow:hidden;isolation:isolate}
-.hero__dots{position:absolute;inset:0 0 auto 0;width:100%;height:620px;z-index:-1;pointer-events:none;
-  -webkit-mask-image:radial-gradient(ellipse 62% 92% at 50% 0%,#000 28%,transparent 74%);mask-image:radial-gradient(ellipse 62% 92% at 50% 0%,#000 28%,transparent 74%)}
 .hero__in{display:flex;flex-direction:column;align-items:center;text-align:center;gap:28px}
 .chip{display:inline-flex;align-items:center;gap:9px;padding:7px 14px 7px 10px;border-radius:999px;background:rgba(255,255,255,.8);box-shadow:0 0 0 1px var(--line);font-size:clamp(12.5px,3.3vw,14px);text-align:center;color:var(--ink-2);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .chip__dot{flex:0 0 auto;width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
@@ -459,7 +457,6 @@ html.lenis,html.lenis body{height:auto}
 
 <main id="top">
   <section class="hero" aria-labelledby="hero-h">
-    <canvas class="hero__dots" id="dots" aria-hidden="true"></canvas>
     <div class="wrap hero__in">
       <h1 class="h-display" id="hero-h">We put 8–15 HNWI and business owner meetings on financial advisors’ calendars every month</h1>
       <p class="hero__sub">For independent RIAs with $50M to $250M+ AUM who want a predictable pipeline of business owners and high-net-worth families, not just “more marketing.”</p>
@@ -810,32 +807,6 @@ html.lenis,html.lenis body{height:auto}
     }, { threshold: 0.6 });
     counts.forEach(function (el) { el.textContent = '0'; cio.observe(el); });
   }
-
-  /* Hero: a slow field of green dots behind the headline */
-  (function dots() {
-    var c = $('#dots'); if (!c || !c.getContext) return;
-    var ctx = c.getContext('2d'), W = 0, H = 0, dpr = Math.min(2, window.devicePixelRatio || 1), run = true, last = 0;
-    function size() { var r = c.getBoundingClientRect(); W = r.width; H = r.height; c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
-    function draw(t) {
-      var s = W < 600 ? 10 : 12, cx = W / 2, time = t / 1000;
-      ctx.clearRect(0, 0, W, H); ctx.fillStyle = '#0f7a62'; ctx.beginPath();
-      for (var y = s / 2; y < H; y += s) {
-        for (var x = s / 2; x < W; x += s) {
-          var dx = (x - cx) / (W * 0.55), dy = y / H;
-          var fall = Math.max(0, 1 - Math.sqrt(dx * dx * 0.9 + dy * dy * 1.6));
-          var wave = 0.5 + 0.5 * Math.sin(x * 0.011 + time * 0.35) * Math.cos(y * 0.019 - time * 0.27 + x * 0.003);
-          var r = fall * (0.35 + wave * 0.9) * (s * 0.2);
-          if (r > 0.35) { ctx.moveTo(x + r, y); ctx.arc(x, y, r, 0, 6.2832); }
-        }
-      }
-      ctx.globalAlpha = 0.5; ctx.fill(); ctx.globalAlpha = 1;
-    }
-    function loop(t) { if (!run) return; if (t - last > 33) { draw(t); last = t; } requestAnimationFrame(loop); }
-    size(); window.addEventListener('resize', function () { size(); if (reduce) draw(0); });
-    if (reduce || !('IntersectionObserver' in window)) { draw(0); return; }
-    new IntersectionObserver(function (es) { var v = es[0].isIntersecting; if (v && !run) { run = true; requestAnimationFrame(loop); } else if (!v) run = false; }).observe(c);
-    requestAnimationFrame(loop);
-  })();
 
   /* Manifesto: words light up as the paragraph scrolls through the middle of the screen */
   (function words() {
