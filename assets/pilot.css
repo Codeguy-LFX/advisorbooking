@@ -273,6 +273,7 @@ h2,h3{text-wrap:balance}
 .legal-line a{display:inline-block;color:var(--night-muted);text-decoration:none;padding:10px 8px;transition:color .15s}
 .legal-line a:hover,.legal-line a:focus-visible{color:var(--night-ink)}
 .legal-line span{padding:0 2px}
+.legal-line__disc{max-width:640px;margin:8px auto 4px;font-size:13px;line-height:1.55;color:var(--night-muted);text-wrap:pretty}
 
 /* ---------- phones ---------- */
 @media (max-width:560px){
