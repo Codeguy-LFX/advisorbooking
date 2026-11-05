@@ -104,7 +104,6 @@ h2,h3{text-wrap:balance}
 .lp-rate strong{color:var(--ink);font-weight:500}
 .lp-hero__desc{max-width:640px;margin:30px auto 0;font-size:clamp(17px,1.4vw,19px);line-height:1.6;color:var(--muted)}
 .lp-cta-row{margin-top:32px}
-.lp-hero__team{font-size:14.5px;color:var(--muted);max-width:52ch;margin:18px auto 0;line-height:1.55}
 
 /* ---------- booking card ---------- */
 .lp-book{padding:clamp(48px,7vw,88px) 0 0}
