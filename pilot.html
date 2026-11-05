@@ -204,7 +204,7 @@ window.AB_LP = {
             <div><h3 id="schedHi" tabindex="-1">Pick a time</h3></div>
           </div>
           <p class="lp-sched__meta"><span data-config="eventLength">20 min</span> &middot; Google Meet &middot; <span class="lp-ok" data-config="eventName">Pipeline Audit</span> &middot; <button type="button" class="lp-linkbtn" id="startOver2">Not you? Start over</button></p>
-          <div class="lp-scheduler" id="scheduler" data-lenis-prevent></div>
+          <div class="lp-scheduler" id="scheduler"></div>
           <p class="lp-expect">A 20-minute Google Meet. We look at your ideal client, your list, your advisors&rsquo; time, and whether your firm has run outreach before. Then we tell you if this will work for your firm or not.</p>
         </div>
 
@@ -276,11 +276,12 @@ window.AB_LP = {
     <div class="lp-sec-head">
       <p class="eyebrow" data-rv>What you get</p>
       <h2 class="h2" id="offer-h" data-rv>The Founding Offer</h2>
-      <p class="lead" data-rv style="--d:.06s">For independent RIAs with $50M to $250M AUM and 2 to 10 advisors.</p>
+      <p class="lead" data-rv style="--d:.06s">For independent RIAs with $50M to $250M+ AUM and 2 to 10 advisors.</p>
     </div>
-    <div class="lp-prods lp-prods--offer">
+    <!-- One card: what you get, then the price and term, and one button. -->
+    <div class="lp-offer" data-rv>
 
-      <div class="lp-prod lp-prod--feat" data-rv>
+      <div class="lp-offer__main">
         <span class="lp-ribbon">Included</span>
         <h3>The Advisor Pipeline</h3>
         <p class="lp-ratio">Built and run for you, start to finish</p>
@@ -291,13 +292,12 @@ window.AB_LP = {
           <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>New outbound and reactivation campaigns across email and LinkedIn</li>
           <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Reply handling and qualification, so your advisors only see real opportunities</li>
           <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Calendar booking with reminders, reschedules, and no-show follow-up</li>
-          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>A weekly pipeline report and working session with our team, led by Nick, to tune messaging and lists</li>
+          <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>A weekly pipeline report and working session with our team to tune messaging and lists</li>
           <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Full ownership of all domains, copy, templates, and data</li>
         </ul>
-        <a href="#book" class="btn btn--accent lp-btn-block">Book a call<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
       </div>
 
-      <div class="lp-prod" data-rv style="--d:.08s">
+      <div class="lp-offer__price">
         <h3>Price and term</h3>
         <p class="lp-ratio">Founding firms only</p>
         <div class="lp-price"><span class="big">$5,000</span><span class="per">every 4 weeks</span></div>
@@ -308,14 +308,14 @@ window.AB_LP = {
           <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Billing runs every 4 weeks, so a year is 13 cycles rather than 12 monthly invoices</li>
           <li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Your founding rate stays locked for as long as you stay</li>
         </ul>
-        <a href="#book" class="btn lp-btn-block">Book a call<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a href="#book" class="btn btn--accent lp-btn-block">Book a call<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- 6. THE MEETING GUARANTEE: the commitment in Nick's words, the conditions beside it, the founding-rate note -->
+<!-- 6. THE MEETING GUARANTEE: the commitment, the conditions beside it, the founding-rate note -->
 <section class="lp-sec lp-sec--alt" id="guarantee" aria-labelledby="guar-h">
   <div class="wrap">
     <div class="lp-sec-head">
@@ -324,12 +324,11 @@ window.AB_LP = {
       <p class="lead" data-rv style="--d:.06s">This is a service guarantee, not a marketing slogan. The full terms are written into your services agreement.</p>
     </div>
     <div class="lp-guar">
-      <blockquote class="lp-guar__quote" data-rv>
-        <p>&ldquo;In the first 90 days, we are committing to a minimum of 15 qualified, attended prospect meetings from this system.</p>
+      <div class="lp-guar__quote" data-rv>
+        <p>In the first 90 days, we are committing to a minimum of 15 qualified, attended prospect meetings from this system.</p>
         <p>Qualified means: fits your stated AUM and niche, is a decision maker or co-decision maker, and knows they are meeting about moving or adding assets.</p>
-        <p>If we are short of 15 by day 90, we keep working at our cost until your team has taken at least 15 qualified, attended meetings from this pipeline.&rdquo;</p>
-        <footer>Nick De Jesus, Founder, Advisor Booking</footer>
-      </blockquote>
+        <p>If we are short of 15 by day 90, we keep working at our cost until your team has taken at least 15 qualified, attended meetings from this pipeline.</p>
+      </div>
       <div class="lp-guar__terms" data-rv style="--d:.08s">
         <h3>Conditions, so it stays fair on both sides</h3>
         <p>You agree to:</p>
@@ -345,7 +344,7 @@ window.AB_LP = {
       <div class="lp-band__txt">
         <span class="lp-band__tag">Founding firms pricing</span>
         <h3>$5,000 every 4 weeks is for the first few firms only</h3>
-        <p>Later clients pay our standard pricing, which starts with a $10,000 one-time setup fee. Early clients keep their founding rate as long as they stay.</p>
+        <p>Later clients pay our standard pricing, which starts with a <span class="nowrap">$10,000 one-time</span> setup fee. Early clients keep their founding rate as long as they stay.</p>
       </div>
       <a href="#book" class="btn btn--light">Book a call<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
     </div>

@@ -26,7 +26,8 @@
 /* ---------- base ---------- */
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+/* CSS smooth scrolling only when Lenis is not running; with Lenis on, it would fight Lenis's own frame-by-frame scrolling */
+@media (prefers-reduced-motion:no-preference){html:not(.lenis){scroll-behavior:smooth}}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--f-sans);letter-spacing:-.006em;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:clip}
 img{max-width:100%}
 h1,h2,h3,h4,p,ul,ol,figure,blockquote{margin:0}
@@ -205,15 +206,18 @@ h2,h3{text-wrap:balance}
 .lp-step__img{border-radius:14px;box-shadow:none;border:0;background:var(--well);margin:0}
 .lp-cta-row--steps{margin-top:clamp(36px,5vw,56px)}
 
-/* the founding offer: two cards */
-.lp-prods{gap:16px}
-.lp-prods--offer{max-width:1080px;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)}
-.lp-prod{border:0;border-radius:24px;box-shadow:var(--shadow-soft);padding:clamp(26px,3vw,38px);transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
-.lp-prod:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift)}
-.lp-prod--feat{background:linear-gradient(#fff,#fff) padding-box,linear-gradient(160deg,var(--accent-bright),var(--accent) 45%,rgba(15,122,98,.15)) border-box;border:1.5px solid transparent;box-shadow:0 30px 60px -30px rgba(15,122,98,.45),0 0 0 1px rgba(15,122,98,.04)}
-.lp-prod--feat:hover{box-shadow:0 36px 70px -30px rgba(15,122,98,.5),0 0 0 1px rgba(15,122,98,.06)}
+/* the founding offer: one card, what you get on the left, price and term on the right, one button */
+.lp-offer{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:clamp(8px,1.6vw,20px);padding:clamp(8px,1vw,12px);border-radius:28px;
+  background:linear-gradient(#fff,#fff) padding-box,linear-gradient(160deg,var(--accent-bright),var(--accent) 45%,rgba(15,122,98,.15)) border-box;border:1.5px solid transparent;
+  box-shadow:0 30px 60px -30px rgba(15,122,98,.45),0 0 0 1px rgba(15,122,98,.04)}
+.lp-offer__main{padding:clamp(20px,2.6vw,32px);display:flex;flex-direction:column}
+.lp-offer__price{border-radius:20px;background:var(--well);padding:clamp(22px,2.6vw,32px);display:flex;flex-direction:column}
+.lp-offer .lp-plist{margin-bottom:0}
+.lp-offer__price .lp-plist{margin-bottom:28px}
+.lp-offer__price .btn{margin-top:auto}
 .lp-ribbon{position:static;align-self:flex-start;margin-bottom:18px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-family:var(--f-mono);font-weight:500;font-size:11px;letter-spacing:.08em;padding:5px 11px}
-.lp-prod h3{font-family:var(--f-sans);font-size:clamp(24px,2.4vw,30px);font-weight:500;letter-spacing:-.035em;line-height:1.1;margin-bottom:8px}
+.lp-offer h3{font-family:var(--f-sans);font-size:clamp(24px,2.4vw,30px);font-weight:500;letter-spacing:-.035em;line-height:1.1;color:var(--ink);margin-bottom:8px}
+.lp-offer__price .lp-tick{background:#fff}
 .lp-ratio{font-family:var(--f-mono);font-weight:500;font-size:12px;letter-spacing:.08em;margin-bottom:22px}
 .lp-price{gap:10px;margin-bottom:12px}
 .lp-price .big{font-family:var(--f-sans);font-weight:500;font-size:clamp(48px,5vw,64px);line-height:1;letter-spacing:-.05em}
@@ -227,7 +231,6 @@ h2,h3{text-wrap:balance}
 .lp-guar{gap:16px;max-width:1080px}
 .lp-guar__quote{background:var(--night);color:rgba(242,245,244,.82);border-radius:24px;padding:clamp(28px,3.4vw,44px);gap:16px;font-size:clamp(16px,1.3vw,18px);line-height:1.65}
 .lp-guar__quote p:first-child{color:#fff;font-size:clamp(20px,1.9vw,24px);line-height:1.4;letter-spacing:-.02em;font-weight:500}
-.lp-guar__quote footer{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;font-weight:500;color:var(--accent-bright);padding-top:18px;border-top:1px solid var(--night-line)}
 .lp-guar__terms{border:0;border-radius:24px;box-shadow:var(--shadow-soft);padding:clamp(28px,3.4vw,44px);gap:16px}
 .lp-guar__terms h3{font-family:var(--f-sans);font-weight:500;font-size:clamp(22px,2vw,26px);letter-spacing:-.03em;line-height:1.2}
 .lp-guar__terms>p{font-size:15.5px}
@@ -235,10 +238,11 @@ h2,h3{text-wrap:balance}
 .lp-band{max-width:1080px;margin:16px auto 0;background:var(--accent);color:#fff;border:0;border-radius:26px;padding:clamp(28px,4vw,48px);gap:clamp(20px,3vw,40px);box-shadow:0 30px 60px -30px rgba(15,122,98,.55)}
 .lp-band__tag{background:rgba(255,255,255,.16);color:#fff;border-radius:999px;font-family:var(--f-mono);font-weight:500;font-size:11px;letter-spacing:.08em;padding:5px 11px;margin-bottom:14px}
 .lp-band__txt h3{font-family:var(--f-sans);font-weight:500;font-size:clamp(24px,2.6vw,34px);letter-spacing:-.035em;line-height:1.1;color:#fff;margin-bottom:10px}
-.lp-band__txt p{color:rgba(255,255,255,.86);font-size:16.5px;line-height:1.6;max-width:560px}
+.lp-band__txt p{color:rgba(255,255,255,.86);font-size:16.5px;line-height:1.6;max-width:560px;text-wrap:pretty}
+.lp-band__txt .nowrap{white-space:nowrap}
 .lp-band .btn{flex:0 0 auto}
 @media (max-width:900px){
-  .lp-prods--offer{grid-template-columns:1fr}
+  .lp-offer{grid-template-columns:1fr}
   .lp-band{flex-direction:column;align-items:flex-start;text-align:left;border:0}
 }
 
@@ -293,6 +297,8 @@ h2,h3{text-wrap:balance}
 html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
 .lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+/* while the page is smooth-scrolling, the calendar iframe must not catch the wheel, or the page stalls under it */
+.lenis.lenis-smooth iframe{pointer-events:none}
 .lenis.lenis-stopped{overflow:hidden}
 
 /* ---------- reveal on scroll: only below the first screen, only once the script runs ---------- */
