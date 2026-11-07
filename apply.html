@@ -17,18 +17,27 @@
 <link rel="stylesheet" href="assets/funnel.css">
 <link rel="stylesheet" href="assets/qf.css">
 <script>window.AB_APPLY = {
- "FORM_VERSION": "ab-apply-master-2026-11-07-qf",
+ "FORM_VERSION": "ab-apply-2part-2026-11-07",
  "SOURCE": "advisorbooking-apply",
  "STORE_KEY": "ab_apply_v1",
- "PROGRESS_TOTAL": 9,
- "PROGRESS_AFTER": "Almost done",
  "CONSENT_TEXT_VERSION": "apply-2026-11-07-shell",
+ "ADVANCE": "tap",
  "QUESTIONS": [
+  {
+   "id": "firm_type",
+   "type": "choice",
+   "q": "What best describes your firm?",
+   "options": [
+    "Independent RIA",
+    "Hybrid RIA (RIA plus a broker-dealer)",
+    "Broker-dealer or wirehouse",
+    "I\u2019m not a financial advisor"
+   ]
+  },
   {
    "id": "role",
    "type": "choice",
    "q": "What&rsquo;s your role at the firm?",
-   "sub": "About 2 minutes. Your answers save as you go.",
    "options": [
     "Owner/Founder",
     "Partner",
@@ -62,6 +71,107 @@
    ]
   },
   {
+   "id": "budget",
+   "type": "choice",
+   "q": "Do you have the budget to invest in growth now?",
+   "sub": "The Founding Sprint is $5,000 every 4 weeks for 3 cycles. No setup fee. No per-meeting fees.",
+   "options": [
+    "Yes",
+    "Not right now"
+   ]
+  },
+  {
+   "id": "contact",
+   "type": "fields",
+   "q": "Contact information",
+   "track": "lead",
+   "fields": [
+    {
+     "id": "first",
+     "label": "First Name",
+     "autocomplete": "given-name",
+     "half": true,
+     "error": "Enter your first name."
+    },
+    {
+     "id": "last",
+     "label": "Last Name",
+     "autocomplete": "family-name",
+     "half": true,
+     "error": "Enter your last name."
+    },
+    {
+     "id": "email",
+     "label": "Work Email",
+     "type": "email",
+     "autocomplete": "email",
+     "error": "That email does not look right. Check it and try again."
+    },
+    {
+     "id": "phone",
+     "label": "Mobile Number",
+     "type": "tel",
+     "autocomplete": "tel-national",
+     "error": "That phone number does not look right. Check it and try again."
+    },
+    {
+     "id": "sms_optin",
+     "type": "checkbox",
+     "label": "Text me reminders about this call. By checking this box you agree to receive transactional text messages from De Jesus Ventures LLC d/b/a Advisor Booking about your scheduled call. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. Consent is not required to book. See our <a href=\"privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a>."
+    }
+   ],
+   "cta": "Continue",
+   "fine": "By continuing you agree to our <a href=\"privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> and <a href=\"terms.html\" target=\"_blank\" rel=\"noopener\">Terms</a>."
+  },
+  {
+   "id": "loader",
+   "type": "loader",
+   "track": "part1_complete",
+   "q": "Checking your firm&rsquo;s fit",
+   "sub": "A few more questions after this. About a minute.",
+   "beat_ms": 900,
+   "min_ms": 3600,
+   "stages": [
+    {
+     "label": "Saving your details",
+     "active": "Saving...",
+     "done": "Saved"
+    },
+    {
+     "label": "Checking your answers",
+     "active": "Checking...",
+     "done": "Done"
+    },
+    {
+     "label": "Loading your fit questions",
+     "active": "Loading...",
+     "done": "Ready"
+    }
+   ]
+  },
+  {
+   "id": "firm",
+   "type": "fields",
+   "q": "Tell us about your firm",
+   "track": "part2_start",
+   "fields": [
+    {
+     "id": "firm",
+     "label": "Firm Name",
+     "autocomplete": "organization",
+     "error": "Enter your firm name."
+    },
+    {
+     "id": "website",
+     "label": "Firm Website",
+     "type": "url",
+     "autocomplete": "url",
+     "error": "Enter your firm website, like yourfirm.com."
+    }
+   ],
+   "cta": "Continue"
+  },
+  {
    "id": "crm",
    "type": "choice",
    "q": "How many contacts are in your CRM or lists?",
@@ -81,6 +191,19 @@
     "Flat or retainer",
     "Hourly only",
     "Mix"
+   ]
+  },
+  {
+   "id": "niche",
+   "type": "choice",
+   "q": "Who are your best clients?",
+   "proposed": true,
+   "options": [
+    "Business owners",
+    "Executives and professionals",
+    "Retirees and pre-retirees",
+    "A specific niche (doctors, attorneys, etc.)",
+    "We don\u2019t have a clear niche yet"
    ]
   },
   {
@@ -114,89 +237,55 @@
    ]
   },
   {
-   "id": "budget",
+   "id": "timing",
    "type": "choice",
-   "q": "The Founding Sprint is $5,000 every 4 weeks for 3 cycles. Does that fit your growth budget?",
-   "sub": "No setup fee. No per-meeting fees.",
+   "q": "When do you want new meetings starting?",
+   "proposed": true,
    "options": [
-    "Yes",
-    "Not right now"
+    "This month",
+    "In the next 1 to 3 months",
+    "Just looking for now"
    ]
-  },
-  {
-   "id": "contact",
-   "type": "fields",
-   "q": "Where should we send your call details?",
-   "sub": "So we know who we&rsquo;re talking to.",
-   "fields": [
-    {
-     "id": "first",
-     "label": "First Name",
-     "autocomplete": "given-name",
-     "half": true,
-     "error": "Enter your first name."
-    },
-    {
-     "id": "last",
-     "label": "Last Name",
-     "autocomplete": "family-name",
-     "half": true,
-     "error": "Enter your last name."
-    },
-    {
-     "id": "email",
-     "label": "Work Email",
-     "type": "email",
-     "autocomplete": "email",
-     "error": "That email does not look right. Check it and try again."
-    },
-    {
-     "id": "firm",
-     "label": "Firm Name",
-     "autocomplete": "organization",
-     "error": "Enter your firm name."
-    },
-    {
-     "id": "website",
-     "label": "Firm Website",
-     "type": "url",
-     "autocomplete": "url",
-     "error": "Enter your firm website, like yourfirm.com."
-    }
-   ],
-   "cta": "Continue",
-   "fine": "By continuing you agree to our <a href=\"privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> and <a href=\"terms.html\" target=\"_blank\" rel=\"noopener\">Terms</a>."
-  },
-  {
-   "id": "phone",
-   "type": "fields",
-   "q": "Last one. Best mobile number?",
-   "sub": "For your call details. We only text you if you check the box.",
-   "fields": [
-    {
-     "id": "phone",
-     "label": "Mobile Number",
-     "type": "tel",
-     "autocomplete": "tel-national",
-     "error": "That phone number does not look right. Check it and try again."
-    },
-    {
-     "id": "sms_optin",
-     "type": "checkbox",
-     "label": "Text me reminders about this call. By checking this box you agree to receive transactional text messages from De Jesus Ventures LLC d/b/a Advisor Booking about your scheduled call. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. Consent is not required to book. See our <a href=\"privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a>."
-    }
-   ],
-   "cta": "See my next step"
   }
  ],
  "RULES": [
   {
    "route": "dq",
+   "early": true,
    "any": [
+    [
+     "firm_type",
+     "I\u2019m not a financial advisor"
+    ]
+   ]
+  },
+  {
+   "route": "dq",
+   "early": "contact",
+   "any": [
+    [
+     "firm_type",
+     "Broker-dealer or wirehouse"
+    ],
     [
      "aum",
      "Under $25M"
-    ],
+    ]
+   ]
+  },
+  {
+   "route": "nurture",
+   "early": "contact",
+   "any": [
+    [
+     "budget",
+     "Not right now"
+    ]
+   ]
+  },
+  {
+   "route": "dq",
+   "any": [
     [
      "fee",
      "Hourly only"
@@ -219,8 +308,8 @@
    "route": "nurture",
    "any": [
     [
-     "budget",
-     "Not right now"
+     "timing",
+     "Just looking for now"
     ]
    ]
   },
@@ -248,6 +337,10 @@
      "11+"
     ],
     [
+     "firm_type",
+     "Hybrid RIA (RIA plus a broker-dealer)"
+    ],
+    [
      "compliance",
      "Not sure"
     ],
@@ -262,6 +355,10 @@
     [
      "decision",
      "Someone else"
+    ],
+    [
+     "niche",
+     "We don\u2019t have a clear niche yet"
     ]
    ]
   }
@@ -295,6 +392,7 @@
 </footer>
 </div>
 <script src="assets/config.js"></script>
+<script src="assets/gtm.js"></script>
 <script src="assets/funnel.js" defer></script>
 </body>
 </html>

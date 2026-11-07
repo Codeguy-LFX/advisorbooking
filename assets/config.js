@@ -18,6 +18,8 @@ window.AB_CONFIG = {
   // GoHighLevel inbound webhook URL. Empty = submissions are not sent anywhere (they still route the visitor).
   ghlWebhookUrl: "",
   // Tracking. Empty = the tag is not loaded.
+  // Google Tag Manager container for the funnel pages (/apply, /book, /booked...), e.g. "GTM-ABC1234". See assets/gtm.js for the events.
+  gtmId: "",
   metaPixelId: "",
   linkedinPartnerId: "",
   linkedinConversionId: "",

@@ -6,8 +6,15 @@
      choice   options: [...], multi: true for "check all" (then a Continue button), auto-advances otherwise
      fields   fields: [{ id, label, type: text|email|tel|url|textarea|checkbox, optional, required (checkbox), hint, srLabel }]
 
+     loader   a checklist loading screen between parts (no answer): q (heading), sub, stages: [{label, active, done}],
+              beat_ms, min_ms. It is not counted in the progress bar, and Back skips over it.
+
    Routing (RULES): an ordered list. The first rule with a matching answer wins; DEFAULT_ROUTE if none match.
      { route: 'dq', any: [['question_id', 'Answer'], ...] }
+     early: true        checked after every answer (Typeform-style jump)
+     early: 'step_id'   checked once, right after that step (e.g. the end of Part 1); otherwise only at the end
+
+   Tracking: every step pushes to window.dataLayer for GTM (see track() below for the event names).
    ROUTES maps a route to a page URL, or to { inline: { title, body, bullets, cta } } to show the result in the card.
 
    Answers go to AB_CONFIG.ghlWebhookUrl after every screen (stage "step") and at the end (stage "complete").
@@ -133,11 +140,13 @@
 
   /* ---------- rendering ---------- */
   var body = $('apBody'), bar = $('apBar'), count = $('apCount'), back = $('apBack'), meta = $('apMeta');
-  var total = F.PROGRESS_TOTAL || Q.length;
+  function counted(i) { var n = 0; for (var k = 0; k < i; k++) if (Q[k].type !== 'loader') n++; return n; }
+  var total = F.PROGRESS_TOTAL || counted(Q.length);
   var QF = F.LAYOUT === 'qf' || doc.body.classList.contains('qf');
   var maxPct = 0;   // the bar never moves backward
 
   function progress(i) {
+    i = counted(i);
     // qf counts the step you are on (LendFax: current / total); the classic card counts finished steps.
     var pct = Math.round((Math.min(QF ? i + 1 : i, total) / total) * 100);
     if (pct > maxPct) maxPct = pct;
@@ -153,6 +162,8 @@
   function render(i, focus) {
     S.step = i; save(); progress(i);
     var q = Q[i];
+    if (q.type === 'loader') { renderLoader(q, i); return; }
+    if (i === 0 && !S.viewed) { S.viewed = true; save(); track('form_view', { step_id: q.id }); }
     var screen = el('div', { class: 'ap-screen', 'data-q': q.id });
     var h = el('h2', { class: 'ap-q', id: 'apQ', tabindex: '-1', html: q.q });
     screen.appendChild(h);
@@ -311,11 +322,76 @@
     if (value !== null) S.answers[q.id] = value;
     save();
     send('step', { step_id: q.id, step_index: i + 1, step_total: Q.length });
-    // A rule can end the form early (Typeform-style jump): set "early: true" on it.
-    var r = route(), rule = F.RULES.filter(function (x) { return x.route === r.route; })[0];
-    if (rule && rule.early) { finish(r); return; }
+    track('step', { step_id: q.id, step_index: counted(i) + 1, answer: q.type === 'choice' ? value : undefined });
+    if (q.track) track(q.track, { step_id: q.id });
+    var hit = earlyHit(q);
+    if (hit) { finish(hit); return; }
     if (i + 1 < Q.length) { history.pushState({ ap: i + 1 }, ''); render(i + 1); }
-    else finish(r);
+    else finish(route());
+  }
+  function earlyHit(q) {
+    for (var k = 0; k < F.RULES.length; k++) {
+      var r = F.RULES[k], any = r.any || [];
+      if (r.early !== true && r.early !== q.id) continue;
+      for (var j = 0; j < any.length; j++) if (has(any[j][0], any[j][1])) return { route: r.route, reason: any[j][0] + '=' + any[j][1] };
+    }
+    return null;
+  }
+
+  /* ---------- the loading screen between Part 1 and Part 2 ---------- */
+  var loaderTimer = null;
+  function renderLoader(q, i) {
+    if (loaderTimer) clearInterval(loaderTimer);
+    track(q.track || 'loader', { step_id: q.id });
+    var stages = q.stages || [];
+    var screen = el('div', { class: 'ap-screen qf-loader', 'data-q': q.id }, [
+      el('div', { class: 'qf-ring', 'aria-hidden': 'true' }, [el('span'), el('span'), el('span')]),
+      el('h2', { class: 'ap-q', id: 'apQ', tabindex: '-1', html: q.q })
+    ]);
+    if (q.sub) screen.appendChild(el('p', { class: 'ap-sub', html: q.sub }));
+    var list = el('ul', { class: 'qf-stages', role: 'list' });
+    var rows = stages.map(function (st) {
+      var row = el('li', { class: 'qf-stage is-pending' }, [
+        el('span', { class: 'qf-stage__ic', 'aria-hidden': 'true' }), el('span', { class: 'qf-stage__label', text: st.label }),
+        el('span', { class: 'qf-stage__status', text: '' })
+      ]);
+      list.appendChild(row); return row;
+    });
+    screen.appendChild(list);
+    screen.appendChild(el('div', { class: 'sr-only', 'aria-live': 'polite', id: 'apLoaderLive' }));
+    body.innerHTML = ''; body.appendChild(screen);
+    if (QF) window.scrollTo(0, 0);
+    var beat = q.beat_ms || 900, minMs = q.min_ms || beat * stages.length, t0 = Date.now(), at = 0;
+    function paint() {
+      rows.forEach(function (row, n) {
+        var state = n < at ? 'done' : n === at ? 'running' : 'pending';
+        row.className = 'qf-stage is-' + state;
+        row.lastChild.textContent = state === 'done' ? stages[n].done : state === 'running' ? stages[n].active : '';
+      });
+      var live = $('apLoaderLive'); if (live && stages[at]) live.textContent = stages[at].label;
+    }
+    paint();
+    loaderTimer = setInterval(function () {
+      if (at < stages.length) { at++; paint(); }
+      if (at >= stages.length && Date.now() - t0 >= minMs) {
+        clearInterval(loaderTimer); loaderTimer = null;
+        // Replace the loader in history, so Back from the next step returns to the step before the loader.
+        history.replaceState({ ap: i + 1 }, ''); render(i + 1);
+      }
+    }, beat);
+  }
+
+  /* ---------- tracking: window.dataLayer events for GTM ----------
+     ab_form_view      first screen shown                 ab_step       every answer (step_id, step_index, answer for choices)
+     <q.track>         a step can name its own event (e.g. ab_lead on the contact step)
+     ab_loader / <loader.track>  the loading screen starts (end of Part 1)
+     ab_complete       the form ends (route, route_reason)  ab_route_<route>  one event per route (ab_route_main, ab_route_dq...)
+     Contact details are never pushed: only step ids, choice answers and the route. */
+  function track(name, data) {
+    if (F.TRACK === false) return;
+    var ev = { event: name.indexOf('ab_') === 0 ? name : 'ab_' + name, ab_form: F.SOURCE, ab_form_version: F.FORM_VERSION, ab_submission_id: S.sid || '' };
+    if (data) Object.keys(data).forEach(function (k) { if (data[k] !== undefined) ev['ab_' + k] = data[k]; });
+    try { (window.dataLayer = window.dataLayer || []).push(ev); } catch (e) {}
   }
 
   function finish(r) {
@@ -324,6 +400,8 @@
     S.tier = r.route === (F.QUALIFIED_ROUTE || 'main') ? 'qualified' : r.route;
     save();
     send('complete', { route: r.route, route_reason: r.reason });
+    track('complete', { route: r.route, route_reason: r.reason });
+    track('route_' + r.route.replace(/[^a-z0-9]+/gi, '_'), { route: r.route });
     var dest = F.ROUTES[r.route];
     if (dest && typeof dest === 'object' && dest.inline) { showInline(dest.inline); return; }
     S.done = true; save();
@@ -351,7 +429,9 @@
   if (back) back.addEventListener('click', function () { if (S.step > 0) history.back(); });
   window.addEventListener('popstate', function (e) {
     var to = e.state && typeof e.state.ap === 'number' ? e.state.ap : 0;
-    render(Math.max(0, Math.min(to, Q.length - 1)));
+    to = Math.max(0, Math.min(to, Q.length - 1));
+    if (Q[to].type === 'loader') to = Math.max(0, to - 1);   // never replay the loader on Back
+    render(to);
   });
   var restart = $('apRestart');
   if (restart) restart.addEventListener('click', function () {
@@ -370,6 +450,7 @@
   });
 
   var start = Math.max(0, Math.min(S.step || 0, Q.length - 1));
+  if (Q[start].type === 'loader') start = Math.min(start + 1, Q.length - 1);   // a refresh mid-loader resumes after it
   history.replaceState({ ap: start }, '');
   render(start, false);
 

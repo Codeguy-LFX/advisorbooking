@@ -25,10 +25,12 @@ Three funnels share one form engine (`assets/funnel.js`, styles in `assets/funne
 
 | Funnel | Pages | What it is |
 | --- | --- | --- |
-| C, master | `/apply` → `/not-a-fit`, `/not-yet`, `/book?call=short`, `/book?call=main` → `/booked` | The Advisor Booking funnel. 11 screens, each answer posted to `ghlWebhookUrl` as it is given, then routed (hard no, nurture, 15-min fit check, 20-min call). `/booked` is now the pre-call page; it keeps the booking tracking. |
-| A, study | `/lab/a/apply` → `/lab/a/book` → `/lab/a/booked` → `/lab/a/pre-call` | Clients Blackbox funnel as captured. Sends nothing. |
-| B, study | `/lab/b/` → `/lab/b/booking?t=tier-1..3, triage` | AAM funnel as captured. Sends nothing. |
+| 3, master | `/apply` → `/not-a-fit`, `/not-yet`, `/book?call=short`, `/book?call=main` → `/booked` | The Advisor Booking funnel, in two parts like the LendFax form. Part 1: firm type, role, AUM, advisors, budget, then contact. A loading screen. Part 2: firm, CRM size, fees, best clients, compliance, capacity, decision maker, timing. Each answer is posted to `ghlWebhookUrl` as it is given. A hard no or a budget "not right now" ends right after contact; the rest is routed at the end (hard no, nurture, 15-min fit check, 20-min call). `/booked` is the thank-you page with next steps; it keeps the booking tracking. |
+| 1, study | `/lab/a/apply` → `/lab/a/book` → `/lab/a/booked` → `/lab/a/pre-call` | Clients Blackbox funnel as captured. Sends nothing. |
+| 2, study | `/lab/b/` → `/lab/b/booking?t=tier-1..3, triage` | AAM funnel as captured. Sends nothing. |
 
+- The forms, `/book` and `/booked` use the questionnaire layout in `assets/qf.css` (LendFax structure, Advisor Booking colors): brand bar, progress bar, the question and answers centered, nothing else. No step animation; the bar never moves backward.
+- GTM: set `gtmId` in `assets/config.js`. The funnel pushes `ab_form_view`, `ab_step`, `ab_lead`, `ab_part1_complete`, `ab_part2_start`, `ab_complete`, `ab_route_<route>`, `ab_booking_view` and `ab_booked` to `dataLayer` (list in `assets/gtm.js`). Contact details are never pushed.
 - Questions, routing rules and destinations live in a `window.AB_APPLY` block at the top of each form page. A new form is a copy of a page with a different block.
 - `/book?call=short` uses `iclosedUrlShort` in `assets/config.js` (empty = the main event) and prefills name, email, mobile and firm from `/apply`.
 - `/lab/` and `/docs/` are `noindex` and blocked in `robots.txt`, but GitHub Pages serves every file in the repo, so anything merged to `main` is public. Keep `/lab/` off `main` or delete it before merging.
