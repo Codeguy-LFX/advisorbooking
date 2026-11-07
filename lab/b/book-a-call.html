@@ -5,15 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Funnel 2: book-a-call | Study build</title>
 <meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#0f7a62">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/lp.css">
 <link rel="stylesheet" href="../../assets/pilot.css">
 <link rel="stylesheet" href="../../assets/funnel.css">
+<link rel="stylesheet" href="../../assets/qf.css">
 <script>window.AB_APPLY = {
  "FORM_VERSION": "lab-b-book-a-call-v2",
  "SOURCE": "lab-b-book-a-call",
@@ -25,6 +26,7 @@
  "LOCK_CONTINUE": true,
  "PROGRESS_TOTAL": 7,
  "PROGRESS_AFTER": "",
+ "SHOW_COUNT": true,
  "QUESTIONS": [
   {
    "id": "q1_contracted",
@@ -266,51 +268,35 @@
   "tier-1": "booking.html#tier-1",
   "tier-2": "booking.html#tier-2",
   "tier-3": "booking.html#tier-3"
- }
+ },
+ "LAYOUT": "qf"
 };</script>
 </head>
-<body class="is-lab">
+<body class="qf is-lab">
 <div class="lp">
-<a class="skip-link" href="#main">Skip to content</a>
-<header class="nav" id="nav">
-  <div class="nav__pill">
-    <span class="brand"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span>
+<header class="qf-head"><span class="qf-logo"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#fff"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#0f7a62"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#0f7a62"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#0f7a62"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#fff"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#0f7a62" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span></header>
+<main class="qf-main" id="main">
+  <div class="qf-col">
+<p class="qf-count" id="apCount" aria-live="polite"></p>
+    <div class="qf-track" role="progressbar" aria-label="Progress"><div class="qf-fill" id="apBar"></div></div>
+    <div id="apBody"><noscript><p>This form needs JavaScript. Email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will set up your call.</p></noscript></div>
+    <div class="lp-hp" aria-hidden="true"><label for="apHp">Website</label><input type="text" id="apHp" name="website" tabindex="-1" autocomplete="off" data-1p-ignore="true" data-lpignore="true"></div>
+    <div class="sr-only" id="apLive" aria-live="polite" aria-atomic="true"></div>
   </div>
-</header>
-<main id="main">
-<section class="fn-top">
-  <div class="wrap">
-    <div class="fn-head">
-      <div class="lab-only"><p class="eyebrow" style="margin-bottom:14px">Funnel 2 &middot; /book-a-call (homepage &ldquo;See If You Qualify&rdquo; lands here; same form)</p></div>
-      <h1 class="h2"><span class="todo-tag">Hero not captured</span></h1>
-    </div>
-    <div class="fn-grid">
-<div class="ap-card" id="apCard">
-  <div class="ap-bar" aria-hidden="true"><i id="apBar"></i></div>
-  <div class="ap-meta" id="apMeta">
-    <span class="ap-count" id="apCount" aria-live="polite"></span>
-    <span><button type="button" class="lp-linkbtn ap-back" id="apBack">&larr; Back</button></span>
-  </div>
-  <div id="apBody"><noscript><div class="ap-screen"><p>This form needs JavaScript. Email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will set up your call.</p></div></noscript></div>
-  <div class="lp-hp" aria-hidden="true"><label for="apHp">Website</label><input type="text" id="apHp" name="website" tabindex="-1" autocomplete="off" data-1p-ignore="true" data-lpignore="true"></div>
-  <div class="sr-only" id="apLive" aria-live="polite" aria-atomic="true"></div>
-  <div class="ap-foot"> <button type="button" class="lp-linkbtn" id="apRestart">Start over</button></div>
-</div>
-    </div>
+  <div class="lab-notes-wrap"><div class="lab-note"><b>Funnel 2: /book-a-call (homepage &ldquo;See If You Qualify&rdquo; lands here; same form).</b> Above the form, their page shows: not captured <span class="todo-tag">Hero</span>.</div>
     <div class="lab-note"><b>Format:</b> 11 screens, one question per screen. The bar reads &ldquo;Step X of 7&rdquo; and stops counting at the contact fields. Each screen validates before Continue unlocks. A refresh resumes from sessionStorage. Hidden &ldquo;Website&rdquo; honeypot plus a timestamp.</div>
     <div class="lab-note"><b>Saving:</b> every answer posts to their backend as it&rsquo;s given (partialCapture), so drop-offs still have a record. Payload: all 11 answers, honeypot, timestamp, utm_source/medium/campaign/term/content/adset, gclid, fbclid, lp_slug and ref. UTMs saved on first page view (sessionStorage <code>aam_utm_params</code>). This copy sends nothing.</div>
     <div class="lab-note"><b>Routing (in the browser):</b> contracted No, investment No, or commission 4% or less &rarr; DQ (inline). Else commission 5% &rarr; setter triage. Else production under $3M &rarr; tier 3, $3 to $10M &rarr; tier 2, $10M+ &rarr; tier 1. Goal, obstacle and products sold never affect routing.</div>
-    <div class="lab-note"><b>Tracking:</b> submit fires custom <code>QualificationFormSubmit</code> with the route. Booking page load fires <code>Schedule</code> + <code>booking_page_view</code>. A completed booking fires <code>Lead</code> + <code>CompleteRegistration</code> + a Google Ads conversion, so Meta optimizes on booked calls, not form fills.</div>
-  </div>
-</section>
+    <div class="lab-note"><b>Tracking:</b> submit fires custom <code>QualificationFormSubmit</code> with the route. Booking page load fires <code>Schedule</code> + <code>booking_page_view</code>. A completed booking fires <code>Lead</code> + <code>CompleteRegistration</code> + a Google Ads conversion, so Meta optimizes on booked calls, not form fills.</div></div>
 </main>
-<div class="legal-line"><p class="legal-line__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p><a href="../../privacy.html" target="_blank" rel="noopener">Privacy</a><span aria-hidden="true">&middot;</span><a href="../../terms.html" target="_blank" rel="noopener">Terms</a></div>
+<footer class="qf-foot">
+  <div class="qf-foot__links"><a href="../../privacy.html" target="_blank" rel="noopener">Privacy Policy</a><a href="../../terms.html" target="_blank" rel="noopener">Terms of Service</a></div>
+  <p class="qf-foot__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
+</footer>
 </div>
 <div class="lab-bar" role="note"><b>Funnel 2: Advanced Agent Marketing (AAM).</b> Their funnel as captured, in our site&rsquo;s look. Not Advisor Booking copy, not for traffic. <a href="../index.html">All funnels</a> <button type="button" class="lab-toggle" id="labToggle" aria-pressed="false">Show study notes</button></div>
 <script>(function(){var k="ab_lab_marks",b=document.body,t=document.getElementById("labToggle");function set(on){b.classList.toggle("lab-marks",on);t.setAttribute("aria-pressed",on?"true":"false");t.textContent=on?"Hide study notes":"Show study notes";try{localStorage.setItem(k,on?"1":"")}catch(e){}}var on=false;try{on=localStorage.getItem(k)==="1"}catch(e){}set(on);t.addEventListener("click",function(){set(!b.classList.contains("lab-marks"))});})();</script>
 <script src="../../assets/config.js"></script>
-<script src="../../assets/vendor/lenis.min.js"></script>
-<script src="../../assets/pilot.js"></script>
 <script src="../../assets/funnel.js" defer></script>
 </body>
 </html>

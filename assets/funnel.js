@@ -38,6 +38,10 @@
     ADVANCE: 'tap',
     // true: Continue stays disabled until the screen is valid ("each screen validates before Continue unlocks").
     LOCK_CONTINUE: false,
+    // 'qf': the LendFax-style questionnaire layout (assets/qf.css). Previous sits under the answers, no step
+    // animation, labels become placeholders, the page jumps to the top on each step.
+    LAYOUT: '',
+    SHOW_COUNT: false,           // qf only: show the "Step X of Y" line above the bar (desktop)
     TEST_MODE: false
   };
   var over = window.AB_APPLY || {};
@@ -130,10 +134,18 @@
   /* ---------- rendering ---------- */
   var body = $('apBody'), bar = $('apBar'), count = $('apCount'), back = $('apBack'), meta = $('apMeta');
   var total = F.PROGRESS_TOTAL || Q.length;
+  var QF = F.LAYOUT === 'qf' || doc.body.classList.contains('qf');
+  var maxPct = 0;   // the bar never moves backward
 
   function progress(i) {
-    if (bar) bar.style.width = Math.round((Math.min(i, total) / total) * 100) + '%';
-    if (count) count.innerHTML = i < total ? F.PROGRESS_LABEL.replace('{n}', '<b>' + (i + 1) + '</b>').replace('{t}', total) : F.PROGRESS_AFTER;
+    // qf counts the step you are on (LendFax: current / total); the classic card counts finished steps.
+    var pct = Math.round((Math.min(QF ? i + 1 : i, total) / total) * 100);
+    if (pct > maxPct) maxPct = pct;
+    if (bar) bar.style.width = maxPct + '%';
+    if (count) {
+      count.innerHTML = i < total ? F.PROGRESS_LABEL.replace('{n}', '<b>' + (i + 1) + '</b>').replace('{t}', total) : F.PROGRESS_AFTER;
+      if (QF) count.classList.toggle('is-on', !!F.SHOW_COUNT && i < total);
+    }
     if (back) back.disabled = i === 0;
     if (meta) meta.hidden = false;
   }
@@ -147,8 +159,17 @@
     if (q.sub) screen.appendChild(el('p', { class: 'ap-sub', html: q.sub }));
     screen.appendChild(q.type === 'choice' ? renderChoice(q, i) : renderFields(q, i));
     if (q.note) screen.appendChild(el('div', { class: 'ap-note', html: q.note }));
+    if (QF && i > 0) screen.appendChild(prevBtn());
     body.innerHTML = ''; body.appendChild(screen);
-    if (focus !== false) { focusEl(h); keepInView(); }
+    if (focus !== false) {
+      if (QF) { window.scrollTo(0, 0); focusEl(h); }   // heading only: never autofocus a field
+      else { focusEl(h); keepInView(); }
+    }
+  }
+  function prevBtn() {
+    var b = el('button', { type: 'button', class: 'qf-prev', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span>Previous</span>' });
+    b.addEventListener('click', function () { if (S.step > 0) history.back(); });
+    return b;
   }
 
   /* After a screen change, bring the top of the card back under the floating nav if it scrolled away. */
@@ -231,13 +252,21 @@
         : el('input', { type: f.type === 'url' ? 'text' : (f.type || 'text'), id: 'ap-' + f.id, autocomplete: f.autocomplete || 'off', placeholder: f.placeholder || '', inputmode: f.type === 'url' ? 'url' : null });
       if (f.type === 'tel') { input.setAttribute('inputmode', 'tel'); input.addEventListener('input', function () { input.value = phoneFmt(input.value); }); }
       input.value = S.answers[f.id] || '';
-      var label = el('label', { class: 'lp-lbl' + (f.srLabel ? ' sr-only' : ''), for: 'ap-' + f.id, html: f.label + (f.optional ? ' <span class="ap-optional">(optional)</span>' : '') });
+      // qf: the label becomes the placeholder (LendFax shows "First Name", "Email Address" inside the box).
+      var srOnly = f.srLabel || (QF && !f.showLabel);
+      if (QF && !f.placeholder && !f.srLabel) input.setAttribute('placeholder', String(f.label).replace(/<[^>]+>/g, '') + (f.optional ? ' (optional)' : ''));
+      var label = el('label', { class: 'lp-lbl' + (srOnly ? ' sr-only' : ''), for: 'ap-' + f.id, html: f.label + (f.optional ? ' <span class="ap-optional">(optional)</span>' : '') });
       var ctl = f.type === 'tel' ? el('div', { class: 'lp-tel' }, [el('span', { class: 'lp-tel__cc', 'aria-hidden': 'true', text: '+1' }), input]) : input;
-      form.appendChild(el('div', { class: 'lp-field', id: 'apf-' + f.id }, [
+      var fieldEl = el('div', { class: 'lp-field', id: 'apf-' + f.id }, [
         label, ctl,
         f.hint ? el('p', { class: 'lp-hint', html: f.hint }) : null,
         el('div', { class: 'lp-err', text: f.error || 'Fill this in.' })
-      ]));
+      ]);
+      // "half: true" on two fields in a row puts them side by side (First Name | Last Name).
+      var last = form.lastElementChild;
+      if (f.half && last && last.classList.contains('qf-pair') && last.children.length === 1) last.appendChild(fieldEl);
+      else if (f.half) form.appendChild(el('div', { class: 'qf-pair' }, [fieldEl]));
+      else form.appendChild(fieldEl);
     });
     btn = el('button', { type: 'submit', class: 'btn btn--accent lp-btn-block ap-next', html: '<span>' + (q.cta || 'Next') + '</span><span class="btn__chip">' + ARROW + '</span>' });
     (q.fields || []).forEach(function (f) { if (f.type === 'checkbox' && f.required && f.gate && !S.answers[f.id]) btn.disabled = true; });

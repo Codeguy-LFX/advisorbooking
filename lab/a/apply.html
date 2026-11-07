@@ -5,15 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Funnel 1: Typeform intake | Study build</title>
 <meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#0f7a62">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/lp.css">
 <link rel="stylesheet" href="../../assets/pilot.css">
 <link rel="stylesheet" href="../../assets/funnel.css">
+<link rel="stylesheet" href="../../assets/qf.css">
 <script>window.AB_APPLY = {
  "FORM_VERSION": "lab-a-typeform-v2",
  "SOURCE": "lab-a",
@@ -74,12 +75,14 @@
     {
      "id": "first",
      "label": "First name",
-     "autocomplete": "given-name"
+     "autocomplete": "given-name",
+     "half": true
     },
     {
      "id": "last",
      "label": "Last name",
-     "autocomplete": "family-name"
+     "autocomplete": "family-name",
+     "half": true
     },
     {
      "id": "phone",
@@ -121,47 +124,33 @@
    }
   },
   "book": "book.html"
- }
+ },
+ "LAYOUT": "qf"
 };</script>
 </head>
-<body class="is-lab">
+<body class="qf is-lab">
 <div class="lp">
-<a class="skip-link" href="#main">Skip to content</a>
-<header class="nav" id="nav">
-  <div class="nav__pill">
-    <span class="brand"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span>
+<header class="qf-head"><span class="qf-logo"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#fff"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#0f7a62"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#0f7a62"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#0f7a62"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#fff"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#0f7a62" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span></header>
+<main class="qf-main" id="main">
+  <div class="qf-col">
+<p class="qf-count" id="apCount" aria-live="polite"></p>
+    <div class="qf-track" role="progressbar" aria-label="Progress"><div class="qf-fill" id="apBar"></div></div>
+    <div id="apBody"><noscript><p>This form needs JavaScript. Email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will set up your call.</p></noscript></div>
+    <div class="lp-hp" aria-hidden="true"><label for="apHp">Website</label><input type="text" id="apHp" name="website" tabindex="-1" autocomplete="off" data-1p-ignore="true" data-lpignore="true"></div>
+    <div class="sr-only" id="apLive" aria-live="polite" aria-atomic="true"></div>
   </div>
-</header>
-<main id="main">
-<section class="fn-top">
-  <div class="wrap">
-    <div class="fn-head"><div class="lab-only"><p class="eyebrow" style="margin-bottom:14px">Funnel 1 &middot; step 1 &middot; Typeform intake (the ad lands here directly)</p></div></div>
-    <div class="fn-grid">
-<div class="ap-card" id="apCard">
-  <div class="ap-bar" aria-hidden="true"><i id="apBar"></i></div>
-  <div class="ap-meta" id="apMeta">
-    <span class="ap-count" id="apCount" aria-live="polite"></span>
-    <span><button type="button" class="lp-linkbtn ap-back" id="apBack">&larr; Back</button></span>
-  </div>
-  <div id="apBody"><noscript><div class="ap-screen"><p>This form needs JavaScript. Email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will set up your call.</p></div></noscript></div>
-  <div class="lp-hp" aria-hidden="true"><label for="apHp">Website</label><input type="text" id="apHp" name="website" tabindex="-1" autocomplete="off" data-1p-ignore="true" data-lpignore="true"></div>
-  <div class="sr-only" id="apLive" aria-live="polite" aria-atomic="true"></div>
-  <div class="ap-foot"> <button type="button" class="lp-linkbtn" id="apRestart">Start over</button></div>
-</div>
-    </div>
-    <div class="lab-note"><b>Typeform settings:</b> progress bar on, time-to-complete shown <span class="todo-tag">Exact time text</span>, autosave on, Typeform branding off.</div>
+  <div class="lab-notes-wrap"><div class="lab-note"><b>Funnel 1, step 1: Typeform intake.</b> The ad lands here directly. Settings: progress bar on, time-to-complete shown <span class="todo-tag">Exact time text</span>, autosave on, Typeform branding off.</div>
     <div class="lab-note"><b>Logic, complete:</b> Q1 = &ldquo;No&rdquo; &rarr; DQ screen (end). Otherwise Q2 &rarr; Q3 &rarr; Q4 &rarr; Q5 &rarr; OnceHub. A non-owner with under $10M in growth and 1-2 advisors still gets the calendar.</div>
-    <div class="lab-note"><b>Hidden fields:</b> utm_source, utm_medium, utm_campaign, utm_term, utm_content, auth_code, product_id, user_id, phone_number, email, first_name, last_name. The redirect passes utm_source and utm_content: <code>oncehub.com/PAGE-453C5F176A?utm_source=&hellip;&amp;utm_content=&hellip;</code></div>
-  </div>
-</section>
+    <div class="lab-note"><b>Hidden fields:</b> utm_source, utm_medium, utm_campaign, utm_term, utm_content, auth_code, product_id, user_id, phone_number, email, first_name, last_name. The redirect passes utm_source and utm_content: <code>oncehub.com/PAGE-453C5F176A?utm_source=&hellip;&amp;utm_content=&hellip;</code></div></div>
 </main>
-<div class="legal-line"><p class="legal-line__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p><a href="../../privacy.html" target="_blank" rel="noopener">Privacy</a><span aria-hidden="true">&middot;</span><a href="../../terms.html" target="_blank" rel="noopener">Terms</a></div>
+<footer class="qf-foot">
+  <div class="qf-foot__links"><a href="../../privacy.html" target="_blank" rel="noopener">Privacy Policy</a><a href="../../terms.html" target="_blank" rel="noopener">Terms of Service</a></div>
+  <p class="qf-foot__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
+</footer>
 </div>
 <div class="lab-bar" role="note"><b>Funnel 1: Clients Blackbox.</b> Their funnel as captured, in our site&rsquo;s look. Not Advisor Booking copy, not for traffic. <a href="../index.html">All funnels</a> <button type="button" class="lab-toggle" id="labToggle" aria-pressed="false">Show study notes</button></div>
 <script>(function(){var k="ab_lab_marks",b=document.body,t=document.getElementById("labToggle");function set(on){b.classList.toggle("lab-marks",on);t.setAttribute("aria-pressed",on?"true":"false");t.textContent=on?"Hide study notes":"Show study notes";try{localStorage.setItem(k,on?"1":"")}catch(e){}}var on=false;try{on=localStorage.getItem(k)==="1"}catch(e){}set(on);t.addEventListener("click",function(){set(!b.classList.contains("lab-marks"))});})();</script>
 <script src="../../assets/config.js"></script>
-<script src="../../assets/vendor/lenis.min.js"></script>
-<script src="../../assets/pilot.js"></script>
 <script src="../../assets/funnel.js" defer></script>
 </body>
 </html>

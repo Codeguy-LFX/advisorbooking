@@ -206,7 +206,8 @@
     var st = applyState();
     if (st) {
       var a = st.answers, d = String(a.phone || '').replace(/\D/g, '');
-      if (a.name) u.searchParams.set('iclosedName', a.name);
+      var nm = a.name || [a.first, a.last].filter(Boolean).join(' ');
+      if (nm) u.searchParams.set('iclosedName', nm);
       if (a.email) u.searchParams.set('iclosedEmail', a.email);
       if (d.length === 10) u.searchParams.set('iclosedPhone', '+1' + d);
       if (a.firm) u.searchParams.set('company', a.firm);
