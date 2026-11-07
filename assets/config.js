@@ -5,8 +5,13 @@ window.AB_CONFIG = {
   // iClosed: the event link from the event's inline embed code (the data-url value). The booking pages build iClosed's
   // inline widget from it, with the visitor's name, email and mobile added so they do not type them twice.
   iclosedUrl: "https://app.iclosed.io/e/advisorbooking/strategy-call",
+  // iClosed: the 15-minute fit-check event for edge cases routed by /apply (/book?call=short). Empty = the main event above.
+  iclosedUrlShort: "",
   // iClosed: set the event's confirmation page to this URL with forwarding on, so bookings are detected and reported.
   bookedUrl: "https://advisorbooking.com/booked",
+  // Where the landers' email-first "Book intro call" sends people (relative to the site root). "fit/" is the
+  // qualifying form (Funnel 4) with the email prefilled; "book.html" skips the form and opens the calendar.
+  landerNext: "fit/",
   // Calendly (legacy): the 20-minute event URL, and whether book.html embeds it or links out to it.
   calendlyUrl: "",
   calendlyMode: "embed",
@@ -16,6 +21,8 @@ window.AB_CONFIG = {
   // GoHighLevel inbound webhook URL. Empty = submissions are not sent anywhere (they still route the visitor).
   ghlWebhookUrl: "",
   // Tracking. Empty = the tag is not loaded.
+  // Google Tag Manager container for the funnel pages (/apply, /book, /booked...), e.g. "GTM-ABC1234". See assets/gtm.js for the events.
+  gtmId: "",
   metaPixelId: "",
   linkedinPartnerId: "",
   linkedinConversionId: "",

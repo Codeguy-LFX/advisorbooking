@@ -1,0 +1,163 @@
+/* Questionnaire layout ("qf") for the three funnel forms: /apply, /lab/a/apply, /lab/b/*.
+   Structure copied from the LendFax form (measured classes in lendfax-live-ui-kit/README.md), colors are
+   Advisor Booking's. A solid brand bar with the logo centered, a thin progress bar, the question dead
+   center, answers dead center, and a plain footer. Nothing else on the page.
+
+   Feel rules (from the kit, do not change):
+   - No enter animation on steps. The next step appears in one frame at full opacity.
+   - Only motion: color change on hover, and the progress bar width (300ms).
+   - Never autofocus a field. The progress bar never moves backward. Previous is hidden on step 1.
+   Loads after pilot.css, lp.css and funnel.css. */
+
+body.qf{
+  --qf-line:#cbd5e1;      /* slate-300: answer and input borders */
+  --qf-track:#e2e8f0;     /* slate-200: progress track */
+  --qf-muted:#64748b;     /* slate-500: helper text, Previous */
+  --qf-disabled-bg:#e5e7eb; --qf-disabled-fg:#6b7280; --qf-disabled-ring:#d1d5db;
+  background:#fff;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column
+}
+body.qf .lp{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
+
+/* header: sticky brand bar, logo centered (LendFax: px-4 py-5 md:py-6, 72px tall) */
+.qf-head{position:sticky;top:0;z-index:50;background:var(--accent);padding:20px 16px;display:flex;align-items:center;justify-content:center;min-height:72px}
+@media (min-width:768px){.qf-head{padding:24px 32px}}
+.qf-logo{display:inline-flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:600;font-size:21px;letter-spacing:-.035em;white-space:nowrap}
+.qf-logo svg{width:28px;height:28px;flex:0 0 28px}
+@media (min-width:768px){.qf-logo{font-size:24px}.qf-logo svg{width:30px;height:30px;flex-basis:30px}}
+
+/* the one column (LendFax: max-w-xl, px-4 py-8 lg:py-12) */
+.qf-main{flex:1;width:100%}
+.qf-col{width:100%;max-width:576px;margin:0 auto;padding:32px 16px}
+@media (min-width:1024px){.qf-col{padding:48px 16px}}
+
+/* progress (h-1.5 rounded-full slate-200, mb-8; fill 300ms) */
+.qf-count{display:none;margin:0 0 8px;font-size:12px;font-weight:500;color:var(--qf-muted)}
+@media (min-width:1024px){.qf-count.is-on{display:block}}
+.qf-track{height:6px;width:100%;overflow:hidden;border-radius:9999px;background:var(--qf-track);margin-bottom:32px}
+.qf-fill{height:100%;width:0;border-radius:9999px;background:var(--accent);transition:width .3s ease}
+
+/* the step: no animation of any kind */
+body.qf .ap-screen{padding:0;animation:none}
+body.qf .ap-q{margin:0 0 24px;text-align:center;font-family:var(--font-display);font-weight:600;font-size:30px;line-height:1.15;letter-spacing:-.035em;color:var(--ink);text-wrap:balance}
+@media (min-width:1024px){body.qf .ap-q{font-size:48px;line-height:1.08}}
+body.qf .ap-q:focus{outline:none}
+body.qf .ap-sub{margin:-12px 0 24px;text-align:center;font-size:14px;line-height:1.5;color:var(--qf-muted)}
+
+/* answer cards (rounded-lg border-2 slate-300 px-4 py-3 text-center font-semibold, text-lg, gap-4) */
+body.qf .ap-opts,body.qf .ap-opts--2{display:flex;flex-direction:column;gap:16px}
+body.qf .ap-opt{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;padding:12px 16px;border:2px solid var(--qf-line);border-radius:8px;background:#fff;text-align:center;font:inherit;font-size:18px;font-weight:600;line-height:1.35;color:var(--ink);cursor:pointer;transition:background-color .15s,color .15s,border-color .15s;box-shadow:none}
+@media (hover:hover){body.qf .ap-opt:hover{background:var(--accent-soft);color:var(--accent)}}  /* no sticky hover on touch */
+body.qf .ap-opt[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+body.qf .ap-opt:focus-visible{outline:2px solid var(--accent);outline-offset:2px;box-shadow:none}
+body.qf .ap-key{display:none}
+
+/* inputs (flex rounded-lg border-2 slate-300 px-5 py-4 text-base md:text-lg; bold value, no outline) */
+body.qf .lp-field{margin-bottom:12px}
+body.qf .lp-field input[type=text],body.qf .lp-field input[type=email],body.qf .lp-field input[type=tel],body.qf .lp-field textarea{
+  min-height:0;padding:16px 20px;border:2px solid var(--qf-line);border-radius:8px;background:#fff;font-size:16px;font-weight:700;color:var(--ink);box-shadow:none}
+@media (min-width:768px){body.qf .lp-field input[type=text],body.qf .lp-field input[type=email],body.qf .lp-field input[type=tel],body.qf .lp-field textarea{font-size:18px}}
+body.qf .lp-field textarea{font-weight:500;min-height:132px}
+body.qf .lp-field input::placeholder,body.qf .lp-field textarea::placeholder{color:rgba(13,15,14,.5);font-weight:500}
+body.qf .lp-field input:focus,body.qf .lp-field textarea:focus{border-color:var(--accent);box-shadow:none;outline:none}
+body.qf .lp-field.invalid input,body.qf .lp-field.invalid textarea{border-color:#dc2626}
+body.qf .lp-tel__cc{min-height:0;border:2px solid var(--qf-line);border-radius:8px;background:#fff;font-size:17px;font-weight:600}
+body.qf .lp-err{color:#dc2626;font-size:13px;font-weight:500;margin-top:4px}
+body.qf .qf-pair{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+body.qf .lp-hint{text-align:left}
+
+/* consent: small text under the fields */
+body.qf .lp-consent{margin:8px 0 4px}
+body.qf .lp-consent__row label{font-size:12px;line-height:1.5;color:#475569}
+
+/* Continue (w-full rounded-lg px-6 py-4 font-bold white, 80% on hover; disabled gray-200 / gray-500 / 1px gray-300 ring) */
+body.qf .ap-next,body.qf .qf-btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:0;margin-top:28px;padding:16px 24px;border:0;border-radius:8px;background:var(--accent);color:#fff;font:inherit;font-size:16px;font-weight:700;cursor:pointer;text-decoration:none;transition:opacity .15s;box-shadow:none;gap:0;--b:var(--accent)}
+body.qf .ap-next:hover,body.qf .qf-btn:hover{--b:var(--accent);opacity:.8;transform:none;box-shadow:none}
+body.qf .ap-next:active,body.qf .qf-btn:active{transform:none}
+body.qf .ap-next .btn__chip,body.qf .qf-btn .btn__chip{display:none}
+body.qf .ap-next[disabled]{opacity:1;background:var(--qf-disabled-bg);color:var(--qf-disabled-fg);box-shadow:0 0 0 1px var(--qf-disabled-ring);cursor:not-allowed}
+body.qf .lp-priv{margin-top:14px;text-align:center;font-size:12px;color:var(--qf-muted)}
+body.qf .lp-priv a{color:var(--ink);font-weight:600;text-decoration:none}
+
+/* Previous (mx-auto mt-8 flex w-fit items-center gap-1 text-sm slate-500) */
+.qf-prev{display:flex;align-items:center;gap:4px;width:fit-content;margin:32px auto 0;padding:0;border:0;background:none;font:inherit;font-size:14px;color:var(--qf-muted);cursor:pointer}
+.qf-prev svg{width:18px;height:18px}
+.qf-prev:hover{color:var(--ink)}
+
+/* inline results (DQ) and the result pages: same column, centered */
+body.qf .ap-inline{text-align:center}
+body.qf .ap-inline .lp-plist,body.qf .qf-body .lp-plist{display:inline-grid;text-align:left;margin:4px auto 8px}
+body.qf .ap-inline .lp-exit__links{justify-content:center;margin-top:24px}
+body.qf .ap-sending{padding:24px 0;text-align:center}
+.qf-body{text-align:center;color:var(--muted);font-size:16px;line-height:1.6}
+.qf-body p{margin:0 0 14px}
+.qf-body .pc-steps{text-align:left;margin:8px 0 0}
+
+/* footer (white, links above a small bordered disclaimer) */
+.qf-foot{background:#fff;padding:32px}
+.qf-foot__links{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}
+.qf-foot__links a{font-weight:600;color:var(--ink);text-decoration:none}
+.qf-foot__disc{margin:24px 0 0;padding-top:16px;border-top:1px solid #e5e7eb;text-align:center;font-size:12.8px;line-height:1.5;color:rgba(13,15,14,.5)}
+
+/* study builds: the bottom bar shrinks to a corner pill so the page stays a plain questionnaire */
+body.qf.is-lab{padding-bottom:0}
+body.qf .lab-bar{left:auto;right:12px;bottom:12px;max-width:min(560px,calc(100% - 24px));border:1px solid #e9cf86;border-radius:10px;padding:8px 12px;font-size:12px;text-align:left;box-shadow:0 8px 24px -12px rgba(0,0,0,.3)}
+body.qf .lab-notes-wrap{max-width:760px;margin:0 auto;padding:0 16px 24px}
+
+/* loading screen between Part 1 and Part 2 (the loaders are the one place motion is allowed):
+   three arcs turning at different speeds, then a checklist whose rows go pending -> running -> done */
+.qf-loader{text-align:center}
+.qf-ring{position:relative;width:96px;height:96px;margin:8px auto 28px}
+.qf-ring span{position:absolute;border-radius:50%;border:3px solid transparent;border-top-color:var(--accent)}
+.qf-ring span:nth-child(1){inset:0;animation:qf-spin 5s linear infinite}
+.qf-ring span:nth-child(2){inset:10%;border-top-color:rgba(15,122,98,.4);animation:qf-spin 3s linear infinite reverse}
+.qf-ring span:nth-child(3){inset:20%;border-top-color:rgba(15,122,98,.2);animation:qf-spin 4s linear infinite}
+@keyframes qf-spin{to{transform:rotate(1turn)}}
+.qf-stages{display:grid;gap:10px;max-width:440px;margin:8px auto 0;text-align:left}
+.qf-stage{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid #e5e7eb;border-radius:10px;background:#fff;font-size:15px;color:var(--ink)}
+.qf-stage__label{flex:1}
+.qf-stage__status{font-size:13px;font-weight:600;color:var(--qf-muted)}
+.qf-stage__ic{flex:0 0 22px;width:22px;height:22px;border-radius:50%;border:2px solid #e5e7eb}
+.qf-stage.is-pending{color:#94a3b8}
+.qf-stage.is-running .qf-stage__ic{border-color:var(--accent-soft);border-top-color:var(--accent);animation:qf-spin .8s linear infinite}
+.qf-stage.is-running .qf-stage__status{color:var(--accent)}
+.qf-stage.is-done .qf-stage__ic{border:0;background:var(--accent-soft) url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpolyline points='2,6 5,9 10,3' fill='none' stroke='%230f7a62' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center/12px}
+.qf-stage.is-done .qf-stage__status{color:var(--accent)}
+@media (prefers-reduced-motion:reduce){.qf-ring span,.qf-stage.is-running .qf-stage__ic{animation-duration:3s}}
+
+/* wide column for the calendar (/book) */
+.qf-col--wide{max-width:1040px}
+.qf-book .calendly-mount{text-align:center}
+.qf-book .iclosed-widget,.qf-book .calendly-frame{display:block;width:100%;border:0;border-radius:12px;height:calc(100vh - 230px);height:calc(100dvh - 230px);min-height:660px}
+.qf-book .notice{text-align:center;max-width:560px;margin:24px auto 0;color:var(--qf-muted)}
+
+/* thank-you page (/booked) */
+.qf-done{text-align:center}
+.qf-done .lp-chk{margin:0 auto 18px}
+.qf-when{display:inline-block;margin:0 0 20px;font-size:14px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:8px;padding:8px 14px}
+.qf-next{text-align:left;margin:28px 0 0}
+.qf-next h2{font-size:20px;font-weight:600;letter-spacing:-.02em;color:var(--ink);margin:0 0 14px;text-align:center}
+.qf-next .pc-steps li{font-size:16px}
+.qf-next .pc-steps b{color:var(--ink)}
+.qf-next .pc-steps p{margin:4px 0 0;color:var(--muted);font-size:15px}
+.qf-card{border:1px solid #e5e7eb;border-radius:12px;padding:18px 20px;background:#fff;text-align:left;margin-top:16px}
+.qf-card p{margin:0 0 10px;color:var(--muted);font-size:15px;line-height:1.55}
+.qf-card p:last-child{margin:0}
+.qf-qa details{border-top:1px solid #e5e7eb;padding:12px 0}
+.qf-qa details:first-child{border-top:0}
+.qf-qa summary{cursor:pointer;font-weight:600;color:var(--ink);list-style:none}
+.qf-qa summary::-webkit-details-marker{display:none}
+.qf-qa summary::after{content:"+";float:right;color:var(--qf-muted)}
+.qf-qa details[open] summary::after{content:"\2212"}
+.qf-qa details p{margin:8px 0 0}
+body.qf.in-frame .qf-head,body.qf.in-frame .qf-foot,body.qf.in-frame .qf-rest{display:none}
+body.qf.in-frame .qf-col{padding:16px}
+
+/* outcome pages (Funnel 4) */
+.qf-hi{margin:0 0 10px;font-size:15px;font-weight:600;color:var(--accent)}
+.qf-next-line{margin:6px 0 0;color:var(--ink);font-weight:600}
+.qf-body .qf-btn + .qf-btn{margin-top:12px}
+body.qf .qf-btn--light{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 2px var(--qf-line)}
+body.qf .qf-btn--light:hover{opacity:1;box-shadow:inset 0 0 0 2px var(--accent);color:var(--accent)}
+.qf-fine{margin:12px 0 0;font-size:12.5px;color:var(--qf-muted)}
+a.qf-prev{text-decoration:none}
+.qf-body .pc-steps{margin:8px 0 4px}

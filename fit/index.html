@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>See if your firm is a fit | Advisor Booking</title>
+<meta name="description" content="A few quick questions. If your firm is a fit, you pick a time for a 20-minute call.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0f7a62">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/lp.css">
+<link rel="stylesheet" href="../assets/pilot.css">
+<link rel="stylesheet" href="../assets/funnel.css">
+<link rel="stylesheet" href="../assets/qf.css">
+<script>window.AB_APPLY = {
+ "FORM_VERSION": "ab-fit-f4-2026-11-07",
+ "SOURCE": "advisorbooking-fit",
+ "STORE_KEY": "ab_apply_v1",
+ "CONSENT_TEXT_VERSION": "fit-2026-11-07-a",
+ "ADVANCE": "tap",
+ "LOCK_CONTINUE": "filled",
+ "PREFILL": true,
+ "QUALIFIED_ROUTE": [
+  "priority",
+  "main"
+ ],
+ "QUESTIONS": [
+  {
+   "id": "firm_type",
+   "type": "choice",
+   "q": "What best describes your firm?",
+   "sub": "We work with independent and hybrid RIAs in the US.",
+   "options": [
+    {
+     "label": "We\u2019re an independent RIA",
+     "value": "independent_ria"
+    },
+    {
+     "label": "We\u2019re a hybrid RIA (RIA plus a broker-dealer)",
+     "value": "hybrid_ria"
+    },
+    {
+     "label": "I\u2019m with a broker-dealer or wirehouse",
+     "value": "bd_wirehouse"
+    },
+    {
+     "label": "I\u2019m not a financial advisor",
+     "value": "not_advisor"
+    }
+   ]
+  },
+  {
+   "id": "role",
+   "type": "choice",
+   "q": "What\u2019s your role?",
+   "sub": "So we know who makes the call on hiring us.",
+   "options": [
+    {
+     "label": "I own the firm and make the call",
+     "value": "owner"
+    },
+    {
+     "label": "I\u2019m a partner and decide with my partners",
+     "value": "partner"
+    },
+    {
+     "label": "I\u2019m an advisor. Someone else decides",
+     "value": "advisor"
+    },
+    {
+     "label": "I work in marketing or ops. Someone else decides",
+     "value": "ops"
+    }
+   ]
+  },
+  {
+   "id": "aum",
+   "type": "choice",
+   "q": "What is your firm\u2019s AUM?",
+   "sub": "Your best estimate is fine.",
+   "options": [
+    {
+     "label": "Under $25M",
+     "value": 0
+    },
+    {
+     "label": "$25M to $50M",
+     "value": 25000000
+    },
+    {
+     "label": "$50M to $100M",
+     "value": 50000000
+    },
+    {
+     "label": "$100M to $250M",
+     "value": 100000000
+    },
+    {
+     "label": "$250M to $500M",
+     "value": 250000000
+    },
+    {
+     "label": "$500M or more",
+     "value": 500000000
+    }
+   ]
+  },
+  {
+   "id": "advisors",
+   "type": "choice",
+   "q": "How many advisors take first meetings?",
+   "sub": "Count everyone who meets new prospects, including you.",
+   "options": [
+    {
+     "label": "Just me",
+     "value": 1
+    },
+    {
+     "label": "2 to 4",
+     "value": 2
+    },
+    {
+     "label": "5 to 10",
+     "value": 5
+    },
+    {
+     "label": "11 or more",
+     "value": 11
+    }
+   ]
+  },
+  {
+   "id": "budget",
+   "type": "choice",
+   "q": "Does $5,000 every 4 weeks fit your growth budget?",
+   "sub": "That\u2019s the Founding Sprint: 3 cycles to start, about 90 days. No setup fee. No per-meeting fees.",
+   "options": [
+    {
+     "label": "Yes, that fits our budget",
+     "value": "yes"
+    },
+    {
+     "label": "We only want a one-time project",
+     "value": "one_time"
+    },
+    {
+     "label": "Not right now",
+     "value": "not_now"
+    }
+   ]
+  },
+  {
+   "id": "contact",
+   "type": "fields",
+   "q": "Where should we send your next step?",
+   "sub": "No spam, ever. We don\u2019t sell your information.",
+   "track": "lead",
+   "fields": [
+    {
+     "id": "first",
+     "label": "First Name",
+     "autocomplete": "given-name",
+     "half": true,
+     "error": "Enter your first name."
+    },
+    {
+     "id": "last",
+     "label": "Last Name",
+     "autocomplete": "family-name",
+     "half": true,
+     "error": "Enter your last name."
+    },
+    {
+     "id": "email",
+     "label": "Work Email",
+     "type": "email",
+     "autocomplete": "email",
+     "error": "That email does not look right. Check it and try again."
+    },
+    {
+     "id": "phone",
+     "label": "Mobile Number",
+     "type": "tel",
+     "autocomplete": "tel-national",
+     "error": "That phone number does not look right. Check it and try again."
+    },
+    {
+     "id": "sms_optin",
+     "type": "checkbox",
+     "label": "Yes, text me about my call. I agree to receive text messages from De Jesus Ventures LLC about my call. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help."
+    }
+   ],
+   "cta": "Continue",
+   "fine": "By continuing you agree to our <a href=\"../privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> and <a href=\"../terms.html\" target=\"_blank\" rel=\"noopener\">Terms</a>."
+  },
+  {
+   "id": "loader",
+   "type": "loader",
+   "track": "part1_complete",
+   "q": "Checking your firm\u2019s fit",
+   "sub": "A few more questions after this.",
+   "beat_ms": 900,
+   "min_ms": 3600,
+   "stages": [
+    {
+     "label": "Saving your details",
+     "active": "Saving...",
+     "done": "Saved"
+    },
+    {
+     "label": "Checking your answers",
+     "active": "Checking...",
+     "done": "Done"
+    },
+    {
+     "label": "Loading the last few questions",
+     "active": "Loading...",
+     "done": "Ready"
+    }
+   ]
+  },
+  {
+   "id": "firm",
+   "type": "fields",
+   "q": "Tell us about your firm",
+   "sub": "We look at your website before the call.",
+   "track": "part2_start",
+   "fields": [
+    {
+     "id": "firm",
+     "label": "Firm Name",
+     "autocomplete": "organization",
+     "error": "Enter your firm name."
+    },
+    {
+     "id": "website",
+     "label": "Firm Website",
+     "type": "url",
+     "autocomplete": "url",
+     "error": "Enter your firm website, like yourfirm.com."
+    }
+   ],
+   "cta": "Continue"
+  },
+  {
+   "id": "client_size",
+   "type": "choice",
+   "q": "How big is a typical new client?",
+   "sub": "In assets you manage for them. Your best estimate is fine.",
+   "options": [
+    {
+     "label": "Under $250K",
+     "value": 0
+    },
+    {
+     "label": "$250K to $1M",
+     "value": 250000
+    },
+    {
+     "label": "$1M to $5M",
+     "value": 1000000
+    },
+    {
+     "label": "$5M or more",
+     "value": 5000000
+    },
+    {
+     "label": "We don\u2019t manage assets (hourly or flat fee only)",
+     "value": "no_assets"
+    }
+   ]
+  },
+  {
+   "id": "niche",
+   "type": "choice",
+   "q": "Who are your best clients?",
+   "sub": "New outreach goes to people like them.",
+   "options": [
+    {
+     "label": "Business owners",
+     "value": "business_owners"
+    },
+    {
+     "label": "Executives and professionals",
+     "value": "executives"
+    },
+    {
+     "label": "Retirees and pre-retirees",
+     "value": "retirees"
+    },
+    {
+     "label": "A specific niche (doctors, attorneys, tech)",
+     "value": "specific"
+    },
+    {
+     "label": "We don\u2019t have a clear niche yet",
+     "value": "none"
+    }
+   ]
+  },
+  {
+   "id": "crm",
+   "type": "choice",
+   "q": "How many contacts are in your CRM or lists?",
+   "sub": "Past prospects, referrals and event lists all count. We work these first.",
+   "options": [
+    {
+     "label": "Under 1,000",
+     "value": 0
+    },
+    {
+     "label": "1,000 to 5,000",
+     "value": 1000
+    },
+    {
+     "label": "5,000 or more",
+     "value": 5000
+    },
+    {
+     "label": "I\u2019m not sure",
+     "value": "unsure"
+    }
+   ]
+  },
+  {
+   "id": "compliance",
+   "type": "choice",
+   "q": "Will compliance allow email and LinkedIn outreach?",
+   "sub": "Your CCO approves every message before anything sends.",
+   "options": [
+    {
+     "label": "Yes",
+     "value": "yes"
+    },
+    {
+     "label": "I\u2019d need to check",
+     "value": "check"
+    },
+    {
+     "label": "No",
+     "value": "no"
+    }
+   ]
+  },
+  {
+   "id": "capacity",
+   "type": "choice",
+   "q": "Can one advisor take 8 or more new first meetings a month?",
+   "sub": "The Founding Sprint commits to at least 15 attended, qualified meetings in your first 90 days. Someone needs room for them.",
+   "options": [
+    {
+     "label": "Yes",
+     "value": "yes"
+    },
+    {
+     "label": "I\u2019m not sure",
+     "value": "unsure"
+    },
+    {
+     "label": "No",
+     "value": "no"
+    }
+   ]
+  },
+  {
+   "id": "timing",
+   "type": "choice",
+   "q": "When do you want new meetings starting?",
+   "options": [
+    {
+     "label": "As soon as possible",
+     "value": "now"
+    },
+    {
+     "label": "In the next 1 to 3 months",
+     "value": "soon"
+    },
+    {
+     "label": "Just researching for now",
+     "value": "researching"
+    }
+   ]
+  },
+  {
+   "id": "goal",
+   "type": "fields",
+   "q": "What\u2019s your growth goal for the next 12 months?",
+   "sub": "Optional. A sentence or two helps us prepare for your call.",
+   "fields": [
+    {
+     "id": "goal",
+     "label": "Your growth goal",
+     "type": "textarea",
+     "optional": true,
+     "srLabel": true,
+     "placeholder": "For example: more business-owner clients in our area"
+    }
+   ],
+   "cta": "See my next step"
+  }
+ ],
+ "RULES": [
+  {
+   "route": "dq",
+   "reason": "not_advisor",
+   "early": true,
+   "any": [
+    [
+     "firm_type",
+     "not_advisor"
+    ]
+   ]
+  },
+  {
+   "route": "dq",
+   "reason": "firm_type",
+   "early": "contact",
+   "any": [
+    [
+     "firm_type",
+     "bd_wirehouse"
+    ]
+   ]
+  },
+  {
+   "route": "dq",
+   "reason": "aum",
+   "early": "contact",
+   "any": [
+    [
+     "aum",
+     0
+    ]
+   ]
+  },
+  {
+   "route": "nurture",
+   "reason": "budget",
+   "early": "contact",
+   "any": [
+    [
+     "budget",
+     "not_now"
+    ]
+   ]
+  },
+  {
+   "route": "nurture",
+   "reason": "one_time",
+   "early": "contact",
+   "any": [
+    [
+     "budget",
+     "one_time"
+    ]
+   ]
+  },
+  {
+   "route": "dq",
+   "reason": "no_assets",
+   "early": true,
+   "any": [
+    [
+     "client_size",
+     "no_assets"
+    ]
+   ]
+  },
+  {
+   "route": "dq",
+   "reason": "crm",
+   "early": true,
+   "any": [
+    [
+     "crm",
+     0
+    ]
+   ]
+  },
+  {
+   "route": "dq",
+   "reason": "compliance",
+   "early": true,
+   "any": [
+    [
+     "compliance",
+     "no"
+    ]
+   ]
+  },
+  {
+   "route": "dq",
+   "reason": "capacity",
+   "early": true,
+   "any": [
+    [
+     "capacity",
+     "no"
+    ]
+   ]
+  },
+  {
+   "route": "nurture",
+   "reason": "researching",
+   "early": true,
+   "any": [
+    [
+     "timing",
+     "researching"
+    ]
+   ]
+  },
+  {
+   "route": "triage",
+   "reason": "edge",
+   "any": [
+    [
+     "aum",
+     [
+      25000000,
+      250000000,
+      500000000
+     ]
+    ],
+    [
+     "advisors",
+     [
+      1,
+      11
+     ]
+    ],
+    [
+     "firm_type",
+     "hybrid_ria"
+    ],
+    [
+     "role",
+     [
+      "advisor",
+      "ops"
+     ]
+    ],
+    [
+     "client_size",
+     0
+    ],
+    [
+     "niche",
+     "none"
+    ],
+    [
+     "crm",
+     "unsure"
+    ],
+    [
+     "compliance",
+     "check"
+    ],
+    [
+     "capacity",
+     "unsure"
+    ]
+   ]
+  },
+  {
+   "route": "priority",
+   "reason": "priority",
+   "all": [
+    [
+     "firm_type",
+     "independent_ria"
+    ],
+    [
+     "role",
+     "owner"
+    ],
+    [
+     "aum",
+     [
+      50000000,
+      100000000
+     ]
+    ],
+    [
+     "advisors",
+     [
+      2,
+      5
+     ]
+    ],
+    [
+     "budget",
+     "yes"
+    ],
+    [
+     "client_size",
+     [
+      250000,
+      1000000,
+      5000000
+     ]
+    ],
+    [
+     "niche",
+     [
+      "business_owners",
+      "executives",
+      "retirees",
+      "specific"
+     ]
+    ],
+    [
+     "crm",
+     [
+      1000,
+      5000
+     ]
+    ],
+    [
+     "compliance",
+     "yes"
+    ],
+    [
+     "capacity",
+     "yes"
+    ],
+    [
+     "timing",
+     "now"
+    ]
+   ]
+  }
+ ],
+ "DEFAULT_ROUTE": "main",
+ "ROUTES": {
+  "dq": "not-a-fit.html",
+  "nurture": "not-yet.html",
+  "triage": "../book.html?call=short",
+  "main": "../book.html?call=main",
+  "priority": "../book.html?call=main&fit=priority"
+ },
+ "LAYOUT": "qf"
+};</script>
+</head>
+<body class="qf">
+<div class="lp">
+<header class="qf-head"><span class="qf-logo"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#fff"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#0f7a62"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#0f7a62"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#0f7a62"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#fff"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#0f7a62" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span></header>
+<main class="qf-main" id="main">
+  <div class="qf-col">
+<p class="qf-count" id="apCount" aria-live="polite"></p>
+    <div class="qf-track" role="progressbar" aria-label="Progress"><div class="qf-fill" id="apBar"></div></div>
+    <div id="apBody"><noscript><p>This form needs JavaScript. Email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will set up your call.</p></noscript></div>
+    <div class="lp-hp" aria-hidden="true"><label for="apHp">Website</label><input type="text" id="apHp" name="website" tabindex="-1" autocomplete="off" data-1p-ignore="true" data-lpignore="true"></div>
+    <div class="sr-only" id="apLive" aria-live="polite" aria-atomic="true"></div>
+  </div>
+</main>
+<footer class="qf-foot">
+  <div class="qf-foot__links"><a href="../privacy.html" target="_blank" rel="noopener">Privacy Policy</a><a href="../terms.html" target="_blank" rel="noopener">Terms of Service</a></div>
+  <p class="qf-foot__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
+</footer>
+</div>
+<script src="../assets/config.js"></script>
+<script src="../assets/gtm.js"></script>
+<script src="../assets/funnel.js" defer></script>
+</body>
+</html>
