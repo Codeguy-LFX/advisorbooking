@@ -204,6 +204,11 @@
     if (source && !u.searchParams.has('utm_content')) u.searchParams.set('utm_content', source);
     /* Prefill from /apply so the visitor does not type it twice (same parameter names as the /pilot card). */
     var st = applyState();
+    if (!st) {
+      /* Straight from a lander's email-first CTA (AB_CONFIG.landerNext set to the booking page): the email only. */
+      var pre = null; try { pre = JSON.parse(sessionStorage.getItem('ab_prefill') || 'null'); } catch (e) {}
+      if (pre && pre.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(pre.email)) u.searchParams.set('iclosedEmail', pre.email);
+    }
     if (st) {
       var a = st.answers, d = String(a.phone || '').replace(/\D/g, '');
       var nm = a.name || [a.first, a.last].filter(Boolean).join(' ');

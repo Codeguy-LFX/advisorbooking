@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thanks for applying | Advisor Booking</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0f7a62">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/lp.css">
+<link rel="stylesheet" href="../assets/pilot.css">
+<link rel="stylesheet" href="../assets/funnel.css">
+<link rel="stylesheet" href="../assets/qf.css">
+</head>
+<body class="qf">
+<div class="lp">
+<header class="qf-head"><span class="qf-logo"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#fff"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#0f7a62"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#0f7a62"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#0f7a62"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#fff"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#0f7a62" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span></header>
+<main class="qf-main" id="main">
+  <div class="qf-col">
+<div class="qf-body">
+      <p class="qf-hi" id="oHi">Thanks for applying.</p>
+      <h1 class="ap-q" id="oH">Not right now is a fine answer.</h1>
+      <div id="oP"></div>
+      <ol class="pc-steps">
+        <li><span><b>Your free 25-Prospect Target Map.</b> 25 prospects that match your best clients, sent within 24 hours.</span></li>
+        <li><span><b>The weekly newsletter.</b> One short play each week on getting more first meetings. Issue 1 is the past-prospect reactivation play.</span></li>
+      </ol>
+      <a class="qf-btn" href="mailto:info@advisorbooking.com?subject=Target%20Map&body=Firm%20website%3A%20">Send me the Target Map</a>
+      <a class="qf-btn qf-btn--light" href="mailto:info@advisorbooking.com?subject=Newsletter&body=Please%20add%20me%20to%20the%20weekly%20newsletter.">Add me to the newsletter</a>
+      <p class="qf-fine">Both buttons open an email to info@advisorbooking.com.</p>
+      <p class="qf-next-line" id="oNext" hidden></p>
+      <a class="qf-prev" href="./?resume=1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span>Change my answer</span></a>
+    </div>
+  </div>
+</main>
+<footer class="qf-foot">
+  <div class="qf-foot__links"><a href="../privacy.html" target="_blank" rel="noopener">Privacy Policy</a><a href="../terms.html" target="_blank" rel="noopener">Terms of Service</a></div>
+  <p class="qf-foot__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
+</footer>
+</div>
+<script src="../assets/config.js"></script>
+<script src="../assets/gtm.js"></script>
+<script>
+/* Show the reason for this outcome from the answers saved in this browser (no network). */
+(function () {
+  var R = {"budget": {"h": "Not right now is a fine answer.", "p": ["Your firm may be a good fit later. Two free ways to keep going until then:"]}, "one_time": {"h": "We only run this as an ongoing system.", "p": ["The Founding Sprint starts with 3 cycles, about 90 days, because the list, the replies and the follow-up need that long to work. A one-time campaign doesn&rsquo;t give them the time.", "If you want to keep learning in the meantime:"]}, "researching": {"h": "No rush.", "p": ["When you&rsquo;re ready to start, apply again. Until then, two free ways to keep going:"]}, "_default": {"h": "Not right now is a fine answer.", "p": ["Two free ways to keep going until then:"]}};
+  var st = null; try { st = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); } catch (e) {}
+  var key = (st && st.route_reason) || '_default'; var d = R[key] || R._default;
+  document.getElementById('oH').innerHTML = d.h;
+  document.getElementById('oP').innerHTML = d.p.map(function (x) { return '<p>' + x + '</p>'; }).join('');
+  var n = document.getElementById('oNext'); if (n) { if (d.next) n.innerHTML = d.next; else n.hidden = true; }
+  var first = st && st.answers && st.answers.first; if (first && key !== 'not_advisor') document.getElementById('oHi').textContent = 'Thanks, ' + String(first).split(/\s+/)[0] + '.';
+  try { (window.dataLayer = window.dataLayer || []).push({ event: 'ab_outcome_view_nurture', ab_route_reason: key, ab_submission_id: (st && st.sid) || '' }); } catch (e) {}
+})();
+</script>
+</body>
+</html>

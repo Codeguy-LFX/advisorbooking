@@ -3,14 +3,17 @@
    script: its questions, routing rules and destinations. A new form is a copy of a page with a different block.
 
    Question types
-     choice   options: [...], multi: true for "check all" (then a Continue button), auto-advances otherwise
+     choice   options: ['Label', ...] or [{ label: 'Shown', value: 100000000 }, ...] (the value is what is stored and
+              routed on, so ranges store an integer floor, never the label). multi: true for "check all" (Continue).
      fields   fields: [{ id, label, type: text|email|tel|url|textarea|checkbox, optional, required (checkbox), hint, srLabel }]
 
      loader   a checklist loading screen between parts (no answer): q (heading), sub, stages: [{label, active, done}],
               beat_ms, min_ms. It is not counted in the progress bar, and Back skips over it.
 
    Routing (RULES): an ordered list. The first rule with a matching answer wins; DEFAULT_ROUTE if none match.
-     { route: 'dq', any: [['question_id', 'Answer'], ...] }
+     { route: 'dq', any: [['question_id', value], ...] }      any one condition matches
+     { route: 'priority', all: [['aum', [50000000, 100000000]], ['role', 'owner'], ...] }   every condition matches
+     A condition's value can be a list (any of those values). reason: 'compliance' names the rule for the outcome page.
      early: true        checked after every answer (Typeform-style jump)
      early: 'step_id'   checked once, right after that step (e.g. the end of Part 1); otherwise only at the end
 
@@ -49,6 +52,10 @@
     // animation, labels become placeholders, the page jumps to the top on each step.
     LAYOUT: '',
     SHOW_COUNT: false,           // qf only: show the "Step X of Y" line above the bar (desktop)
+    // Prefill from the lander's email capture (sessionStorage ab_prefill) and from ?email=&first=&last=&firm= links
+    // (e.g. a cold email). URL values are removed from the address bar at once, so they never sit in history.
+    PREFILL: false,
+    PREFILL_KEYS: ['email', 'first', 'last', 'firm'],
     TEST_MODE: false
   };
   var over = window.AB_APPLY || {};
@@ -86,12 +93,39 @@
 
   /* ---------- state ---------- */
   var TTL = 7 * 24 * 60 * 60 * 1000;
-  function fresh() { return { sid: '', answers: {}, step: 0, route: '', started: Date.now(), consent_text: '' }; }
+  function fresh() { return { sid: '', answers: {}, labels: {}, step: 0, route: '', started: Date.now(), consent_text: '' }; }
   var S = fresh();
+  var resumed = false;
   try {
     var saved = STORE && JSON.parse(STORE.getItem(F.STORE_KEY) || 'null');
-    if (saved && saved.form_version === F.FORM_VERSION && Date.now() - (saved.started || 0) < TTL && !saved.done) S = saved;
+    var same = saved && saved.form_version === F.FORM_VERSION && Date.now() - (saved.started || 0) < TTL;
+    if (same && !saved.done) S = saved;
+    // "Change my answer" on an outcome page links back with ?resume=1: reopen the last question answered.
+    else if (same && saved.done && /[?&]resume=1(&|$)/.test(location.search)) {
+      S = saved; S.done = false; S.route = ''; S.route_reason = ''; S.tier = ''; resumed = true;
+    }
   } catch (e) {}
+  if (!S.labels) S.labels = {};
+  (function cleanUrl() {
+    try {
+      var u = new URL(location.href), changed = false, pre = {};
+      try { pre = JSON.parse(sessionStorage.getItem('ab_prefill') || '{}') || {}; } catch (e) {}
+      ['resume'].concat(F.PREFILL_KEYS).forEach(function (k) {
+        var v = u.searchParams.get(k);
+        if (v === null) return;
+        if (k !== 'resume') pre[k] = v;
+        u.searchParams.delete(k); changed = true;
+      });
+      if (changed) history.replaceState(history.state, '', u.pathname + (u.searchParams.toString() ? '?' + u.searchParams.toString() : '') + u.hash);
+      if (!F.PREFILL) return;
+      F.PREFILL_KEYS.forEach(function (k) {
+        var v = String(pre[k] || '').trim().slice(0, 200);
+        if (!v || S.answers[k]) return;
+        if (k === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return;
+        S.answers[k] = v;
+      });
+    } catch (e) {}
+  })();
   function save() { S.form_version = F.FORM_VERSION; try { if (STORE) STORE.setItem(F.STORE_KEY, JSON.stringify(S)); } catch (e) {} }
 
   var utm = {};
@@ -112,7 +146,8 @@
     var bot = botFlag();
     var p = {
       submission_id: S.sid, stage: stage, route: S.route || '', source: F.SOURCE, form_version: F.FORM_VERSION,
-      answers: S.answers, sms_consent: !!S.answers.sms_optin, consent_text: S.consent_text,
+      answers: S.answers, answer_labels: S.labels, route_reason: S.route_reason || '',
+      sms_consent: !!S.answers.sms_optin, consent_text: S.consent_text,
       consent_text_version: F.CONSENT_TEXT_VERSION, utm: utm, page_url: location.href, referrer: doc.referrer,
       started_iso: new Date(S.started).toISOString(), ts_iso: new Date().toISOString(),
       bot_flag: bot ? 'true' : 'false', bot_reason: bot, test_mode: F.TEST_MODE ? 'true' : 'false'
@@ -130,12 +165,30 @@
     var a = S.answers[id];
     return Array.isArray(a) ? a.indexOf(val) > -1 : a === val;
   }
-  function route() {
-    for (var i = 0; i < F.RULES.length; i++) {
-      var r = F.RULES[i], any = r.any || [];
-      for (var j = 0; j < any.length; j++) if (has(any[j][0], any[j][1])) return { route: r.route, reason: any[j][0] + '=' + any[j][1] };
+  function cond(c) {
+    var allowed = Array.isArray(c[1]) ? c[1] : [c[1]];
+    for (var k = 0; k < allowed.length; k++) if (has(c[0], allowed[k])) return true;
+    return false;
+  }
+  function ruleHit(r) {
+    if (r.all && r.all.length) {
+      for (var k = 0; k < r.all.length; k++) if (!cond(r.all[k])) return null;
+      return { route: r.route, reason: r.reason || r.route };
     }
+    var any = r.any || [];
+    for (var j = 0; j < any.length; j++) if (cond(any[j])) return { route: r.route, reason: r.reason || (any[j][0] + '=' + any[j][1]) };
+    return null;
+  }
+  function route() {
+    for (var i = 0; i < F.RULES.length; i++) { var hit = ruleHit(F.RULES[i]); if (hit) return hit; }
     return { route: F.DEFAULT_ROUTE, reason: '' };
+  }
+  function optLabel(o) { return o && typeof o === 'object' ? String(o.label) : String(o); }
+  function optValue(o) { return o && typeof o === 'object' ? o.value : o; }
+  function labelFor(q, v) {
+    if (Array.isArray(v)) return v.map(function (x) { return labelFor(q, x); });
+    var o = (q.options || []).filter(function (x) { return optValue(x) === v; })[0];
+    return o === undefined ? v : optLabel(o);
   }
 
   /* ---------- rendering ---------- */
@@ -199,19 +252,20 @@
     var tap = !q.multi && (q.advance || F.ADVANCE) === 'tap';
     var picked = q.multi ? (S.answers[q.id] || []).slice() : (S.answers[q.id] ? [S.answers[q.id]] : []);
     q.options.forEach(function (opt, n) {
-      var on = picked.indexOf(opt) > -1;
+      var val = optValue(opt);
+      var on = picked.indexOf(val) > -1;
       var b = el('button', { type: 'button', class: 'ap-opt' + (q.multi ? ' ap-opt--multi' : ''), 'aria-pressed': on ? 'true' : 'false' }, [
         el('span', { class: 'ap-key', 'aria-hidden': 'true', text: String.fromCharCode(65 + n) }),
-        el('span', { text: opt })
+        el('span', { text: optLabel(opt) })
       ]);
       b.addEventListener('click', function () {
-        if (tap) { answer(q, opt, i); return; }
+        if (tap) { answer(q, val, i); return; }
         if (!q.multi) {
-          picked = [opt];
+          picked = [val];
           Array.prototype.forEach.call(wrap.children, function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
         } else {
-          var k = picked.indexOf(opt);
-          if (k > -1) picked.splice(k, 1); else picked.push(opt);
+          var k = picked.indexOf(val);
+          if (k > -1) picked.splice(k, 1); else picked.push(val);
           b.setAttribute('aria-pressed', k > -1 ? 'false' : 'true');
         }
         if (err) err.hidden = true;
@@ -231,17 +285,19 @@
     return el('div', null, [wrap, err, next]);
   }
 
-  function fieldBad(f, inp) {
+  function fieldBad(f, inp, loose) {
     if (f.type === 'checkbox') return !!f.required && !inp.checked;
     var v = String(inp.value || '').trim();
     if (!v) return !f.optional;
+    if (loose) return false;
     if (f.type === 'email') return !emailOk(v);
     if (f.type === 'tel') return !phoneOk(v);
     if (f.type === 'url') return !urlOk(v);
     return false;
   }
   function screenValid(q) {
-    return (q.fields || []).every(function (f) { var inp = $('ap-' + f.id); return inp && !fieldBad(f, inp); });
+    var loose = F.LOCK_CONTINUE === 'filled';
+    return (q.fields || []).every(function (f) { var inp = $('ap-' + f.id); return inp && !fieldBad(f, inp, loose); });
   }
 
   function renderFields(q, i) {
@@ -283,7 +339,7 @@
     (q.fields || []).forEach(function (f) { if (f.type === 'checkbox' && f.required && f.gate && !S.answers[f.id]) btn.disabled = true; });
     form.appendChild(btn);
     if (F.LOCK_CONTINUE) {
-      var relock = function () { btn.disabled = !screenValid(q); };
+      var relock = function () { btn.disabled = !screenValid(q); };   // 'filled': unlock when filled; true: when valid
       form.addEventListener('input', relock); form.addEventListener('change', relock);
       setTimeout(relock, 0);
     }
@@ -319,10 +375,11 @@
   /* ---------- moving through the form ---------- */
   function answer(q, value, i) {
     if (!S.sid) S.sid = uuid();
-    if (value !== null) S.answers[q.id] = value;
+    if (value !== null) { S.answers[q.id] = value; if (q.type === 'choice') S.labels[q.id] = labelFor(q, value); }
     save();
     send('step', { step_id: q.id, step_index: i + 1, step_total: Q.length });
-    track('step', { step_id: q.id, step_index: counted(i) + 1, answer: q.type === 'choice' ? value : undefined });
+    track('step', { step_id: q.id, step_index: counted(i) + 1,
+                    answer: q.type === 'choice' ? S.labels[q.id] : undefined, value: q.type === 'choice' ? value : undefined });
     if (q.track) track(q.track, { step_id: q.id });
     var hit = earlyHit(q);
     if (hit) { finish(hit); return; }
@@ -331,9 +388,9 @@
   }
   function earlyHit(q) {
     for (var k = 0; k < F.RULES.length; k++) {
-      var r = F.RULES[k], any = r.any || [];
+      var r = F.RULES[k];
       if (r.early !== true && r.early !== q.id) continue;
-      for (var j = 0; j < any.length; j++) if (has(any[j][0], any[j][1])) return { route: r.route, reason: any[j][0] + '=' + any[j][1] };
+      var hit = ruleHit(r); if (hit) return hit;
     }
     return null;
   }
@@ -397,7 +454,8 @@
   function finish(r) {
     S.route = r.route; S.route_reason = r.reason;
     // /booked reads tier: only the route named in QUALIFIED_ROUTE counts as a qualified ad conversion.
-    S.tier = r.route === (F.QUALIFIED_ROUTE || 'main') ? 'qualified' : r.route;
+    var qr = F.QUALIFIED_ROUTE || 'main';
+    S.tier = (Array.isArray(qr) ? qr.indexOf(r.route) > -1 : r.route === qr) ? 'qualified' : r.route;
     save();
     send('complete', { route: r.route, route_reason: r.reason });
     track('complete', { route: r.route, route_reason: r.reason });
@@ -450,6 +508,7 @@
   });
 
   var start = Math.max(0, Math.min(S.step || 0, Q.length - 1));
+  if (resumed) track('resume', { step_id: Q[start].id });
   if (Q[start].type === 'loader') start = Math.min(start + 1, Q.length - 1);   // a refresh mid-loader resumes after it
   history.replaceState({ ap: start }, '');
   render(start, false);

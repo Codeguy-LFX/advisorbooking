@@ -29,6 +29,9 @@ Three funnels share one form engine (`assets/funnel.js`, styles in `assets/funne
 | 1, study | `/lab/a/apply` → `/lab/a/book` → `/lab/a/booked` → `/lab/a/pre-call` | Clients Blackbox funnel as captured. Sends nothing. |
 | 2, study | `/lab/b/` → `/lab/b/booking?t=tier-1..3, triage` | AAM funnel as captured. Sends nothing. |
 
+| 4, master v2 | `/fit/` → `/fit/not-a-fit`, `/fit/not-yet`, `/book?call=short`, `/book?call=main` (+ `&fit=priority`) → `/booked` | Funnel 3 rebuilt with what worked in Funnels 1 and 2: role and decision maker in one question, a client-size gate (hourly-only folded in), the one-campaign exclusion in the budget question, first-person answers with a helper line under each, an optional growth goal, a priority route for the sweet spot, hard no's that end at once with the reason and next step on the outcome page, and "Change my answer". Ranges store integers. |
+| Landers | `/v2/`, `/v2/methodology`, `/v2/blog/` (+3 posts) | Site variations in our look with page patterns from the Clients Blackbox site. Email-first CTA: email → "Book intro call" → `AB_CONFIG.landerNext` (default `fit/`) with the email prefilled. |
+
 - The forms, `/book` and `/booked` use the questionnaire layout in `assets/qf.css` (LendFax structure, Advisor Booking colors): brand bar, progress bar, the question and answers centered, nothing else. No step animation; the bar never moves backward.
 - GTM: set `gtmId` in `assets/config.js`. The funnel pushes `ab_form_view`, `ab_step`, `ab_lead`, `ab_part1_complete`, `ab_part2_start`, `ab_complete`, `ab_route_<route>`, `ab_booking_view` and `ab_booked` to `dataLayer` (list in `assets/gtm.js`). Contact details are never pushed.
 - Questions, routing rules and destinations live in a `window.AB_APPLY` block at the top of each form page. A new form is a copy of a page with a different block.

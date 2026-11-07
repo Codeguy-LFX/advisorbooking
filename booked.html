@@ -39,7 +39,7 @@
         <div class="qf-next">
           <h2>What to expect on the call</h2>
           <div class="qf-card">
-            <p>20 minutes with Nick De Jesus, founder of Advisor Booking. <span class="todo-tag">Photo + bio line</span></p>
+            <p><span data-call-len>20</span> minutes with Nick De Jesus, founder of Advisor Booking. <span class="todo-tag">Photo + bio line</span></p>
             <p>We look at your ideal client, your list, your advisors&rsquo; time, and whether your firm has run outreach before. Then we tell you if this will work for your firm. Yes or no.</p>
             <p>It&rsquo;s a fit check both ways. If it doesn&rsquo;t look right for you at any point, cancel. No hard feelings. <span class="todo-tag">Cancel/reschedule link</span></p>
           </div>
@@ -64,6 +64,13 @@
 <script src="assets/config.js"></script>
 <script src="assets/gtm.js"></script>
 <script src="assets/site.js" defer></script>
+<script>
+/* A booking that came through the 15-minute fit check (route "triage") says 15 minutes, not 20. */
+(function () {
+  var st = null; try { st = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); } catch (e) {}
+  if (st && st.route === 'triage') Array.prototype.forEach.call(document.querySelectorAll('[data-call-len]'), function (el) { el.textContent = '15'; });
+})();
+</script>
 <script>
 (function () {
   'use strict';
@@ -105,7 +112,7 @@
   try { var ap = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); if (ap && ap.sid && (!lp || (ap.started || 0) > (lp.ts || 0))) { lp = ap; lpKey = 'ab_apply_v1'; } } catch (e) {}
   var payload = {
     event: 'booked', stage: 'booked', provider: 'iclosed', source: q.src || (lp && lp.sid ? (lpKey === 'ab_apply_v1' ? 'apply' : 'lp') : 'book'),
-    sid: (lp && lp.sid) || '', tier: (lp && lp.tier) || '', route: (lp && lp.route) || '', route: (lp && lp.route) || '', utm: utm, page: location.pathname,
+    sid: (lp && lp.sid) || '', tier: (lp && lp.tier) || '', route: (lp && lp.route) || '', utm: utm, page: location.pathname,
     forwarded: q, ts: new Date().toISOString()
   };
   if (inFrame) {
