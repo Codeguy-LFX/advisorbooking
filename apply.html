@@ -16,55 +16,18 @@
 <link rel="stylesheet" href="assets/pilot.css">
 <link rel="stylesheet" href="assets/funnel.css">
 <script>window.AB_APPLY = {
- "FORM_VERSION": "ab-apply-master-2026-11-07-shell",
+ "FORM_VERSION": "ab-apply-master-2026-11-07-shell-v2",
  "SOURCE": "advisorbooking-apply",
  "STORE_KEY": "ab_apply_v1",
+ "PROGRESS_TOTAL": 9,
+ "PROGRESS_AFTER": "Almost done",
  "CONSENT_TEXT_VERSION": "apply-2026-11-07-shell",
  "QUESTIONS": [
   {
-   "id": "contact",
-   "type": "fields",
-   "q": "First, who are we talking to?",
-   "sub": "About 2 minutes. Your answers save as you go.",
-   "fields": [
-    {
-     "id": "name",
-     "label": "Your name",
-     "autocomplete": "name",
-     "placeholder": "First and last name",
-     "error": "Enter your name."
-    },
-    {
-     "id": "email",
-     "label": "Work email",
-     "type": "email",
-     "autocomplete": "email",
-     "placeholder": "you@yourfirm.com",
-     "error": "Enter a valid work email."
-    },
-    {
-     "id": "firm",
-     "label": "Firm name",
-     "autocomplete": "organization",
-     "placeholder": "Your firm",
-     "error": "Enter your firm name."
-    },
-    {
-     "id": "website",
-     "label": "Firm website",
-     "type": "url",
-     "autocomplete": "url",
-     "placeholder": "yourfirm.com",
-     "error": "Enter your firm website."
-    }
-   ],
-   "cta": "Next",
-   "fine": "By continuing you agree to our <a href=\"privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> and <a href=\"terms.html\" target=\"_blank\" rel=\"noopener\">Terms</a>."
-  },
-  {
    "id": "role",
    "type": "choice",
-   "q": "Your role",
+   "q": "What&rsquo;s your role at the firm?",
+   "sub": "About 2 minutes. Your answers save as you go.",
    "options": [
     "Owner/Founder",
     "Partner",
@@ -76,7 +39,7 @@
   {
    "id": "aum",
    "type": "choice",
-   "q": "Your firm&rsquo;s AUM",
+   "q": "What is your firm&rsquo;s AUM?",
    "options": [
     "Under $25M",
     "$25M to $50M",
@@ -158,6 +121,46 @@
     "Yes",
     "Not right now"
    ]
+  },
+  {
+   "id": "contact",
+   "type": "fields",
+   "q": "Where should we send your call details?",
+   "sub": "So we know who we&rsquo;re talking to.",
+   "fields": [
+    {
+     "id": "name",
+     "label": "Your name",
+     "autocomplete": "name",
+     "placeholder": "First and last name",
+     "error": "Enter your name."
+    },
+    {
+     "id": "email",
+     "label": "Work email",
+     "type": "email",
+     "autocomplete": "email",
+     "placeholder": "you@yourfirm.com",
+     "error": "Enter a valid work email."
+    },
+    {
+     "id": "firm",
+     "label": "Firm name",
+     "autocomplete": "organization",
+     "placeholder": "Your firm",
+     "error": "Enter your firm name."
+    },
+    {
+     "id": "website",
+     "label": "Firm website",
+     "type": "url",
+     "autocomplete": "url",
+     "placeholder": "yourfirm.com",
+     "error": "Enter your firm website."
+    }
+   ],
+   "cta": "Next",
+   "fine": "By continuing you agree to our <a href=\"privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> and <a href=\"terms.html\" target=\"_blank\" rel=\"noopener\">Terms</a>."
   },
   {
    "id": "phone",
@@ -283,7 +286,7 @@
     <div class="fn-head">
       <p class="eyebrow">Founding Sprint application</p>
       <h1 class="h2">See if your firm is a fit.</h1>
-      <p class="lead">11 quick questions. If it fits, you pick a time for a 20-minute call. If it doesn&rsquo;t, we&rsquo;ll tell you now.</p>
+      <p class="lead">9 quick questions, then where to reach you. If it fits, you pick a time for a 20-minute call. If it doesn&rsquo;t, we&rsquo;ll tell you now.</p>
     </div>
     <div class="fn-grid">
 <div class="ap-card" id="apCard">
