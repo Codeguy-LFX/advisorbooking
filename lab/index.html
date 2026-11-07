@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Funnel lab | Advisor Booking</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/lp.css">
+<link rel="stylesheet" href="../assets/pilot.css">
+<link rel="stylesheet" href="../assets/funnel.css">
+</head>
+<body class="is-lab">
+<div class="lp">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="nav__pill">
+    <span class="brand"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span>
+  </div>
+</header>
+<main id="main">
+<section class="fn-top">
+  <div class="wrap">
+    <div class="fn-head">
+      <p class="eyebrow">Funnel lab</p>
+      <h1 class="h2">Three funnels, side by side.</h1>
+      <p class="lead">A and B rebuild two competitor funnels as captured, so we can study them. C is the Advisor Booking master we&rsquo;ll ship. All three use the same form engine and the site&rsquo;s look.</p>
+    </div>
+    <div class="lab-cols">
+      <div class="lab-col">
+        <span class="tier-chip">A &middot; Study</span>
+        <h3>Clients Blackbox pattern</h3>
+        <p>Meta ad straight to a 5-question intake. Only Q1 routes. Booking page filters nothing; the booked and homework pages do the selling.</p>
+        <ol>
+          <li><a href="a/apply.html">Intake form</a> (5 screens, Q1 &ldquo;No&rdquo; ends it)</li>
+          <li><a href="a/book.html">Booking page</a> (banner + 8 fields, no logic)</li>
+          <li><a href="a/booked.html">Booked page</a> (4-step path, proof)</li>
+          <li><a href="a/pre-call.html">Pre-call homework</a></li>
+          <li>Emails + SMS: <code>docs/funnel-a-emails-sms.md</code></li>
+        </ol>
+      </div>
+      <div class="lab-col">
+        <span class="tier-chip">B &middot; Study</span>
+        <h3>AAM pattern</h3>
+        <p>The form is the landing page. 11 screens, every answer saved, routed in the browser to 4 booking tiers or an inline no.</p>
+        <ol>
+          <li><a href="b/index.html">Application landing page</a> (form on screen 1)</li>
+          <li>Routes to <a href="b/booking.html?t=tier-1">Tier 1</a>, <a href="b/booking.html?t=tier-2">Tier 2</a>, <a href="b/booking.html?t=tier-3">Tier 3</a>, <a href="b/booking.html?t=triage">Triage</a>, or an inline DQ</li>
+          <li>Booked state: check email, join Meet, come prepared</li>
+          <li>Emails + SMS: not captured</li>
+        </ol>
+      </div>
+      <div class="lab-col">
+        <span class="tier-chip">C &middot; Master</span>
+        <h3>Advisor Booking</h3>
+        <p>Sales page, then an 11-screen application routed four ways, then iClosed, then the pre-call page.</p>
+        <ol>
+          <li><a href="../pilot.html">/pilot</a> sales page</li>
+          <li><a href="../apply.html">/apply</a> form</li>
+          <li><a href="../not-a-fit.html">/not-a-fit</a> &middot; <a href="../not-yet.html">/not-yet</a></li>
+          <li><a href="../book.html?call=short">/book?call=short</a> (15 min) &middot; <a href="../book.html?call=main">/book?call=main</a> (20 min)</li>
+          <li><a href="../booked.html">/booked</a> pre-call page</li>
+          <li>Emails + SMS: <code>docs/funnel-c-emails-sms.md</code></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<div class="legal-line"><p class="legal-line__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p><a href="../privacy.html" target="_blank" rel="noopener">Privacy</a><span aria-hidden="true">&middot;</span><a href="../terms.html" target="_blank" rel="noopener">Terms</a></div>
+</div>
+<div class="lab-bar" role="note"><b>Internal page.</b> Not linked from the site, not indexed. Red = breaks our rules (Flag). Yellow = not captured or waiting on Nick.</div>
+<script src="../assets/config.js"></script>
+<script src="../assets/vendor/lenis.min.js"></script>
+<script src="../assets/pilot.js"></script>
+</body>
+</html>

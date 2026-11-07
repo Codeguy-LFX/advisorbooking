@@ -1,0 +1,130 @@
+/* Advisor Booking funnel pages: /apply, /not-a-fit, /not-yet and the /booked pre-call page.
+   Loads AFTER assets/lp.css and assets/pilot.css and only adds what those two do not have:
+   the one-question-per-screen card, answer buttons, the progress bar, and the simple result pages. */
+
+/* ---------- page frame ---------- */
+.fn-top{background:var(--paper-2);border-bottom:1px solid var(--line);min-height:100vh;min-height:100dvh;padding:calc(var(--nav-h) + 40px) 0 72px}
+.fn-head{text-align:center;max-width:720px;margin:0 auto 28px}
+.fn-head .h2{font-size:clamp(30px,4vw,46px)}
+.fn-head .lead{margin:14px auto 0}
+.fn-grid{display:grid;grid-template-columns:minmax(0,600px);justify-content:center}
+
+/* ---------- apply card ---------- */
+.ap-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-lg);overflow:hidden}
+.ap-bar{height:4px;background:var(--line)}
+.ap-bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .35s var(--ease)}
+.ap-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 26px;border-bottom:1px solid var(--line)}
+.ap-count{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--muted)}
+.ap-count b{color:var(--ink)}
+.ap-back[disabled]{visibility:hidden}
+
+.ap-screen{padding:26px 26px 28px;animation:lpfade .35s var(--ease)}
+.ap-q{font-family:var(--font-display);font-weight:600;font-size:clamp(21px,2.4vw,26px);letter-spacing:-.03em;line-height:1.2;color:var(--ink);margin:0 0 6px}
+.ap-q:focus{outline:none}
+.ap-sub{font-size:14px;color:var(--muted);margin:0 0 18px;line-height:1.5}
+
+/* answer buttons: one tap answers and moves on */
+.ap-opts{display:grid;gap:10px}
+.ap-opts--2{grid-template-columns:1fr 1fr}
+.ap-opt{display:flex;align-items:center;gap:12px;width:100%;min-height:54px;padding:12px 16px;border:1.5px solid var(--line);border-radius:8px;background:#fff;text-align:left;font:inherit;font-size:15.5px;font-weight:500;color:var(--ink);cursor:pointer;transition:border-color .15s,background .15s,box-shadow .15s}
+.ap-opt:hover{border-color:var(--accent)}
+.ap-opt:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint)}
+.ap-opt[aria-pressed=true]{border-color:var(--accent);background:var(--accent-tint)}
+.ap-key{flex:0 0 26px;width:26px;height:26px;border-radius:6px;border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--muted)}
+.ap-opt[aria-pressed=true] .ap-key{background:var(--accent);border-color:var(--accent);color:#fff}
+
+.ap-next{margin-top:18px}
+.ap-optional{font-weight:400;color:var(--muted)}
+.ap-foot{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2);text-align:center;padding:10px;border-top:1px solid var(--line)}
+.ap-sending{text-align:center;padding:48px 26px}
+.ap-sending p{color:var(--muted);margin-top:10px}
+
+/* ---------- result pages (/not-a-fit, /not-yet) ---------- */
+.fn-card{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-lg);padding:36px 32px}
+.fn-card h1{font-family:var(--font-display);font-weight:600;font-size:clamp(28px,3.6vw,40px);letter-spacing:-.04em;line-height:1.08;color:var(--ink);margin:0 0 12px}
+.fn-card p{color:var(--muted);font-size:16px;line-height:1.6;margin:0 0 14px}
+.fn-card .lp-plist{margin:6px 0 22px}
+.fn-actions{display:grid;gap:12px;margin-top:8px}
+
+/* ---------- /booked pre-call page ---------- */
+.pc-hero{padding:calc(var(--nav-h) + 48px) 0 40px;text-align:center;background:var(--paper-2);border-bottom:1px solid var(--line)}
+.pc-hero .h-display{font-size:clamp(34px,5vw,64px)}
+.pc-when{display:inline-block;margin-top:18px;font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--accent);background:var(--accent-tint);border:1px solid var(--accent-tint-deep);border-radius:6px;padding:8px 14px}
+.pc-note{max-width:620px;margin:18px auto 0;color:var(--muted);font-size:16px;line-height:1.55}
+.pc-sec{padding-block:72px}
+.pc-sec--alt{background:var(--paper-2)}
+.pc-num{font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
+.pc-body{max-width:760px;margin:0 auto}
+.pc-body p{color:var(--muted);font-size:17px;line-height:1.6;margin:0 0 14px}
+.pc-body .h2{font-size:clamp(28px,3.4vw,42px);margin-bottom:18px}
+.pc-host{display:flex;gap:20px;align-items:center;margin-top:24px;padding:20px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--shadow)}
+.pc-photo{flex:0 0 84px;width:84px;height:84px;border-radius:12px;background:var(--well);border:1px dashed var(--faint);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:10px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em}
+.pc-host p{margin:0;font-size:15px}
+.pc-host b{color:var(--ink)}
+.pc-steps{counter-reset:pc;display:grid;gap:12px;margin-top:22px}
+.pc-steps li{counter-increment:pc;display:flex;gap:14px;align-items:flex-start;font-size:16px;color:var(--ink);line-height:1.5}
+.pc-steps li::before{content:counter(pc);flex:0 0 30px;width:30px;height:30px;border-radius:8px;background:var(--accent-tint);color:var(--accent);font-family:var(--font-mono);font-weight:600;font-size:13px;display:inline-flex;align-items:center;justify-content:center}
+.pc-cost{margin-top:28px}
+.pc-cost .lp-guar__quote{font-size:16px}
+.pc-video{margin-top:22px}
+
+/* Shell markers: anything still waiting on Nick. Remove the class once the copy or asset is final. */
+.todo{outline:2px dashed #d4a017;outline-offset:3px;border-radius:4px}
+.todo-tag{display:inline-block;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:#fff4d6;color:#7a5a00;border:1px solid #e9cf86;border-radius:4px;padding:2px 6px;margin-left:6px;vertical-align:middle}
+
+/* Inside the iClosed iframe /booked shows only the compact confirmation. */
+body.in-frame .nav,body.in-frame .pc-rest,body.in-frame .legal-line{display:none}
+body.in-frame .pc-hero{padding:20px 0;background:#fff;border:0}
+
+@media (max-width:560px){
+  .fn-top{padding-top:calc(var(--nav-h) + 28px)}
+  .ap-screen{padding:22px 18px 24px}
+  .ap-meta{padding:12px 18px}
+  .ap-opts--2{grid-template-columns:1fr}
+  .ap-opt{font-size:16px}
+  .fn-card{padding:28px 20px}
+  .pc-sec{padding-block:56px}
+  .pc-host{flex-direction:column;text-align:center}
+}
+
+/* ---------- engine extras ---------- */
+.lp-field textarea{width:100%;min-height:120px;padding:13px 14px;border:1.5px solid var(--line);border-radius:8px;font:inherit;font-size:15px;color:var(--ink);background:#fff;resize:vertical;line-height:1.5}
+.lp-field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint)}
+.lp-field.invalid textarea{border-color:#C0392B}
+.ap-opt--multi .ap-key{border-radius:4px}
+.ap-err{margin-top:10px}
+.ap-note{margin-top:16px;font-size:13px;color:var(--muted);line-height:1.5}
+.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none!important;box-shadow:none}
+.ap-inline .lp-plist{margin:4px 0 20px}
+.fn-card .lp-plist li,.ap-inline .lp-plist li{display:flex;gap:10px;align-items:flex-start;font-size:15px;color:var(--ink);line-height:1.45}
+
+/* ---------- study builds (/lab) ----------
+   .flag  = their copy that breaks Nick's rules ([FLAG] in the clone brief). Shown so it can be studied, never shipped.
+   .todo  = not captured, or waiting on Nick. A placeholder, not copy. */
+.flag{position:relative;outline:2px dashed #d4483b;outline-offset:4px;border-radius:4px}
+.flag-tag,.todo-tag{display:inline-block;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-radius:4px;padding:2px 6px;margin:0 0 0 6px;vertical-align:middle;font-weight:600;line-height:1.5}
+.flag-tag{background:#fdecea;color:#a3271b;border:1px solid #f0b4ad}
+.ph{display:block;border:1.5px dashed var(--faint);border-radius:8px;background:var(--well);padding:16px 18px;color:var(--muted);font-size:14px;line-height:1.5;text-align:left}
+.ph b{color:var(--ink)}
+.lab-bar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:#fff4d6;border-top:1px solid #e9cf86;color:#5c4400;font-size:13px;line-height:1.45;padding:9px 16px;text-align:center}
+.lab-bar a{color:#5c4400;font-weight:600}
+body.is-lab{padding-bottom:56px}
+.lab-note{max-width:760px;margin:22px auto 0;font-size:13px;color:var(--muted);line-height:1.55;text-align:left;background:#fff;border:1px solid var(--line);border-left:3px solid #d4a017;border-radius:8px;padding:12px 16px}
+.lab-note b{color:var(--ink)}
+.lab-steps{display:grid;gap:12px;max-width:760px;margin:0 auto}
+.lab-step{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow);text-decoration:none;color:var(--ink)}
+.lab-step:hover{border-color:var(--accent)}
+.lab-step .n{flex:0 0 32px;height:32px;border-radius:8px;background:var(--accent-tint);color:var(--accent);font-family:var(--font-mono);font-weight:600;display:flex;align-items:center;justify-content:center}
+.lab-step p{margin:2px 0 0;color:var(--muted);font-size:14px}
+.lab-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1100px;margin:0 auto}
+@media (max-width:900px){.lab-cols{grid-template-columns:1fr}}
+.lab-col{background:#fff;border:1px solid var(--line);border-radius:12px;padding:24px;box-shadow:var(--shadow)}
+.lab-col h3{font-size:20px;font-weight:600;letter-spacing:-.02em;margin:0 0 6px}
+.lab-col>p{color:var(--muted);font-size:14px;margin:0 0 14px}
+.lab-col ol{list-style:decimal;padding-left:20px;display:grid;gap:6px;font-size:14.5px}
+.lab-col a{color:var(--accent);font-weight:600}
+.tier-chip{display:inline-block;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:#fff;background:var(--accent);border-radius:4px;padding:5px 10px;margin-bottom:12px}
+.bk-banner{background:var(--accent-tint);border:1px solid var(--accent-tint-deep);color:var(--accent-hover);border-radius:8px;padding:12px 16px;font-size:14px;line-height:1.5;margin-bottom:18px}
+.bk-event{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13.5px;color:var(--muted);margin:0 0 18px}
+.bk-event b{color:var(--ink)}
+.cal-ph{min-height:420px;display:flex;align-items:center;justify-content:center;text-align:center}

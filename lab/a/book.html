@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Funnel A: booking page | Study build</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/lp.css">
+<link rel="stylesheet" href="../../assets/pilot.css">
+<link rel="stylesheet" href="../../assets/funnel.css">
+</head>
+<body class="is-lab">
+<div class="lp">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="nav__pill">
+    <span class="brand"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span>
+  </div>
+</header>
+<main id="main">
+<section class="fn-top">
+  <div class="wrap">
+    <div class="fn-head">
+      <p class="eyebrow">Step 2 of 4 &middot; Booking page</p>
+      <h1 class="h2">RIA Growth Introduction Call</h1>
+    </div>
+    <div class="fn-grid">
+      <div class="lp-card" style="padding:24px 26px">
+        <div class="bk-banner">This call is intended for established firms. If your firm manages less than $50M in assets, this will likely not be a fit at this time. This is not for solo advisors.</div>
+        <p class="bk-event"><span><b>15 min</b></span><span>Zoom</span><span>One rep</span><span>24-hour minimum notice</span><span>Up to 18 days out</span><span>10-minute buffer</span><span>Confirms instantly, no payment</span></p>
+        <div class="ph cal-ph" style="min-height:260px;margin-bottom:20px"><span><b>Calendar goes here.</b><br>Their scheduler is OnceHub. Ours would be iClosed.</span></div>
+        <form id="bkForm" novalidate>
+          <div class="lp-field"><label class="lp-lbl" for="bk-name">Full Name</label><input type="text" id="bk-name" autocomplete="name" required></div>
+          <div class="lp-field"><label class="lp-lbl" for="bk-email">Email</label><input type="email" id="bk-email" autocomplete="email" required></div>
+          <div class="lp-field"><label class="lp-lbl" for="bk-phone">Mobile</label><div class="lp-tel"><span class="lp-tel__cc" aria-hidden="true">+1</span><input type="tel" id="bk-phone" autocomplete="tel-national" required></div>
+            <p class="lp-hint">With the scheduler&rsquo;s SMS consent. <span class="todo-tag">Consent wording</span></p></div>
+          <div class="lp-field"><label class="lp-lbl" for="bk-web">Website</label><input type="text" id="bk-web" inputmode="url" required>
+            <p class="lp-hint">We require a functioning website to proceed. Calls without one will be canceled.</p></div>
+          <div class="lp-field"><label class="lp-lbl" for="bk-advisors">How many advisors are currently producing revenue at your firm?</label><select id="bk-advisors" required><option value="" disabled selected>Select one</option><option>1-2</option><option>3-29</option><option>30-49</option><option>50-99</option><option>100+</option></select></div>
+          <fieldset class="lp-field" style="border:0;padding:0;margin:0 0 12px"><legend class="lp-lbl">How did you hear about us?</legend><label class="lp-consent__row" style="margin:6px 0"><input type="checkbox" name="heard" value="Facebook"><span style="font-size:14.5px">Facebook</span></label><label class="lp-consent__row" style="margin:6px 0"><input type="checkbox" name="heard" value="Media mention"><span style="font-size:14.5px">Media mention</span></label><label class="lp-consent__row" style="margin:6px 0"><input type="checkbox" name="heard" value="YouTube"><span style="font-size:14.5px">YouTube</span></label><label class="lp-consent__row" style="margin:6px 0"><input type="checkbox" name="heard" value="Podcast interview"><span style="font-size:14.5px">Podcast interview</span></label><label class="lp-consent__row" style="margin:6px 0"><input type="checkbox" name="heard" value="Conference introduction"><span style="font-size:14.5px">Conference introduction</span></label><label class="lp-consent__row" style="margin:6px 0"><input type="checkbox" name="heard" value="LinkedIn"><span style="font-size:14.5px">LinkedIn</span></label><label class="lp-consent__row" style="margin:6px 0"><input type="checkbox" name="heard" value="Referral from an existing client"><span style="font-size:14.5px">Referral from an existing client</span></label><label class="lp-consent__row" style="margin:6px 0"><input type="checkbox" name="heard" value="Google Search"><span style="font-size:14.5px">Google Search</span></label></fieldset>
+          <div class="lp-field"><label class="lp-lbl" for="bk-aum">What is your current AUM range?</label><select id="bk-aum" required><option value="" disabled selected>Select one</option><option>Under $50 Million (not a fit - please do not book.)</option><option>$50-100M</option><option>$100-500M</option><option>$500M-1B</option><option>$1-5B</option><option>$5-10B</option><option>$10B+</option></select></div>
+          <div class="lp-field"><label class="lp-lbl" for="bk-situation">Which best describes your situation right now?</label><select id="bk-situation" required><option value="" disabled selected>Select one</option><option>Actively looking to invest in growth this quarter</option><option>Evaluating options for later this year</option><option>Just researching (Please do not book...)</option></select></div>
+          <button type="submit" class="btn btn--accent lp-btn-block">Confirm booking<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+        </form>
+      </div>
+    </div>
+    <div class="lab-note"><b>Their logic: none.</b> The &ldquo;do not book&rdquo; answers can be picked and the booking still goes through. They filter afterward, by hand (review or cancel). This copy does the same: any answer books.</div>
+  </div>
+</section>
+<script>
+(function () {
+  var st = window.AB_FORM_STATE ? window.AB_FORM_STATE('ab_lab_a') : null;
+  try { st = st || JSON.parse(localStorage.getItem('ab_lab_a') || 'null'); } catch (e) {}
+  var a = (st && st.answers) || {};
+  function set(id, v) { var el = document.getElementById(id); if (el && v) el.value = v; }
+  set('bk-name', [a.first, a.last].filter(Boolean).join(' ')); set('bk-email', a.email); set('bk-phone', a.phone);
+  document.getElementById('bkForm').addEventListener('submit', function (e) { e.preventDefault(); location.href = 'booked.html'; });
+})();
+</script>
+</main>
+<div class="legal-line"><p class="legal-line__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p><a href="../../privacy.html" target="_blank" rel="noopener">Privacy</a><span aria-hidden="true">&middot;</span><a href="../../terms.html" target="_blank" rel="noopener">Terms</a></div>
+</div>
+<div class="lab-bar" role="note"><b>Study build: Funnel A, Clients Blackbox pattern.</b> Their funnel as captured, in our site&rsquo;s look. Not Advisor Booking copy and not for traffic. Red = breaks our rules (Flag). Yellow = not captured. <a href="../index.html">All three funnels</a></div>
+<script src="../../assets/config.js"></script>
+<script src="../../assets/vendor/lenis.min.js"></script>
+<script src="../../assets/pilot.js"></script>
+</body>
+</html>

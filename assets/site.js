@@ -182,15 +182,36 @@
   /* The booking page embeds whichever provider config.js names. iClosed uses its own inline widget built from the event
      link, with campaign tags passed through (a plain iframe if the widget script is blocked); the event's confirmation
      page (the site's /booked page) records the booking. */
+  /* /book?call=short (15-minute fit check) or /book?call=main (20-minute call), set by the /apply form's routing.
+     The short call uses iclosedUrlShort when it is set, otherwise the main event. */
+  function callType() {
+    var c = '';
+    try { c = new URLSearchParams(location.search).get('call') || ''; } catch (e) {}
+    return c === 'short' || c === 'main' ? c : '';
+  }
+  function applyState() {
+    if (!callType()) return null;
+    try { var s = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); return s && s.answers ? s : null; } catch (e) { return null; }
+  }
   function schedulerUrl() {
     if (CFG.scheduler !== 'iclosed') return calendlyUrl();
-    var base = String(CFG.iclosedUrl || '').trim();
+    var base = String((callType() === 'short' && CFG.iclosedUrlShort) || CFG.iclosedUrl || '').trim();
     if (!base) return '';
     var u;
     try { u = new URL(base); } catch (e) { return ''; }
     var extra = utmOnly();
     Object.keys(extra).forEach(function (k) { u.searchParams.set(k, extra[k]); });
     if (source && !u.searchParams.has('utm_content')) u.searchParams.set('utm_content', source);
+    /* Prefill from /apply so the visitor does not type it twice (same parameter names as the /pilot card). */
+    var st = applyState();
+    if (st) {
+      var a = st.answers, d = String(a.phone || '').replace(/\D/g, '');
+      if (a.name) u.searchParams.set('iclosedName', a.name);
+      if (a.email) u.searchParams.set('iclosedEmail', a.email);
+      if (d.length === 10) u.searchParams.set('iclosedPhone', '+1' + d);
+      if (a.firm) u.searchParams.set('company', a.firm);
+      u.searchParams.set('utm_term', u.searchParams.get('utm_term') || ('apply-' + (st.route || callType())));
+    }
     return u.toString();
   }
   function renderCalendly() {

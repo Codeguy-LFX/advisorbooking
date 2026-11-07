@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Funnel A: intake | Study build</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/lp.css">
+<link rel="stylesheet" href="../../assets/pilot.css">
+<link rel="stylesheet" href="../../assets/funnel.css">
+<script>window.AB_APPLY = {
+ "FORM_VERSION": "lab-a-typeform-shell",
+ "SOURCE": "lab-a",
+ "WEBHOOK_URL": "",
+ "STORE_KEY": "ab_lab_a",
+ "TEST_MODE": true,
+ "QUESTIONS": [
+  {
+   "id": "q1_pro",
+   "type": "choice",
+   "q": "Are you a financial professional?",
+   "sub": "Takes <span class=\"todo-tag\">Time-to-complete text</span>.",
+   "options": [
+    "No, I'm NOT a financial professional",
+    "Yes, I am a financial professional"
+   ]
+  },
+  {
+   "id": "q2_owner",
+   "type": "choice",
+   "q": "Are you owner/leader of your financial firm?",
+   "options": [
+    "Yes I'm the owner / leader of my firm",
+    "No I'm not"
+   ]
+  },
+  {
+   "id": "q3_aum_growth",
+   "type": "choice",
+   "q": "How much AUM did you and the advisors under you personally grow organically (not through acquisitions) in the last 12 months?",
+   "sub": "If you're not the RIA owner, please answer based on your book of business, not the entire firm.",
+   "options": [
+    "Less than $10M",
+    "$10M-$25M",
+    "$25M-$50M",
+    "$50M-$100M",
+    "$100M-$250M",
+    "$250M+"
+   ]
+  },
+  {
+   "id": "q4_advisors",
+   "type": "choice",
+   "q": "How many financial advisors are you responsible for filling their calendars with qualified appointments?",
+   "options": [
+    "1-2",
+    "3-5",
+    "5-24",
+    "24-49",
+    "50+"
+   ]
+  },
+  {
+   "id": "q5_contact",
+   "type": "fields",
+   "q": "Where should we send your booking link?",
+   "sub": "<span class=\"todo-tag\">Exact screen-5 heading</span>",
+   "fields": [
+    {
+     "id": "first",
+     "label": "First name",
+     "autocomplete": "given-name"
+    },
+    {
+     "id": "last",
+     "label": "Last name",
+     "autocomplete": "family-name"
+    },
+    {
+     "id": "phone",
+     "label": "Phone",
+     "type": "tel",
+     "autocomplete": "tel-national",
+     "error": "Enter a valid 10-digit US number."
+    },
+    {
+     "id": "email",
+     "label": "Email",
+     "type": "email",
+     "autocomplete": "email",
+     "error": "Enter a valid email."
+    }
+   ],
+   "cta": "Submit",
+   "note": "<b>Their logic:</b> Q2 to Q4 never change the route. They are collected for the rep. On submit, the email goes to ScaleStack for enrichment. <span class=\"flag-tag\">Flag</span> Personal wealth and age enrichment on individuals is off-limits for us."
+  }
+ ],
+ "RULES": [
+  {
+   "route": "dq",
+   "early": true,
+   "any": [
+    [
+     "q1_pro",
+     "No, I'm NOT a financial professional"
+    ]
+   ]
+  }
+ ],
+ "DEFAULT_ROUTE": "book",
+ "QUALIFIED_ROUTE": "book",
+ "ROUTES": {
+  "dq": {
+   "inline": {
+    "title": "Sorry, this is not a fit at the moment."
+   }
+  },
+  "book": "book.html"
+ }
+};</script>
+</head>
+<body class="is-lab">
+<div class="lp">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="nav__pill">
+    <span class="brand"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span>
+  </div>
+</header>
+<main id="main">
+<section class="fn-top">
+  <div class="wrap">
+    <div class="fn-head">
+      <p class="eyebrow">Step 1 of 4 &middot; Intake form</p>
+      <h1 class="h2">Typeform intake</h1>
+      <p class="lead">Their Meta ads land here directly, with no page in front of it. Progress bar on, time to complete shown, autosave on, no Typeform branding.</p>
+    </div>
+    <div class="fn-grid">
+<div class="ap-card" id="apCard">
+  <div class="ap-bar" aria-hidden="true"><i id="apBar"></i></div>
+  <div class="ap-meta" id="apMeta">
+    <span class="ap-count" id="apCount" aria-live="polite"></span>
+    <span><button type="button" class="lp-linkbtn ap-back" id="apBack">&larr; Back</button></span>
+  </div>
+  <div id="apBody"><noscript><div class="ap-screen"><p>This form needs JavaScript. Email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will set up your call.</p></div></noscript></div>
+  <div class="lp-hp" aria-hidden="true"><label for="apHp">Website</label><input type="text" id="apHp" name="website" tabindex="-1" autocomplete="off" data-1p-ignore="true" data-lpignore="true"></div>
+  <div class="sr-only" id="apLive" aria-live="polite" aria-atomic="true"></div>
+  <div class="ap-foot">Autosave on. <button type="button" class="lp-linkbtn" id="apRestart">Start over</button></div>
+</div>
+    </div>
+    <div class="lab-note"><b>Hidden fields:</b> utm_source, utm_medium, utm_campaign, utm_term, utm_content, auth_code, product_id, user_id, plus phone, email and name for prefill. utm_source and utm_content are passed on to the booking page.</div>
+  </div>
+</section>
+</main>
+<div class="legal-line"><p class="legal-line__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p><a href="../../privacy.html" target="_blank" rel="noopener">Privacy</a><span aria-hidden="true">&middot;</span><a href="../../terms.html" target="_blank" rel="noopener">Terms</a></div>
+</div>
+<div class="lab-bar" role="note"><b>Study build: Funnel A, Clients Blackbox pattern.</b> Their funnel as captured, in our site&rsquo;s look. Not Advisor Booking copy and not for traffic. Red = breaks our rules (Flag). Yellow = not captured. <a href="../index.html">All three funnels</a></div>
+<script src="../../assets/config.js"></script>
+<script src="../../assets/vendor/lenis.min.js"></script>
+<script src="../../assets/pilot.js"></script>
+<script src="../../assets/funnel.js" defer></script>
+</body>
+</html>

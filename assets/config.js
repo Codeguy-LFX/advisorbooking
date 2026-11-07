@@ -5,6 +5,8 @@ window.AB_CONFIG = {
   // iClosed: the event link from the event's inline embed code (the data-url value). The booking pages build iClosed's
   // inline widget from it, with the visitor's name, email and mobile added so they do not type them twice.
   iclosedUrl: "https://app.iclosed.io/e/advisorbooking/strategy-call",
+  // iClosed: the 15-minute fit-check event for edge cases routed by /apply (/book?call=short). Empty = the main event above.
+  iclosedUrlShort: "",
   // iClosed: set the event's confirmation page to this URL with forwarding on, so bookings are detected and reported.
   bookedUrl: "https://advisorbooking.com/booked",
   // Calendly (legacy): the 20-minute event URL, and whether book.html embeds it or links out to it.

@@ -11,11 +11,29 @@ Static marketing site for Advisor Booking (De Jesus Ventures LLC). No build step
 | `pilot.html` | `/pilot` | Hidden founding-offer landing page for email and LinkedIn outreach (gated form, then the iClosed calendar). `noindex`, not linked from the nav. |
 | `meetings.html` | `/meetings` | Hidden v1 landing page, kept for later use. `noindex`. |
 | `founding-sprint.html` | `/founding-sprint` | Founding Sprint sales page (hidden lander for outreach). `noindex`, not linked from the nav, not in the sitemap. |
-| `booked.html` | `/booked` | Booking confirmation. iClosed sends people here after they book; it records the booking. `noindex`. |
+| `booked.html` | `/booked` | Pre-call page and booking confirmation. iClosed sends people here after they book; it records the booking. `noindex`. |
+| `apply.html` | `/apply` | Qualifying form with routing (funnel shell). `noindex`. |
+| `not-a-fit.html`, `not-yet.html` | `/not-a-fit`, `/not-yet` | Form outcomes: hard no, and nurture. `noindex`. |
 | `privacy.html`, `terms.html` | `/privacy`, `/terms` | Privacy Policy and Terms of Use |
 | `404.html` | | Not-found page |
 
 GitHub Pages serves `page.html` at `/page`, so the clean URLs above work without redirects.
+
+## Funnel shell (branch `funnel-shell`)
+
+Three funnels share one form engine (`assets/funnel.js`, styles in `assets/funnel.css`). Overview: `/lab/`.
+
+| Funnel | Pages | What it is |
+| --- | --- | --- |
+| C, master | `/apply` → `/not-a-fit`, `/not-yet`, `/book?call=short`, `/book?call=main` → `/booked` | The Advisor Booking funnel. 11 screens, each answer posted to `ghlWebhookUrl` as it is given, then routed (hard no, nurture, 15-min fit check, 20-min call). `/booked` is now the pre-call page; it keeps the booking tracking. |
+| A, study | `/lab/a/apply` → `/lab/a/book` → `/lab/a/booked` → `/lab/a/pre-call` | Clients Blackbox funnel as captured. Sends nothing. |
+| B, study | `/lab/b/` → `/lab/b/booking?t=tier-1..3, triage` | AAM funnel as captured. Sends nothing. |
+
+- Questions, routing rules and destinations live in a `window.AB_APPLY` block at the top of each form page. A new form is a copy of a page with a different block.
+- `/book?call=short` uses `iclosedUrlShort` in `assets/config.js` (empty = the main event) and prefills name, email, mobile and firm from `/apply`.
+- `/lab/` and `/docs/` are `noindex` and blocked in `robots.txt`, but GitHub Pages serves every file in the repo, so anything merged to `main` is public. Keep `/lab/` off `main` or delete it before merging.
+- Email and SMS copy: `docs/funnel-c-emails-sms.md` (master), `docs/funnel-a-emails-sms.md` (study).
+- Dashed yellow outline or tag = placeholder waiting on Nick. Dashed red = competitor copy that breaks our rules, shown for study only.
 
 ## Editing the site
 

@@ -3,62 +3,100 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>You are booked | Advisor Booking</title>
+<title>Your call is booked | Advisor Booking</title>
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/styles.css">
-<style>
-/* Booking confirmation. iClosed sends people here after they book (the event's confirmation page, with forwarding on).
-   Inside the scheduler iframe it shows a compact card and tells the page around it; opened on its own it is a full page. */
-.booked{min-height:60vh;display:flex;align-items:center;justify-content:center;padding:48px 0}
-.booked__card{max-width:560px;width:100%;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);padding:40px 32px;text-align:center;box-shadow:var(--shadow)}
-.booked__chk{width:64px;height:64px;border-radius:16px;background:var(--accent-tint);display:inline-flex;align-items:center;justify-content:center;margin-bottom:18px}
-.booked__card h1{font-family:var(--font-display);font-weight:800;font-size:clamp(26px,4vw,36px);letter-spacing:-.04em;line-height:1.05;margin:0 0 10px;color:var(--ink)}
-.booked__card p{color:var(--muted);font-size:16px;line-height:1.55;margin:0}
-.booked__meta{margin-top:18px;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600}
-.booked__next{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);text-align:left}
-.booked__next p{font-size:14.5px}
-.booked__next ol{margin:10px 0 0;padding-left:20px;list-style:decimal;color:var(--ink);font-size:14.5px;line-height:1.55}
-.booked__next li{display:list-item;margin:4px 0}
-body.in-frame .header,body.in-frame .legal-line{display:none}
-body.in-frame .booked{min-height:0;padding:16px 0}
-body.in-frame .booked__card{box-shadow:none}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/lp.css">
+<link rel="stylesheet" href="assets/pilot.css">
+<link rel="stylesheet" href="assets/funnel.css">
 </head>
 <body>
-<header class="header">
-  <nav class="nav container" aria-label="Primary">
-    <div class="nav__inner">
-      <a class="nav__brand" href="/"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" class="mark__body"/><rect x="6" y="12" width="20" height="14" rx="3" class="mark__page"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" class="mark__page"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" class="mark__page"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></a>
-    </div>
-  </nav>
+<div class="lp">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="nav__pill">
+    <span class="brand"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span>
+  </div>
 </header>
-<main id="main" class="booked">
-  <div class="container">
-    <div class="booked__card">
-      <span class="booked__chk"><svg width="30" height="30" viewBox="0 0 26 26" aria-hidden="true"><path d="M6 13.5L11 18.5 20 8" stroke="#0F7A62" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      <h1 id="bookedH">You&rsquo;re booked.</h1>
-      <p>Check your email for the calendar invite and the Google Meet link.</p>
-      <p class="booked__meta" id="bookedMeta" hidden></p>
-      <div class="booked__next">
-        <p><b>Three things to know before the call:</b></p>
-        <ol>
-          <li>Your rough close rate on first meetings. A guess is fine.</li>
-          <li>The average size of a new client from the last 12 months.</li>
-          <li>Whether your firm has run email or LinkedIn outreach before, and who decides if it can.</li>
-        </ol>
+<main id="main">
+<section class="pc-hero" id="top">
+  <div class="wrap">
+    <span class="lp-chk"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M6 13.5L11 18.5 20 8" stroke="#0F7A62" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <h1 class="h-display" id="bookedH">Your call is booked. Do this before we talk.</h1>
+    <p class="pc-when" id="bookedMeta" hidden></p>
+    <p class="pc-note">Takes about 8 minutes. It makes our 20 minutes much more useful. Your calendar invite and the Google Meet link are in your email.</p>
+    <p class="pc-note">If this doesn&rsquo;t look like a fit at any point, cancel. No hard feelings. Same goes for us. <span class="todo-tag">Cancel/reschedule link</span></p>
+  </div>
+</section>
+<div class="pc-rest">
+<section class="pc-sec">
+  <div class="wrap pc-body">
+    <p class="pc-num">1. What this call is</p>
+    <h2 class="h2" data-rv>A fit check, both ways.</h2>
+    <p>We book qualified first meetings for independent RIAs with $50M to $250M AUM and 2 to 10 advisors. We don&rsquo;t sell shared leads, and we don&rsquo;t run ads.</p>
+    <p>We work two sources:</p>
+    <ul class="lp-plist"><li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>People already in your CRM who never became clients</span></li><li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>New outreach by email and LinkedIn, sent under your firm&rsquo;s name</span></li></ul>
+    <p>A real person handles every reply. Your compliance officer approves every word before anything goes out.</p>
+    <p>If we&rsquo;re not the right fit, I&rsquo;ll tell you on the call.</p>
+    <div class="pc-host">
+      <div class="pc-photo todo">Photo</div>
+      <p><b>You&rsquo;re meeting with Nick De Jesus, founder of Advisor Booking.</b> <span class="todo">He has spent years in lead generation for financial services and has managed eight figures in ad spend in that space.</span> <span class="todo-tag">Nick: confirm bio line</span></p>
+    </div>
+  </div>
+</section>
+<section class="pc-sec pc-sec--alt">
+  <div class="wrap pc-body">
+    <p class="pc-num">2. How one meeting gets made</p>
+    <h2 class="h2" data-rv>Watch the 4-minute walkthrough.</h2>
+    <div class="lp-vsl pc-video todo" id="pcVideo"><div class="ph cal-ph" style="height:100%;border:0;background:transparent;color:#99a39f">4-minute video embed goes here</div></div>
+    <ol class="pc-steps">
+      <li><span>We clean your CRM and build a fresh list that fits your best clients.</span></li>
+      <li><span>We write emails and LinkedIn messages in your voice. Your CCO approves them.</span></li>
+      <li><span>They go out under your firm&rsquo;s name.</span></li>
+      <li><span>A real person answers every reply within 1 business day.</span></li>
+      <li><span>Qualified prospects book onto your calendar. You get a one-page brief before each meeting.</span></li>
+    </ol>
+  </div>
+</section>
+<section class="pc-sec">
+  <div class="wrap pc-body">
+    <p class="pc-num">3. Bring 3 numbers</p>
+    <h2 class="h2" data-rv>Rough is fine.</h2>
+    <ul class="lp-plist"><li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Your AUM band</span></li><li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>How many advisors take first meetings</span></li><li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Roughly how many contacts are in your CRM</span></li></ul>
+    <div class="pc-cost">
+      <p class="pc-num">What it costs</p>
+      <p>The Founding Sprint is $5,000 every 4 weeks for 3 cycles. No setup fee. No per-meeting fee.</p>
+      <div class="lp-guar__quote"><p>In your first 90 days from launch, we commit to at least 15 attended, qualified meetings that match your written criteria. If we're short, we keep working at our cost (no operating fee) until you've taken 15 such meetings.</p><footer>The meeting guarantee</footer></div>
+    </div>
+  </div>
+</section>
+<section class="faq" id="faq" aria-labelledby="faq-h">
+  <div class="wrap">
+    <div class="faq__grid">
+      <div class="faq__side"><h2 class="h2" id="faq-h">Questions your compliance officer will ask</h2></div>
+      <div class="qa">
+<details open><summary>Who approves the messaging?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>Your CCO, before anything sends.</p></div></div></details>
+<details><summary>Channels?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>Email and LinkedIn only. No texts to prospects.</p></div></div></details>
+<details><summary>Are fees tied to meetings or assets?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>No. It&rsquo;s a flat fee.</p></div></div></details>
+<details><summary>Who owns the list?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>You do. Domains, copy, templates and data stay yours.</p></div></div></details>
+<details><summary>Any performance or return claims?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>No.</p></div></div></details>
       </div>
     </div>
   </div>
+</section>
+</div>
 </main>
-<div class="legal-line"><a href="/privacy">Privacy</a><span aria-hidden="true">&middot;</span><a href="/terms">Terms</a></div>
-<script src="/assets/config.js"></script>
-<script src="/assets/site.js" defer></script>
+<div class="legal-line"><p class="legal-line__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p><a href="privacy.html" target="_blank" rel="noopener">Privacy</a><span aria-hidden="true">&middot;</span><a href="terms.html" target="_blank" rel="noopener">Terms</a></div>
+</div>
+<script src="assets/config.js"></script>
+<script src="assets/vendor/lenis.min.js"></script>
+<script src="assets/pilot.js"></script>
+<script src="assets/site.js" defer></script>
 <script>
 (function () {
   'use strict';
@@ -89,7 +127,7 @@ body.in-frame .booked__card{box-shadow:none}
   var meta = document.getElementById('bookedMeta');
   if (meta && (shown || tz)) { meta.textContent = [shown, tz].filter(Boolean).join(' · '); meta.hidden = false; }
   var name = pick('inviteefirstname', 'firstname', 'iclosedname', 'inviteefullname', 'inviteename', 'fullname', 'name');
-  if (name) { var h = document.getElementById('bookedH'); if (h) h.textContent = 'You’re booked, ' + String(name).split(/\s+/)[0] + '.'; }
+  if (name) { var h = document.getElementById('bookedH'); if (h) h.textContent = 'Your call is booked, ' + String(name).split(/\s+/)[0] + '. Do this before we talk.'; }
 
   /* Attribution kept by the site's scripts during the visit. */
   var utm = {};
@@ -97,12 +135,14 @@ body.in-frame .booked__card{box-shadow:none}
   ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(function (k) { if (q[k]) utm[k] = q[k]; });
 
   /* The landing page's saved form state, if this booking came from one. */
-  var lp = null;
+  var lp = null, lpKey = 'ab_lp_v1';
   try { lp = JSON.parse(localStorage.getItem('ab_lp_v1') || 'null'); } catch (e) {}
+  /* A booking that came through /apply: use that form's saved state (route, tier, submission id). */
+  try { var ap = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); if (ap && ap.sid && (!lp || (ap.started || 0) > (lp.ts || 0))) { lp = ap; lpKey = 'ab_apply_v1'; } } catch (e) {}
 
   var payload = {
-    event: 'booked', stage: 'booked', provider: 'iclosed', source: q.src || (lp && lp.sid ? 'lp' : 'book'),
-    sid: (lp && lp.sid) || '', tier: (lp && lp.tier) || '', utm: utm, page: location.pathname,
+    event: 'booked', stage: 'booked', provider: 'iclosed', source: q.src || (lp && lp.sid ? (lpKey === 'ab_apply_v1' ? 'apply' : 'lp') : 'book'),
+    sid: (lp && lp.sid) || '', tier: (lp && lp.tier) || '', route: (lp && lp.route) || '', utm: utm, page: location.pathname,
     forwarded: q, ts: new Date().toISOString()
   };
 
@@ -119,7 +159,7 @@ body.in-frame .booked__card{box-shadow:none}
   if (lp && lp.booked) seen = true;
   if (seen) return;
   if (lp) {
-    try { lp.booked = true; lp.stage = 'booked'; lp.firstName = lp.firstName || ((lp.answers && lp.answers.first) || ''); lp.answers = {}; localStorage.setItem('ab_lp_v1', JSON.stringify(lp)); } catch (e) {}
+    try { lp.booked = true; lp.stage = 'booked'; lp.firstName = lp.firstName || ((lp.answers && lp.answers.first) || ''); lp.answers = {}; localStorage.setItem(lpKey, JSON.stringify(lp)); } catch (e) {}
   }
   var url = CFG.ghlWebhookUrl || '';
   if (url) {
