@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Funnel B: booking | Study build</title>
+<title>Funnel 2: booking | Study build</title>
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
@@ -26,40 +26,48 @@
 <main id="main">
 <section class="fn-top">
   <div class="wrap">
+    <div class="fn-head"><div class="lab-only"><p class="eyebrow">Funnel 2 &middot; /booking/&lt;tier&gt; (each tier is its own page with its own calendar)</p></div></div>
     <div class="fn-grid">
       <div class="lp-card" style="padding:28px 26px" id="bkCard">
         <span class="tier-chip" id="tChip"></span>
         <h1 class="ap-q" id="tH" style="font-size:clamp(26px,3vw,34px)"></h1>
         <p class="ap-sub" id="tSub"></p>
         <ul class="lp-plist" id="tList" style="margin:8px 0 20px"></ul>
-        <p class="bk-event"><span><b id="tLen"></b></span><span>Google Meet</span><span>A separate calendar per tier (GoHighLevel)</span></p>
-        <div class="ph cal-ph" id="tCal"><span><b>Calendar embed for this tier.</b><br>Theirs is a GoHighLevel calendar. Ours would be iClosed.<br><br><button type="button" class="btn btn--accent" id="tSim">Simulate a booking<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button></span></div>
+        <p class="bk-event"><span><b id="tLen"></b></span><span>Google Meet</span></p>
+        <div class="ph cal-ph" id="tCal"><span><b>Calendar</b><br>Theirs is a GoHighLevel calendar, a different one per tier. Ours would be iClosed.<br><br><button type="button" class="btn btn--accent" id="tSim">Simulate a booking<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button></span></div>
         <div id="tDone" hidden>
           <span class="lp-chk"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M6 13.5L11 18.5 20 8" stroke="#0F7A62" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <h2 class="ap-q">You&rsquo;re booked.</h2>
           <ol class="pc-steps">
-            <li><span><b>Check Your Email.</b> The calendar invite arrives within minutes.</span></li>
+            <li><span><b>Check Your Email.</b> Calendar invite within minutes.</span></li>
             <li><span><b>Join the Google Meet.</b> The link is in the invite.</span></li>
             <li><span><b>Come Prepared.</b> Know your production numbers and goals.</span></li>
           </ol>
         </div>
       </div>
     </div>
-    <div class="lab-note"><b>Not captured:</b> emails and SMS after booking (no AAM call was booked), the setter call script. Alongside this, they run retargeting ads to bookers: &ldquo;Booked a call with AAM? Here&rsquo;s a quick resource... before your appointment.&rdquo;</div>
+    <div class="lab-note"><b>Not captured:</b> emails and SMS after booking (no AAM call was booked), the setter call script, the pre-call retargeting video. They also run retargeting ads to bookers: &ldquo;Booked a call with AAM? Here&rsquo;s a quick resource... before your appointment.&rdquo;</div>
+    <div class="lab-note"><b>Other tiers:</b> <a href="#tier-1">Tier 1</a> &middot; <a href="#tier-2">Tier 2</a> &middot; <a href="#tier-3">Tier 3</a> &middot; <a href="#triage">Triage</a></div>
   </div>
 </section>
 <script>
 (function () {
-  var T = {"tier-1": {"chip": "Tier 1 &middot; Highest priority", "h": "Priority Strategy Session", "sub": "Speak with a senior advisor.", "b": ["Dedicated Senior Advisor", "Custom Scaling Plan", "Priority Onboarding"], "len": "30 min"}, "tier-2": {"chip": "Tier 2", "h": "Strategy Session", "sub": "", "b": ["Personalized Growth Plan", "ROI Projection <span class=\"flag-tag\">Flag: ROI</span>", "30-Minute Session"], "len": "30 min"}, "tier-3": {"chip": "Tier 3", "h": "Discovery Call", "sub": "", "b": ["Growth Roadmap", "Investment Breakdown", "30-Minute Call"], "len": "30 min"}, "triage": {"chip": "Setter triage", "h": "Quick Intro Call", "sub": "We'd like to learn a bit more about your practice before scheduling your full strategy session.", "b": ["Quick 15-Minute Call", "Commission Discussion", "No Obligation"], "len": "15 min"}};
-  var t = new URLSearchParams(location.search).get('t'); if (!T[t]) t = 'tier-3';
-  var d = T[t];
-  document.getElementById('tChip').innerHTML = d.chip;
-  document.getElementById('tH').textContent = d.h;
-  var sub = document.getElementById('tSub'); if (d.sub) sub.textContent = d.sub; else sub.hidden = true;
-  document.getElementById('tLen').textContent = d.len;
+  var T = {"tier-1": {"chip": "Tier 1 &middot; Highest Priority", "h": "Priority Strategy Session", "sub": "Speak with a senior advisor.", "b": ["Dedicated Senior Advisor", "Custom Scaling Plan", "Priority Onboarding"], "len": "30 min"}, "tier-2": {"chip": "Tier 2", "h": "Strategy Session", "sub": "", "b": ["Personalized Growth Plan", "ROI Projection <span class=\"flag-tag\">Flag: ROI</span>", "30-Minute Session"], "len": "30 min"}, "tier-3": {"chip": "Tier 3", "h": "Discovery Call", "sub": "", "b": ["Growth Roadmap", "Investment Breakdown", "30-Minute Call"], "len": "30 min"}, "triage": {"chip": "Setter triage", "h": "Quick Intro Call", "sub": "We'd like to learn a bit more about your practice before scheduling your full strategy session.", "b": ["Quick 15-Minute Call", "Commission Discussion", "No Obligation"], "len": "15 min"}};
   var tick = "<span class=\"lp-tick\" aria-hidden=\"true\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\"><path d=\"M2 6.2L4.6 9 10 3\" stroke=\"#0F7A62\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span>";
-  document.getElementById('tList').innerHTML = d.b.map(function (b) { return '<li>' + tick + '<span>' + b + '</span></li>'; }).join('');
-  document.title = 'Funnel B: ' + d.h + ' | Study build';
+  function show() {
+    var t = (location.hash || '').slice(1);
+    if (!T[t]) { try { t = new URLSearchParams(location.search).get('t') || ''; } catch (e) {} }
+    if (!T[t]) t = 'tier-3';
+    var d = T[t];
+    document.getElementById('tChip').innerHTML = d.chip;
+    document.getElementById('tH').textContent = d.h;
+    var sub = document.getElementById('tSub'); sub.textContent = d.sub; sub.hidden = !d.sub;
+    document.getElementById('tLen').textContent = d.len;
+    document.getElementById('tList').innerHTML = d.b.map(function (b) { return '<li>' + tick + '<span>' + b + '</span></li>'; }).join('');
+    document.getElementById('tCal').hidden = false; document.getElementById('tDone').hidden = true;
+    document.title = 'Funnel 2: ' + d.h + ' | Study build';
+  }
+  show(); window.addEventListener('hashchange', show);
   document.getElementById('tSim').addEventListener('click', function () {
     document.getElementById('tCal').hidden = true; document.getElementById('tDone').hidden = false;
   });
@@ -68,7 +76,8 @@
 </main>
 <div class="legal-line"><p class="legal-line__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p><a href="../../privacy.html" target="_blank" rel="noopener">Privacy</a><span aria-hidden="true">&middot;</span><a href="../../terms.html" target="_blank" rel="noopener">Terms</a></div>
 </div>
-<div class="lab-bar" role="note"><b>Study build: Funnel B, AAM pattern.</b> Their funnel as captured, in our site&rsquo;s look. Not Advisor Booking copy and not for traffic. Red = breaks our rules (Flag). Yellow = not captured. <a href="../index.html">All three funnels</a></div>
+<div class="lab-bar" role="note"><b>Funnel 2: Advanced Agent Marketing (AAM).</b> Their funnel as captured, in our site&rsquo;s look. Not Advisor Booking copy, not for traffic. <a href="../index.html">All funnels</a> <button type="button" class="lab-toggle" id="labToggle" aria-pressed="false">Show study notes</button></div>
+<script>(function(){var k="ab_lab_marks",b=document.body,t=document.getElementById("labToggle");function set(on){b.classList.toggle("lab-marks",on);t.setAttribute("aria-pressed",on?"true":"false");t.textContent=on?"Hide study notes":"Show study notes";try{localStorage.setItem(k,on?"1":"")}catch(e){}}var on=false;try{on=localStorage.getItem(k)==="1"}catch(e){}set(on);t.addEventListener("click",function(){set(!b.classList.contains("lab-marks"))});})();</script>
 <script src="../../assets/config.js"></script>
 <script src="../../assets/vendor/lenis.min.js"></script>
 <script src="../../assets/pilot.js"></script>

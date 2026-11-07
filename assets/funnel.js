@@ -33,6 +33,11 @@
     PROGRESS_LABEL: 'Step {n} of {t}',
     PROGRESS_AFTER: 'Almost done',
     REDIRECT_DELAY_MS: 450,
+    // 'tap': a single-choice screen moves on as soon as an answer is tapped (Typeform style).
+    // 'continue': the tap selects, then Continue moves on (AAM style). A question can set its own "advance".
+    ADVANCE: 'tap',
+    // true: Continue stays disabled until the screen is valid ("each screen validates before Continue unlocks").
+    LOCK_CONTINUE: false,
     TEST_MODE: false
   };
   var over = window.AB_APPLY || {};
@@ -159,30 +164,52 @@
 
   function renderChoice(q, i) {
     var wrap = el('div', { class: 'ap-opts' + (q.options.length === 2 && !q.multi ? ' ap-opts--2' : ''), role: 'group', 'aria-labelledby': 'apQ' });
-    var picked = q.multi ? (S.answers[q.id] || []).slice() : null;
+    var tap = !q.multi && (q.advance || F.ADVANCE) === 'tap';
+    var picked = q.multi ? (S.answers[q.id] || []).slice() : (S.answers[q.id] ? [S.answers[q.id]] : []);
     q.options.forEach(function (opt, n) {
-      var on = q.multi ? picked.indexOf(opt) > -1 : S.answers[q.id] === opt;
+      var on = picked.indexOf(opt) > -1;
       var b = el('button', { type: 'button', class: 'ap-opt' + (q.multi ? ' ap-opt--multi' : ''), 'aria-pressed': on ? 'true' : 'false' }, [
         el('span', { class: 'ap-key', 'aria-hidden': 'true', text: String.fromCharCode(65 + n) }),
         el('span', { text: opt })
       ]);
       b.addEventListener('click', function () {
-        if (!q.multi) { answer(q, opt, i); return; }
-        var k = picked.indexOf(opt);
-        if (k > -1) picked.splice(k, 1); else picked.push(opt);
-        b.setAttribute('aria-pressed', k > -1 ? 'false' : 'true');
+        if (tap) { answer(q, opt, i); return; }
+        if (!q.multi) {
+          picked = [opt];
+          Array.prototype.forEach.call(wrap.children, function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        } else {
+          var k = picked.indexOf(opt);
+          if (k > -1) picked.splice(k, 1); else picked.push(opt);
+          b.setAttribute('aria-pressed', k > -1 ? 'false' : 'true');
+        }
         if (err) err.hidden = true;
+        if (F.LOCK_CONTINUE && next) next.disabled = !picked.length;
       });
       wrap.appendChild(b);
     });
-    if (!q.multi) return wrap;
-    var err = el('div', { class: 'lp-err ap-err', text: 'Pick at least one.' }); err.hidden = true;
+    if (tap) return wrap;
+    var errText = q.multi ? 'Pick at least one.' : 'Pick one.';
+    var err = el('div', { class: 'lp-err ap-err', text: errText }); err.hidden = true;
     var next = el('button', { type: 'button', class: 'btn btn--accent lp-btn-block ap-next', html: '<span>' + (q.cta || 'Continue') + '</span><span class="btn__chip">' + ARROW + '</span>' });
+    if (F.LOCK_CONTINUE) next.disabled = !picked.length;
     next.addEventListener('click', function () {
-      if (!picked.length) { err.hidden = false; err.style.display = 'block'; announce('Pick at least one.'); return; }
-      answer(q, picked.slice(), i);
+      if (!picked.length) { err.hidden = false; err.style.display = 'block'; announce(errText); return; }
+      answer(q, q.multi ? picked.slice() : picked[0], i);
     });
     return el('div', null, [wrap, err, next]);
+  }
+
+  function fieldBad(f, inp) {
+    if (f.type === 'checkbox') return !!f.required && !inp.checked;
+    var v = String(inp.value || '').trim();
+    if (!v) return !f.optional;
+    if (f.type === 'email') return !emailOk(v);
+    if (f.type === 'tel') return !phoneOk(v);
+    if (f.type === 'url') return !urlOk(v);
+    return false;
+  }
+  function screenValid(q) {
+    return (q.fields || []).every(function (f) { var inp = $('ap-' + f.id); return inp && !fieldBad(f, inp); });
   }
 
   function renderFields(q, i) {
@@ -215,6 +242,11 @@
     btn = el('button', { type: 'submit', class: 'btn btn--accent lp-btn-block ap-next', html: '<span>' + (q.cta || 'Next') + '</span><span class="btn__chip">' + ARROW + '</span>' });
     (q.fields || []).forEach(function (f) { if (f.type === 'checkbox' && f.required && f.gate && !S.answers[f.id]) btn.disabled = true; });
     form.appendChild(btn);
+    if (F.LOCK_CONTINUE) {
+      var relock = function () { btn.disabled = !screenValid(q); };
+      form.addEventListener('input', relock); form.addEventListener('change', relock);
+      setTimeout(relock, 0);
+    }
     if (q.fine) form.appendChild(el('p', { class: 'lp-priv', html: q.fine }));
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -298,14 +330,14 @@
     S = fresh(); history.replaceState({ ap: 0 }, ''); render(0);
   });
 
-  /* Letter keys pick an answer on single-choice screens (A, B, C...). */
+  /* Letter keys pick an answer on single-choice screens (A, B, C...): same as tapping it. */
   doc.addEventListener('keydown', function (e) {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     var t = e.target && e.target.tagName;
     if (t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT' || t === 'BUTTON') return;
     var q = Q[S.step]; if (!q || q.type !== 'choice' || q.multi || !$('apQ') || !body.querySelector('.ap-opts')) return;
     var n = (e.key || '').toUpperCase().charCodeAt(0) - 65;
-    if (e.key && e.key.length === 1 && n >= 0 && n < q.options.length) { e.preventDefault(); answer(q, q.options[n], S.step); }
+    if (e.key && e.key.length === 1 && n >= 0 && n < q.options.length) { e.preventDefault(); var bs = body.querySelectorAll('.ap-opt'); if (bs[n]) bs[n].click(); }
   });
 
   var start = Math.max(0, Math.min(S.step || 0, Q.length - 1));

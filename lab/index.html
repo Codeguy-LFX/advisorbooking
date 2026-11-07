@@ -29,34 +29,36 @@
     <div class="fn-head">
       <p class="eyebrow">Funnel lab</p>
       <h1 class="h2">Three funnels, side by side.</h1>
-      <p class="lead">A and B rebuild two competitor funnels as captured, so we can study them. C is the Advisor Booking master we&rsquo;ll ship. All three use the same form engine and the site&rsquo;s look.</p>
+      <p class="lead">Funnels 1 and 2 rebuild two competitor funnels exactly as captured. Funnel 3 is the Advisor Booking master we&rsquo;ll ship. Use &ldquo;Show study notes&rdquo; in the bottom bar to see flags and notes. All three use the same form engine and the site&rsquo;s look.</p>
     </div>
     <div class="lab-cols">
       <div class="lab-col">
-        <span class="tier-chip">A &middot; Study</span>
-        <h3>Clients Blackbox pattern</h3>
-        <p>Meta ad straight to a 5-question intake. Only Q1 routes. Booking page filters nothing; the booked and homework pages do the selling.</p>
+        <span class="tier-chip">Funnel 1 &middot; Clients Blackbox</span>
+        <h3>Exact clone</h3>
+        <p>Meta ad straight to a 5-question Typeform. Only Q1 routes. The OnceHub page filters nothing; the booked and homework pages do the selling.</p>
         <ol>
-          <li><a href="a/apply.html">Intake form</a> (5 screens, Q1 &ldquo;No&rdquo; ends it)</li>
-          <li><a href="a/book.html">Booking page</a> (banner + 8 fields, no logic)</li>
-          <li><a href="a/booked.html">Booked page</a> (4-step path, proof)</li>
-          <li><a href="a/pre-call.html">Pre-call homework</a></li>
+          <li><a href="a/vsl.html">VSL page</a> (entry for VSL ads)</li>
+          <li><a href="a/apply.html">Typeform intake</a> (Q1 &ldquo;No&rdquo; ends it)</li>
+          <li><a href="a/book.html">OnceHub booking page</a> (banner + 9 fields, no logic)</li>
+          <li><a href="a/booked.html">booked-yt page</a></li>
+          <li><a href="a/pre-call.html">Pre-call homework page</a></li>
           <li>Emails + SMS: <code>docs/funnel-a-emails-sms.md</code></li>
         </ol>
       </div>
       <div class="lab-col">
-        <span class="tier-chip">B &middot; Study</span>
-        <h3>AAM pattern</h3>
-        <p>The form is the landing page. 11 screens, every answer saved, routed in the browser to 4 booking tiers or an inline no.</p>
+        <span class="tier-chip">Funnel 2 &middot; AAM</span>
+        <h3>Exact clone</h3>
+        <p>The form is the landing page. 11 screens, pick then Continue, every answer saved, routed in the browser to 4 booking tiers or an inline no.</p>
         <ol>
-          <li><a href="b/index.html">Application landing page</a> (form on screen 1)</li>
-          <li>Routes to <a href="b/booking.html?t=tier-1">Tier 1</a>, <a href="b/booking.html?t=tier-2">Tier 2</a>, <a href="b/booking.html?t=tier-3">Tier 3</a>, <a href="b/booking.html?t=triage">Triage</a>, or an inline DQ</li>
-          <li>Booked state: check email, join Meet, come prepared</li>
+          <li><a href="b/index.html">/lp/application-fb</a> (Meta ads; form on screen 1)</li>
+          <li><a href="b/home.html">Homepage</a> &rarr; <a href="b/book-a-call.html">/book-a-call</a> (same form)</li>
+          <li><a href="b/event.html">Short event form</a> (application-event-ap26)</li>
+          <li>Outcomes: <a href="b/booking.html#tier-1">Tier 1</a>, <a href="b/booking.html#tier-2">Tier 2</a>, <a href="b/booking.html#tier-3">Tier 3</a>, <a href="b/booking.html#triage">Triage</a>, or an inline DQ</li>
           <li>Emails + SMS: not captured</li>
         </ol>
       </div>
       <div class="lab-col">
-        <span class="tier-chip">C &middot; Master</span>
+        <span class="tier-chip">Funnel 3 &middot; Master</span>
         <h3>Advisor Booking</h3>
         <p>Sales page, then an 11-screen application routed four ways, then iClosed, then the pre-call page.</p>
         <ol>
@@ -74,7 +76,8 @@
 </main>
 <div class="legal-line"><p class="legal-line__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p><a href="../privacy.html" target="_blank" rel="noopener">Privacy</a><span aria-hidden="true">&middot;</span><a href="../terms.html" target="_blank" rel="noopener">Terms</a></div>
 </div>
-<div class="lab-bar" role="note"><b>Internal page.</b> Not linked from the site, not indexed. Red = breaks our rules (Flag). Yellow = not captured or waiting on Nick.</div>
+<div class="lab-bar" role="note"><b>Internal page.</b> Not linked from the site, not indexed. Red = breaks our rules. Yellow = not captured or waiting on Nick. <button type="button" class="lab-toggle" id="labToggle" aria-pressed="false">Show study notes</button></div>
+<script>(function(){var k="ab_lab_marks",b=document.body,t=document.getElementById("labToggle");function set(on){b.classList.toggle("lab-marks",on);t.setAttribute("aria-pressed",on?"true":"false");t.textContent=on?"Hide study notes":"Show study notes";try{localStorage.setItem(k,on?"1":"")}catch(e){}}var on=false;try{on=localStorage.getItem(k)==="1"}catch(e){}set(on);t.addEventListener("click",function(){set(!b.classList.contains("lab-marks"))});})();</script>
 <script src="../assets/config.js"></script>
 <script src="../assets/vendor/lenis.min.js"></script>
 <script src="../assets/pilot.js"></script>

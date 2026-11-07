@@ -128,3 +128,13 @@ body.is-lab{padding-bottom:56px}
 .bk-event{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13.5px;color:var(--muted);margin:0 0 18px}
 .bk-event b{color:var(--ink)}
 .cal-ph{min-height:420px;display:flex;align-items:center;justify-content:center;text-align:center}
+
+/* ---------- study builds: clean view vs study marks ----------
+   A clone shows exactly what the prospect sees. "Show study notes" in the bottom bar adds the flags, notes and
+   step labels (remembered per browser). */
+body.is-lab:not(.lab-marks) .lab-only,
+body.is-lab:not(.lab-marks) .lab-note,
+body.is-lab:not(.lab-marks) .flag-tag,
+body.is-lab:not(.lab-marks) .todo-tag{display:none!important}
+body.is-lab:not(.lab-marks) .flag,body.is-lab:not(.lab-marks) .todo{outline:0}
+.lab-toggle{margin-left:10px;background:#5c4400;color:#fff4d6;border:0;border-radius:6px;padding:4px 10px;font:inherit;font-size:12px;font-weight:600;cursor:pointer}

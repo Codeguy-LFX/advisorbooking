@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Funnel A: intake | Study build</title>
+<title>Funnel 1: Typeform intake | Study build</title>
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
@@ -15,17 +15,17 @@
 <link rel="stylesheet" href="../../assets/pilot.css">
 <link rel="stylesheet" href="../../assets/funnel.css">
 <script>window.AB_APPLY = {
- "FORM_VERSION": "lab-a-typeform-shell",
+ "FORM_VERSION": "lab-a-typeform-v2",
  "SOURCE": "lab-a",
  "WEBHOOK_URL": "",
  "STORE_KEY": "ab_lab_a",
  "TEST_MODE": true,
+ "ADVANCE": "tap",
  "QUESTIONS": [
   {
    "id": "q1_pro",
    "type": "choice",
    "q": "Are you a financial professional?",
-   "sub": "Takes <span class=\"todo-tag\">Time-to-complete text</span>.",
    "options": [
     "No - I\u2019m NOT a financial professional",
     "Yes, I am a financial professional"
@@ -83,7 +83,7 @@
     },
     {
      "id": "phone",
-     "label": "Phone",
+     "label": "Phone number",
      "type": "tel",
      "autocomplete": "tel-national",
      "error": "Enter a valid 10-digit US number."
@@ -97,7 +97,7 @@
     }
    ],
    "cta": "Submit",
-   "note": "<b>Their logic:</b> Q2 to Q4 never change the route. They are collected for the rep. On submit, the email goes to ScaleStack for enrichment. <span class=\"flag-tag\">Flag</span> Personal wealth and age enrichment on individuals is off-limits for us."
+   "note": "<span class=\"lab-only\">On submit, the email goes to ScaleStack for enrichment (company domain, industry; ~80 fields set up, including revenue, headcount, title, household income and net worth). <span class=\"flag-tag\">Flag: personal wealth and age enrichment</span></span>"
   }
  ],
  "RULES": [
@@ -135,11 +135,7 @@
 <main id="main">
 <section class="fn-top">
   <div class="wrap">
-    <div class="fn-head">
-      <p class="eyebrow">Step 1 of 4 &middot; Intake form</p>
-      <h1 class="h2">Typeform intake</h1>
-      <p class="lead">Their Meta ads land here directly, with no page in front of it. Q1 &ldquo;No&rdquo; ends the form. Q2, Q3 and Q4 never change where anyone goes: a non-owner with under $10M in growth and 1-2 advisors still gets the calendar.</p>
-    </div>
+    <div class="fn-head"><div class="lab-only"><p class="eyebrow" style="margin-bottom:14px">Funnel 1 &middot; step 1 &middot; Typeform intake (the ad lands here directly)</p></div></div>
     <div class="fn-grid">
 <div class="ap-card" id="apCard">
   <div class="ap-bar" aria-hidden="true"><i id="apBar"></i></div>
@@ -150,16 +146,19 @@
   <div id="apBody"><noscript><div class="ap-screen"><p>This form needs JavaScript. Email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will set up your call.</p></div></noscript></div>
   <div class="lp-hp" aria-hidden="true"><label for="apHp">Website</label><input type="text" id="apHp" name="website" tabindex="-1" autocomplete="off" data-1p-ignore="true" data-lpignore="true"></div>
   <div class="sr-only" id="apLive" aria-live="polite" aria-atomic="true"></div>
-  <div class="ap-foot">Autosave on. <button type="button" class="lp-linkbtn" id="apRestart">Start over</button></div>
+  <div class="ap-foot"> <button type="button" class="lp-linkbtn" id="apRestart">Start over</button></div>
 </div>
     </div>
-    <div class="lab-note"><b>Hidden fields:</b> utm_source, utm_medium, utm_campaign, utm_term, utm_content, auth_code, product_id, user_id, plus phone, email and name for prefill. utm_source and utm_content are passed on to the booking page.</div>
+    <div class="lab-note"><b>Typeform settings:</b> progress bar on, time-to-complete shown <span class="todo-tag">Exact time text</span>, autosave on, Typeform branding off.</div>
+    <div class="lab-note"><b>Logic, complete:</b> Q1 = &ldquo;No&rdquo; &rarr; DQ screen (end). Otherwise Q2 &rarr; Q3 &rarr; Q4 &rarr; Q5 &rarr; OnceHub. A non-owner with under $10M in growth and 1-2 advisors still gets the calendar.</div>
+    <div class="lab-note"><b>Hidden fields:</b> utm_source, utm_medium, utm_campaign, utm_term, utm_content, auth_code, product_id, user_id, phone_number, email, first_name, last_name. The redirect passes utm_source and utm_content: <code>oncehub.com/PAGE-453C5F176A?utm_source=&hellip;&amp;utm_content=&hellip;</code></div>
   </div>
 </section>
 </main>
 <div class="legal-line"><p class="legal-line__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p><a href="../../privacy.html" target="_blank" rel="noopener">Privacy</a><span aria-hidden="true">&middot;</span><a href="../../terms.html" target="_blank" rel="noopener">Terms</a></div>
 </div>
-<div class="lab-bar" role="note"><b>Study build: Funnel A, Clients Blackbox pattern.</b> Their funnel as captured, in our site&rsquo;s look. Not Advisor Booking copy and not for traffic. Red = breaks our rules (Flag). Yellow = not captured. <a href="../index.html">All three funnels</a></div>
+<div class="lab-bar" role="note"><b>Funnel 1: Clients Blackbox.</b> Their funnel as captured, in our site&rsquo;s look. Not Advisor Booking copy, not for traffic. <a href="../index.html">All funnels</a> <button type="button" class="lab-toggle" id="labToggle" aria-pressed="false">Show study notes</button></div>
+<script>(function(){var k="ab_lab_marks",b=document.body,t=document.getElementById("labToggle");function set(on){b.classList.toggle("lab-marks",on);t.setAttribute("aria-pressed",on?"true":"false");t.textContent=on?"Hide study notes":"Show study notes";try{localStorage.setItem(k,on?"1":"")}catch(e){}}var on=false;try{on=localStorage.getItem(k)==="1"}catch(e){}set(on);t.addEventListener("click",function(){set(!b.classList.contains("lab-marks"))});})();</script>
 <script src="../../assets/config.js"></script>
 <script src="../../assets/vendor/lenis.min.js"></script>
 <script src="../../assets/pilot.js"></script>

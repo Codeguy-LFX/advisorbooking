@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Funnel B: application | Study build</title>
+<title>Funnel 2: application-fb | Study build</title>
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
@@ -15,14 +15,16 @@
 <link rel="stylesheet" href="../../assets/pilot.css">
 <link rel="stylesheet" href="../../assets/funnel.css">
 <script>window.AB_APPLY = {
- "FORM_VERSION": "lab-b-application-shell",
- "SOURCE": "lab-b",
+ "FORM_VERSION": "lab-b-application-fb-v2",
+ "SOURCE": "lab-b-application-fb",
  "WEBHOOK_URL": "",
  "STORE_KEY": "ab_lab_b",
  "STORAGE": "session",
  "TEST_MODE": true,
+ "ADVANCE": "continue",
+ "LOCK_CONTINUE": true,
  "PROGRESS_TOTAL": 7,
- "PROGRESS_AFTER": "Almost done",
+ "PROGRESS_AFTER": "",
  "QUESTIONS": [
   {
    "id": "q1_contracted",
@@ -260,10 +262,10 @@
     }
    }
   },
-  "triage": "booking.html?t=triage",
-  "tier-1": "booking.html?t=tier-1",
-  "tier-2": "booking.html?t=tier-2",
-  "tier-3": "booking.html?t=tier-3"
+  "triage": "booking.html#triage",
+  "tier-1": "booking.html#tier-1",
+  "tier-2": "booking.html#tier-2",
+  "tier-3": "booking.html#tier-3"
  }
 };</script>
 </head>
@@ -279,10 +281,10 @@
 <section class="fn-top">
   <div class="wrap">
     <div class="fn-head">
+      <div class="lab-only"><p class="eyebrow" style="margin-bottom:14px">Funnel 2 &middot; /lp/application-fb (Meta ads land here; the form starts on screen 1)</p></div>
       <p class="eyebrow">Life Insurance Agents &amp; Advisors</p>
       <h1 class="h2 flag">We&rsquo;ll Put Clients With $250K to $10M in Liquid Investable Assets On Your Calendar. Only Pay If They Show Up.</h1>
-      <p style="margin-top:10px"><span class="flag-tag">Flag: pay-per-show and asset claims</span></p>
-      <p class="lead">Subhead names HNWIs &ldquo;ready to talk annuities.&rdquo; <span class="todo-tag">Exact subhead</span></p>
+      <p class="lead"><span class="todo-tag">Subhead wording</span> HNWIs &ldquo;ready to talk annuities.&rdquo; <span class="flag-tag">Flag: pay-per-show and asset claims</span></p>
     </div>
     <div class="fn-grid">
 <div class="ap-card" id="apCard">
@@ -294,18 +296,21 @@
   <div id="apBody"><noscript><div class="ap-screen"><p>This form needs JavaScript. Email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will set up your call.</p></div></noscript></div>
   <div class="lp-hp" aria-hidden="true"><label for="apHp">Website</label><input type="text" id="apHp" name="website" tabindex="-1" autocomplete="off" data-1p-ignore="true" data-lpignore="true"></div>
   <div class="sr-only" id="apLive" aria-live="polite" aria-atomic="true"></div>
-  <div class="ap-foot">Saves as you go. <button type="button" class="lp-linkbtn" id="apRestart">Start over</button></div>
+  <div class="ap-foot"> <button type="button" class="lp-linkbtn" id="apRestart">Start over</button></div>
 </div>
     </div>
-    <div class="lab-note"><b>Their page:</b> no hero video and no proof above the form. The form starts on screen 1 straight away. Dark background #0A0A0A with gold #C9A84C (shown here in our look). Variant application-fb2 is light with a shorter headline. 17 traffic slugs share this form and router; only the hero changes.</div>
-    <div class="lab-note"><b>Saving:</b> every answer posts as it&rsquo;s given (partialCapture). A refresh resumes from sessionStorage. Hidden &ldquo;Website&rdquo; honeypot plus a timestamp. Payload adds utm_source/medium/campaign/term/content/adset, gclid, fbclid, lp_slug and ref. This copy sends nothing.</div>
-    <div class="lab-note"><b>Tracking:</b> form submit fires a custom <code>QualificationFormSubmit</code> with the route. The booking page load fires <code>Schedule</code> + <code>booking_page_view</code>. A completed booking fires <code>Lead</code> + <code>CompleteRegistration</code> + a Google Ads conversion. So Meta optimizes on booked calls, not form fills.</div>
+    <div class="lab-note"><b>Format:</b> 11 screens, one question per screen. The bar reads &ldquo;Step X of 7&rdquo; and stops counting at the contact fields. Each screen validates before Continue unlocks. A refresh resumes from sessionStorage. Hidden &ldquo;Website&rdquo; honeypot plus a timestamp.</div>
+    <div class="lab-note"><b>Saving:</b> every answer posts to their backend as it&rsquo;s given (partialCapture), so drop-offs still have a record. Payload: all 11 answers, honeypot, timestamp, utm_source/medium/campaign/term/content/adset, gclid, fbclid, lp_slug and ref. UTMs saved on first page view (sessionStorage <code>aam_utm_params</code>). This copy sends nothing.</div>
+    <div class="lab-note"><b>Routing (in the browser):</b> contracted No, investment No, or commission 4% or less &rarr; DQ (inline). Else commission 5% &rarr; setter triage. Else production under $3M &rarr; tier 3, $3 to $10M &rarr; tier 2, $10M+ &rarr; tier 1. Goal, obstacle and products sold never affect routing.</div>
+    <div class="lab-note"><b>Tracking:</b> submit fires custom <code>QualificationFormSubmit</code> with the route. Booking page load fires <code>Schedule</code> + <code>booking_page_view</code>. A completed booking fires <code>Lead</code> + <code>CompleteRegistration</code> + a Google Ads conversion, so Meta optimizes on booked calls, not form fills.</div>
+    <div class="lab-note"><b>Their look:</b> dark #0A0A0A with gold #C9A84C (shown here in our look). Variant application-fb2 uses a light theme and a shorter headline. 17 traffic slugs share this form and router; only the hero changes.</div>
   </div>
 </section>
 </main>
 <div class="legal-line"><p class="legal-line__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p><a href="../../privacy.html" target="_blank" rel="noopener">Privacy</a><span aria-hidden="true">&middot;</span><a href="../../terms.html" target="_blank" rel="noopener">Terms</a></div>
 </div>
-<div class="lab-bar" role="note"><b>Study build: Funnel B, AAM pattern.</b> Their funnel as captured, in our site&rsquo;s look. Not Advisor Booking copy and not for traffic. Red = breaks our rules (Flag). Yellow = not captured. <a href="../index.html">All three funnels</a></div>
+<div class="lab-bar" role="note"><b>Funnel 2: Advanced Agent Marketing (AAM).</b> Their funnel as captured, in our site&rsquo;s look. Not Advisor Booking copy, not for traffic. <a href="../index.html">All funnels</a> <button type="button" class="lab-toggle" id="labToggle" aria-pressed="false">Show study notes</button></div>
+<script>(function(){var k="ab_lab_marks",b=document.body,t=document.getElementById("labToggle");function set(on){b.classList.toggle("lab-marks",on);t.setAttribute("aria-pressed",on?"true":"false");t.textContent=on?"Hide study notes":"Show study notes";try{localStorage.setItem(k,on?"1":"")}catch(e){}}var on=false;try{on=localStorage.getItem(k)==="1"}catch(e){}set(on);t.addEventListener("click",function(){set(!b.classList.contains("lab-marks"))});})();</script>
 <script src="../../assets/config.js"></script>
 <script src="../../assets/vendor/lenis.min.js"></script>
 <script src="../../assets/pilot.js"></script>
