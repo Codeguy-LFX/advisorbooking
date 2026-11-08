@@ -26,9 +26,9 @@ rules and settings: the `window.AB_APPLY` block at the top of `L1/index.html`.
 
 - Six screens: RIA status, role, AUM, advisors' calendars, new assets in the last 12 months, contact (with the required
   calls/texts/voicemail consent box). Then the iClosed event (`iclosedUrlFit5`) opens in the same card, prefilled.
-- Nobody is turned away: every lead gets the calendar. Each lead is labeled: route `main` (qualified), `triage`
-  (qualified edge case), or `dq` with `dq_reasons` (not an advisor, broker-dealer or wirehouse, AUM under $50M, new
-  assets under $10M).
+- Nobody is turned away: every lead gets the same screens and the calendar. Two labels only: `qualified` (RIA,
+  $50M+ AUM and $10M+ new assets, all three) or `dq` (any one missed), with `dq_reasons` (not an advisor,
+  broker-dealer or wirehouse, AUM under $50M, new assets under $10M).
 - Tracking: only qualified leads (independent or hybrid RIA, $50M+ AUM, $10M+ new assets) send anything to GTM or the
   Meta Pixel, and only after the contact screen is submitted: GTM loads then, the held `ab_*` events are released,
   and Meta gets `Lead` (and `Schedule` on booking). Unqualified leads send nothing to either.
