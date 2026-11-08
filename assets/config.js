@@ -13,9 +13,9 @@ window.AB_CONFIG = {
   iclosedUrlShortFit5: "",
   // iClosed: set the event's confirmation page to this URL with forwarding on, so bookings are detected and reported.
   bookedUrl: "https://advisorbooking.com/booked",
-  // Where the landers' email-first "Book intro call" sends people (relative to the site root). "fit/" is the
-  // qualifying form (Funnel 4) with the email prefilled; "book.html" skips the form and opens the calendar.
-  landerNext: "fit/",
+  // Where the landers' email-first "Book intro call" sends people (relative to the site root). "fit5/" is the
+  // qualifying form (Funnel 5) with the email prefilled; "fit/" is Funnel 4; "book.html" skips the form.
+  landerNext: "fit5/",
   // Calendly (legacy): the 20-minute event URL, and whether book.html embeds it or links out to it.
   calendlyUrl: "",
   calendlyMode: "embed",
