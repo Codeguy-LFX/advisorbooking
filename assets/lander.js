@@ -4,9 +4,9 @@
    Email-first CTA ("Ready to talk?"): the visitor gives a work email, then "Book intro call" takes them to the
    qualifying form with that email already filled in. Before leaving it:
      - saves the email for the form (sessionStorage ab_prefill, this tab only; never put in the URL)
-     - posts { event: 'email_capture', email, page, utm } to AB_CONFIG.ghlWebhookUrl when it is set
+     - posts stage=email_capture, email, page and campaign tags (form-encoded) to AB_CONFIG.ghlWebhookUrl when set
      - pushes ab_email_capture to window.dataLayer for GTM (no email in the event)
-   Where it goes: AB_CONFIG.landerNext (default "fit/", the Funnel 4 form), relative to the site root. */
+   Where it goes: AB_CONFIG.landerNext (default "L1/", the qualifying form), relative to the site root. */
 (function () {
   'use strict';
   var doc = document, CFG = window.AB_CONFIG || {};
@@ -26,14 +26,14 @@
 
   /* ---------- the email-first form ---------- */
   function emailOk(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
-  function post(payload) {
+  /* Form-encoded: a simple cross-site request (no preflight), so the CRM gets it without CORS headers. */
+  function post(p) {
     var url = String(CFG.ghlWebhookUrl || '').trim();
     if (!url) return;
-    var body = JSON.stringify(payload);
-    try {
-      if (navigator.sendBeacon && navigator.sendBeacon(url, new Blob([body], { type: 'application/json' }))) return;
-      fetch(url, { method: 'POST', mode: 'no-cors', keepalive: true, body: body }).catch(function () {});
-    } catch (e) {}
+    var body = new URLSearchParams();
+    Object.keys(p).forEach(function (k) { body.append(k, p[k] === undefined || p[k] === null ? '' : String(p[k])); });
+    try { if (navigator.sendBeacon && navigator.sendBeacon(url, body)) return; } catch (e) {}
+    try { fetch(url, { method: 'POST', mode: 'no-cors', keepalive: true, body: body }).catch(function () {}); } catch (e) {}
   }
   var T0 = Date.now();
   Array.prototype.forEach.call(doc.querySelectorAll('form[data-ec]'), function (form) {
@@ -50,11 +50,13 @@
       var bot = (hp && hp.value) ? 'honeypot' : ((Date.now() - T0) < 2000 ? 'too_fast' : '');
       var pre = {}; try { pre = JSON.parse(sessionStorage.getItem('ab_prefill') || '{}') || {}; } catch (x) {}
       pre.email = v; try { sessionStorage.setItem('ab_prefill', JSON.stringify(pre)); } catch (x) {}
-      post({ event: 'email_capture', stage: 'email_capture', email: v, page: location.pathname, cta: form.getAttribute('data-ec') || '',
-             utm: utm, referrer: doc.referrer, bot_flag: bot ? 'true' : 'false', bot_reason: bot, ts_iso: new Date().toISOString() });
-      var next = String(CFG.landerNext || 'fit/');
+      post({ stage: 'email_capture', email: v, page_url: location.href, cta: form.getAttribute('data-ec') || '',
+             utm_source: utm.utm_source || '', utm_medium: utm.utm_medium || '', utm_campaign: utm.utm_campaign || '',
+             utm_term: utm.utm_term || '', utm_content: utm.utm_content || '', gclid: utm.gclid || '', fbclid: utm.fbclid || '',
+             referrer: doc.referrer, bot_flag: bot ? 'true' : 'false', bot_reason: bot, submitted_at: new Date().toISOString() });
+      var next = String(CFG.landerNext || 'L1/');
       var lander = doc.body.getAttribute('data-lander') || location.pathname, cta = form.getAttribute('data-ec') || '';
-      if (/^fit[0-9]*\//.test(next)) {   // fit/ (Funnel 4) or fit5/ (Funnel 5)
+      if (/^(L[0-9]+|fit[0-9]*)\//.test(next)) {   // the qualifying form (L1/)
         /* Going to the qualifying form: its tracking gate decides whether this event fires (AUM $50M+ only). */
         try { sessionStorage.setItem('ab_email_capture_pending', JSON.stringify({ lander: lander, cta: cta })); } catch (x) {}
       } else {

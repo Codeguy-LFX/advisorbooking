@@ -11,11 +11,31 @@ Static marketing site for Advisor Booking (De Jesus Ventures LLC). No build step
 | `pilot.html` | `/pilot` | Hidden founding-offer landing page for email and LinkedIn outreach (gated form, then the iClosed calendar). `noindex`, not linked from the nav. |
 | `meetings.html` | `/meetings` | Hidden v1 landing page, kept for later use. `noindex`. |
 | `founding-sprint.html` | `/founding-sprint` | Founding Sprint sales page (hidden lander for outreach). `noindex`, not linked from the nav, not in the sitemap. |
-| `booked.html` | `/booked` | Booking confirmation. iClosed sends people here after they book; it records the booking. `noindex`. |
+| `L1/index.html` | `/L1/` | The qualifying funnel: six screens, then the iClosed calendar in the same card. `noindex`. See below. |
+| `booked.html` | `/booked` | Booking confirmation with next steps. iClosed sends people here after they book; it records the booking (CRM post, GTM `ab_booked`, Meta `Schedule` for qualified leads). `noindex`. |
+| `fit/`, `fit5/` | `/fit/`, `/fit5/` | Old funnel links: forward to `/L1/` with the query string (campaign tags) intact. |
 | `privacy.html`, `terms.html` | `/privacy`, `/terms` | Privacy Policy and Terms of Use |
 | `404.html` | | Not-found page |
 
 GitHub Pages serves `page.html` at `/page`, so the clean URLs above work without redirects.
+
+## The /L1 funnel
+
+One funnel (Funnels 1 to 4 were retired on Nov 8, 2026). Engine: `assets/funnel.js`; layout: `assets/qf.css`; questions,
+rules and settings: the `window.AB_APPLY` block at the top of `L1/index.html`.
+
+- Six screens: RIA status, role, AUM, advisors' calendars, new assets in the last 12 months, contact (with the required
+  calls/texts/voicemail consent box). Then the iClosed event (`iclosedUrlFit5`) opens in the same card, prefilled.
+- Nobody is turned away: every lead gets the calendar. Each lead is labeled: route `main` (qualified), `triage`
+  (qualified edge case), or `dq` with `dq_reasons` (not an advisor, broker-dealer or wirehouse, AUM under $50M, new
+  assets under $10M).
+- Tracking: only qualified leads (independent or hybrid RIA, $50M+ AUM, $10M+ new assets) send anything to GTM or the
+  Meta Pixel, and only after the contact screen is submitted: GTM loads then, the held `ab_*` events are released,
+  and Meta gets `Lead` (and `Schedule` on booking). Unqualified leads send nothing to either.
+- CRM: `ghlWebhookUrl` gets two form-encoded posts per lead: `stage=complete` (all answers, contact details,
+  qualified, dq_reasons, consent text and time, campaign tags) and `stage=booked` (from `/booked`).
+- Landers (`/v2/`): the email-first button goes to `landerNext` (`L1/`) with the email prefilled.
+- Settings in `assets/config.js`: `ghlWebhookUrl`, `metaPixelId`, `gtmId`, `iclosedUrlFit5`.
 
 ## Editing the site
 
@@ -26,7 +46,7 @@ Numbers, IDs, and contact details live in **`assets/config.js`**. It is the only
 - Meta Pixel and LinkedIn tag IDs (empty = the tags are not loaded; they are also never loaded when a browser sends a Global Privacy Control signal)
 - the contact email (`info@advisorbooking.com`), entity, city
 
-The home page (`index.html`) carries its own styles and script inline, plus `assets/vendor/lenis.min.js` (Lenis 1.1.13, MIT, license in `assets/vendor/LENIS-LICENSE.txt`) for smooth wheel scrolling. It keeps the same attribution rules as `assets/site.js`: campaign tags are stored for the visit and added, with a `src` label, to every link to `book.html`, and ad tags load only when their IDs are set. The other pages still use `assets/styles.css` and `assets/site.js`.
+The home page (`index.html`) carries its own styles and script inline. Scrolling is the browser's own (the Lenis smooth-scroll library was removed on Nov 8, 2026: it made the wheel lag; `assets/vendor/lenis.min.js` is no longer loaded). It keeps the same attribution rules as `assets/site.js`: campaign tags are stored for the visit and added, with a `src` label, to every link to `book.html`, and ad tags load only when their IDs are set. The other pages still use `assets/styles.css` and `assets/site.js`.
 
 The landing pages read page-specific settings (fit questions, exit copy, form version) from a `window.AB_LP` block at the top of each page; `assets/lp.js` merges it over its defaults.
 

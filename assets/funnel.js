@@ -61,6 +61,13 @@
     // see gtm.js) waits until all of them are answered. All at or above min: released in order. Any below: dropped,
     // and tracking stays off for this person (S.track = 'off', which gtm.js, site.js and /booked also respect).
     TRACK_GATE: null,
+    // Meta Pixel (AB_CONFIG.metaPixelId), fired from this page for these dataLayer events, only when the tracking
+    // gate has passed: { ab_lead: 'Lead', ab_booked: 'Schedule' }. Empty = no pixel from the form.
+    PIXEL_EVENTS: null,
+    // Which stages are posted to AB_CONFIG.ghlWebhookUrl: null = every screen ('step') and the end ('complete');
+    // ['complete', 'booked'] = once when the form is finished and once when a call is booked.
+    WEBHOOK_STAGES: null,
+    UTM_TERM_PREFIX: 'apply-',   // the route tag passed to the scheduler as utm_term (when the link has none)
     PREFILL_KEYS: ['email', 'first', 'last', 'firm'],
     // The calendar inside the card: { routes: ['main'], url_key: 'iclosedUrlFit5', short_key, short_routes: ['triage'],
     // title: 'Pick a time for your call{first}.', sub }. url_key/short_key name AB_CONFIG entries (the iClosed event
@@ -160,22 +167,35 @@
   }
   function send(stage, extra) {
     var url = F.WEBHOOK_URL;
-    if (!url || typeof fetch !== 'function') return;
-    var bot = botFlag();
+    if (!url) return;
+    if (F.WEBHOOK_STAGES && F.WEBHOOK_STAGES.indexOf(stage) === -1) return;
+    var bot = botFlag(), a = S.answers, L = S.labels || {}, d = digits(a.phone), q = qualified();
     var p = {
-      submission_id: S.sid, stage: stage, route: S.route || '', source: F.SOURCE, form_version: F.FORM_VERSION,
-      answers: S.answers, answer_labels: S.labels, route_reason: S.route_reason || '',
-      sms_consent: !!S.answers.sms_optin, consent_text: S.consent_text,
-      consent_text_version: F.CONSENT_TEXT_VERSION, utm: utm, page_url: location.href, referrer: doc.referrer,
-      started_iso: new Date(S.started).toISOString(), ts_iso: new Date().toISOString(),
+      stage: stage, submission_id: S.sid, form: F.SOURCE, form_version: F.FORM_VERSION,
+      first_name: a.first || '', last_name: a.last || '', full_name: [a.first, a.last].filter(Boolean).join(' '),
+      email: a.email || '', phone: d.length === 10 ? '+1' + d : (a.phone || ''),
+      qualified: q === null ? '' : (q ? 'yes' : 'no'), dq_reasons: dqReasons().join(', '),
+      route: S.route || '', route_reason: S.route_reason || '',
+      sms_consent: a.sms_optin ? 'yes' : 'no', consent_text: S.consent_text || '', consent_version: F.CONSENT_TEXT_VERSION,
+      consent_at: S.consent_at || '',
+      page_url: location.href, referrer: doc.referrer, user_agent: navigator.userAgent || '',
+      started_at: new Date(S.started).toISOString(), submitted_at: new Date().toISOString(),
       bot_flag: bot ? 'true' : 'false', bot_reason: bot, test_mode: F.TEST_MODE ? 'true' : 'false'
     };
-    if (extra) Object.keys(extra).forEach(function (k) { p[k] = extra[k]; });
-    var body = JSON.stringify(p);
-    try {
-      fetch(url, { method: 'POST', keepalive: true, body: body, headers: { 'Content-Type': 'application/json' } })
-        .catch(function () { try { fetch(url, { method: 'POST', mode: 'no-cors', keepalive: true, body: body }).catch(function () {}); } catch (e) {} });
-    } catch (e) {}
+    // every choice answer by question id, as the words the person picked (firm_type, role, aum, advisors, growth...)
+    Q.forEach(function (x) { if (x.type === 'choice') p[x.id] = L[x.id] === undefined ? '' : [].concat(L[x.id]).join(', '); });
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'].forEach(function (k) { p[k] = utm[k] || ''; });
+    p.answers_json = JSON.stringify(a);
+    if (extra) Object.keys(extra).forEach(function (k) { var v = extra[k]; p[k] = v && typeof v === 'object' ? JSON.stringify(v) : v; });
+    postForm(url, p);
+  }
+  /* Form-encoded POST: a "simple" cross-site request (no preflight), so it is delivered even though the CRM sends no
+     CORS headers, and sendBeacon lets it finish while the page changes. */
+  function postForm(url, p) {
+    var body = new URLSearchParams();
+    Object.keys(p).forEach(function (k) { body.append(k, p[k] === undefined || p[k] === null ? '' : String(p[k])); });
+    try { if (navigator.sendBeacon && navigator.sendBeacon(url, body)) return; } catch (e) {}
+    try { fetch(url, { method: 'POST', mode: 'no-cors', keepalive: true, body: body }).catch(function () {}); } catch (e) {}
   }
 
   /* ---------- routing ---------- */
@@ -196,6 +216,19 @@
     var any = r.any || [];
     for (var j = 0; j < any.length; j++) if (cond(any[j])) return { route: r.route, reason: r.reason || (any[j][0] + '=' + any[j][1]), qid: any[j][0] };
     return null;
+  }
+  /* Qualified = every TRACK_GATE condition passes. dq_reasons = every 'dq' rule that matches (all of them, not only
+     the first). */
+  function qualified() {
+    var list = F.TRACK_GATE ? [].concat(F.TRACK_GATE) : []; if (!list.length) return null;
+    var st = list.map(condState);
+    if (st.indexOf('fail') > -1) return false;
+    return st.indexOf('wait') > -1 ? null : true;
+  }
+  function dqReasons() {
+    var out = [];
+    F.RULES.forEach(function (r) { if (r.route === 'dq') { var hit = ruleHit(r); if (hit && out.indexOf(hit.reason) === -1) out.push(hit.reason); } });
+    return out;
   }
   function route() {
     for (var i = 0; i < F.RULES.length; i++) { var hit = ruleHit(F.RULES[i]); if (hit) return hit; }
@@ -390,7 +423,7 @@
       }
       Object.keys(vals).forEach(function (k) { S.answers[k] = vals[k]; });
       (q.fields || []).forEach(function (f) {
-        if (f.type === 'checkbox') { var l = $('apl-' + f.id); S.consent_text = l ? (l.innerText || l.textContent || '').replace(/\s+/g, ' ').trim() : ''; }
+        if (f.type === 'checkbox') { var l = $('apl-' + f.id); S.consent_text = l ? (l.innerText || l.textContent || '').replace(/\s+/g, ' ').trim() : ''; S.consent_at = vals[f.id] ? new Date().toISOString() : ''; }
       });
       answer(q, null, i);
     });
@@ -401,7 +434,7 @@
   function answer(q, value, i) {
     if (!S.sid) S.sid = uuid();
     if (value !== null) { S.answers[q.id] = value; if (q.type === 'choice') S.labels[q.id] = labelFor(q, value); }
-    gate(q, value);
+    gate();
     save();
     send('step', { step_id: q.id, step_index: i + 1, step_total: Q.length });
     track('step', { step_id: q.id, step_index: counted(i) + 1,
@@ -475,28 +508,60 @@
     var ev = { event: name.indexOf('ab_') === 0 ? name : 'ab_' + name, ab_form: F.SOURCE, ab_form_version: F.FORM_VERSION, ab_submission_id: S.sid || '' };
     if (data) Object.keys(data).forEach(function (k) { if (data[k] !== undefined) ev['ab_' + k] = data[k]; });
     if (S.track === 'pending') { pending.push(ev); return; }
-    try { (window.dataLayer = window.dataLayer || []).push(ev); } catch (e) {}
+    emit(ev);
   }
-  /* The tracking gate (TRACK_GATE): one condition { id, min } or a list of them. Events wait until every gate question
-     is answered. All at or above their minimum: the held events are released in order and GTM loads. Any below:
-     nothing is sent for this person from here on. Answering again (Back) re-checks it. */
-  function gate(q, value) {
-    var G = F.TRACK_GATE;
-    if (!G) return;
-    var list = [].concat(G);
-    if (!list.some(function (g) { return g.id === q.id; })) return;
-    var fail = false, waiting = false;
-    list.forEach(function (g) {
-      var a = S.answers[g.id];
-      if (a === undefined || a === null || a === '') waiting = true;
-      else if (typeof a !== 'number' || a < g.min) fail = true;
-    });
-    if (fail) { S.track = 'off'; save(); return; }   // held events stay held: a corrected answer (Back) releases them
-    if (waiting) { if (S.track === 'off') S.track = 'pending'; save(); return; }
+  /* The tracking gate (TRACK_GATE): a list of conditions, each { id, min } (a number at or above min), { id, in: [...] }
+     (one of these values) or { id, present: true } (answered at all, e.g. the contact step's email). Every event (and
+     GTM, and the pixel) waits until all of them are answered. All pass: the held events are released in order and GTM
+     loads. Any fails: nothing is sent for this person from here on (S.track = 'off'). Checked after every answer, so a
+     corrected answer (Back) can still turn it on. */
+  function condState(g) {
+    var a = S.answers[g.id];
+    if (a === undefined || a === null || a === '') return 'wait';
+    if (g.present) return 'pass';
+    if (g.in) return g.in.indexOf(a) > -1 ? 'pass' : 'fail';
+    if (typeof g.min === 'number') return typeof a === 'number' && a >= g.min ? 'pass' : 'fail';
+    return 'pass';
+  }
+  function gate() {
+    if (!F.TRACK_GATE) return;
+    var st = [].concat(F.TRACK_GATE).map(condState);
+    if (st.indexOf('fail') > -1) { S.track = 'off'; save(); return; }   // held events stay held: a corrected answer releases them
+    if (st.indexOf('wait') > -1) { if (S.track === 'off') S.track = 'pending'; save(); return; }
     var was = S.track; S.track = 'on'; save();
     var held = pending; pending = [];
-    held.forEach(function (ev) { if (!ev.ab_submission_id) ev.ab_submission_id = S.sid || ''; try { (window.dataLayer = window.dataLayer || []).push(ev); } catch (e) {} });
+    held.forEach(function (ev) { if (!ev.ab_submission_id) ev.ab_submission_id = S.sid || ''; emit(ev); });
     if (was !== 'on' && typeof window.AB_LOAD_GTM === 'function') window.AB_LOAD_GTM();
+  }
+  function emit(ev) {
+    try { (window.dataLayer = window.dataLayer || []).push(ev); } catch (e) {}
+    var px = F.PIXEL_EVENTS && F.PIXEL_EVENTS[ev.event];
+    if (px) pixel(px);
+  }
+  /* Meta Pixel from the form page: loaded on the first mapped event, only for someone the gate passed, never with a
+     Global Privacy Control signal. Advanced matching from the contact step (Meta hashes these in the browser). */
+  var pixelOn = false;
+  function pixel(name) {
+    var id = String(AB.metaPixelId || '').trim();
+    if (!id || S.track !== 'on' || navigator.globalPrivacyControl) return;
+    if (!pixelOn) {
+      pixelOn = true;
+      if (!window.fbq) {
+        !function (f, b, e, v, n, t, x) {
+          if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+          if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = [];
+          t = b.createElement(e); t.async = !0; t.src = v; x = b.getElementsByTagName(e)[0]; x.parentNode.insertBefore(t, x);
+        }(window, doc, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+      }
+      var a = S.answers, d = digits(a.phone), m = {};
+      if (a.email) m.em = String(a.email).trim().toLowerCase();
+      if (d.length === 10) m.ph = '1' + d;
+      if (a.first) m.fn = String(a.first).trim().toLowerCase();
+      if (a.last) m.ln = String(a.last).trim().toLowerCase();
+      if (S.sid) m.external_id = S.sid;
+      window.fbq('init', id, m); window.fbq('track', 'PageView');
+    }
+    window.fbq('track', name, { content_name: F.SOURCE }, { eventID: (S.sid || 'ab') + '-' + name.toLowerCase() });
   }
 
   function finish(r) {
@@ -558,7 +623,7 @@
     if (a.email) u.searchParams.set('iclosedEmail', a.email);
     if (d.length === 10) u.searchParams.set('iclosedPhone', '+1' + d);
     if (a.firm) u.searchParams.set('company', a.firm);
-    u.searchParams.set('utm_term', u.searchParams.get('utm_term') || ('apply-' + route));
+    u.searchParams.set('utm_term', u.searchParams.get('utm_term') || ((F.UTM_TERM_PREFIX || 'apply-') + route));
     return u.toString();
   }
   function warmBooking() {

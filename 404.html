@@ -12,6 +12,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/styles.css">
+<script>/* /l1 (lowercase) or /L1 without the slash: go to the form at /L1/, keeping the campaign tags. */
+if (/^\/l1(\/|\/index\.html)?$/i.test(location.pathname) && location.pathname.indexOf('/L1/') !== 0) location.replace('/L1/' + location.search + location.hash);</script>
 </head>
 <body>
 <main id="main">
