@@ -15,6 +15,9 @@ Static marketing site for Advisor Booking (De Jesus Ventures LLC). No build step
 | `L1/Q/index.html`, `L1/DQ/index.html` | `/L1/Q/`, `/L1/DQ/` | The booking page (iClosed calendar, prefilled). Identical, except `Q/` carries the Meta pixel and fires one `Lead` event. `noindex`. |
 | `booked.html` | `/booked` | Booking confirmation with next steps. iClosed sends people here after they book; it records the booking (CRM post, GTM `ab_booked` for qualified leads). `noindex`. |
 | `fit/`, `fit5/` | `/fit/`, `/fit5/` | Old funnel links: forward to `/L1/` with the query string (campaign tags) intact. |
+| `v2/index.html` | `/v2/` | The home lander (hero with the rotating word, email-first "Book intro call" box). `noindex`: a variant of `/`. Generated. |
+| `v2/blog/` | `/v2/blog/` + 3 posts | Value-only posts from Nick's emails (no CTA in the text, no pricing, no claims), indexable, with BlogPosting, FAQPage and BreadcrumbList data and sitemap entries. Generated. |
+| `v2/methodology.html` | `/v2/methodology` | Retired Nov 8, 2026: forwards to `/v2/`. The three original post URLs forward to `/v2/blog/`. |
 | `privacy.html`, `terms.html` | `/privacy`, `/terms` | Privacy Policy and Terms of Use |
 | `404.html` | | Not-found page |
 
@@ -38,7 +41,10 @@ rules and settings: the `window.AB_APPLY` block at the top of `L1/index.html`.
   submission) and `/booked` (`ab_booked`, qualified leads only). The form page and `/L1/DQ/` do not include it.
 - CRM: `ghlWebhookUrl` gets two form-encoded posts per lead: `stage=complete` (all answers, contact details,
   qualified, dq_reasons, consent text and time, campaign tags) and `stage=booked` (from `/booked`).
-- Landers (`/v2/`): the email-first button goes to `landerNext` (`L1/`) with the email prefilled.
+- Landers (`/v2/`): the email-first button goes to `landerNext` (`L1/`) with the email prefilled. The v2 pages load
+  `assets/lander-lite.css` (the 2 KB of `lp.css` they use) instead of `lp.css`. v2 copy rules (Nov 8, 2026): say
+  "Compliance Team", never CCO; no pricing anywhere; only what we do (nothing against ads or other channels); the
+  generator's lint fails the build on any of these.
 - Settings in `assets/config.js`: `ghlWebhookUrl`, `metaPixelLeadId`, `gtmId`, `iclosedUrlFit5`.
 
 ## Editing the site

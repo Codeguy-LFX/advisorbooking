@@ -41,11 +41,14 @@
     var err = form.parentNode.querySelector('.ec__err');
     function bad(on) { form.classList.toggle('is-bad', on); if (err) err.hidden = !on; input.setAttribute('aria-invalid', on ? 'true' : 'false'); }
     input.addEventListener('input', function () { if (form.classList.contains('is-bad') && emailOk(input.value.trim())) bad(false); });
+    var sent = false;
+    window.addEventListener('pageshow', function (ev) { if (ev.persisted && sent) { sent = false; if (btn) { btn.disabled = false; btn.classList.remove('is-wait'); var l0 = btn.querySelector('span'); if (l0) l0.textContent = 'Book intro call'; } } });
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      if (sent) return;   // a second Enter or tap while the page is leaving
       var v = input.value.trim();
       if (!emailOk(v)) { bad(true); input.focus(); return; }
-      bad(false);
+      bad(false); sent = true;
       var hp = form.querySelector('input[name=website]');
       var bot = (hp && hp.value) ? 'honeypot' : ((Date.now() - T0) < 2000 ? 'too_fast' : '');
       var pre = {}; try { pre = JSON.parse(sessionStorage.getItem('ab_prefill') || '{}') || {}; } catch (x) {}
@@ -62,7 +65,7 @@
       } else {
         push({ event: 'ab_email_capture', ab_lander: lander, ab_cta: cta });
       }
-      if (btn) { btn.classList.add('is-wait'); var l = btn.querySelector('span'); if (l) l.textContent = 'One moment...'; }
+      if (btn) { btn.disabled = true; btn.classList.add('is-wait'); var l = btn.querySelector('span'); if (l) l.textContent = 'One moment...'; }
       setTimeout(function () { location.href = /^https?:/.test(next) ? next : ROOT + next; }, 250);
     });
   });
@@ -73,17 +76,32 @@
     if (!a) return;
     var id = (a.getAttribute('href') || '').replace(/^#/, ''), box = id && doc.getElementById(id);
     var input = box && box.querySelector('input[type=email]');
-    if (input) setTimeout(function () { try { input.focus({ preventScroll: true }); } catch (x) { input.focus(); } }, 700);
+    if (!input) return;
+    Array.prototype.forEach.call(box.querySelectorAll('[data-rv]'), function (x) { x.classList.remove('pre'); });   // no fade-in to wait for
+    if (box.hasAttribute('data-rv')) box.classList.remove('pre');
+    var last = -1, still = 0, t0 = Date.now();
+    (function settle() {   // focus once the page has stopped moving (smooth scroll), or after 2.5 s at most
+      var y = window.scrollY;
+      if (y === last) still++; else { still = 0; last = y; }
+      if (still >= 3 || Date.now() - t0 > 2500) { try { input.focus({ preventScroll: true }); } catch (x) { input.focus(); } return; }
+      requestAnimationFrame(settle);
+    })();
   });
 
   /* ---------- rotating word in the hero ---------- */
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   Array.prototype.forEach.call(doc.querySelectorAll('.rot'), function (rot) {
+    var extra = [];
+    try { extra = JSON.parse(rot.getAttribute('data-words') || '[]') || []; } catch (x) {}
+    extra.forEach(function (w) { var s = doc.createElement('span'); s.className = 'rot__w'; s.setAttribute('aria-hidden', 'true'); s.textContent = w; rot.appendChild(s); });
     var words = rot.querySelectorAll('.rot__w');
     if (!words.length) return;
     var i = 0; words[0].classList.add('is-on');
     if (reduce || words.length < 2) { rot.classList.add('rot--static'); return; }
+    var visible = true;
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(rot);
     setInterval(function () {
+      if (doc.hidden || !visible) return;   // nothing to animate when nobody can see it
       var cur = words[i]; i = (i + 1) % words.length; var nx = words[i];
       cur.classList.remove('is-on'); cur.classList.add('is-out');
       nx.classList.remove('is-out'); nx.classList.add('is-on');

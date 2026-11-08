@@ -1,0 +1,26 @@
+/* The lp.css rules the /v2/ landers use (variables, resets, the email form, the guarantee block). Generated from lp.css on Nov 8, 2026;
+   lp.css itself stays for /pilot and /meetings. */
+.lp [hidden]{display:none!important}
+.lp-hp{position:absolute!important;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden}
+.lp #book,.lp #how,.lp #faq,.lp #cost{scroll-margin-top:92px}
+from{opacity:0;transform:translateY(8px)}
+to{opacity:1;transform:none}
+.lp-field.invalid input,.lp-field.invalid select{border-color:#C0392B}
+.lp-field.invalid .lp-err,.lp-consent.invalid .lp-err{display:block}
+.lp-consent.invalid label{color:#B03023}
+.lp-sec-head{text-align:center;max-width:680px;margin:0 auto 52px}
+.lp-sec-head .sub{margin-top:14px}
+.lp-plist{display:grid;gap:11px;margin:0 0 24px;flex:1}
+.lp-plist li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:var(--ink);line-height:1.45}
+.lp-guar{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;max-width:960px;margin:0 auto}
+.lp-guar__quote{margin:0;background:var(--ink);color:#fff;border-radius:12px;padding:34px 32px;display:flex;flex-direction:column;gap:14px;font-size:17px;line-height:1.55}
+.lp-guar__quote p{margin:0}
+.lp-guar__quote footer{margin-top:auto;padding-top:14px;font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-bright)}
+.lp-guar__terms{background:#fff;border:1px solid var(--line);border-radius:12px;padding:34px 32px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:14px}
+.lp-guar__terms h3{font-family:var(--font-display);font-size:22px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin:0;line-height:1.2}
+.lp-guar__terms>p{color:var(--muted);font-size:15px;margin:0}
+.lp-guar__terms .lp-plist{margin:0}
+.lp-guar__close{font-weight:600;color:var(--ink)!important;border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:900px){.lp-guar{grid-template-columns:1fr}}
+@media (max-width:560px){.lp-guar__quote,.lp-guar__terms{padding:26px 20px}}
+.lp-tick{flex:0 0 22px;width:22px;height:22px;border-radius:4px;background:var(--accent-tint);display:inline-flex;align-items:center;justify-content:center;margin-top:1px}

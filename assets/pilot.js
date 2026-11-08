@@ -21,21 +21,28 @@
 
     doc.addEventListener('click', function (e) {
       var a = e.target.closest ? e.target.closest('a[href^="#"]') : null; if (!a) return;
+      if (a.classList.contains('skip-link')) return;   // the browser handles the skip link, so focus really moves
       var id = a.getAttribute('href').slice(1), t = id ? doc.getElementById(id) : null; if (!t) return;
       e.preventDefault();
       var off = id === 'top' ? 0 : -((nav ? nav.offsetHeight : 64) + 24);
       window.scrollTo({ top: id === 'top' ? 0 : t.getBoundingClientRect().top + window.scrollY + off, behavior: reduce ? 'auto' : 'smooth' });
+      if (id !== 'top') {   // keyboard and screen-reader users arrive at the target, and the URL keeps the anchor
+        if (!t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1');
+        try { t.focus({ preventScroll: true }); } catch (x) {}
+        try { history.replaceState(history.state, '', '#' + id); } catch (x) {}
+      }
     });
 
     /* Reveal: only items below the first screen start hidden */
     var rv = $$('[data-rv]');
     if ('IntersectionObserver' in window && !reduce) {
       var vh0 = window.innerHeight;
-      rv.forEach(function (el) { if (el.getBoundingClientRect().top > vh0 * 0.92) el.classList.add('pre'); });
+      rv.forEach(function (el) { if (el.getBoundingClientRect().top > vh0 * 0.98) el.classList.add('pre'); });   // anything already on screen stays put
       var io = new IntersectionObserver(function (es) {
         es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.remove('pre'); io.unobserve(e.target); } });
-      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      }, { rootMargin: '0px 0px -2% 0px', threshold: 0.05 });
       rv.forEach(function (el) { if (el.classList.contains('pre')) io.observe(el); });
+      window.addEventListener('beforeprint', function () { rv.forEach(function (el) { el.classList.remove('pre'); }); });   // a printout shows everything
     }
 
     /* Count up two of the stats once */
@@ -53,19 +60,20 @@
 
     /* FAQ: smooth open and close */
     $$('.qa details').forEach(function (d) {
-      var sum = $('summary', d), body = $('.qa__a', d), anim = null;
+      var sum = $('summary', d), body = $('.qa__a', d), anim = null, closing = false;
       if (!sum || !body) return;
       sum.addEventListener('click', function (e) {
         if (reduce || !body.animate) return;
         e.preventDefault();
-        if (anim) anim.cancel();
-        if (d.open) {
-          var h = body.offsetHeight;
-          anim = body.animate([{ height: h + 'px', opacity: 1 }, { height: '0px', opacity: 0 }], { duration: 420, easing: 'cubic-bezier(.16,1,.3,1)' });
-          anim.onfinish = function () { d.open = false; anim = null; };
-        } else {
-          d.open = true; var h2 = body.offsetHeight;
-          anim = body.animate([{ height: '0px', opacity: 0 }, { height: h2 + 'px', opacity: 1 }], { duration: 520, easing: 'cubic-bezier(.16,1,.3,1)' });
+        var h0 = d.open ? body.offsetHeight : 0;   // where it is right now, even mid-animation
+        if (anim) { anim.cancel(); anim = null; }
+        if (d.open && !closing) {
+          closing = true;
+          anim = body.animate([{ height: h0 + 'px', opacity: 1 }, { height: '0px', opacity: 0 }], { duration: 420, easing: 'cubic-bezier(.16,1,.3,1)' });
+          anim.onfinish = function () { d.open = false; closing = false; anim = null; };
+        } else {   // open, or reopen while it was still closing
+          closing = false; d.open = true; var h2 = body.offsetHeight;
+          anim = body.animate([{ height: h0 + 'px', opacity: h0 ? 0.5 : 0 }, { height: h2 + 'px', opacity: 1 }], { duration: 520, easing: 'cubic-bezier(.16,1,.3,1)' });
           anim.onfinish = function () { anim = null; };
         }
       });
