@@ -47,14 +47,14 @@
 <script>
 /* Show the reason for this outcome from the answers saved in this browser (no network). */
 (function () {
-  var R = {"budget": {"h": "Not right now is a fine answer.", "p": ["Your firm may be a good fit later. Two free ways to keep going until then:"]}, "one_time": {"h": "We only run this as an ongoing system.", "p": ["The Founding Sprint starts with 3 cycles, about 90 days, because the list, the replies and the follow-up need that long to work. A one-time campaign doesn&rsquo;t give them the time.", "If you want to keep learning in the meantime:"]}, "researching": {"h": "No rush.", "p": ["When you&rsquo;re ready to start, apply again. Until then, two free ways to keep going:"]}, "_default": {"h": "Not right now is a fine answer.", "p": ["Two free ways to keep going until then:"]}};
+  var R = {"budget": {"h": "Not right now is a fine answer.", "p": ["Your firm may be a good fit later. Two free ways to keep going until then:"]}, "one_time": {"h": "We only run this as an ongoing system.", "p": ["We start with 3 cycles, about 90 days, because the list, the replies and the follow-up need that long to work. A one-time campaign doesn&rsquo;t give them the time.", "If you want to keep learning in the meantime:"]}, "researching": {"h": "No rush.", "p": ["When you&rsquo;re ready to start, apply again. Until then, two free ways to keep going:"]}, "_default": {"h": "Not right now is a fine answer.", "p": ["Two free ways to keep going until then:"]}};
   var st = null; try { st = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); } catch (e) {}
   var key = (st && st.route_reason) || '_default'; var d = R[key] || R._default;
   document.getElementById('oH').innerHTML = d.h;
   document.getElementById('oP').innerHTML = d.p.map(function (x) { return '<p>' + x + '</p>'; }).join('');
   var n = document.getElementById('oNext'); if (n) { if (d.next) n.innerHTML = d.next; else n.hidden = true; }
   var first = st && st.answers && st.answers.first; if (first && key !== 'not_advisor') document.getElementById('oHi').textContent = 'Thanks, ' + String(first).split(/\s+/)[0] + '.';
-  try { (window.dataLayer = window.dataLayer || []).push({ event: 'ab_outcome_view_nurture', ab_route_reason: key, ab_submission_id: (st && st.sid) || '' }); } catch (e) {}
+  if (!(st && st.track === 'off')) try { (window.dataLayer = window.dataLayer || []).push({ event: 'ab_outcome_view_nurture', ab_route_reason: key, ab_submission_id: (st && st.sid) || '' }); } catch (e) {}
 })();
 </script>
 </body>

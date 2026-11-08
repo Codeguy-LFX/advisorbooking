@@ -118,6 +118,8 @@
   /* 4. Tracking ----------------------------------------------------------- */
   function initTracking() {
     if (navigator.globalPrivacyControl) return;   /* honor GPC: no advertising pixels for this visit */
+    /* No pixels for someone the qualifying form's tracking gate turned off (Funnel 4: under $50M AUM). */
+    try { var abs = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); if (abs && abs.track === 'off') return; } catch (e) {}
     if (CFG.metaPixelId) {
       /* Standard Meta Pixel base code */
       !function (f, b, e, v, n, t, s) {

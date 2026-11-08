@@ -44,7 +44,7 @@
             <p>It&rsquo;s a fit check both ways. If it doesn&rsquo;t look right for you at any point, cancel. No hard feelings. <span class="todo-tag">Cancel/reschedule link</span></p>
           </div>
           <div class="qf-card">
-            <p><b style="color:var(--ink)">What it costs:</b> the Founding Sprint is $5,000 every 4 weeks for 3 cycles. No setup fee. No per-meeting fee.</p>
+            <p><b style="color:var(--ink)">What it costs:</b> $5,000 every 4 weeks, starting with 3 cycles. No setup fee. No per-meeting fee.</p>
             <p>In your first 90 days from launch, we commit to at least 15 attended, qualified meetings that match your written criteria. If we're short, we keep working at our cost (no operating fee) until you've taken 15 such meetings.</p>
           </div>
         </div>
@@ -129,7 +129,8 @@
   if (lp) {
     try { lp.booked = true; lp.stage = 'booked'; lp.firstName = lp.firstName || ((lp.answers && lp.answers.first) || ''); lp.answers = {}; localStorage.setItem(lpKey, JSON.stringify(lp)); } catch (e) {}
   }
-  try { (window.dataLayer = window.dataLayer || []).push({ event: 'ab_booked', ab_route: payload.route, ab_tier: payload.tier, ab_submission_id: payload.sid }); } catch (e) {}
+  var trackOff = !!(lp && lp.track === 'off');   /* Funnel 4 tracking gate: under $50M AUM, no GTM event and no pixels */
+  if (!trackOff) { try { (window.dataLayer = window.dataLayer || []).push({ event: 'ab_booked', ab_route: payload.route, ab_tier: payload.tier, ab_submission_id: payload.sid }); } catch (e) {} }
   var url = CFG.ghlWebhookUrl || '';
   if (url) {
     var body = JSON.stringify(payload);
@@ -139,7 +140,7 @@
     } catch (e) {}
   }
   function fire() {
-    if (navigator.globalPrivacyControl) return;
+    if (navigator.globalPrivacyControl || trackOff) return;
     /* Same rule as the landing pages: only a qualified request counts as an ad conversion. */
     if (lp && lp.tier && lp.tier !== 'qualified') return;
     if (typeof window.fbq === 'function') { try { window.fbq('track', 'Schedule'); } catch (e) {} }

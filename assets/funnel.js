@@ -55,6 +55,10 @@
     // Prefill from the lander's email capture (sessionStorage ab_prefill) and from ?email=&first=&last=&firm= links
     // (e.g. a cold email). URL values are removed from the address bar at once, so they never sit in history.
     PREFILL: false,
+    // Tracking gate: { id: 'aum', min: 50000000 } holds every dataLayer event (and GTM itself, see gtm.js) until that
+    // question is answered. A value at or above min releases them in order; anything else drops them and keeps
+    // tracking off for this person (S.track = 'off', which gtm.js, site.js and /booked also respect).
+    TRACK_GATE: null,
     PREFILL_KEYS: ['email', 'first', 'last', 'firm'],
     TEST_MODE: false
   };
@@ -106,6 +110,8 @@
     }
   } catch (e) {}
   if (!S.labels) S.labels = {};
+  if (!S.track) S.track = F.TRACK_GATE ? 'pending' : 'on';
+  var pending = [];   // events held while the tracking gate is unanswered
   (function cleanUrl() {
     try {
       var u = new URL(location.href), changed = false, pre = {};
@@ -376,6 +382,7 @@
   function answer(q, value, i) {
     if (!S.sid) S.sid = uuid();
     if (value !== null) { S.answers[q.id] = value; if (q.type === 'choice') S.labels[q.id] = labelFor(q, value); }
+    gate(q, value);
     save();
     send('step', { step_id: q.id, step_index: i + 1, step_total: Q.length });
     track('step', { step_id: q.id, step_index: counted(i) + 1,
@@ -445,10 +452,25 @@
      ab_complete       the form ends (route, route_reason)  ab_route_<route>  one event per route (ab_route_main, ab_route_dq...)
      Contact details are never pushed: only step ids, choice answers and the route. */
   function track(name, data) {
-    if (F.TRACK === false) return;
+    if (F.TRACK === false || S.track === 'off') return;
     var ev = { event: name.indexOf('ab_') === 0 ? name : 'ab_' + name, ab_form: F.SOURCE, ab_form_version: F.FORM_VERSION, ab_submission_id: S.sid || '' };
     if (data) Object.keys(data).forEach(function (k) { if (data[k] !== undefined) ev['ab_' + k] = data[k]; });
+    if (S.track === 'pending') { pending.push(ev); return; }
     try { (window.dataLayer = window.dataLayer || []).push(ev); } catch (e) {}
+  }
+  /* The tracking gate (TRACK_GATE): answered at or above the minimum releases the held events and loads GTM;
+     below it, nothing is sent for this person from here on. Answering again (Back) re-checks it. */
+  function gate(q, value) {
+    var G = F.TRACK_GATE;
+    if (!G || q.id !== G.id) return;
+    if (typeof value === 'number' && value >= G.min) {
+      var was = S.track; S.track = 'on'; save();
+      var held = pending; pending = [];
+      held.forEach(function (ev) { if (!ev.ab_submission_id) ev.ab_submission_id = S.sid || ''; try { (window.dataLayer = window.dataLayer || []).push(ev); } catch (e) {} });
+      if (was !== 'on' && typeof window.AB_LOAD_GTM === 'function') window.AB_LOAD_GTM();
+    } else {
+      S.track = 'off'; pending = []; save();
+    }
   }
 
   function finish(r) {
@@ -506,6 +528,12 @@
     var n = (e.key || '').toUpperCase().charCodeAt(0) - 65;
     if (e.key && e.key.length === 1 && n >= 0 && n < q.options.length) { e.preventDefault(); var bs = body.querySelectorAll('.ap-opt'); if (bs[n]) bs[n].click(); }
   });
+
+  /* A lander's email-first CTA leaves its event here, so it obeys the tracking gate like every other event. */
+  try {
+    var ecp = sessionStorage.getItem('ab_email_capture_pending');
+    if (ecp) { sessionStorage.removeItem('ab_email_capture_pending'); var ecd = JSON.parse(ecp) || {}; track('email_capture', { lander: ecd.lander, cta: ecd.cta }); }
+  } catch (e) {}
 
   var start = Math.max(0, Math.min(S.step || 0, Q.length - 1));
   if (resumed) track('resume', { step_id: Q[start].id });

@@ -19,7 +19,9 @@
   try { new URLSearchParams(location.search).forEach(function (v, k) { if (/^utm_|^(gclid|fbclid|src|ref)$/.test(k)) utm[k] = v; }); } catch (e) {}
   try { sessionStorage.setItem('ab_utm', JSON.stringify(utm)); } catch (e) {}
 
-  function push(ev) { try { (window.dataLayer = window.dataLayer || []).push(ev); } catch (e) {} }
+  /* Nothing is pushed for someone the qualifying form's tracking gate turned off (Funnel 4: under $50M AUM). */
+  function trackOff() { try { var s = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); return !!(s && s.track === 'off'); } catch (e) { return false; } }
+  function push(ev) { if (trackOff()) return; try { (window.dataLayer = window.dataLayer || []).push(ev); } catch (e) {} }
   push({ event: 'ab_lander_view', ab_lander: doc.body.getAttribute('data-lander') || location.pathname });
 
   /* ---------- the email-first form ---------- */
@@ -50,9 +52,15 @@
       pre.email = v; try { sessionStorage.setItem('ab_prefill', JSON.stringify(pre)); } catch (x) {}
       post({ event: 'email_capture', stage: 'email_capture', email: v, page: location.pathname, cta: form.getAttribute('data-ec') || '',
              utm: utm, referrer: doc.referrer, bot_flag: bot ? 'true' : 'false', bot_reason: bot, ts_iso: new Date().toISOString() });
-      push({ event: 'ab_email_capture', ab_lander: doc.body.getAttribute('data-lander') || location.pathname, ab_cta: form.getAttribute('data-ec') || '' });
-      if (btn) { btn.classList.add('is-wait'); var l = btn.querySelector('span'); if (l) l.textContent = 'One moment...'; }
       var next = String(CFG.landerNext || 'fit/');
+      var lander = doc.body.getAttribute('data-lander') || location.pathname, cta = form.getAttribute('data-ec') || '';
+      if (/^fit[0-9]*\//.test(next)) {   // fit/ (Funnel 4) or fit5/ (Funnel 5)
+        /* Going to the qualifying form: its tracking gate decides whether this event fires (AUM $50M+ only). */
+        try { sessionStorage.setItem('ab_email_capture_pending', JSON.stringify({ lander: lander, cta: cta })); } catch (x) {}
+      } else {
+        push({ event: 'ab_email_capture', ab_lander: lander, ab_cta: cta });
+      }
+      if (btn) { btn.classList.add('is-wait'); var l = btn.querySelector('span'); if (l) l.textContent = 'One moment...'; }
       setTimeout(function () { location.href = /^https?:/.test(next) ? next : ROOT + next; }, 250);
     });
   });

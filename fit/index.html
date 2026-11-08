@@ -17,13 +17,17 @@
 <link rel="stylesheet" href="../assets/funnel.css">
 <link rel="stylesheet" href="../assets/qf.css">
 <script>window.AB_APPLY = {
- "FORM_VERSION": "ab-fit-f4-2026-11-08c",
+ "FORM_VERSION": "ab-fit-f4-2026-11-08d",
  "SOURCE": "advisorbooking-fit",
  "STORE_KEY": "ab_apply_v1",
  "CONSENT_TEXT_VERSION": "fit-2026-11-07-a",
  "ADVANCE": "tap",
  "LOCK_CONTINUE": "filled",
  "PREFILL": true,
+ "TRACK_GATE": {
+  "id": "aum",
+  "min": 50000000
+ },
  "QUALIFIED_ROUTE": [
   "priority",
   "main"
@@ -104,24 +108,28 @@
   {
    "id": "advisors",
    "type": "choice",
-   "q": "How many advisors take first meetings?",
-   "sub": "Count everyone who meets new prospects, including you.",
+   "q": "How many financial advisors\u2019 calendars do you need to fill with qualified appointments?",
+   "sub": "Count yourself if you take meetings too.",
    "options": [
     {
-     "label": "Just me",
+     "label": "1 to 2 advisors",
      "value": 1
     },
     {
-     "label": "2 to 4",
-     "value": 2
+     "label": "3 to 5 advisors",
+     "value": 3
     },
     {
-     "label": "5 to 10",
-     "value": 5
+     "label": "6 to 24 advisors",
+     "value": 6
     },
     {
-     "label": "11 or more",
-     "value": 11
+     "label": "25 to 49 advisors",
+     "value": 25
+    },
+    {
+     "label": "50 or more advisors",
+     "value": 50
     }
    ]
   },
@@ -129,7 +137,7 @@
    "id": "budget",
    "type": "choice",
    "q": "Does $5,000 every 4 weeks fit your growth budget?",
-   "sub": "That\u2019s the Founding Sprint: 3 cycles to start, about 90 days. No setup fee. No per-meeting fees.",
+   "sub": "The first term is 3 cycles, about 90 days. No setup fee. No per-meeting fees.",
    "options": [
     {
      "label": "Yes, that fits our budget",
@@ -319,7 +327,7 @@
    "id": "capacity",
    "type": "choice",
    "q": "Can one advisor take 8 or more new first meetings a month?",
-   "sub": "The Founding Sprint commits to at least 15 attended, qualified meetings in your first 90 days. Someone needs room for them.",
+   "sub": "We commit to at least 15 attended, qualified meetings in your first 90 days. Someone needs room for them.",
    "options": [
     {
      "label": "Yes",
@@ -499,7 +507,8 @@
      "advisors",
      [
       1,
-      11
+      25,
+      50
      ]
     ],
     [
@@ -554,8 +563,8 @@
     [
      "advisors",
      [
-      2,
-      5
+      3,
+      6
      ]
     ],
     [

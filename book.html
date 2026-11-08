@@ -56,7 +56,7 @@ if (/claudeusercontent\.com$|\.claude\.ai$/.test(location.hostname)) window.__AB
   var st = null; try { st = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); } catch (e) {}
   var first = st && st.answers && st.answers.first;
   if (first) document.getElementById('bookH').textContent = 'Pick a time for your call, ' + String(first).split(/\s+/)[0] + '.';
-  try { (window.dataLayer = window.dataLayer || []).push({ event: 'ab_booking_view', ab_call: c || 'main', ab_route: (st && st.route) || '', ab_submission_id: (st && st.sid) || '' }); } catch (e) {}
+  if (!(st && st.track === 'off')) try { (window.dataLayer = window.dataLayer || []).push({ event: 'ab_booking_view', ab_call: c || 'main', ab_route: (st && st.route) || '', ab_submission_id: (st && st.sid) || '' }); } catch (e) {}
 })();
 </script>
 </body>
