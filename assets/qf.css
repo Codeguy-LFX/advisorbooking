@@ -171,9 +171,13 @@ body.qf .ap-sub .ap-em{color:var(--ink);font-weight:700;font-size:15px;line-heig
    shape of the scheduler holds the space until iClosed's frame has loaded, so nothing jumps. */
 .ap-book .ap-q{margin-bottom:20px}
 .ap-book .ap-sub{margin-top:-8px}
-.ap-book__frame{position:relative;width:100%;height:calc(100vh - 230px);height:calc(100dvh - 230px);min-height:660px;border-radius:12px;overflow:hidden}
-.ap-book__frame .iclosed-widget{position:relative;z-index:1;width:100%;height:100%}
-.ap-book__frame iframe{display:block;width:100%;height:100%;border:0}
+/* No fixed height and nothing clipped: when iClosed's script sizes its frame to the form (taller on phones), the box
+   grows and the page scrolls as one; when it doesn't, the frame is at least about a screen tall and scrolls inside.
+   (A fixed box with overflow hidden cut the form off on phones, Nov 8.) */
+.ap-book__frame{position:relative;width:100%;min-height:660px}
+.ap-book__frame .iclosed-widget{position:relative;z-index:1;width:100%;min-height:660px}
+.ap-book__frame iframe{display:block;width:100%;min-height:660px;border:0}
+@media (max-width:767px){.ap-book__frame,.ap-book__frame .iclosed-widget,.ap-book__frame iframe{min-height:calc(100vh - 100px);min-height:calc(100dvh - 100px)}}
 .ap-book__skel{position:absolute;inset:0;z-index:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:32px;padding:28px;
   border:1px solid #e5e7eb;border-radius:12px;background:#fff;transition:opacity .3s ease}
 .ap-book__frame.is-ready .ap-book__skel{opacity:0}
