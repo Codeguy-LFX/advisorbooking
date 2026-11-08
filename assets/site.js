@@ -198,8 +198,8 @@
   }
   function schedulerUrl() {
     if (CFG.scheduler !== 'iclosed') return calendlyUrl();
-    /* Funnel 5 (/book?form=fit5) books into its own iClosed event when one is set; otherwise the events above. */
-    var fit5 = formParam() === 'fit5', short = callType() === 'short';
+    /* The /L1 funnel (/book?form=L1, formerly fit5) books into its own iClosed event when one is set; otherwise the events above. */
+    var fit5 = /^(L1|fit5)$/.test(formParam()), short = callType() === 'short';
     var base = String((fit5 && short && (CFG.iclosedUrlShortFit5 || CFG.iclosedUrlFit5)) || (fit5 && CFG.iclosedUrlFit5) ||
                       (short && CFG.iclosedUrlShort) || CFG.iclosedUrl || '').trim();
     if (!base) return '';

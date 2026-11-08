@@ -11,35 +11,31 @@ Static marketing site for Advisor Booking (De Jesus Ventures LLC). No build step
 | `pilot.html` | `/pilot` | Hidden founding-offer landing page for email and LinkedIn outreach (gated form, then the iClosed calendar). `noindex`, not linked from the nav. |
 | `meetings.html` | `/meetings` | Hidden v1 landing page, kept for later use. `noindex`. |
 | `founding-sprint.html` | `/founding-sprint` | Founding Sprint sales page (hidden lander for outreach). `noindex`, not linked from the nav, not in the sitemap. |
-| `booked.html` | `/booked` | Pre-call page and booking confirmation. iClosed sends people here after they book; it records the booking. `noindex`. |
-| `apply.html` | `/apply` | Qualifying form with routing (funnel shell). `noindex`. |
-| `not-a-fit.html`, `not-yet.html` | `/not-a-fit`, `/not-yet` | Form outcomes: hard no, and nurture. `noindex`. |
+| `L1/index.html` | `/L1/` | The qualifying funnel: six screens, then the iClosed calendar in the same card. `noindex`. See below. |
+| `booked.html` | `/booked` | Booking confirmation with next steps. iClosed sends people here after they book; it records the booking (CRM post, GTM `ab_booked`, Meta `Schedule` for qualified leads). `noindex`. |
+| `fit/`, `fit5/` | `/fit/`, `/fit5/` | Old funnel links: forward to `/L1/` with the query string (campaign tags) intact. |
 | `privacy.html`, `terms.html` | `/privacy`, `/terms` | Privacy Policy and Terms of Use |
 | `404.html` | | Not-found page |
 
 GitHub Pages serves `page.html` at `/page`, so the clean URLs above work without redirects.
 
-## Funnel shell (branch `funnel-shell`)
+## The /L1 funnel
 
-Three funnels share one form engine (`assets/funnel.js`, styles in `assets/funnel.css`). Overview: `/lab/`.
+One funnel (Funnels 1 to 4 were retired on Nov 8, 2026). Engine: `assets/funnel.js`; layout: `assets/qf.css`; questions,
+rules and settings: the `window.AB_APPLY` block at the top of `L1/index.html`.
 
-| Funnel | Pages | What it is |
-| --- | --- | --- |
-| 3, master | `/apply` → `/not-a-fit`, `/not-yet`, `/book?call=short`, `/book?call=main` → `/booked` | The Advisor Booking funnel, in two parts like the LendFax form. Part 1: firm type, role, AUM, advisors, budget, then contact. A loading screen. Part 2: firm, CRM size, fees, best clients, compliance, capacity, decision maker, timing. Each answer is posted to `ghlWebhookUrl` as it is given. A hard no or a budget "not right now" ends right after contact; the rest is routed at the end (hard no, nurture, 15-min fit check, 20-min call). `/booked` is the thank-you page with next steps; it keeps the booking tracking. |
-| 1, study | `/lab/a/apply` → `/lab/a/book` → `/lab/a/booked` → `/lab/a/pre-call` | Clients Blackbox funnel as captured. Sends nothing. |
-| 2, study | `/lab/b/` → `/lab/b/booking?t=tier-1..3, triage` | AAM funnel as captured. Sends nothing. |
-
-| 4, master v2 | `/fit/` → `/fit/not-a-fit`, `/fit/not-yet`, `/book?call=short`, `/book?call=main` (+ `&fit=priority`) → `/booked` | Funnel 3 rebuilt with what worked in Funnels 1 and 2: role and decision maker in one question, a client-size gate (hourly-only folded in), the one-campaign exclusion in the budget question, first-person answers with a helper line under each, an optional growth goal, a priority route for the sweet spot, hard no's that end at once with the reason and next step on the outcome page, and "Change my answer". Ranges store integers. |
-| 5, working copy | `/fit5/` → `/fit5/not-a-fit`, or `/book?call=main&form=fit5` / `/book?call=short&form=fit5` → `/booked` | Six screens (Nick, Nov 8): RIA status, role (own or lead / don't), AUM, advisors' calendars to fill, new assets in the last 12 months (little or none = not a fit; it stands in for the budget question), then contact, which fires the lead event and goes straight to booking. The other fit questions live in Funnel 5's own iClosed event (`iclosedUrlFit5`, `iclosedUrlShortFit5` in `assets/config.js`). Under $50M AUM fires no GTM event or pixel anywhere. Funnel 4 is frozen. |
-| Landers | `/v2/`, `/v2/methodology`, `/v2/blog/` (+3 posts) | Site variations in our look with page patterns from the Clients Blackbox site. Email-first CTA: email → "Book intro call" → `AB_CONFIG.landerNext` (default `fit/`) with the email prefilled. |
-
-- The forms, `/book` and `/booked` use the questionnaire layout in `assets/qf.css` (LendFax structure, Advisor Booking colors): brand bar, progress bar, the question and answers centered, nothing else. No step animation; the bar never moves backward.
-- GTM: set `gtmId` in `assets/config.js`. The funnel pushes `ab_form_view`, `ab_step`, `ab_lead`, `ab_part1_complete`, `ab_part2_start`, `ab_complete`, `ab_route_<route>`, `ab_booking_view` and `ab_booked` to `dataLayer` (list in `assets/gtm.js`). Contact details are never pushed.
-- Questions, routing rules and destinations live in a `window.AB_APPLY` block at the top of each form page. A new form is a copy of a page with a different block.
-- `/book?call=short` uses `iclosedUrlShort` in `assets/config.js` (empty = the main event) and prefills name, email, mobile and firm from `/apply`.
-- `/lab/` and `/docs/` are `noindex` and blocked in `robots.txt`, but GitHub Pages serves every file in the repo, so anything merged to `main` is public. Keep `/lab/` off `main` or delete it before merging.
-- Email and SMS copy: `docs/funnel-c-emails-sms.md` (master), `docs/funnel-a-emails-sms.md` (study).
-- Dashed yellow outline or tag = placeholder waiting on Nick. Dashed red = competitor copy that breaks our rules, shown for study only.
+- Six screens: RIA status, role, AUM, advisors' calendars, new assets in the last 12 months, contact (with the required
+  calls/texts/voicemail consent box). Then the iClosed event (`iclosedUrlFit5`) opens in the same card, prefilled.
+- Nobody is turned away: every lead gets the calendar. Each lead is labeled: route `main` (qualified), `triage`
+  (qualified edge case), or `dq` with `dq_reasons` (not an advisor, broker-dealer or wirehouse, AUM under $50M, new
+  assets under $10M).
+- Tracking: only qualified leads (independent or hybrid RIA, $50M+ AUM, $10M+ new assets) send anything to GTM or the
+  Meta Pixel, and only after the contact screen is submitted: GTM loads then, the held `ab_*` events are released,
+  and Meta gets `Lead` (and `Schedule` on booking). Unqualified leads send nothing to either.
+- CRM: `ghlWebhookUrl` gets two form-encoded posts per lead: `stage=complete` (all answers, contact details,
+  qualified, dq_reasons, consent text and time, campaign tags) and `stage=booked` (from `/booked`).
+- Landers (`/v2/`): the email-first button goes to `landerNext` (`L1/`) with the email prefilled.
+- Settings in `assets/config.js`: `ghlWebhookUrl`, `metaPixelId`, `gtmId`, `iclosedUrlFit5`.
 
 ## Editing the site
 
@@ -50,7 +46,7 @@ Numbers, IDs, and contact details live in **`assets/config.js`**. It is the only
 - Meta Pixel and LinkedIn tag IDs (empty = the tags are not loaded; they are also never loaded when a browser sends a Global Privacy Control signal)
 - the contact email (`info@advisorbooking.com`), entity, city
 
-The home page (`index.html`) carries its own styles and script inline, plus `assets/vendor/lenis.min.js` (Lenis 1.1.13, MIT, license in `assets/vendor/LENIS-LICENSE.txt`) for smooth wheel scrolling. It keeps the same attribution rules as `assets/site.js`: campaign tags are stored for the visit and added, with a `src` label, to every link to `book.html`, and ad tags load only when their IDs are set. The other pages still use `assets/styles.css` and `assets/site.js`.
+The home page (`index.html`) carries its own styles and script inline. Scrolling is the browser's own (the Lenis smooth-scroll library was removed on Nov 8, 2026: it made the wheel lag; `assets/vendor/lenis.min.js` is no longer loaded). It keeps the same attribution rules as `assets/site.js`: campaign tags are stored for the visit and added, with a `src` label, to every link to `book.html`, and ad tags load only when their IDs are set. The other pages still use `assets/styles.css` and `assets/site.js`.
 
 The landing pages read page-specific settings (fit questions, exit copy, form version) from a `window.AB_LP` block at the top of each page; `assets/lp.js` merges it over its defaults.
 

@@ -5,72 +5,77 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>You are booked | Advisor Booking</title>
 <meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#0f7a62">
+<meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/lp.css">
-<link rel="stylesheet" href="assets/pilot.css">
-<link rel="stylesheet" href="assets/funnel.css">
-<link rel="stylesheet" href="assets/qf.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+<style>
+/* Booking confirmation. iClosed sends people here after they book (the event's confirmation page, with forwarding on).
+   Inside the scheduler iframe it shows a compact card and tells the page around it; opened on its own it is a full page. */
+.booked{min-height:60vh;display:flex;align-items:center;justify-content:center;padding:48px 0}
+.booked__card{max-width:560px;width:100%;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);padding:40px 32px;text-align:center;box-shadow:var(--shadow)}
+.booked__chk{width:64px;height:64px;border-radius:16px;background:var(--accent-tint);display:inline-flex;align-items:center;justify-content:center;margin-bottom:18px}
+.booked__card h1{font-family:var(--font-display);font-weight:800;font-size:clamp(26px,4vw,36px);letter-spacing:-.04em;line-height:1.05;margin:0 0 10px;color:var(--ink)}
+.booked__card p{color:var(--muted);font-size:16px;line-height:1.55;margin:0}
+.booked__meta{margin-top:18px;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.booked__steps{margin-top:22px;text-align:left;background:var(--accent-tint);border-radius:14px;padding:18px 20px}
+.booked__steps-h{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 10px}
+.booked__steps ol{margin:0;padding-left:20px;list-style:decimal;color:var(--ink);font-size:15px;line-height:1.55}
+.booked__steps li{display:list-item;margin:6px 0}
+.booked__steps li b{color:var(--ink)}
+.booked__steps li span{color:var(--muted)}
+.booked__card .booked__help{margin-top:12px;font-size:14px}
+.booked__help a{color:var(--accent)}
+.booked__next{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);text-align:left}
+.booked__next p{font-size:14.5px}
+.booked__next ol{margin:10px 0 0;padding-left:20px;list-style:decimal;color:var(--ink);font-size:14.5px;line-height:1.55}
+.booked__next li{display:list-item;margin:4px 0}
+body.in-frame .header,body.in-frame .legal-line{display:none}
+body.in-frame .booked{min-height:0;padding:16px 0}
+body.in-frame .booked__card{box-shadow:none}
+</style>
 </head>
-<body class="qf">
-<div class="lp">
-<header class="qf-head"><span class="qf-logo"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#fff"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#0f7a62"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#0f7a62"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#0f7a62"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#fff"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#0f7a62" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span></header>
-<main class="qf-main" id="main">
-  <div class="qf-col">
-<div class="qf-done">
-      <span class="lp-chk"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M6 13.5L11 18.5 20 8" stroke="#0F7A62" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      <h1 class="ap-q" id="bookedH">You&rsquo;re booked.</h1>
-      <p class="qf-when" id="bookedMeta" hidden></p>
-      <p class="ap-sub" style="margin-top:0">Check your inbox. Your calendar invite and the Google Meet link are on their way.</p>
-      <div class="qf-rest">
-        <div class="qf-next">
-          <h2>What happens next</h2>
-          <ol class="pc-steps">
-            <li><span><b>Check your inbox.</b><p>Look for the invite from Advisor Booking. Not there in 5 minutes? Check spam or promotions, and add info@advisorbooking.com to your contacts.</p></span></li>
-            <li><span><b>Watch the 4-minute walkthrough.</b><p>How one meeting gets made, from your list to your calendar.</p><div class="lp-vsl todo" style="margin-top:12px"><div class="ph cal-ph" style="height:100%;border:0;background:transparent;color:#99a39f;min-height:0">4-minute video embed goes here</div></div></span></li>
-            <li><span><b>Bring 3 numbers.</b><p>Your AUM band, how many advisors take first meetings, and roughly how many contacts are in your CRM. Rough is fine.</p></span></li>
-            <li><span><b>Join the call.</b><p>Use the Google Meet link in your invite. Running late? Reply to the invite email.</p></span></li>
-          </ol>
-        </div>
-        <div class="qf-next">
-          <h2>What to expect on the call</h2>
-          <div class="qf-card">
-            <p><span data-call-len>20</span> minutes with Nick De Jesus, founder of Advisor Booking. <span class="todo-tag">Photo + bio line</span></p>
-            <p>We look at your ideal client, your list, your advisors&rsquo; time, and whether your firm has run outreach before. Then we tell you if this will work for your firm. Yes or no.</p>
-            <p>It&rsquo;s a fit check both ways. If it doesn&rsquo;t look right for you at any point, cancel. No hard feelings. <span class="todo-tag">Cancel/reschedule link</span></p>
-          </div>
-          <div class="qf-card">
-            <p><b style="color:var(--ink)">What it costs:</b> $5,000 every 4 weeks, starting with 3 cycles. No setup fee. No per-meeting fee.</p>
-            <p>In your first 90 days from launch, we commit to at least 15 attended, qualified meetings that match your written criteria. If we're short, we keep working at our cost (no operating fee) until you've taken 15 such meetings.</p>
-          </div>
-        </div>
-        <div class="qf-next">
-          <h2>Questions your compliance officer will ask</h2>
-          <div class="qf-card qf-qa"><details><summary>Who approves the messaging?</summary><p>Your CCO, before anything sends.</p></details><details><summary>Channels?</summary><p>Email and LinkedIn only. No texts to prospects.</p></details><details><summary>Are fees tied to meetings or assets?</summary><p>No. It&rsquo;s a flat fee.</p></details><details><summary>Who owns the list?</summary><p>You do. Domains, copy, templates and data stay yours.</p></details><details><summary>Any performance or return claims?</summary><p>No.</p></details></div>
-        </div>
+<body>
+<header class="header">
+  <nav class="nav container" aria-label="Primary">
+    <div class="nav__inner">
+      <a class="nav__brand" href="/"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" class="mark__body"/><rect x="6" y="12" width="20" height="14" rx="3" class="mark__page"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" class="mark__page"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" class="mark__page"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></a>
+    </div>
+  </nav>
+</header>
+<main id="main" class="booked">
+  <div class="container">
+    <div class="booked__card">
+      <span class="booked__chk"><svg width="30" height="30" viewBox="0 0 26 26" aria-hidden="true"><path d="M6 13.5L11 18.5 20 8" stroke="#0F7A62" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <h1 id="bookedH">You&rsquo;re booked.</h1>
+      <p class="booked__meta" id="bookedMeta" hidden></p>
+      <div class="booked__steps">
+        <p class="booked__steps-h">Your next steps</p>
+        <ol>
+          <li><b>Check your email now.</b> <span>We just sent your calendar invite and Google Meet link<span id="bookedTo"></span>. Not in your inbox in 5 minutes? Check spam and promotions.</span></li>
+          <li><b>Accept the invite</b> <span>so the call is on your calendar.</span></li>
+          <li><b>Join from the Google Meet link</b> <span>in the invite at your call time.</span></li>
+        </ol>
+        <p class="booked__help">Need a different time, or still no email? Write to <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a>.</p>
+      </div>
+      <div class="booked__next">
+        <p><b>Have these ready for the call:</b></p>
+        <ol>
+          <li>Your close rate (%) on first meetings. A rough estimate is fine.</li>
+          <li>The average portfolio size (in assets) of each new client you brought in over the last 12 months.</li>
+          <li>Whether your firm has run ads, email or LinkedIn outreach before, and whether your compliance officer is OK with it.</li>
+        </ol>
       </div>
     </div>
   </div>
 </main>
-<footer class="qf-foot">
-  <div class="qf-foot__links"><a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a><a href="terms.html" target="_blank" rel="noopener">Terms of Service</a></div>
-  <p class="qf-foot__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
-</footer>
-</div>
-<script src="assets/config.js"></script>
-<script src="assets/gtm.js"></script>
-<script src="assets/site.js" defer></script>
-<script>
-/* A booking that came through the 15-minute fit check (route "triage") says 15 minutes, not 20. */
-(function () {
-  var st = null; try { st = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); } catch (e) {}
-  if (st && st.route === 'triage') Array.prototype.forEach.call(document.querySelectorAll('[data-call-len]'), function (el) { el.textContent = '15'; });
-})();
-</script>
+<div class="legal-line"><a href="/privacy">Privacy</a><span aria-hidden="true">&middot;</span><a href="/terms">Terms</a></div>
+<script src="/assets/config.js"></script>
+<script src="/assets/gtm.js"></script>
+<script src="/assets/site.js" defer></script>
 <script>
 (function () {
   'use strict';
@@ -80,13 +85,14 @@
   var inFrame = false;
   try { inFrame = window.self !== window.top; } catch (e) { inFrame = true; }
   if (inFrame) document.body.className += ' in-frame';
+
   /* The scheduler forwards booking details. iClosed's key names vary in case (Invitee_email, timeZone, event_start_time),
      so look them up case-insensitively and show the ones a visitor would want to see. */
   var qi = {};
   Object.keys(q).forEach(function (k) { qi[k.toLowerCase().replace(/[^a-z0-9]/g, '')] = q[k]; });
   function pick() { for (var i = 0; i < arguments.length; i++) { var v = qi[arguments[i]]; if (v) return String(v); } return ''; }
   var when = pick('eventstarttime', 'starttime', 'start', 'date');
-  var tz = pick('timezone', 'inviteetimezone', 'tz');
+  var tz = pick('timezone', 'inviteetimezone', 'tz'), tzRaw = tz;
   var shown = when;
   if (when) {
     var d = new Date(when);
@@ -106,20 +112,38 @@
   if (!em) { try { var fs0 = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); em = (fs0 && fs0.answers && fs0.answers.email) || ''; } catch (e) {} }
   var toEl = document.getElementById('bookedTo');
   if (toEl && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) toEl.textContent = ' to ' + em;
+
   /* Attribution kept by the site's scripts during the visit. */
   var utm = {};
   try { utm = JSON.parse(sessionStorage.getItem('ab_utm') || '{}') || {}; } catch (e) {}
   ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(function (k) { if (q[k]) utm[k] = q[k]; });
+
   /* The landing page's saved form state, if this booking came from one. */
-  var lp = null, lpKey = 'ab_lp_v1';
+  var lp = null;
   try { lp = JSON.parse(localStorage.getItem('ab_lp_v1') || 'null'); } catch (e) {}
-  /* A booking that came through /apply: use that form's saved state (route, tier, submission id). */
-  try { var ap = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); if (ap && ap.sid && (!lp || (ap.started || 0) > (lp.ts || 0))) { lp = ap; lpKey = 'ab_apply_v1'; } } catch (e) {}
+
+  /* The /L1 form's saved request in this browser (route, qualified or not, contact details), if the booking came from it. */
+  var ap = null;
+  try { ap = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); } catch (e) {}
+  if (ap && !ap.sid) ap = null;
+  var A = (ap && ap.answers) || {}, dg = String(A.phone || '').replace(/\D/g, '').slice(-10);
+  var trackOff = !!(ap && ap.track === 'off');   /* not a qualified lead: no GTM event and no pixel, here or anywhere */
+
+  /* One flat record for the CRM (GoHighLevel maps each field). */
   var payload = {
-    event: 'booked', stage: 'booked', provider: 'iclosed', source: q.src || (lp && lp.sid ? (lpKey === 'ab_apply_v1' ? 'apply' : 'lp') : 'book'),
-    sid: (lp && lp.sid) || '', tier: (lp && lp.tier) || '', route: (lp && lp.route) || '', utm: utm, page: location.pathname,
-    forwarded: q, ts: new Date().toISOString()
+    stage: 'booked', provider: 'iclosed', source: q.src || (ap ? 'L1' : (lp && lp.sid ? 'lp' : 'book')),
+    submission_id: (ap && ap.sid) || (lp && lp.sid) || '', form_version: (ap && ap.form_version) || '',
+    route: (ap && ap.route) || '', tier: (ap && ap.tier) || (lp && lp.tier) || '',
+    qualified: ap ? (ap.track === 'on' ? 'yes' : (ap.track === 'off' ? 'no' : '')) : '',
+    first_name: pick('inviteefirstname', 'firstname') || A.first || '', last_name: pick('inviteelastname', 'lastname') || A.last || '',
+    email: em || '', phone: dg.length === 10 ? '+1' + dg : pick('inviteephone', 'phone', 'phonenumber'),
+    event_start_time: when, event_timezone: tzRaw, event_name: pick('eventtypename', 'eventname'),
+    utm_source: utm.utm_source || '', utm_medium: utm.utm_medium || '', utm_campaign: utm.utm_campaign || '',
+    utm_term: utm.utm_term || '', utm_content: utm.utm_content || '',
+    page_url: location.href, booked_at: new Date().toISOString(), forwarded_json: JSON.stringify(q),
+    forwarded: q
   };
+
   /* A booking that came from a fit form: mark that form's saved request as booked, so the form starts fresh next time
      instead of reopening the calendar (Funnel 5 reopens it until a booking is reported). */
   try { var abs = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); if (abs && abs.done && !abs.booked) { abs.booked = true; localStorage.setItem('ab_apply_v1', JSON.stringify(abs)); } } catch (e) {}
@@ -128,6 +152,7 @@
     try { window.parent.postMessage({ event: 'iclosed.booked', payload: payload }, location.origin); } catch (e) {}
     return;
   }
+
   /* Opened as a full page (iClosed sends the whole window here): report the booking once, not again on a refresh. */
   var seenKey = 'ab_booked_seen';
   var seen = false;
@@ -135,17 +160,17 @@
   if (lp && lp.booked) seen = true;
   if (seen) return;
   if (lp) {
-    try { lp.booked = true; lp.stage = 'booked'; lp.firstName = lp.firstName || ((lp.answers && lp.answers.first) || ''); lp.answers = {}; localStorage.setItem(lpKey, JSON.stringify(lp)); } catch (e) {}
+    try { lp.booked = true; lp.stage = 'booked'; lp.firstName = lp.firstName || ((lp.answers && lp.answers.first) || ''); lp.answers = {}; localStorage.setItem('ab_lp_v1', JSON.stringify(lp)); } catch (e) {}
   }
-  var trackOff = !!(lp && lp.track === 'off');   /* Funnel 4 tracking gate: under $50M AUM, no GTM event and no pixels */
-  if (!trackOff) { try { (window.dataLayer = window.dataLayer || []).push({ event: 'ab_booked', ab_route: payload.route, ab_tier: payload.tier, ab_submission_id: payload.sid }); } catch (e) {} }
+  /* GTM: one ab_booked event per booking, for qualified leads (and bookings that didn't come through the form). */
+  if (!trackOff) { try { (window.dataLayer = window.dataLayer || []).push({ event: 'ab_booked', ab_route: payload.route, ab_tier: payload.tier, ab_submission_id: payload.submission_id }); } catch (e) {} }
+  /* CRM: form-encoded, a simple cross-site request (no preflight), so it is delivered without CORS headers. */
   var url = CFG.ghlWebhookUrl || '';
   if (url) {
-    var body = JSON.stringify(payload);
-    try {
-      if (navigator.sendBeacon && navigator.sendBeacon(url, new Blob([body], { type: 'application/json' }))) { /* queued */ }
-      else fetch(url, { method: 'POST', mode: 'no-cors', keepalive: true, body: body }).catch(function () {});
-    } catch (e) {}
+    var body = new URLSearchParams();
+    Object.keys(payload).forEach(function (k) { if (k !== 'forwarded') body.append(k, payload[k] === undefined || payload[k] === null ? '' : String(payload[k])); });
+    try { if (!(navigator.sendBeacon && navigator.sendBeacon(url, body))) fetch(url, { method: 'POST', mode: 'no-cors', keepalive: true, body: body }).catch(function () {}); }
+    catch (e) { try { fetch(url, { method: 'POST', mode: 'no-cors', keepalive: true, body: body }).catch(function () {}); } catch (x) {} }
   }
   function fire() {
     if (navigator.globalPrivacyControl || trackOff) return;
