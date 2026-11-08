@@ -380,7 +380,7 @@
     send('step', { step_id: q.id, step_index: i + 1, step_total: Q.length });
     track('step', { step_id: q.id, step_index: counted(i) + 1,
                     answer: q.type === 'choice' ? S.labels[q.id] : undefined, value: q.type === 'choice' ? value : undefined });
-    if (q.track) track(q.track, { step_id: q.id });
+    if (q.track) [].concat(q.track).forEach(function (t) { track(t, { step_id: q.id }); });   // one name or a list
     var hit = earlyHit(q);
     if (hit) { finish(hit); return; }
     if (i + 1 < Q.length) { history.pushState({ ap: i + 1 }, ''); render(i + 1); }
