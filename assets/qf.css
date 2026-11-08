@@ -1,4 +1,4 @@
-/* Questionnaire layout ("qf") for the three funnel forms: /apply, /lab/a/apply, /lab/b/*.
+/* Questionnaire layout ("qf") for the /L1 funnel: the form page and its two booking pages.
    Structure copied from the LendFax form (measured classes in lendfax-live-ui-kit/README.md), colors are
    Advisor Booking's. A solid brand bar with the logo centered, a thin progress bar, the question dead
    center, answers dead center, and a plain footer. Nothing else on the page.
@@ -96,7 +96,7 @@ body.qf .ap-sending{padding:24px 0;text-align:center}
 .qf-foot{background:#fff;padding:32px}
 .qf-foot__links{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}
 .qf-foot__links a{font-weight:600;color:var(--ink);text-decoration:none}
-.qf-foot__disc{margin:24px 0 0;padding-top:16px;border-top:1px solid #e5e7eb;text-align:center;font-size:12.8px;line-height:1.5;color:rgba(13,15,14,.5)}
+.qf-foot__disc{margin:24px 0 0;padding-top:16px;border-top:1px solid #e5e7eb;text-align:center;font-size:12.8px;line-height:1.5;color:rgba(13,15,14,.66)}
 
 /* study builds: the bottom bar shrinks to a corner pill so the page stays a plain questionnaire */
 body.qf.is-lab{padding-bottom:0}
@@ -124,7 +124,7 @@ body.qf .lab-notes-wrap{max-width:760px;margin:0 auto;padding:0 16px 24px}
 .qf-stage.is-done .qf-stage__status{color:var(--accent)}
 @media (prefers-reduced-motion:reduce){.qf-ring span,.qf-stage.is-running .qf-stage__ic{animation-duration:3s}}
 
-/* wide column for the calendar (/book) */
+/* wide column for the calendar (/L1/Q/, /L1/DQ/) */
 .qf-col--wide{max-width:1040px}
 .qf-book .calendly-mount{text-align:center}
 .qf-book .calendly-frame{display:block;width:100%;border:0;border-radius:12px;height:calc(100vh - 230px);height:calc(100dvh - 230px);min-height:660px}
@@ -170,37 +170,13 @@ body.qf .ap-sub .ap-emw{display:block;margin:8px 0}
 body.qf .ap-sub .ap-em{color:var(--ink);font-weight:700;font-size:15px;line-height:1.5}
 @media (min-width:768px){body.qf .ap-sub .ap-em{font-size:16px}}
 
-/* Funnel 5: the calendar opens inside the card after the contact screen (funnel.js BOOK). A placeholder in the
-   shape of the scheduler holds the space until iClosed's frame has loaded, so nothing jumps. */
-.ap-book .ap-q{margin-bottom:20px}
-.ap-book .ap-sub{margin-top:-8px}
-/* No fixed height and nothing clipped: when iClosed's script sizes its frame to the form (taller on phones), the box
-   grows and the page scrolls as one; when it doesn't, the frame is at least about a screen tall and scrolls inside.
-   (A fixed box with overflow hidden cut the form off on phones, Nov 8.) */
-.ap-book__frame{position:relative;width:100%;min-height:660px}
-.ap-book__frame .iclosed-widget{position:relative;z-index:1;width:100%;min-height:660px}
-.ap-book__frame iframe{display:block;width:100%;min-height:660px;border:0}
-@media (max-width:767px){.ap-book__frame,.ap-book__frame .iclosed-widget,.ap-book__frame iframe{min-height:calc(100vh - 100px);min-height:calc(100dvh - 100px)}}
-.ap-book__skel{position:absolute;inset:0;z-index:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:32px;padding:28px;
-  border:1px solid #e5e7eb;border-radius:12px;background:#fff;transition:opacity .3s ease}
-.ap-book__frame.is-ready .ap-book__skel{opacity:0}
-.ap-book__sk-l,.ap-book__sk-r{display:grid;align-content:start;gap:14px}
-.ap-book__skel b{display:block;height:42px;border-radius:8px;background:#f1f5f9;animation:apsk 1.4s ease-in-out infinite}
-.ap-book__skel b.w70{width:70%}
-.ap-book__skel b.w50{width:50%}
-.ap-book__skel b.w40{width:40%;height:22px}
-.ap-book__skel b.btn{height:46px;margin-top:6px;background:#e2e8f0}
-.ap-book__sk-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:12px;max-width:440px}
-.ap-book__sk-grid i{display:block;aspect-ratio:1;border-radius:50%;background:#f1f5f9;animation:apsk 1.4s ease-in-out infinite}
-@keyframes apsk{50%{opacity:.45}}
-@media (max-width:767px){.ap-book__skel{grid-template-columns:minmax(0,1fr);padding:20px}.ap-book__sk-r{display:none}}
-@media (prefers-reduced-motion:reduce){.ap-book__skel b,.ap-book__sk-grid i{animation:none}}
-.ap-book .qf-prev{margin-top:18px}
-.ap-book__alt{text-align:center;margin:12px 0 0;font-size:14px}
 .ap-next.is-busy{opacity:.7;cursor:progress}
 
-/* The questionnaire jumps to the top of each new screen at once (pilot.css turns on smooth scrolling for the landers) */
-html:has(body.qf){scroll-behavior:auto}
+/* The questionnaire jumps to the top of each new screen at once (pilot.css turns on smooth scrolling for the landers;
+   this file loads after it and only on the form pages). */
+html{scroll-behavior:auto}
+/* Room for the first question before the script draws it, so the footer does not jump up and down on load. */
+body.qf #apBody{min-height:60vh}
 
 /* Required consent box (Funnel 5): Continue checks it; unchecked shows a red message under it and outlines the box.
    The consent text keeps its normal color so it stays readable. */

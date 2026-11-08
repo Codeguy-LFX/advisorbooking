@@ -1,27 +1,23 @@
 /* Advisor Booking form engine: one question per screen, every answer saved as it is given, then routed.
-   Used by /apply (the master form) and by the study clones in /lab. Each page defines window.AB_APPLY before this
-   script: its questions, routing rules and destinations. A new form is a copy of a page with a different block.
+   Used by /L1/ (the one live funnel). The page defines window.AB_APPLY before this script: its questions, routing
+   rules and destinations.
 
    Question types
      choice   options: ['Label', ...] or [{ label: 'Shown', value: 100000000 }, ...] (the value is what is stored and
               routed on, so ranges store an integer floor, never the label). multi: true for "check all" (Continue).
      fields   fields: [{ id, label, type: text|email|tel|url|textarea|checkbox, optional, required (checkbox), hint, srLabel }]
-
-     loader   a checklist loading screen between parts (no answer): q (heading), sub, stages: [{label, active, done}],
-              beat_ms, min_ms. It is not counted in the progress bar, and Back skips over it.
+     loader   a checklist loading screen between parts (no answer): q, sub, stages: [{label, active, done}], beat_ms, min_ms.
 
    Routing (RULES): an ordered list. The first rule with a matching answer wins; DEFAULT_ROUTE if none match.
      { route: 'dq', any: [['question_id', value], ...] }      any one condition matches
-     { route: 'priority', all: [['aum', [50000000, 100000000]], ['role', 'owner'], ...] }   every condition matches
-     A condition's value can be a list (any of those values). reason: 'compliance' names the rule for the outcome page.
-     early: true        checked after every answer (Typeform-style jump)
-     early: 'step_id'   checked once, right after that step (e.g. the end of Part 1); otherwise only at the end
+     { route: 'x', all: [['aum', [50000000, 100000000]], ['role', 'owner'], ...] }   every condition matches
+     A condition's value can be a list (any of those values). reason names the rule (sent to the CRM as route_reason).
+     early: true | 'step_id' ends the form as soon as the rule matches (not used by /L1: nobody is stopped early).
+   ROUTES maps a route to a page URL (relative to the form page), or to { inline: {...} } to show a result in the card.
 
-   Tracking: every step pushes to window.dataLayer for GTM (see track() below for the event names).
-   ROUTES maps a route to a page URL, or to { inline: { title, body, bullets, cta } } to show the result in the card.
-
-   Answers go to AB_CONFIG.ghlWebhookUrl after every screen (stage "step") and at the end (stage "complete").
-   A page sets WEBHOOK_URL: '' to never send (the /lab clones do). */
+   Tracking: dataLayer events (ab_*) only when TRACK is not false and the tracking gate (TRACK_GATE) has passed.
+   CRM: a flat form-encoded record to AB_CONFIG.ghlWebhookUrl at the stages in WEBHOOK_STAGES (default: every screen
+   and the end). The saved state (localStorage ab_apply_v1) is what the booking pages read. */
 (function () {
   'use strict';
   var doc = document;
@@ -59,14 +55,15 @@
     // see gtm.js) waits until all of them are answered. All at or above min: released in order. Any below: dropped,
     // and tracking stays off for this person (S.track = 'off', which gtm.js, site.js and /booked also respect).
     TRACK_GATE: null,
-    // Which stages are posted to AB_CONFIG.ghlWebhookUrl: null = every screen ('step') and the end ('complete');
-    // ['complete', 'booked'] = once when the form is finished and once when a call is booked.
+    // Which stages this page posts to AB_CONFIG.ghlWebhookUrl: null = every screen ('step') and the end ('complete');
+    // ['complete'] = once, when the form is finished. (The booking pages post 'booked' themselves.)
     WEBHOOK_STAGES: null,
     PREFILL_KEYS: ['email', 'first', 'last', 'firm'],
     // true: a route that leaves the page goes at once, with no "Thanks. One moment." screen.
     REDIRECT_QUIET: false,
-    // Hosts to connect to early (from the last two screens), so the next page's calendar appears faster.
-    WARM_HOSTS: [],
+    // The saved state is kept across visits only while this matches. Bump it when question ids or values change;
+    // copy-only edits can bump FORM_VERSION without resetting someone mid-form. Empty = FORM_VERSION.
+    STATE_VERSION: '',
     TEST_MODE: false
   };
   var over = window.AB_APPLY || {};
@@ -107,15 +104,14 @@
   var TTL = 7 * 24 * 60 * 60 * 1000;
   function fresh() { return { sid: '', answers: {}, labels: {}, step: 0, route: '', started: Date.now(), consent_text: '' }; }
   var S = fresh();
-  var resumed = false;
+  var SVER = F.STATE_VERSION || F.FORM_VERSION;
   try {
     var saved = STORE && JSON.parse(STORE.getItem(F.STORE_KEY) || 'null');
-    var same = saved && saved.form_version === F.FORM_VERSION && Date.now() - (saved.started || 0) < TTL;
+    var same = saved && (saved.state_version || saved.form_version) === SVER && Date.now() - (saved.started || 0) < TTL;
     if (same && !saved.done) S = saved;
-    // "Change my answer" on an outcome page links back with ?resume=1: reopen the last question answered.
-    else if (same && saved.done && /[?&]resume=1(&|$)/.test(location.search)) {
-      S = saved; S.done = false; S.route = ''; S.route_reason = ''; S.tier = ''; resumed = true;
-    }
+    // Back from the booking page (or a return within 7 days before booking): reopen the form where they were, with the
+    // same answers and submission id, so nothing is counted twice. After a booking the form starts fresh.
+    else if (same && saved.done && !saved.booked) { S = saved; S.done = false; }
   } catch (e) {}
   if (!S.labels) S.labels = {};
   if (!S.track) S.track = F.TRACK_GATE ? 'pending' : 'on';
@@ -140,7 +136,7 @@
       });
     } catch (e) {}
   })();
-  function save() { S.form_version = F.FORM_VERSION; try { if (STORE) STORE.setItem(F.STORE_KEY, JSON.stringify(S)); } catch (e) {} }
+  function save() { S.form_version = F.FORM_VERSION; S.state_version = SVER; try { if (STORE) STORE.setItem(F.STORE_KEY, JSON.stringify(S)); } catch (e) {} }
 
   var utm = {};
   try { utm = JSON.parse(sessionStorage.getItem('ab_utm') || '{}') || {}; } catch (e) {}
@@ -243,7 +239,7 @@
     // qf counts the step you are on (LendFax: current / total); the classic card counts finished steps.
     var pct = Math.round((Math.min(QF ? i + 1 : i, total) / total) * 100);
     if (pct > maxPct) maxPct = pct;
-    if (bar) bar.style.width = maxPct + '%';
+    if (bar) { bar.style.width = maxPct + '%'; var tr = bar.parentNode; if (tr && tr.getAttribute('role') === 'progressbar') { tr.setAttribute('aria-valuemin', '0'); tr.setAttribute('aria-valuemax', '100'); tr.setAttribute('aria-valuenow', String(maxPct)); } }
     if (count) {
       count.innerHTML = i < total ? F.PROGRESS_LABEL.replace('{n}', '<b>' + (i + 1) + '</b>').replace('{t}', total) : F.PROGRESS_AFTER;
       if (QF) count.classList.toggle('is-on', !!F.SHOW_COUNT && i < total);
@@ -254,7 +250,6 @@
 
   function render(i, focus) {
     S.step = i; save(); progress(i);
-    if (i >= Q.length - 2) warm();
     var q = Q[i];
     if (q.type === 'loader') { renderLoader(q, i); return; }
     if (i === 0 && !S.viewed) { S.viewed = true; save(); track('form_view', { step_id: q.id }); }
@@ -336,10 +331,10 @@
     if (f.type === 'url') return !urlOk(v);
     return false;
   }
-  function screenValid(q) {
+  function screenValid(q, form) {
     var loose = F.LOCK_CONTINUE === 'filled';
     // A required checkbox (without gate) doesn't lock Continue: it is checked when Continue is pressed and shows its message.
-    return (q.fields || []).every(function (f) { if (f.type === 'checkbox' && !f.gate) return true; var inp = $('ap-' + f.id); return inp && !fieldBad(f, inp, loose); });
+    return (q.fields || []).every(function (f) { if (f.type === 'checkbox' && !f.gate) return true; var inp = form.querySelector('#ap-' + f.id); return inp && !fieldBad(f, inp, loose); });
   }
 
   function renderFields(q, i) {
@@ -347,13 +342,13 @@
     var btn;
     (q.fields || []).forEach(function (f) {
       if (f.type === 'checkbox') {
-        var cb = el('input', { type: 'checkbox', id: 'ap-' + f.id });
+        var cb = el('input', { type: 'checkbox', id: 'ap-' + f.id, 'aria-describedby': 'ape-' + f.id });
         cb.checked = !!S.answers[f.id];
         if (f.required && f.gate) cb.addEventListener('change', function () { if (btn) btn.disabled = !cb.checked; });
         cb.addEventListener('change', function () { if (cb.checked) { var w = $('apf-' + f.id); if (w) w.classList.remove('invalid'); } });
         form.appendChild(el('div', { class: 'lp-consent', id: 'apf-' + f.id }, [
           el('div', { class: 'lp-consent__row' }, [cb, el('label', { for: 'ap-' + f.id, id: 'apl-' + f.id, html: f.label })]),
-          el('div', { class: 'lp-err', text: f.error || 'Check the box to continue.' })
+          el('div', { class: 'lp-err', id: 'ape-' + f.id, text: f.error || 'Check the box to continue.' })
         ]));
         return;
       }
@@ -366,11 +361,12 @@
       var srOnly = f.srLabel || (QF && !f.showLabel);
       if (QF && !f.placeholder && !f.srLabel) input.setAttribute('placeholder', String(f.label).replace(/<[^>]+>/g, '') + (f.optional ? ' (optional)' : ''));
       var label = el('label', { class: 'lp-lbl' + (srOnly ? ' sr-only' : ''), for: 'ap-' + f.id, html: f.label + (f.optional ? ' <span class="ap-optional">(optional)</span>' : '') });
+      input.setAttribute('aria-describedby', 'ape-' + f.id);
       var ctl = f.type === 'tel' ? el('div', { class: 'lp-tel' }, [el('span', { class: 'lp-tel__cc', 'aria-hidden': 'true', text: '+1' }), input]) : input;
       var fieldEl = el('div', { class: 'lp-field', id: 'apf-' + f.id }, [
         label, ctl,
         f.hint ? el('p', { class: 'lp-hint', html: f.hint }) : null,
-        el('div', { class: 'lp-err', text: f.error || 'Fill this in.' })
+        el('div', { class: 'lp-err', id: 'ape-' + f.id, text: f.error || 'Fill this in.' })
       ]);
       // "half: true" on two fields in a row puts them side by side (First Name | Last Name).
       var last = form.lastElementChild;
@@ -382,9 +378,9 @@
     (q.fields || []).forEach(function (f) { if (f.type === 'checkbox' && f.required && f.gate && !S.answers[f.id]) btn.disabled = true; });
     form.appendChild(btn);
     if (F.LOCK_CONTINUE) {
-      var relock = function () { btn.disabled = !screenValid(q); };   // 'filled': unlock when filled; true: when valid
+      var relock = function () { btn.disabled = !screenValid(q, form); };   // 'filled': unlock when filled; true: when valid
       form.addEventListener('input', relock); form.addEventListener('change', relock);
-      setTimeout(relock, 0);
+      relock();   // before the screen is shown, so the button never flashes between states
     }
     if (q.fine) form.appendChild(el('p', { class: 'lp-priv', html: q.fine }));
     form.addEventListener('submit', function (e) {
@@ -403,6 +399,7 @@
           vals[f.id] = v;
         }
         wrap.classList.toggle('invalid', bad);
+        inp.setAttribute('aria-invalid', bad ? 'true' : 'false');
         if (bad) ok = false;
       });
       if (!ok) {
@@ -430,8 +427,15 @@
     if (q.track) [].concat(q.track).forEach(function (t) { track(t, { step_id: q.id }); });   // one name or a list
     var hit = earlyHit(q);
     if (hit) { finish(hit); return; }
+    var fo = firstOpen();
+    if (fo < i) { history.pushState({ ap: fo }, ''); render(fo); announce('One more question first.'); return; }   // a skipped screen (stale history)
     if (i + 1 < Q.length) { history.pushState({ ap: i + 1 }, ''); render(i + 1); }
     else finish(route());
+  }
+  /* The first choice question with no answer yet (or the last screen when every choice is answered). */
+  function firstOpen() {
+    for (var k = 0; k < Q.length; k++) { var a = S.answers[Q[k].id]; if (Q[k].type === 'choice' && (a === undefined || a === null || a === '')) return k; }
+    return Q.length - 1;
   }
   function earlyHit(q) {
     for (var k = 0; k < F.RULES.length; k++) {
@@ -506,7 +510,7 @@
   function condState(g) {
     var a = S.answers[g.id];
     if (a === undefined || a === null || a === '') return 'wait';
-    if (g.present) return 'pass';
+    if (g.present) return a ? 'pass' : 'fail';
     if (g.in) return g.in.indexOf(a) > -1 ? 'pass' : 'fail';
     if (typeof g.min === 'number') return typeof a === 'number' && a >= g.min ? 'pass' : 'fail';
     return 'pass';
@@ -523,7 +527,7 @@
   }
   function emit(ev) { try { (window.dataLayer = window.dataLayer || []).push(ev); } catch (e) {} }
   function finish(r) {
-    S.route = r.route; S.route_reason = r.reason; S.route_q = r.qid || '';
+    S.route = r.route; S.route_reason = r.reason;
     // /booked reads tier: only the route named in QUALIFIED_ROUTE counts as a qualified ad conversion.
     var qr = F.QUALIFIED_ROUTE || 'main';
     S.tier = (Array.isArray(qr) ? qr.indexOf(r.route) > -1 : r.route === qr) ? 'qualified' : r.route;
@@ -559,20 +563,15 @@
     focusEl($('apQ')); keepInView();
   }
 
-  /* Connect early to the hosts the next page needs (e.g. the scheduler), once, from the last two screens. */
-  var warmed = false;
-  function warm() {
-    if (warmed || !(F.WARM_HOSTS || []).length) return; warmed = true;
-    F.WARM_HOSTS.forEach(function (h) { var k = doc.createElement('link'); k.rel = 'preconnect'; k.href = h; doc.head.appendChild(k); });
-  }
-
   if (back) back.addEventListener('click', function () { if (S.step > 0) history.back(); });
   window.addEventListener('popstate', function (e) {
     var to = e.state && typeof e.state.ap === 'number' ? e.state.ap : 0;
-    to = Math.max(0, Math.min(to, Q.length - 1));
+    to = Math.max(0, Math.min(to, Q.length - 1, firstOpen()));   // never past the first unanswered question
     if (Q[to].type === 'loader') to = Math.max(0, to - 1);   // never replay the loader on Back
     render(to);
   });
+  /* Back from the booking page can restore this page from the browser's cache with the finished state still in memory. */
+  window.addEventListener('pageshow', function (e) { if (e.persisted && S.done) { S.done = false; save(); render(S.step); } });
   var restart = $('apRestart');
   if (restart) restart.addEventListener('click', function () {
     try { if (STORE) STORE.removeItem(F.STORE_KEY); } catch (e) {}
@@ -595,18 +594,11 @@
     if (ecp) { sessionStorage.removeItem('ab_email_capture_pending'); var ecd = JSON.parse(ecp) || {}; track('email_capture', { lander: ecd.lander, cta: ecd.cta }); }
   } catch (e) {}
 
-  var start = Math.max(0, Math.min(S.step || 0, Q.length - 1));
-  /* "Change my answer" reopens the question that decided the outcome, not the screen where it was checked. */
-  if (resumed && S.route_q) { for (var qi = 0; qi < Q.length; qi++) if (Q[qi].id === S.route_q) { start = qi; break; } }
-  if (resumed) track('resume', { step_id: Q[start].id });
+  try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}   // the form controls the scroll position
+  var start = Math.max(0, Math.min(S.step || 0, Q.length - 1, firstOpen()));
   if (Q[start].type === 'loader') start = Math.min(start + 1, Q.length - 1);   // a refresh mid-loader resumes after it
-  history.replaceState({ ap: start }, '');
+  /* One history entry per screen up to the current one, so Back always goes to the previous screen (never off the site). */
+  history.replaceState({ ap: 0 }, '');
+  for (var j = 1; j <= start; j++) history.pushState({ ap: j }, '');
   render(start, false);
-
-  /* Shared reader for the pages after the form (booking, booked): window.AB_FORM_STATE(key). */
 })();
-
-/* Read a saved form state from a page after the form. */
-window.AB_FORM_STATE = function (key, storage) {
-  try { return JSON.parse((storage === 'session' ? sessionStorage : localStorage).getItem(key || 'ab_apply_v1') || 'null'); } catch (e) { return null; }
-};

@@ -144,14 +144,16 @@ body.in-frame .booked__card{box-shadow:none}
     forwarded: q
   };
 
-  /* A booking that came from a fit form: mark that form's saved request as booked, so the form starts fresh next time
-     instead of reopening the calendar (Funnel 5 reopens it until a booking is reported). */
+  /* A booking that came from /L1: mark the saved request as booked, so the form starts fresh next time. */
   try { var abs = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); if (abs && abs.done && !abs.booked) { abs.booked = true; localStorage.setItem('ab_apply_v1', JSON.stringify(abs)); } } catch (e) {}
-  if (inFrame) {
-    /* Inside the scheduler iframe on a booking page: hand the booking to that page, which owns the CRM post and tracking. */
+  var sameOriginParent = false;
+  try { sameOriginParent = inFrame && !!window.parent.location.href; } catch (e) { sameOriginParent = false; }
+  if (sameOriginParent) {
+    /* Inside the scheduler frame on one of our booking pages: hand the booking to that page, which posts it to the CRM. */
     try { window.parent.postMessage({ event: 'iclosed.booked', payload: payload }, location.origin); } catch (e) {}
     return;
   }
+  /* Opened as a full page, or framed by another site (then the parent cannot receive it): report from here. */
 
   /* Opened as a full page (iClosed sends the whole window here): report the booking once, not again on a refresh. */
   var seenKey = 'ab_booked_seen';
