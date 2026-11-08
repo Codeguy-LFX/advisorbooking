@@ -292,3 +292,10 @@
 .v2-foot{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-bottom:4px}
 .v2-foot a{color:var(--night-muted);text-decoration:none;font-size:14px;padding:6px 2px}
 .v2-foot a:hover{color:var(--night-ink)}
+
+/* Header links: the same as the live home page (index.html), so the blog header matches it */
+.nav__links{display:flex;gap:4px}
+.nav__links a{text-decoration:none;font-size:14.5px;color:var(--muted);padding:8px 12px;border-radius:999px;transition:color .15s,background-color .15s}
+.nav__links a:hover,.nav__links a[aria-current=page]{color:var(--ink);background:var(--well)}
+@media (max-width:860px){.nav__links{display:none}}
+@media (max-width:480px){.nav__pill{padding-left:16px}.nav .brand span{display:none}.nav .btn--sm{font-size:13.5px;padding-left:14px}}
