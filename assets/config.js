@@ -7,6 +7,10 @@ window.AB_CONFIG = {
   iclosedUrl: "https://app.iclosed.io/e/advisorbooking/strategy-call",
   // iClosed: the 15-minute fit-check event for edge cases routed by /apply (/book?call=short). Empty = the main event above.
   iclosedUrlShort: "",
+  // Funnel 5 (/fit5) books into its own iClosed event, with the extra fit questions as dropdowns. Paste its link here.
+  // iclosedUrlShortFit5 is for Funnel 5's 15-minute fit checks; empty = iclosedUrlFit5. Both empty = the events above.
+  iclosedUrlFit5: "",
+  iclosedUrlShortFit5: "",
   // iClosed: set the event's confirmation page to this URL with forwarding on, so bookings are detected and reported.
   bookedUrl: "https://advisorbooking.com/booked",
   // Where the landers' email-first "Book intro call" sends people (relative to the site root). "fit/" is the

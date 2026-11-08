@@ -182,7 +182,7 @@
       return { route: r.route, reason: r.reason || r.route };
     }
     var any = r.any || [];
-    for (var j = 0; j < any.length; j++) if (cond(any[j])) return { route: r.route, reason: r.reason || (any[j][0] + '=' + any[j][1]) };
+    for (var j = 0; j < any.length; j++) if (cond(any[j])) return { route: r.route, reason: r.reason || (any[j][0] + '=' + any[j][1]), qid: any[j][0] };
     return null;
   }
   function route() {
@@ -474,7 +474,7 @@
   }
 
   function finish(r) {
-    S.route = r.route; S.route_reason = r.reason;
+    S.route = r.route; S.route_reason = r.reason; S.route_q = r.qid || '';
     // /booked reads tier: only the route named in QUALIFIED_ROUTE counts as a qualified ad conversion.
     var qr = F.QUALIFIED_ROUTE || 'main';
     S.tier = (Array.isArray(qr) ? qr.indexOf(r.route) > -1 : r.route === qr) ? 'qualified' : r.route;
@@ -536,6 +536,8 @@
   } catch (e) {}
 
   var start = Math.max(0, Math.min(S.step || 0, Q.length - 1));
+  /* "Change my answer" reopens the question that decided the outcome, not the screen where it was checked. */
+  if (resumed && S.route_q) { for (var qi = 0; qi < Q.length; qi++) if (Q[qi].id === S.route_q) { start = qi; break; } }
   if (resumed) track('resume', { step_id: Q[start].id });
   if (Q[start].type === 'loader') start = Math.min(start + 1, Q.length - 1);   // a refresh mid-loader resumes after it
   history.replaceState({ ap: start }, '');
