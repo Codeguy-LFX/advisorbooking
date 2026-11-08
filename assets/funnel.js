@@ -19,6 +19,8 @@
 
    Tracking: every step pushes to window.dataLayer for GTM (see track() below for the event names).
    ROUTES maps a route to a page URL, or to { inline: { title, body, bullets, cta } } to show the result in the card.
+   BOOK opens the iClosed calendar inside the card for the routes it names (no page change), prefilled from the
+   answers; ROUTES stays the fallback when the event link is not set. See BOOK below.
 
    Answers go to AB_CONFIG.ghlWebhookUrl after every screen (stage "step") and at the end (stage "complete").
    A page sets WEBHOOK_URL: '' to never send (the /lab clones do). */
@@ -60,6 +62,12 @@
     // and tracking stays off for this person (S.track = 'off', which gtm.js, site.js and /booked also respect).
     TRACK_GATE: null,
     PREFILL_KEYS: ['email', 'first', 'last', 'firm'],
+    // The calendar inside the card: { routes: ['main'], url_key: 'iclosedUrlFit5', short_key, short_routes: ['triage'],
+    // title: 'Pick a time for your call{first}.', sub }. url_key/short_key name AB_CONFIG entries (the iClosed event
+    // links). When the link is empty the route's ROUTES page is used instead.
+    BOOK: null,
+    // true: a route that leaves the page goes at once, with no "Thanks. One moment." screen.
+    REDIRECT_QUIET: false,
     TEST_MODE: false
   };
   var over = window.AB_APPLY || {};
@@ -91,6 +99,7 @@
   function phoneOk(v) { return digits(v).length === 10; }
   function phoneFmt(v) { var d = digits(v).slice(0, 10); if (d.length < 4) return d; if (d.length < 7) return '(' + d.slice(0, 3) + ') ' + d.slice(3); return '(' + d.slice(0, 3) + ') ' + d.slice(3, 6) + '-' + d.slice(6); }
   function announce(msg) { var l = $('apLive'); if (!l) return; l.textContent = ''; setTimeout(function () { l.textContent = msg; }, 40); }
+  function toTop() { try { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); } catch (e) { window.scrollTo(0, 0); } }
   function focusEl(h) { if (!h) return; try { h.focus({ preventScroll: true }); } catch (e) { h.focus(); } }
   var ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
   var TICK = '<span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
@@ -99,11 +108,14 @@
   var TTL = 7 * 24 * 60 * 60 * 1000;
   function fresh() { return { sid: '', answers: {}, labels: {}, step: 0, route: '', started: Date.now(), consent_text: '' }; }
   var S = fresh();
-  var resumed = false;
+  var resumed = false, reopenBook = false;
+  function isBookRoute(r) { return !!(F.BOOK && r && (F.BOOK.routes || []).indexOf(r) > -1); }
   try {
     var saved = STORE && JSON.parse(STORE.getItem(F.STORE_KEY) || 'null');
     var same = saved && saved.form_version === F.FORM_VERSION && Date.now() - (saved.started || 0) < TTL;
     if (same && !saved.done) S = saved;
+    // Finished and sent to the calendar but not booked yet: a refresh (or a visit within 7 days) reopens the calendar.
+    else if (same && saved.done && !saved.booked && isBookRoute(saved.route) && !/[?&]resume=1(&|$)/.test(location.search)) { S = saved; reopenBook = true; }
     // "Change my answer" on an outcome page links back with ?resume=1: reopen the last question answered.
     else if (same && saved.done && /[?&]resume=1(&|$)/.test(location.search)) {
       S = saved; S.done = false; S.route = ''; S.route_reason = ''; S.tier = ''; resumed = true;
@@ -219,7 +231,9 @@
   }
 
   function render(i, focus) {
+    hideBooking();
     S.step = i; save(); progress(i);
+    if (F.BOOK && i >= Q.length - 2) warmBooking();
     var q = Q[i];
     if (q.type === 'loader') { renderLoader(q, i); return; }
     if (i === 0 && !S.viewed) { S.viewed = true; save(); track('form_view', { step_id: q.id }); }
@@ -232,7 +246,7 @@
     if (QF && i > 0) screen.appendChild(prevBtn());
     body.innerHTML = ''; body.appendChild(screen);
     if (focus !== false) {
-      if (QF) { window.scrollTo(0, 0); focusEl(h); }   // heading only: never autofocus a field
+      if (QF) { toTop(); focusEl(h); }   // heading only: never autofocus a field
       else { focusEl(h); keepInView(); }
     }
   }
@@ -424,7 +438,7 @@
     screen.appendChild(list);
     screen.appendChild(el('div', { class: 'sr-only', 'aria-live': 'polite', id: 'apLoaderLive' }));
     body.innerHTML = ''; body.appendChild(screen);
-    if (QF) window.scrollTo(0, 0);
+    if (QF) toTop();
     var beat = q.beat_ms || 900, minMs = q.min_ms || beat * stages.length, t0 = Date.now(), at = 0;
     function paint() {
       rows.forEach(function (row, n) {
@@ -491,8 +505,13 @@
     track('route_' + r.route.replace(/[^a-z0-9]+/gi, '_'), { route: r.route });
     var dest = F.ROUTES[r.route];
     if (dest && typeof dest === 'object' && dest.inline) { showInline(dest.inline); return; }
+    if (isBookRoute(r.route) && showBooking(r.route, true)) return;
     S.done = true; save();
     if (bar) bar.style.width = '100%';
+    if (F.REDIRECT_QUIET) {
+      var nb = body.querySelector('.ap-next'); if (nb) { nb.disabled = true; nb.classList.add('is-busy'); }
+      location.href = dest || '#'; return;
+    }
     body.innerHTML = '';
     body.appendChild(el('div', { class: 'ap-sending' }, [el('h2', { class: 'ap-q', text: 'Thanks. One moment.' }), el('p', { text: 'Taking you to the next step.' })]));
     setTimeout(function () { location.href = dest || '#'; }, F.REDIRECT_DELAY_MS);
@@ -513,8 +532,112 @@
     focusEl($('apQ')); keepInView();
   }
 
+  /* ---------- the calendar inside the card (BOOK) ----------
+     No page change after the contact screen: the iClosed event opens here with the answers already filled in.
+     iClosed's script is fetched while the visitor is still on the last two screens, a placeholder holds the space
+     while the calendar loads, and Back (or "Change my answers") returns to the contact screen. */
+  var bookBox = null, bookUrlShown = '', warmed = false;
+  function previewHost() { return /claudeusercontent\.com$|\.claude\.ai$/.test(location.hostname); }
+  function bookUrl(route) {
+    var B = F.BOOK; if (!B || previewHost()) return '';
+    var short = (B.short_routes || []).indexOf(route) > -1;
+    var base = String((short && B.short_key && AB[B.short_key]) || (B.url_key && AB[B.url_key]) || '').trim();
+    if (!base) return '';
+    var u; try { u = new URL(base); } catch (e) { return ''; }
+    Object.keys(utm).forEach(function (k) { if (k.indexOf('utm_') === 0) u.searchParams.set(k, utm[k]); });
+    var a = S.answers, d = digits(a.phone);
+    var first = String(a.first || '').trim(), last = String(a.last || '').trim(), nm = [first, last].filter(Boolean).join(' ');
+    if (nm) u.searchParams.set('iclosedName', nm);              // iClosed's documented name parameter
+    if (first) u.searchParams.set('iclosedFirstName', first);   // for events whose form splits First and Last name
+    if (last) u.searchParams.set('iclosedLastName', last);
+    if (a.email) u.searchParams.set('iclosedEmail', a.email);
+    if (d.length === 10) u.searchParams.set('iclosedPhone', '+1' + d);
+    if (a.firm) u.searchParams.set('company', a.firm);
+    u.searchParams.set('utm_term', u.searchParams.get('utm_term') || ('apply-' + route));
+    return u.toString();
+  }
+  function warmBooking() {
+    if (warmed || previewHost()) return; warmed = true;
+    [['preconnect', 'https://app.iclosed.io'], ['prefetch', 'https://app.iclosed.io/assets/widget.js']].forEach(function (l) {
+      var k = doc.createElement('link'); k.rel = l[0]; k.href = l[1]; if (l[0] === 'prefetch') k.as = 'script'; doc.head.appendChild(k);
+    });
+  }
+  function hideBooking() {
+    if (!bookBox || bookBox.hidden) return;
+    bookBox.hidden = true; body.hidden = false;
+    var col = body.parentNode; if (col && col.classList) col.classList.remove('qf-col--wide');
+  }
+  function skeleton() {
+    var cells = ''; for (var k = 0; k < 35; k++) cells += '<i></i>';
+    return el('div', { class: 'ap-book__skel', 'aria-hidden': 'true', html:
+      '<div class="ap-book__sk-l"><b></b><b class="w70"></b><b></b><b></b><b class="w50"></b><b class="btn"></b></div>' +
+      '<div class="ap-book__sk-r"><b class="w40"></b><div class="ap-book__sk-grid">' + cells + '</div></div>' });
+  }
+  function mountWidget(frame, url) {
+    var w = el('div', { class: 'iclosed-widget', 'data-url': url, title: 'Pick a time for your call' });
+    frame.appendChild(w);
+    var settled = false, waited = 0, iv;
+    function ready() {   // the calendar has loaded: fade the placeholder out, then drop it
+      setTimeout(function () { frame.classList.add('is-ready'); }, 400);
+      setTimeout(function () { var sk = frame.querySelector('.ap-book__skel'); if (sk) sk.parentNode.removeChild(sk); }, 1400);
+    }
+    function watch(f) { if (f.__abw) return; f.__abw = 1; f.addEventListener('load', ready); }
+    function fallback() {
+      if (settled) return; settled = true; clearInterval(iv);
+      if (frame.querySelector('iframe')) return;
+      /* iClosed's script was blocked (ad blocker or network): load the event link straight into a frame. */
+      var f = el('iframe', { class: 'ap-book__iframe', title: 'Pick a time for your call', src: url });
+      watch(f); w.appendChild(f);
+      frame.parentNode.insertBefore(el('p', { class: 'ap-book__alt', html: '<a href="' + url.replace(/"/g, '&quot;') + '" target="_blank" rel="noopener">Calendar not showing? Open it here.</a>' }), frame.nextSibling);
+    }
+    var s = doc.createElement('script'); s.async = true; s.src = 'https://app.iclosed.io/assets/widget.js'; s.onerror = fallback;
+    doc.body.appendChild(s);
+    iv = setInterval(function () {
+      var f = frame.querySelector('iframe');
+      if (f) { settled = true; clearInterval(iv); watch(f); return; }
+      if ((waited += 100) >= 8000) fallback();
+    }, 100);
+  }
+  function showBooking(route, fresh) {
+    var url = bookUrl(route);
+    if (!url) return false;
+    S.done = true; S.step = Q.length - 1; save();
+    if (fresh) history.pushState({ ap: Q.length }, '');
+    if (bar) bar.style.width = '100%';
+    if (count) count.classList.remove('is-on');
+    var B = F.BOOK, first = String(S.answers.first || '').trim().split(/\s+/)[0];
+    if (!bookBox) { bookBox = el('div', { id: 'apBook', class: 'ap-book' }); body.parentNode.insertBefore(bookBox, body.nextSibling); }
+    if (url !== bookUrlShown || !bookBox.firstChild) {
+      bookUrlShown = url; bookBox.innerHTML = '';
+      bookBox.appendChild(el('h2', { class: 'ap-q', id: 'apBookQ', tabindex: '-1', text: (B.title || 'Pick a time for your call{first}.').replace('{first}', first ? ', ' + first : '') }));
+      if (B.sub) bookBox.appendChild(el('p', { class: 'ap-sub', html: B.sub }));
+      var frame = el('div', { class: 'ap-book__frame' }, [skeleton(), el('p', { class: 'sr-only', role: 'status', text: 'Loading the calendar.' })]);
+      bookBox.appendChild(frame);
+      var ch = el('button', { type: 'button', class: 'qf-prev', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span>Change my answers</span>' });
+      ch.addEventListener('click', function () { if (history.state && history.state.ap === Q.length) history.back(); else render(Q.length - 1); });
+      bookBox.appendChild(ch);
+      mountWidget(frame, url);
+    }
+    body.hidden = true; bookBox.hidden = false;
+    var col = body.parentNode; if (col && col.classList) col.classList.add('qf-col--wide');
+    toTop(); focusEl($('apBookQ'));
+    track('booking_view', { route: route, call: (F.BOOK.short_routes || []).indexOf(route) > -1 ? 'short' : 'main' });
+    return true;
+  }
+  /* The site's /booked page, shown inside the calendar frame after a booking, reports it here. */
+  window.addEventListener('message', function (e) {
+    var d = e.data || {};
+    if (e.origin !== location.origin || d.event !== 'iclosed.booked' || !bookBox || S.booked) return;
+    S.booked = true; save();
+    track('booked', { route: S.route });
+    send('booked', { route: S.route, booking: (d.payload && d.payload.forwarded) || null });
+    var h = $('apBookQ'); if (h) h.textContent = 'You’re booked.';
+    var sub = bookBox.querySelector('.ap-sub'); if (sub) sub.textContent = 'The details are on their way to your email.';
+  });
+
   if (back) back.addEventListener('click', function () { if (S.step > 0) history.back(); });
   window.addEventListener('popstate', function (e) {
+    if (e.state && e.state.ap === Q.length && S.done && isBookRoute(S.route) && showBooking(S.route, false)) return;
     var to = e.state && typeof e.state.ap === 'number' ? e.state.ap : 0;
     to = Math.max(0, Math.min(to, Q.length - 1));
     if (Q[to].type === 'loader') to = Math.max(0, to - 1);   // never replay the loader on Back
@@ -547,6 +670,11 @@
   if (resumed && S.route_q) { for (var qi = 0; qi < Q.length; qi++) if (Q[qi].id === S.route_q) { start = qi; break; } }
   if (resumed) track('resume', { step_id: Q[start].id });
   if (Q[start].type === 'loader') start = Math.min(start + 1, Q.length - 1);   // a refresh mid-loader resumes after it
+  if (reopenBook) {
+    history.replaceState({ ap: Q.length - 1 }, '');
+    if (showBooking(S.route, true)) return;
+    S.done = false; start = Q.length - 1;
+  }
   history.replaceState({ ap: start }, '');
   render(start, false);
 

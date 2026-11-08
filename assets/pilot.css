@@ -26,8 +26,9 @@
 /* ---------- base ---------- */
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-/* CSS smooth scrolling only when Lenis is not running; with Lenis on, it would fight Lenis's own frame-by-frame scrolling */
-@media (prefers-reduced-motion:no-preference){html:not(.lenis){scroll-behavior:smooth}}
+/* Native scrolling (no JS smooth-scroll library): the browser scrolls on its own thread, so the page follows the wheel or
+   finger at once. In-page links still glide. */
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--f-sans);letter-spacing:-.006em;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:clip}
 img{max-width:100%}
 h1,h2,h3,h4,p,ul,ol,figure,blockquote{margin:0}
@@ -60,14 +61,14 @@ h2,h3{text-wrap:balance}
 
 /* ---------- buttons: sentence case, an arrow chip that slides on hover (same as the home page) ---------- */
 .btn{--b:var(--ink);--c:#fff;display:inline-flex;align-items:center;gap:14px;min-height:48px;padding:6px 6px 6px 20px;border-radius:12px;background:var(--b);color:var(--c);text-decoration:none;font-weight:500;font-size:15.5px;letter-spacing:-.01em;line-height:1.2;border:0;cursor:pointer;
-  transition:transform .3s var(--ease-snap),box-shadow .3s var(--ease-snap),background-color .15s ease}
+  transition:transform .3s var(--ease-snap),background-color .15s ease}
 .btn__chip{flex:0 0 auto;width:36px;height:36px;border-radius:9px;display:grid;place-items:center;background:rgba(255,255,255,.14);transition:transform .3s var(--ease-snap)}
 .btn__chip svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.btn:hover{transform:translateY(-1px)}
-.btn:hover .btn__chip{transform:translateX(3px)}
+/* Hover only where there is a real mouse, and no glow change: a glow that grows on hover flashes on and off as buttons
+   slide under a still pointer while the page scrolls. */
+@media (hover:hover) and (pointer:fine){.btn:hover{transform:translateY(-1px)}.btn:hover .btn__chip{transform:translateX(3px)}.btn--accent:hover{--b:var(--accent-hover)}}
 .btn:active{transform:translateY(0) scale(.98)}
 .btn--accent{--b:var(--accent);box-shadow:0 14px 36px -12px rgba(15,122,98,.65),0 0 70px -16px rgba(47,191,143,.55)}
-.btn--accent:hover{--b:var(--accent-hover);box-shadow:0 18px 44px -12px rgba(15,122,98,.7),0 0 90px -14px rgba(47,191,143,.6)}
 .btn--xl{min-height:64px;padding:8px 8px 8px 28px;font-size:18px;border-radius:16px;gap:18px}
 .btn--xl .btn__chip{width:48px;height:48px;border-radius:12px}
 .btn--light{--b:#fff;--c:var(--ink)}
@@ -86,9 +87,11 @@ h2,h3{text-wrap:balance}
 
 /* ---------- floating pill nav: the mark and one button, no menu ---------- */
 .nav{position:fixed;z-index:50;top:calc(env(safe-area-inset-top,0px) + 12px);left:max(var(--gutter),env(safe-area-inset-left,0px));right:max(var(--gutter),env(safe-area-inset-right,0px));max-width:1000px;margin-inline:auto}
-.nav__pill{display:flex;align-items:center;justify-content:space-between;gap:12px;height:var(--nav-h);padding:0 10px 0 22px;border-radius:999px;background:rgba(255,255,255,.72);
-  -webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6);box-shadow:0 0 0 1px rgba(10,30,22,.06);transition:box-shadow .5s var(--ease),background-color .5s var(--ease)}
-.nav.is-scrolled .nav__pill{background:rgba(255,255,255,.86);box-shadow:var(--shadow-float)}
+.nav__pill{display:flex;align-items:center;justify-content:space-between;gap:12px;height:var(--nav-h);padding:0 10px 0 22px;border-radius:999px;background:rgba(255,255,255,.94);
+  box-shadow:0 0 0 1px rgba(10,30,22,.06);transition:box-shadow .5s var(--ease),background-color .5s var(--ease)}
+/* No backdrop blur: re-blurring everything that slides under a fixed bar costs a repaint on every scroll frame and
+   flickers in some browsers. A near-solid bar looks the same. */
+.nav.is-scrolled .nav__pill{background:#fff;box-shadow:var(--shadow-float)}
 .brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:600;font-size:17px;letter-spacing:-.035em;white-space:nowrap;color:var(--ink)}
 .brand svg{width:26px;height:26px;flex:0 0 26px}
 .nav .btn--sm{white-space:nowrap}
@@ -109,7 +112,7 @@ h2,h3{text-wrap:balance}
 /* ---------- booking card ---------- */
 .lp-book{padding:clamp(48px,7vw,88px) 0 0}
 .lp-book__grid{position:relative;isolation:isolate;grid-template-columns:minmax(0,580px);padding-bottom:clamp(72px,9vw,120px)}
-.lp-book__grid::before{content:"";position:absolute;left:50%;top:80px;width:min(760px,96vw);height:460px;transform:translateX(-50%);z-index:-1;pointer-events:none;background:radial-gradient(closest-side,rgba(47,191,143,.2),transparent);filter:blur(30px)}
+.lp-book__grid::before{content:"";position:absolute;left:50%;top:80px;width:min(760px,96vw);height:460px;transform:translateX(-50%);z-index:-1;pointer-events:none;background:radial-gradient(closest-side,rgba(47,191,143,.2),transparent)}
 .lp-card{border:0;border-radius:28px;background:#fff;box-shadow:0 2px 4px rgba(10,30,22,.04),0 40px 80px -36px rgba(10,30,22,.32),0 0 0 1px rgba(10,30,22,.07)}
 .lp-card__hd{padding:20px 28px 16px;border-bottom:1px solid var(--line)}
 .lp-steps{gap:20px}
@@ -139,7 +142,7 @@ h2,h3{text-wrap:balance}
 .lp-tel__cc{min-height:52px;min-width:58px;border:1.5px solid var(--line);border-radius:12px;background:var(--well);font-family:var(--f-mono);font-size:14px;font-weight:500;color:var(--ink-2)}
 .lp-name-row{gap:0 12px}
 .lp-more.show{animation:pvIn .6s var(--ease)}
-@keyframes pvIn{from{opacity:0;transform:translateY(10px);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+@keyframes pvIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
 .lp-consent{margin:12px 0 18px}
 .lp-consent__row{gap:12px}
@@ -197,7 +200,7 @@ h2,h3{text-wrap:balance}
 /* how it works: three cards */
 .lp-steps3{gap:16px;max-width:1140px}
 .lp-step{text-align:left;background:#fff;border-radius:22px;box-shadow:var(--shadow-soft);padding:clamp(24px,2.6vw,32px);display:grid;align-content:start;gap:14px;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
-.lp-step:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift)}
+@media (hover:hover) and (pointer:fine){.lp-step:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift)}}
 .lp-step__ic{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);margin-bottom:6px}
 .lp-step__ic svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .lp-step__when{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--accent);margin:0}
@@ -269,7 +272,7 @@ h2,h3{text-wrap:balance}
 
 /* ---------- closing band and the legal line, on the same dark ground ---------- */
 .lp-final{position:relative;isolation:isolate;overflow:hidden;background:var(--night);color:var(--night-ink);padding-block:clamp(72px,9vw,130px);text-align:center}
-.lp-final::after{content:"";position:absolute;left:50%;top:62%;width:min(620px,90vw);height:260px;transform:translate(-50%,-50%);z-index:-1;background:radial-gradient(closest-side,rgba(15,122,98,.55),transparent);filter:blur(30px)}
+.lp-final::after{content:"";position:absolute;left:50%;top:62%;width:min(620px,90vw);height:260px;transform:translate(-50%,-50%);z-index:-1;background:radial-gradient(closest-side,rgba(15,122,98,.55),transparent)}
 .lp-final .h2{color:var(--night-ink);max-width:14em;margin-inline:auto}
 .lp-final p{font-size:clamp(17px,1.4vw,19px);color:var(--night-muted);margin:18px auto 34px;max-width:560px;line-height:1.55;text-wrap:balance}
 .legal-line{background:var(--night);border-top:1px solid var(--night-line);text-align:center;padding:16px 20px calc(20px + env(safe-area-inset-bottom,0px));font-size:14px;color:var(--night-muted)}
@@ -293,20 +296,13 @@ h2,h3{text-wrap:balance}
 }
 @media (max-width:480px){.lp-cta-row .btn,.lp-final .btn{max-width:100%}}
 
-/* ---------- smooth scrolling (Lenis) ---------- */
-html.lenis,html.lenis body{height:auto}
-.lenis.lenis-smooth{scroll-behavior:auto!important}
-.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
-/* while the page is smooth-scrolling, the calendar iframe must not catch the wheel, or the page stalls under it */
-.lenis.lenis-smooth iframe{pointer-events:none}
-.lenis.lenis-stopped{overflow:hidden}
-
 /* ---------- reveal on scroll: only below the first screen, only once the script runs ---------- */
-.js [data-rv].pre{opacity:0;transform:translateY(18px);filter:blur(6px)}
-.js [data-rv]{transition:opacity .9s var(--ease),transform .9s var(--ease),filter .9s var(--ease),box-shadow .5s var(--ease);transition-delay:var(--d,0s)}
+/* fade and rise only: no blur (animating a blur repaints the whole block every frame while you scroll) */
+.js [data-rv].pre{opacity:0;transform:translateY(16px)}
+.js [data-rv]{transition:opacity .7s var(--ease),transform .7s var(--ease),box-shadow .5s var(--ease);transition-delay:var(--d,0s)}
 .js [data-rv]:hover{transition-delay:0s}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
-  .js [data-rv].pre{opacity:1;transform:none;filter:none}
+  .js [data-rv].pre{opacity:1;transform:none}
   html{scroll-behavior:auto}
 }

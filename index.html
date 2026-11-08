@@ -65,11 +65,9 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
   transition:transform .3s var(--ease-snap),box-shadow .3s var(--ease-snap),background-color .15s ease}
 .btn__chip{flex:0 0 auto;width:36px;height:36px;border-radius:9px;display:grid;place-items:center;background:rgba(255,255,255,.14);transition:transform .3s var(--ease-snap)}
 .btn__chip svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.btn:hover{transform:translateY(-1px)}
-.btn:hover .btn__chip{transform:translateX(3px)}
+@media (hover:hover) and (pointer:fine){.btn:hover{transform:translateY(-1px)}.btn:hover .btn__chip{transform:translateX(3px)}.btn--accent:hover{--b:var(--accent-hover)}}
 .btn:active{transform:translateY(0) scale(.98)}
 .btn--accent{--b:var(--accent);box-shadow:0 14px 36px -12px rgba(15,122,98,.65),0 0 70px -16px rgba(47,191,143,.55)}
-.btn--accent:hover{--b:var(--accent-hover);box-shadow:0 18px 44px -12px rgba(15,122,98,.7),0 0 90px -14px rgba(47,191,143,.6)}
 .btn--xl{min-height:64px;padding:8px 8px 8px 28px;font-size:18px;border-radius:16px;gap:18px}
 .btn--xl .btn__chip{width:48px;height:48px;border-radius:12px}
 .btn--light{--b:#fff;--c:var(--ink)}
@@ -79,9 +77,9 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
 
 /* Floating pill nav */
 .nav{position:fixed;z-index:50;top:calc(env(safe-area-inset-top,0px) + 12px);left:max(var(--gutter),env(safe-area-inset-left,0px));right:max(var(--gutter),env(safe-area-inset-right,0px));max-width:1000px;margin-inline:auto}
-.nav__pill{display:flex;align-items:center;justify-content:space-between;gap:12px;height:var(--nav-h);padding:0 10px 0 22px;border-radius:999px;background:rgba(255,255,255,.72);
-  -webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6);box-shadow:0 0 0 1px rgba(10,30,22,.06);transition:box-shadow .5s var(--ease),background-color .5s var(--ease)}
-.nav.is-scrolled .nav__pill{background:rgba(255,255,255,.86);box-shadow:var(--shadow-float)}
+.nav__pill{display:flex;align-items:center;justify-content:space-between;gap:12px;height:var(--nav-h);padding:0 10px 0 22px;border-radius:999px;background:rgba(255,255,255,.94);
+  box-shadow:0 0 0 1px rgba(10,30,22,.06);transition:box-shadow .5s var(--ease),background-color .5s var(--ease)}
+.nav.is-scrolled .nav__pill{background:#fff;box-shadow:var(--shadow-float)}
 .brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:600;font-size:17px;letter-spacing:-.035em;white-space:nowrap}
 .brand svg{width:26px;height:26px}
 .nav__links{display:flex;gap:4px}
@@ -94,7 +92,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
 /* Hero */
 .hero{position:relative;padding-block:calc(var(--nav-h) + 110px) 72px;overflow:hidden;isolation:isolate}
 .hero__in{display:flex;flex-direction:column;align-items:center;text-align:center;gap:28px}
-.chip{display:inline-flex;align-items:center;gap:9px;padding:7px 14px 7px 10px;border-radius:999px;background:rgba(255,255,255,.8);box-shadow:0 0 0 1px var(--line);font-size:clamp(12.5px,3.3vw,14px);text-align:center;color:var(--ink-2);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.chip{display:inline-flex;align-items:center;gap:9px;padding:7px 14px 7px 10px;border-radius:999px;background:rgba(255,255,255,.8);box-shadow:0 0 0 1px var(--line);font-size:clamp(12.5px,3.3vw,14px);text-align:center;color:var(--ink-2)}
 .chip__dot{flex:0 0 auto;width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
 .hero .h-display{max-width:14em;font-size:clamp(38px,6.2vw,86px)}
 .hero__sub{font-size:clamp(17px,1.5vw,20px);line-height:1.5;color:var(--muted);max-width:46ch;margin-top:-4px}
@@ -356,7 +354,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
 .close{position:relative;padding-block:clamp(80px,10vw,140px);display:grid;justify-items:center;text-align:center;gap:22px;isolation:isolate}
 .close::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle,rgba(47,191,143,.5) 1.2px,transparent 1.6px) 0 0/13px 13px;
   -webkit-mask-image:radial-gradient(ellipse 46% 60% at 50% 55%,#000 5%,transparent 70%);mask-image:radial-gradient(ellipse 46% 60% at 50% 55%,#000 5%,transparent 70%)}
-.close::after{content:"";position:absolute;left:50%;top:55%;width:min(620px,90vw);height:260px;transform:translate(-50%,-50%);z-index:-1;background:radial-gradient(closest-side,rgba(15,122,98,.55),transparent);filter:blur(30px)}
+.close::after{content:"";position:absolute;left:50%;top:55%;width:min(620px,90vw);height:260px;transform:translate(-50%,-50%);z-index:-1;background:radial-gradient(closest-side,rgba(15,122,98,.55),transparent)}
 .close p{color:var(--night-muted);font-size:15px}
 .foot{border-top:1px solid var(--night-line);padding-block:28px calc(28px + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;color:var(--night-muted);font-size:14px}
 .foot .brand{color:var(--night-ink)}
@@ -364,12 +362,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
 .foot nav{display:flex;flex-wrap:wrap;gap:6px 18px}
 .foot a{text-decoration:none;transition:color .15s}
 .foot a:hover{color:var(--night-ink)}
-
-/* Smooth scrolling (Lenis) */
-html.lenis,html.lenis body{height:auto}
-.lenis.lenis-smooth{scroll-behavior:auto!important}
-.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
-.lenis.lenis-stopped{overflow:hidden}
 
 /* Journey strip under the hero: one example prospect, start to booked */
 .journey{width:min(1320px,calc(100vw - 48px));margin-top:clamp(36px,6vw,72px);text-align:left}
@@ -434,11 +426,11 @@ html.lenis,html.lenis body{height:auto}
 @media (prefers-reduced-motion:reduce){.jstep,.jstep__h::after{animation:none}}
 
 /* Reveal on scroll: only for things below the first screen, and only once the script is running */
-.js [data-rv].pre{opacity:0;transform:translateY(18px);filter:blur(6px)}
-.js [data-rv]{transition:opacity .9s var(--ease),transform .9s var(--ease),filter .9s var(--ease);transition-delay:var(--d,0s)}
+.js [data-rv].pre{opacity:0;transform:translateY(16px)}
+.js [data-rv]{transition:opacity .7s var(--ease),transform .7s var(--ease);transition-delay:var(--d,0s)}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
-  .js [data-rv].pre{opacity:1;transform:none;filter:none}
+  .js [data-rv].pre{opacity:1;transform:none}
 }
 </style>
 </head>
@@ -694,7 +686,6 @@ html.lenis,html.lenis body{height:auto}
 </main>
 
 <script src="assets/config.js"></script>
-<script src="assets/vendor/lenis.min.js"></script>
 <script>
 (function () {
   'use strict';
@@ -754,25 +745,18 @@ html.lenis,html.lenis body{height:auto}
 
   /* Nav: a stronger shadow once the page moves */
   var nav = $('#nav');
-  function onNav() { nav.classList.toggle('is-scrolled', window.scrollY > 8); }
+  var navOn = null;
+  function onNav() { var on = window.scrollY > 8; if (on !== navOn) { navOn = on; nav.classList.toggle('is-scrolled', on); } }
   window.addEventListener('scroll', onNav, { passive: true }); onNav();
 
 
-  /* Smooth scrolling: Lenis eases wheel and trackpad scrolling; touch keeps native scrolling */
-  var lenis = null;
-  if (window.Lenis && !reduce) {
-    try {
-      lenis = new window.Lenis({ duration: 0.9, easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
-      var lr = function (t) { lenis.raf(t); requestAnimationFrame(lr); }; requestAnimationFrame(lr);
-    } catch (err) { lenis = null; }
-  }
+  /* Native scrolling: no JS smooth-scroll library (it made the wheel lag behind the hand). In-page links still glide. */
   doc.addEventListener('click', function (e) {
     var a = e.target.closest ? e.target.closest('a[href^="#"]') : null; if (!a) return;
     var id = a.getAttribute('href').slice(1), t = id ? doc.getElementById(id) : null; if (!t) return;
     e.preventDefault();
     var off = id === 'top' ? 0 : -($('#nav').offsetHeight + 36);
-    if (lenis) lenis.scrollTo(id === 'top' ? 0 : t, { offset: off });
-    else window.scrollTo({ top: id === 'top' ? 0 : t.getBoundingClientRect().top + window.scrollY + off, behavior: reduce ? 'auto' : 'smooth' });
+    window.scrollTo({ top: id === 'top' ? 0 : t.getBoundingClientRect().top + window.scrollY + off, behavior: reduce ? 'auto' : 'smooth' });
   });
 
   /* Journey strip: after the cards arrive, a highlight walks from first message to booked meeting */

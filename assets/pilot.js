@@ -1,5 +1,5 @@
-/* /pilot motion, matching the home page: nav shadow once the page moves, Lenis smooth scrolling for wheel and
-   trackpad (touch keeps native scrolling), eased in-page links, reveal on scroll for items below the first screen,
+/* /pilot motion, matching the home page: nav shadow once the page moves, native scrolling (no JS smooth-scroll
+   library: it made the wheel feel laggy), eased in-page links, reveal on scroll for items below the first screen,
    count-up on two stats, and a smooth open and close for the FAQ. The booking card logic stays in assets/lp.js. */
 (function () {
   'use strict';
@@ -15,24 +15,16 @@
   ready(function () {
     /* Nav: a stronger shadow once the page moves */
     var nav = $('#nav');
-    function onNav() { if (nav) nav.classList.toggle('is-scrolled', window.scrollY > 8); }
+    var navOn = null;
+    function onNav() { var on = window.scrollY > 8; if (nav && on !== navOn) { navOn = on; nav.classList.toggle('is-scrolled', on); } }
     window.addEventListener('scroll', onNav, { passive: true }); onNav();
 
-    /* Smooth scrolling */
-    var lenis = null;
-    if (window.Lenis && !reduce) {
-      try {
-        lenis = new window.Lenis({ duration: 0.9, easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
-        var lr = function (t) { lenis.raf(t); requestAnimationFrame(lr); }; requestAnimationFrame(lr);
-      } catch (err) { lenis = null; }
-    }
     doc.addEventListener('click', function (e) {
       var a = e.target.closest ? e.target.closest('a[href^="#"]') : null; if (!a) return;
       var id = a.getAttribute('href').slice(1), t = id ? doc.getElementById(id) : null; if (!t) return;
       e.preventDefault();
       var off = id === 'top' ? 0 : -((nav ? nav.offsetHeight : 64) + 24);
-      if (lenis) lenis.scrollTo(id === 'top' ? 0 : t, { offset: off });
-      else window.scrollTo({ top: id === 'top' ? 0 : t.getBoundingClientRect().top + window.scrollY + off, behavior: reduce ? 'auto' : 'smooth' });
+      window.scrollTo({ top: id === 'top' ? 0 : t.getBoundingClientRect().top + window.scrollY + off, behavior: reduce ? 'auto' : 'smooth' });
     });
 
     /* Reveal: only items below the first screen start hidden */

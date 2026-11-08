@@ -161,3 +161,38 @@ body.qf .qf-btn--light:hover{opacity:1;box-shadow:inset 0 0 0 2px var(--accent);
 .qf-fine{margin:12px 0 0;font-size:12.5px;color:var(--qf-muted)}
 a.qf-prev{text-decoration:none}
 .qf-body .pc-steps{margin:8px 0 4px}
+
+/* A must-read line inside a helper (Funnel 5 Q5): its own line, dark and bold, with a brand-green highlighter mark
+   that follows the text when it wraps on a phone */
+body.qf .ap-sub .ap-emw{display:block;margin:8px 0}
+body.qf .ap-sub .ap-em{color:var(--ink);font-weight:700;font-size:15px;line-height:1.5;padding:1px 4px;border-radius:3px;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;background:linear-gradient(transparent 55%,rgba(47,191,143,.38) 55%)}
+@media (min-width:768px){body.qf .ap-sub .ap-em{font-size:16px}}
+
+/* Funnel 5: the calendar opens inside the card after the contact screen (funnel.js BOOK). A placeholder in the
+   shape of the scheduler holds the space until iClosed's frame has loaded, so nothing jumps. */
+.ap-book .ap-q{margin-bottom:20px}
+.ap-book .ap-sub{margin-top:-8px}
+.ap-book__frame{position:relative;width:100%;height:calc(100vh - 230px);height:calc(100dvh - 230px);min-height:660px;border-radius:12px;overflow:hidden}
+.ap-book__frame .iclosed-widget{position:relative;z-index:1;width:100%;height:100%}
+.ap-book__frame iframe{display:block;width:100%;height:100%;border:0}
+.ap-book__skel{position:absolute;inset:0;z-index:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:32px;padding:28px;
+  border:1px solid #e5e7eb;border-radius:12px;background:#fff;transition:opacity .3s ease}
+.ap-book__frame.is-ready .ap-book__skel{opacity:0}
+.ap-book__sk-l,.ap-book__sk-r{display:grid;align-content:start;gap:14px}
+.ap-book__skel b{display:block;height:42px;border-radius:8px;background:#f1f5f9;animation:apsk 1.4s ease-in-out infinite}
+.ap-book__skel b.w70{width:70%}
+.ap-book__skel b.w50{width:50%}
+.ap-book__skel b.w40{width:40%;height:22px}
+.ap-book__skel b.btn{height:46px;margin-top:6px;background:#e2e8f0}
+.ap-book__sk-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:12px;max-width:440px}
+.ap-book__sk-grid i{display:block;aspect-ratio:1;border-radius:50%;background:#f1f5f9;animation:apsk 1.4s ease-in-out infinite}
+@keyframes apsk{50%{opacity:.45}}
+@media (max-width:767px){.ap-book__skel{grid-template-columns:minmax(0,1fr);padding:20px}.ap-book__sk-r{display:none}}
+@media (prefers-reduced-motion:reduce){.ap-book__skel b,.ap-book__sk-grid i{animation:none}}
+.ap-book .qf-prev{margin-top:18px}
+.ap-book__alt{text-align:center;margin:12px 0 0;font-size:14px}
+.ap-next.is-busy{opacity:.7;cursor:progress}
+
+/* The questionnaire jumps to the top of each new screen at once (pilot.css turns on smooth scrolling for the landers) */
+html:has(body.qf){scroll-behavior:auto}
