@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="../assets/funnel.css">
 <link rel="stylesheet" href="../assets/qf.css">
 <script>window.AB_APPLY = {
- "FORM_VERSION": "ab-fit-f4-2026-11-07",
+ "FORM_VERSION": "ab-fit-f4-2026-11-08",
  "SOURCE": "advisorbooking-fit",
  "STORE_KEY": "ab_apply_v1",
  "CONSENT_TEXT_VERSION": "fit-2026-11-07-a",
@@ -158,7 +158,10 @@
    "type": "fields",
    "q": "Where should we send your next step?",
    "sub": "No spam, ever. We don\u2019t sell your information.",
-   "track": "lead",
+   "track": [
+    "lead",
+    "part1_complete"
+   ],
    "fields": [
     {
      "id": "first",
@@ -198,36 +201,10 @@
    "fine": "By continuing you agree to our <a href=\"../privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> and <a href=\"../terms.html\" target=\"_blank\" rel=\"noopener\">Terms</a>."
   },
   {
-   "id": "loader",
-   "type": "loader",
-   "track": "part1_complete",
-   "q": "Checking your firm\u2019s fit",
-   "sub": "A few more questions after this.",
-   "beat_ms": 900,
-   "min_ms": 3600,
-   "stages": [
-    {
-     "label": "Saving your details",
-     "active": "Saving...",
-     "done": "Saved"
-    },
-    {
-     "label": "Checking your answers",
-     "active": "Checking...",
-     "done": "Done"
-    },
-    {
-     "label": "Loading the last few questions",
-     "active": "Loading...",
-     "done": "Ready"
-    }
-   ]
-  },
-  {
    "id": "firm",
    "type": "fields",
    "q": "Tell us about your firm",
-   "sub": "We look at your website before the call.",
+   "sub": "A few more questions, then you pick a time. We look at your website before the call.",
    "track": "part2_start",
    "fields": [
     {
