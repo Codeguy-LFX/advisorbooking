@@ -162,11 +162,9 @@ body.qf .qf-btn--light:hover{opacity:1;box-shadow:inset 0 0 0 2px var(--accent);
 a.qf-prev{text-decoration:none}
 .qf-body .pc-steps{margin:8px 0 4px}
 
-/* A must-read line inside a helper (Funnel 5 Q5): its own line, dark and bold, with a brand-green highlighter mark
-   that follows the text when it wraps on a phone */
+/* A must-read line inside a helper (Funnel 5 Q5): its own line, dark and bold (Nick, Nov 8: no highlight) */
 body.qf .ap-sub .ap-emw{display:block;margin:8px 0}
-body.qf .ap-sub .ap-em{color:var(--ink);font-weight:700;font-size:15px;line-height:1.5;padding:1px 4px;border-radius:3px;
-  -webkit-box-decoration-break:clone;box-decoration-break:clone;background:linear-gradient(transparent 55%,rgba(47,191,143,.38) 55%)}
+body.qf .ap-sub .ap-em{color:var(--ink);font-weight:700;font-size:15px;line-height:1.5}
 @media (min-width:768px){body.qf .ap-sub .ap-em{font-size:16px}}
 
 /* Funnel 5: the calendar opens inside the card after the contact screen (funnel.js BOOK). A placeholder in the
