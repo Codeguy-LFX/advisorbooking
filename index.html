@@ -1,15 +1,15 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Advisor Booking | We book first meetings for independent RIAs</title>
-<meta name="description" content="For independent RIAs with $50M to $250M+ AUM. We put 8–15 meetings with HNW individuals and business owners on financial advisors’ calendars every month.">
+<meta name="description" content="For independent RIAs with $50M to $250M+ AUM. We work your dormant CRM first, then reach new people by email and LinkedIn. Your Compliance Team approves every message. A real person books every meeting.">
 <link rel="canonical" href="https://advisorbooking.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Advisor Booking">
 <meta property="og:title" content="Advisor Booking | We book first meetings for independent RIAs">
-<meta property="og:description" content="For independent RIAs with $50M to $250M+ AUM. We put 8–15 meetings with HNW individuals and business owners on financial advisors’ calendars every month.">
+<meta property="og:description" content="For independent RIAs with $50M to $250M+ AUM. We work your dormant CRM first, then reach new people by email and LinkedIn. Your Compliance Team approves every message. A real person books every meeting.">
 <meta property="og:url" content="https://advisorbooking.com/">
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
@@ -433,27 +433,41 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
   .js [data-rv].pre{opacity:1;transform:none}
 }
 </style>
+<link rel="stylesheet" href="assets/v3.css">
 </head>
-<body>
+<body data-root="" data-lander="home">
 <header class="nav" id="nav">
   <div class="nav__pill">
     <a class="brand" href="#top" aria-label="Advisor Booking, back to top"><svg viewBox="0 0 32 32" aria-hidden="true"><rect class="mb" x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect class="mp" x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect class="mp" x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect class="mp" x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></a>
     <nav class="nav__links" aria-label="Sections">
       <a href="#how">How it works</a>
-      <a href="#pricing">What it costs</a>
+      <a href="#guarantee">Our guarantee</a>
       <a href="#faq">FAQ</a>
+      <a href="blog/">Blog</a>
     </nav>
     <a class="btn btn--sm" href="book.html" data-src="nav">Get More Booked Meetings<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
   </div>
 </header>
 
 <main id="top">
-  <section class="hero" aria-labelledby="hero-h">
+  <section class="hero v2-hero" aria-labelledby="hero-h">
     <div class="wrap hero__in">
-      <h1 class="h-display" id="hero-h">We put 8–15 meetings with HNW individuals and business owners on financial advisors’ calendars every&nbsp;month</h1>
-      <p class="hero__sub">For independent RIAs with $50M to $250M+ AUM who want a predictable pipeline of business owners and high-net-worth families, not just “more marketing.”</p>
-      <div class="hero__cta"><a class="btn btn--accent btn--xl" href="book.html" data-src="hero">Get More Booked Meetings<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
-      <p class="hero__note">See the exact outbound and reactivation system we’ll run for your firm.</p>
+    <p class="eyebrow">For independent RIAs with $50M to $250M+ AUM</p>
+    <h1 class="v2-h1" id="hero-h">We fill financial advisors&rsquo; calendars with
+      <span class="rot" data-words='["HNW individuals.","executives.","your past prospects."]'><span class="rot__w">business owners.</span></span>
+    </h1>
+    <p class="v2-sub">We work your dormant CRM first, then reach new people by email and LinkedIn. <b>Your Compliance Team approves every message. A real person books every meeting.</b></p>
+    <div class="ec-wrap">
+        <form class="ec" data-ec="hero" action="L1/" method="get" novalidate>
+          <label class="sr-only" for="ec-hero">Work email</label>
+          <input type="email" id="ec-hero" name="email" placeholder="Your work email" autocomplete="email" inputmode="email" required>
+          <button type="submit" class="btn btn--accent"><span>Book intro call</span><span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+          <div class="lp-hp" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off" data-1p-ignore="true" data-lpignore="true"></div>
+        </form>
+        <p class="ec__err" role="alert" hidden>Enter a valid work email.</p>
+        <p class="ec__fine">See the exact outbound and reactivation system we&rsquo;ll run for your firm.</p>
+      </div>
+        <p class="v2-hero__alt"><a href="#how">See how the system works</a></p>
       <div class="journey" aria-label="Example: one prospect, from first message to a booked meeting">
         <ol class="journey__row">
           <li class="jstep" style="--i:0">
@@ -613,77 +627,66 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
         </section>
       </div>
 
-      <div class="cost" id="pricing">
-        <div class="cost__head">
-          <h3 class="h2" data-rv>What it costs</h3>
-          <p class="lead" data-rv style="--d:.06s">One setup fee, then a monthly retainer plus $750 for each qualified meeting that shows.</p>
-        </div>
-        <div class="cost__grid">
-          <div class="price" data-rv>
-            <p class="mono">Setup</p>
-            <p class="price__big">$10,000 <span>one time.</span></p>
-            <p>This covers list build and enrichment, CRM cleanup, LinkedIn profile tune-up, domains and inboxes, message packs, and the full system setup before a single campaign goes live.</p>
-          </div>
-          <div class="price price--feat" data-rv style="--d:.06s">
-            <p class="mono">Ongoing</p>
-            <p class="price__lead">Each month you pay:</p>
-            <div class="either">
-              <div class="opt"><b>$5,000</b><span>monthly retainer</span></div>
-              <span class="either__or">plus</span>
-              <div class="opt"><b>$750</b><span>per qualified, attended meeting</span></div>
-            </div>
-            <p class="price__fine">A qualified meeting is with a business owner or HNWI who fits your agreed AUM minimum, niche, and geography, and attends the call live.</p>
-          </div>
-        </div>
-        <div class="examples" data-rv>
-          <p class="mono">Examples</p>
-          <ul class="ex">
-            <li><span class="ex__dots" aria-hidden="true" style="--n:8"></span><p>If we deliver 8 qualified, attended meetings in a month, you pay $5,000 + 8 × $750 = $11,000.</p><b>$11,000</b></li>
-            <li><span class="ex__dots" aria-hidden="true" style="--n:12"></span><p>If we deliver 12, you pay $5,000 + 12 × $750 = $14,000.</p><b>$14,000</b></li>
-            <li><span class="ex__dots" aria-hidden="true" style="--n:4"></span><p>If a month is slow and only 4 meetings happen, you pay $5,000 + 4 × $750 = $8,000.</p><b>$8,000</b></li>
-          </ul>
-          <p class="examples__note">Your spend rises only when real people who fit your rules show up to talk with your advisors.</p>
-        </div>
-      </div>
-
-      <div class="commit" data-rv>
-        <div class="commit__num" aria-hidden="true"><b>24</b><span>qualified, attended meetings in your first 90 days</span></div>
-        <div class="commit__body">
-          <h3 class="h3">Our 90-day commitment</h3>
-          <p>In your first 90 days, our target is at least 24 qualified, attended meetings.</p>
-          <p>If we fall short of that target, we keep running the system and managing campaigns at no additional management fee until we hit 24. You still cover any hard costs, but we do not charge extra for our time until that number is met.</p>
-          <p>This keeps us focused on the same thing you care about: real HNWI and business-owner conversations, not vanity metrics.</p>
-        </div>
-      </div>
     </div>
   </section>
 
-  <section class="faq" id="faq" aria-labelledby="faq-h">
-    <div class="wrap">
-      <div class="faq__grid">
-        <div class="faq__side">
-          <h2 class="h2" id="faq-h">FAQ</h2>
-          <a class="btn btn--light" href="book.html" data-src="faq">Get More Booked Meetings<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-        </div>
-        <div class="qa">
-          <details open><summary>What do you actually do?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>The same work, every week. We build a list of the right people. We send them marketing on your behalf that you have approved. We follow up until a real person answers. Then a real person on our team checks the reply, qualifies the prospect, and books the meeting on your calendar. We nurture them so they show up. We build automations and a system that lets you track and convert meetings at the highest rate. We measure one thing: what each meeting cost.</p></div></div></details>
-          <details><summary>Who is this NOT for?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><ul><li>Firms under $25M in assets, or firms that only charge by the hour</li><li>Firms with no CRM data and no budget to build a list of their ideal clients</li><li>Firms whose compliance team says no to all outreach</li><li>Firms that want one campaign, not a system</li><li>Firms with no advisor who has time for 8 or more new meetings a month</li></ul><p>These are not judgments. They are the conditions the system needs to produce meetings.</p></div></div></details>
-          <details><summary>What does it cost?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>Setup is $10,000, one time. It covers list build and enrichment, CRM cleanup, a LinkedIn profile tune-up, domains and inboxes, message packs, and the full system setup before a single campaign goes live.</p><p>After setup, you pay a $5,000 monthly retainer plus $750 for each qualified, attended meeting. A qualified meeting is with a business owner or HNWI who fits your agreed AUM minimum, niche, and geography, and attends the call live.</p><p>In your first 90 days, our target is at least 24 qualified, attended meetings. If we fall short, we keep running the system at no additional management fee until we hit 24.</p></div></div></details>
-          <details><summary>Will we get a lot of bad meetings?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>No. Before we start, we ask you questions so you can tell us what a good fit looks like: how much they have, what job or situation they are in, where they are located, and what is going on in their life. A real person reads every reply. People who do not fit get a polite no. You only pay the meeting fee when the person fits your rules and shows up.</p></div></div></details>
-          <details><summary>We have tried marketing agencies before.<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>So have most of the firms we talk to. Agencies sell things like a campaign, a website, or ad views. We sell what actually drives revenue: qualified meetings that happen, and the clients that come with them. We report one number every week. If the number is bad, there is no hiding. Our incentives are aligned with yours.</p></div></div></details>
-          <details><summary>What do you need from us?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>One demo call where we determine if we are a good fit. We work out who your ideal client is and how we will get them booked with you. We build you a list and/or you give us access to your CRM data so we can enrich your list. We transform your marketing and social pages with our proven systems and copywriting. Meetings get booked with your qualified dream clients. And your advisors show up with the biggest smile to the meetings we book.</p></div></div></details>
-        </div>
-      </div>
-      <div class="close">
-        <a class="btn btn--accent btn--xl" href="book.html" data-src="close">Get More Booked Meetings<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-      </div>
-      <footer class="foot">
-        <a class="brand" href="#top"><svg viewBox="0 0 32 32" aria-hidden="true"><rect class="mb" x="3" y="5" width="26" height="24" rx="6"/><rect class="mp" x="6" y="12" width="20" height="14" rx="3"/><rect class="mp" x="9.5" y="2" width="3" height="7" rx="1.5"/><rect class="mp" x="19.5" y="2" width="3" height="7" rx="1.5"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></a>
-        <nav aria-label="Footer"><a href="#how">How it works</a><a href="#pricing">What it costs</a><a href="#faq">FAQ</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
-      </footer>
+<section class="v2-sec" id="guarantee" aria-labelledby="guar-h">
+  <div class="wrap">
+    <div class="lp-sec-head v2-head">
+      <p class="eyebrow" data-rv>The meeting guarantee</p>
+      <h2 class="h2 h2--md" id="guar-h" data-rv>At least 15 attended, qualified meetings in your first 90 days.</h2>
     </div>
-  </section>
+    <div class="lp-guar">
+      <div class="lp-guar__quote" data-rv><p>In your first 90 days from launch, we commit to at least 15 attended, qualified meetings that match your written criteria. If we're short, we keep working at our cost (no operating fee) until you've taken 15 such meetings.</p><footer>Written into your services agreement</footer></div>
+      <div class="lp-guar__terms" data-rv style="--d:.08s">
+        <h3>Conditions, so it stays fair on both sides</h3>
+        <ul class="lp-plist"><li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Agree on your ideal client and messages at kickoff</span></li><li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>One advisor or owner on the weekly call</span></li><li><span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Follow the process we set for booked meetings</span></li></ul>
+        <p class="lp-guar__close">Qualified means your written criteria: AUM minimum, niche and geography, with a decision maker who shows up.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="v2-sec v2-sec--tight" id="start" aria-labelledby="start-h">
+  <div class="wrap">
+    <div class="v2-cta" data-rv>
+      <h2 class="h2" id="start-h">Your first step is a 20-minute call.</h2>
+      <p class="lead">Start with your work email. A few quick questions, then pick a time to see if your firm is a fit.</p>
+      <div class="ec-wrap">
+        <form class="ec" data-ec="footer" action="L1/" method="get" novalidate>
+          <label class="sr-only" for="ec-foot">Work email</label>
+          <input type="email" id="ec-foot" name="email" placeholder="Your work email" autocomplete="email" inputmode="email" required>
+          <button type="submit" class="btn btn--accent"><span>Book intro call</span><span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+          <div class="lp-hp" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off" data-1p-ignore="true" data-lpignore="true"></div>
+        </form>
+        <p class="ec__err" role="alert" hidden>Enter a valid work email.</p>
+        <p class="ec__fine">Next: a few quick questions, then you pick a time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq" aria-labelledby="faq-h">
+  <div class="wrap">
+    <div class="faq__grid">
+      <div class="faq__side">
+        <h2 class="h2" id="faq-h">FAQ</h2>
+        <a class="btn btn--light" href="#start" data-ec-focus>Book intro call<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      </div>
+      <div class="qa">
+<details open><summary>How fast do meetings start?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>We plan to launch within 21 days of kickoff, unless compliance review takes longer. Meetings book as replies come in. The guarantee&rsquo;s 90 days start at launch, so review time never counts against it.</p></div></div></details>
+<details><summary>How does compliance work?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>Your Compliance Team approves every message before it sends. We send from separate domains and keep a reply log your Compliance Team can access. The compliance decision stays with your firm. Questions about investments, performance, or fees go to your advisor.</p></div></div></details>
+<details><summary>What counts as a qualified meeting?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>A business owner or HNW individual who fits your agreed AUM minimum, niche, and geography, and attends the call live. You set those rules before we start. People who do not fit get a polite no.</p></div></div></details>
+<details><summary>Who owns the list and data?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>You do. Domains, inboxes, lists, and messages live in your accounts, in your firm&rsquo;s name. If you bring it in-house, your team keeps running it.</p></div></div></details>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
+<footer class="legal-line">
+  <nav class="v2-foot" aria-label="Footer"><a href="/">Home</a><a href="blog/">Blog</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+  <p class="legal-line__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance. &copy; 2026 De Jesus Ventures LLC. Boca Raton, FL.</p>
+</footer>
 
 <script src="assets/config.js"></script>
 <script>
@@ -738,7 +741,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
   })();
   var doc = document, root = doc.documentElement;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  root.classList.add('js');
+  root.classList.add('js'); root.classList.remove('no-js');
   function $(s, c) { return (c || doc).querySelector(s); }
   function $$(s, c) { return Array.prototype.slice.call((c || doc).querySelectorAll(s)); }
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
@@ -873,5 +876,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
   });
 })();
 </script>
+<script src="assets/lander.js" defer></script>
 </body>
 </html>
