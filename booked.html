@@ -101,6 +101,11 @@
   if (meta && (shown || tz)) { meta.textContent = [shown, tz].filter(Boolean).join(' · '); meta.hidden = false; }
   var name = pick('inviteefirstname', 'firstname', 'iclosedname', 'inviteefullname', 'inviteename', 'fullname', 'name');
   if (name) { var h = document.getElementById('bookedH'); if (h) h.textContent = 'You’re booked, ' + String(name).split(/\s+/)[0] + '.'; }
+  /* Say which inbox to check: the booking's email, or the one given on the fit form in this browser. */
+  var em = pick('inviteeemail', 'email', 'iclosedemail');
+  if (!em) { try { var fs0 = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); em = (fs0 && fs0.answers && fs0.answers.email) || ''; } catch (e) {} }
+  var toEl = document.getElementById('bookedTo');
+  if (toEl && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) toEl.textContent = ' to ' + em;
   /* Attribution kept by the site's scripts during the visit. */
   var utm = {};
   try { utm = JSON.parse(sessionStorage.getItem('ab_utm') || '{}') || {}; } catch (e) {}
