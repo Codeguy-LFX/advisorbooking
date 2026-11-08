@@ -21,6 +21,14 @@
 .booked__card h1{font-family:var(--font-display);font-weight:800;font-size:clamp(26px,4vw,36px);letter-spacing:-.04em;line-height:1.05;margin:0 0 10px;color:var(--ink)}
 .booked__card p{color:var(--muted);font-size:16px;line-height:1.55;margin:0}
 .booked__meta{margin-top:18px;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.booked__steps{margin-top:22px;text-align:left;background:var(--accent-tint);border-radius:14px;padding:18px 20px}
+.booked__steps-h{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 10px}
+.booked__steps ol{margin:0;padding-left:20px;list-style:decimal;color:var(--ink);font-size:15px;line-height:1.55}
+.booked__steps li{display:list-item;margin:6px 0}
+.booked__steps li b{color:var(--ink)}
+.booked__steps li span{color:var(--muted)}
+.booked__card .booked__help{margin-top:12px;font-size:14px}
+.booked__help a{color:var(--accent)}
 .booked__next{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);text-align:left}
 .booked__next p{font-size:14.5px}
 .booked__next ol{margin:10px 0 0;padding-left:20px;list-style:decimal;color:var(--ink);font-size:14.5px;line-height:1.55}
@@ -43,14 +51,22 @@ body.in-frame .booked__card{box-shadow:none}
     <div class="booked__card">
       <span class="booked__chk"><svg width="30" height="30" viewBox="0 0 26 26" aria-hidden="true"><path d="M6 13.5L11 18.5 20 8" stroke="#0F7A62" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       <h1 id="bookedH">You&rsquo;re booked.</h1>
-      <p>Check your email for the calendar invite and the Google Meet link.</p>
       <p class="booked__meta" id="bookedMeta" hidden></p>
+      <div class="booked__steps">
+        <p class="booked__steps-h">Your next steps</p>
+        <ol>
+          <li><b>Check your email now.</b> <span>We just sent your calendar invite and Google Meet link<span id="bookedTo"></span>. Not in your inbox in 5 minutes? Check spam and promotions.</span></li>
+          <li><b>Accept the invite</b> <span>so the call is on your calendar.</span></li>
+          <li><b>Join from the Google Meet link</b> <span>in the invite at your call time.</span></li>
+        </ol>
+        <p class="booked__help">Need a different time, or still no email? Write to <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a>.</p>
+      </div>
       <div class="booked__next">
-        <p><b>Three things to know before the call:</b></p>
+        <p><b>Have these ready for the call:</b></p>
         <ol>
           <li>Your rough close rate on first meetings. A guess is fine.</li>
           <li>The average size of a new client from the last 12 months.</li>
-          <li>Whether your firm has run email or LinkedIn outreach before, and who decides if it can.</li>
+          <li>Whether your firm has run ads, email or LinkedIn outreach before, and whether your compliance officer is OK with it.</li>
         </ol>
       </div>
     </div>
@@ -90,6 +106,11 @@ body.in-frame .booked__card{box-shadow:none}
   if (meta && (shown || tz)) { meta.textContent = [shown, tz].filter(Boolean).join(' · '); meta.hidden = false; }
   var name = pick('inviteefirstname', 'firstname', 'iclosedname', 'inviteefullname', 'inviteename', 'fullname', 'name');
   if (name) { var h = document.getElementById('bookedH'); if (h) h.textContent = 'You’re booked, ' + String(name).split(/\s+/)[0] + '.'; }
+  /* Say which inbox to check: the booking's email, or the one given on the fit form in this browser. */
+  var em = pick('inviteeemail', 'email', 'iclosedemail');
+  if (!em) { try { var fs0 = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); em = (fs0 && fs0.answers && fs0.answers.email) || ''; } catch (e) {} }
+  var toEl = document.getElementById('bookedTo');
+  if (toEl && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) toEl.textContent = ' to ' + em;
 
   /* Attribution kept by the site's scripts during the visit. */
   var utm = {};
@@ -106,6 +127,9 @@ body.in-frame .booked__card{box-shadow:none}
     forwarded: q, ts: new Date().toISOString()
   };
 
+  /* A booking that came from a fit form: mark that form's saved request as booked, so the form starts fresh next time
+     instead of reopening the calendar (Funnel 5 reopens it until a booking is reported). */
+  try { var abs = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); if (abs && abs.done && !abs.booked) { abs.booked = true; localStorage.setItem('ab_apply_v1', JSON.stringify(abs)); } } catch (e) {}
   if (inFrame) {
     /* Inside the scheduler iframe on a booking page: hand the booking to that page, which owns the CRM post and tracking. */
     try { window.parent.postMessage({ event: 'iclosed.booked', payload: payload }, location.origin); } catch (e) {}
