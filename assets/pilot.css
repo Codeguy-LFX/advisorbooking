@@ -88,7 +88,7 @@ h2,h3{text-wrap:balance}
 /* ---------- floating pill nav: the mark and one button, no menu ---------- */
 .nav{position:fixed;z-index:50;top:calc(env(safe-area-inset-top,0px) + 12px);left:max(var(--gutter),env(safe-area-inset-left,0px));right:max(var(--gutter),env(safe-area-inset-right,0px));max-width:1000px;margin-inline:auto}
 .nav__pill{display:flex;align-items:center;justify-content:space-between;gap:12px;height:var(--nav-h);padding:0 10px 0 22px;border-radius:999px;background:rgba(255,255,255,.94);
-  box-shadow:0 0 0 1px rgba(10,30,22,.06);transition:box-shadow .5s var(--ease),background-color .5s var(--ease)}
+  box-shadow:0 0 0 1px rgba(10,30,22,.06);transition:background-color .5s var(--ease)}
 /* No backdrop blur: re-blurring everything that slides under a fixed bar costs a repaint on every scroll frame and
    flickers in some browsers. A near-solid bar looks the same. */
 .nav.is-scrolled .nav__pill{background:#fff;box-shadow:var(--shadow-float)}
@@ -297,8 +297,10 @@ h2,h3{text-wrap:balance}
 @media (max-width:480px){.lp-cta-row .btn,.lp-final .btn{max-width:100%}}
 
 /* ---------- reveal on scroll: only below the first screen, only once the script runs ---------- */
-/* fade and rise only: no blur (animating a blur repaints the whole block every frame while you scroll) */
-.js [data-rv].pre{opacity:0;transform:translateY(16px)}
+/* fade and rise only: no blur (animating a blur repaints the whole block every frame while you scroll). Hiding is
+   instant (no fade-out when the class is added after first paint); only the reveal animates. */
+.js [data-rv].pre{opacity:0;transform:translateY(16px);transition:none}
+@media print{.js [data-rv].pre{opacity:1;transform:none}.nav{position:static}}
 .js [data-rv]{transition:opacity .7s var(--ease),transform .7s var(--ease),box-shadow .5s var(--ease);transition-delay:var(--d,0s)}
 .js [data-rv]:hover{transition-delay:0s}
 @media (prefers-reduced-motion:reduce){
