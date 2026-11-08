@@ -109,6 +109,20 @@
     }, 2400);
   });
 
+  /* ---------- journey strip: a highlight walks from first message to booked meeting while it is on screen ---------- */
+  var jr = doc.querySelector('.journey');
+  if (jr && 'IntersectionObserver' in window) {
+    var steps = jr.querySelectorAll('.jstep'), ji = -1, jv = false, jt = null;
+    var jnext = function () { if (doc.hidden || !jv) return; ji = (ji + 1) % steps.length; Array.prototype.forEach.call(steps, function (s, k) { s.classList.toggle('is-on', k === ji); }); };
+    new IntersectionObserver(function (es) {
+      jv = es[0].isIntersecting;
+      if (jv && !jr.classList.contains('is-in')) {
+        jr.classList.add('is-in');
+        if (!reduce && steps.length) setTimeout(function () { jnext(); jt = setInterval(jnext, 2200); }, 1200);
+      }
+    }, { threshold: 0.25 }).observe(jr);
+  }
+
   /* ---------- blog topic filter ---------- */
   var bar = doc.querySelector('.bl-filter');
   if (bar) bar.addEventListener('click', function (e) {
