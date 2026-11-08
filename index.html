@@ -590,7 +590,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
           </div>
         </div>
       </div>
-      <div class="how__cta"><p class="how__next">Your first step is a 20-minute call to see if your firm is a fit.</p><a class="btn btn--accent btn--xl" href="book.html" data-src="how">Get More Booked Meetings<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
+      <div class="how__cta"><p class="how__next">Your first step is a 20-minute call to see if your firm is a fit.</p><a class="btn btn--accent btn--xl" href="L1/" data-src="how">Get More Booked Meetings<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
     </div>
   </section>
 
@@ -670,7 +670,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
     <div class="faq__grid">
       <div class="faq__side">
         <h2 class="h2" id="faq-h">FAQ</h2>
-        <a class="btn btn--light" href="#start" data-ec-focus>Book intro call<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a class="btn btn--light" href="L1/" data-src="faq">Book intro call<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
       </div>
       <div class="qa">
 <details open><summary>How fast do meetings start?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>We plan to launch within 21 days of kickoff, unless compliance review takes longer. Meetings book as replies come in. The guarantee&rsquo;s 90 days start at launch, so review time never counts against it.</p></div></div></details>
@@ -703,7 +703,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
     var params = new URLSearchParams(location.search), found = false;
     UTM_KEYS.forEach(function (k) { var v = params.get(k); if (v) { stored[k] = v; found = true; } });
     if (found) { try { sessionStorage.setItem('ab_utm', JSON.stringify(stored)); } catch (e) {} }
-    var keys = Object.keys(stored);
+    var keys = Object.keys(stored).filter(function (k) { return UTM_KEYS.indexOf(k) > -1; });
     Array.prototype.slice.call(document.querySelectorAll('a[href]')).forEach(function (a) {
       var href = a.getAttribute('href'), url;
       if (!href || /^(mailto:|tel:|#|javascript:)/i.test(href)) return;
