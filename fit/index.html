@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="../assets/funnel.css">
 <link rel="stylesheet" href="../assets/qf.css">
 <script>window.AB_APPLY = {
- "FORM_VERSION": "ab-fit-f4-2026-11-08b",
+ "FORM_VERSION": "ab-fit-f4-2026-11-08c",
  "SOURCE": "advisorbooking-fit",
  "STORE_KEY": "ab_apply_v1",
  "CONSENT_TEXT_VERSION": "fit-2026-11-07-a",
@@ -56,24 +56,16 @@
   {
    "id": "role",
    "type": "choice",
-   "q": "What\u2019s your role?",
+   "q": "What\u2019s your role at your firm?",
    "sub": "So we know who makes the call on hiring us.",
    "options": [
     {
-     "label": "I own the firm and make the call",
+     "label": "I own or lead the firm",
      "value": "owner"
     },
     {
-     "label": "I\u2019m a partner and decide with my partners",
-     "value": "partner"
-    },
-    {
-     "label": "I\u2019m an advisor. Someone else decides",
-     "value": "advisor"
-    },
-    {
-     "label": "I work in marketing or ops. Someone else decides",
-     "value": "ops"
+     "label": "I don\u2019t own or lead the firm",
+     "value": "not_owner"
     }
    ]
   },
@@ -516,10 +508,7 @@
     ],
     [
      "role",
-     [
-      "advisor",
-      "ops"
-     ]
+     "not_owner"
     ],
     [
      "client_size",
