@@ -17,17 +17,23 @@
 <link rel="stylesheet" href="../assets/funnel.css">
 <link rel="stylesheet" href="../assets/qf.css">
 <script>window.AB_APPLY = {
- "FORM_VERSION": "ab-fit-f5-2026-11-08f",
+ "FORM_VERSION": "ab-fit-f5-2026-11-08g",
  "SOURCE": "advisorbooking-fit5",
  "STORE_KEY": "ab_apply_v1",
  "CONSENT_TEXT_VERSION": "fit-2026-11-07-a",
  "ADVANCE": "tap",
  "LOCK_CONTINUE": "filled",
  "PREFILL": true,
- "TRACK_GATE": {
-  "id": "aum",
-  "min": 50000000
- },
+ "TRACK_GATE": [
+  {
+   "id": "aum",
+   "min": 50000000
+  },
+  {
+   "id": "growth",
+   "min": 10000000
+  }
+ ],
  "QUALIFIED_ROUTE": [
   "main"
  ],
@@ -143,28 +149,28 @@
    "sub": "New money from new and existing clients. Don\u2019t count market gains or acquisitions. If you don\u2019t own or lead the firm, answer for your own clients.",
    "options": [
     {
-     "label": "Little or none (under $1M)",
+     "label": "Less than $10M",
      "value": 0
     },
     {
-     "label": "$1M to $5M",
-     "value": 1000000
-    },
-    {
-     "label": "$5M to $10M",
-     "value": 5000000
-    },
-    {
-     "label": "$10M to $25M",
+     "label": "$10M - $25M",
      "value": 10000000
     },
     {
-     "label": "$25M or more",
+     "label": "$25M - $50M",
      "value": 25000000
     },
     {
-     "label": "I\u2019m not sure",
-     "value": "unsure"
+     "label": "$50M - $100M",
+     "value": 50000000
+    },
+    {
+     "label": "$100M - $250M",
+     "value": 100000000
+    },
+    {
+     "label": "$250M+",
+     "value": 250000000
     }
    ]
   },
@@ -289,10 +295,6 @@
     [
      "role",
      "not_owner"
-    ],
-    [
-     "growth",
-     "unsure"
     ]
    ]
   }

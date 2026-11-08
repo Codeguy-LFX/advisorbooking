@@ -55,9 +55,9 @@
     // Prefill from the lander's email capture (sessionStorage ab_prefill) and from ?email=&first=&last=&firm= links
     // (e.g. a cold email). URL values are removed from the address bar at once, so they never sit in history.
     PREFILL: false,
-    // Tracking gate: { id: 'aum', min: 50000000 } holds every dataLayer event (and GTM itself, see gtm.js) until that
-    // question is answered. A value at or above min releases them in order; anything else drops them and keeps
-    // tracking off for this person (S.track = 'off', which gtm.js, site.js and /booked also respect).
+    // Tracking gate: { id: 'aum', min: 50000000 } or a list of such conditions. Every dataLayer event (and GTM itself,
+    // see gtm.js) waits until all of them are answered. All at or above min: released in order. Any below: dropped,
+    // and tracking stays off for this person (S.track = 'off', which gtm.js, site.js and /booked also respect).
     TRACK_GATE: null,
     PREFILL_KEYS: ['email', 'first', 'last', 'firm'],
     TEST_MODE: false
@@ -458,19 +458,26 @@
     if (S.track === 'pending') { pending.push(ev); return; }
     try { (window.dataLayer = window.dataLayer || []).push(ev); } catch (e) {}
   }
-  /* The tracking gate (TRACK_GATE): answered at or above the minimum releases the held events and loads GTM;
-     below it, nothing is sent for this person from here on. Answering again (Back) re-checks it. */
+  /* The tracking gate (TRACK_GATE): one condition { id, min } or a list of them. Events wait until every gate question
+     is answered. All at or above their minimum: the held events are released in order and GTM loads. Any below:
+     nothing is sent for this person from here on. Answering again (Back) re-checks it. */
   function gate(q, value) {
     var G = F.TRACK_GATE;
-    if (!G || q.id !== G.id) return;
-    if (typeof value === 'number' && value >= G.min) {
-      var was = S.track; S.track = 'on'; save();
-      var held = pending; pending = [];
-      held.forEach(function (ev) { if (!ev.ab_submission_id) ev.ab_submission_id = S.sid || ''; try { (window.dataLayer = window.dataLayer || []).push(ev); } catch (e) {} });
-      if (was !== 'on' && typeof window.AB_LOAD_GTM === 'function') window.AB_LOAD_GTM();
-    } else {
-      S.track = 'off'; pending = []; save();
-    }
+    if (!G) return;
+    var list = [].concat(G);
+    if (!list.some(function (g) { return g.id === q.id; })) return;
+    var fail = false, waiting = false;
+    list.forEach(function (g) {
+      var a = S.answers[g.id];
+      if (a === undefined || a === null || a === '') waiting = true;
+      else if (typeof a !== 'number' || a < g.min) fail = true;
+    });
+    if (fail) { S.track = 'off'; save(); return; }   // held events stay held: a corrected answer (Back) releases them
+    if (waiting) { if (S.track === 'off') S.track = 'pending'; save(); return; }
+    var was = S.track; S.track = 'on'; save();
+    var held = pending; pending = [];
+    held.forEach(function (ev) { if (!ev.ab_submission_id) ev.ab_submission_id = S.sid || ''; try { (window.dataLayer = window.dataLayer || []).push(ev); } catch (e) {} });
+    if (was !== 'on' && typeof window.AB_LOAD_GTM === 'function') window.AB_LOAD_GTM();
   }
 
   function finish(r) {
