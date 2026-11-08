@@ -1,4 +1,4 @@
-/* Advisor Booking site variation landers (/v2/: home, methodology, blog).
+/* Advisor Booking site variation landers (/v2/: home and blog).
    The site's own look (assets/pilot.css: Geist, white, floating pill nav, green accent, dark FAQ band) with page
    patterns taken from the Clients Blackbox site: a rotating-word hero, fit stats beside the pitch, problem rows,
    a dark "enter the system" stage block, a do / don't block, a fit grid, and the email-first "Ready to talk?" card.
@@ -120,6 +120,7 @@
 
 /* ---------- do / don't ---------- */
 .v2-dd{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;max-width:980px;margin:0 auto}
+.v2-dd--one{grid-template-columns:1fr;max-width:640px}
 .v2-dd > div{border-radius:24px;padding:clamp(24px,3vw,34px)}
 .v2-dd__do{background:var(--accent-soft)}
 .v2-dd__dont{background:var(--well)}
@@ -218,9 +219,20 @@
 .po-body b{color:var(--ink);font-weight:600}
 .po-body blockquote{margin:24px 0;padding:18px 22px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 14px 14px 0;font-size:18px;line-height:1.6;color:var(--ink)}
 .po-note{font-size:14.5px!important;color:var(--muted)!important;border-top:1px solid var(--line);padding-top:16px;margin-top:28px!important}
-.po-cta{margin:36px 0 0;border-radius:24px;background:var(--well);padding:clamp(22px,3vw,32px)}
-.po-cta h2{margin:0 0 6px!important;font-size:24px!important}
-.po-cta p{font-size:16px!important;color:var(--muted)!important;margin:0 0 16px!important}
+/* key takeaways (top of a post) and the question block (end of a post): plain headings and text, so answer engines
+   can quote them */
+.po-key{margin:0 0 28px;border-radius:20px;background:var(--accent-soft);padding:20px 24px}
+.po-key h2{margin:0 0 10px!important;font-size:15px!important;font-family:var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent-hover)}
+.po-key ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.po-key li{font-size:16.5px;line-height:1.5;color:var(--ink)}
+.po-faq{margin-top:36px;border-top:1px solid var(--line);padding-top:28px}
+.po-faq h3{font-weight:600;font-size:18px;letter-spacing:-.02em;color:var(--ink);margin:18px 0 6px}
+.po-faq h3:first-of-type{margin-top:0}
+.po-series{font-size:15.5px!important;color:var(--muted)!important}
+.bl-grid--2{grid-template-columns:repeat(2,minmax(0,1fr));max-width:760px}
+.v2-who--4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:1000px){.v2-who--4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.v2-who--4,.bl-grid--2{grid-template-columns:1fr}}
 .po-more{padding-block:clamp(40px,5vw,72px);border-top:1px solid var(--line)}
 .po-more .h2{font-size:clamp(26px,3vw,36px);margin-bottom:22px}
 
