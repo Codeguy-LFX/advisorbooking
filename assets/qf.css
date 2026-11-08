@@ -194,3 +194,9 @@ body.qf .ap-sub .ap-em{color:var(--ink);font-weight:700;font-size:15px;line-heig
 
 /* The questionnaire jumps to the top of each new screen at once (pilot.css turns on smooth scrolling for the landers) */
 html:has(body.qf){scroll-behavior:auto}
+
+/* Required consent box (Funnel 5): Continue checks it; unchecked shows a red message under it and outlines the box.
+   The consent text keeps its normal color so it stays readable. */
+body.qf .lp-consent.invalid label{color:#475569}
+body.qf .lp-consent.invalid .lp-consent__row input{outline:2px solid #dc2626;outline-offset:2px;border-radius:3px}
+body.qf .lp-consent .lp-err{margin:8px 0 0 27px;padding:8px 12px;border-radius:8px;background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;font-size:13px;font-weight:500;line-height:1.4}

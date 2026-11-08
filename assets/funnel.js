@@ -317,7 +317,8 @@
   }
   function screenValid(q) {
     var loose = F.LOCK_CONTINUE === 'filled';
-    return (q.fields || []).every(function (f) { var inp = $('ap-' + f.id); return inp && !fieldBad(f, inp, loose); });
+    // A required checkbox (without gate) doesn't lock Continue: it is checked when Continue is pressed and shows its message.
+    return (q.fields || []).every(function (f) { if (f.type === 'checkbox' && !f.gate) return true; var inp = $('ap-' + f.id); return inp && !fieldBad(f, inp, loose); });
   }
 
   function renderFields(q, i) {
@@ -328,6 +329,7 @@
         var cb = el('input', { type: 'checkbox', id: 'ap-' + f.id });
         cb.checked = !!S.answers[f.id];
         if (f.required && f.gate) cb.addEventListener('change', function () { if (btn) btn.disabled = !cb.checked; });
+        cb.addEventListener('change', function () { if (cb.checked) { var w = $('apf-' + f.id); if (w) w.classList.remove('invalid'); } });
         form.appendChild(el('div', { class: 'lp-consent', id: 'apf-' + f.id }, [
           el('div', { class: 'lp-consent__row' }, [cb, el('label', { for: 'ap-' + f.id, id: 'apl-' + f.id, html: f.label })]),
           el('div', { class: 'lp-err', text: f.error || 'Check the box to continue.' })
@@ -382,7 +384,10 @@
         wrap.classList.toggle('invalid', bad);
         if (bad) ok = false;
       });
-      if (!ok) { var first = form.querySelector('.invalid input, .invalid textarea'); if (first) first.focus(); announce('Check the highlighted field.'); return; }
+      if (!ok) {
+        var first = form.querySelector('.invalid input, .invalid textarea'); if (first) first.focus();
+        var msg = form.querySelector('.invalid .lp-err'); announce(msg ? msg.textContent : 'Check the highlighted field.'); return;
+      }
       Object.keys(vals).forEach(function (k) { S.answers[k] = vals[k]; });
       (q.fields || []).forEach(function (f) {
         if (f.type === 'checkbox') { var l = $('apl-' + f.id); S.consent_text = l ? (l.innerText || l.textContent || '').replace(/\s+/g, ' ').trim() : ''; }

@@ -115,6 +115,9 @@
     sid: (lp && lp.sid) || '', tier: (lp && lp.tier) || '', route: (lp && lp.route) || '', utm: utm, page: location.pathname,
     forwarded: q, ts: new Date().toISOString()
   };
+  /* A booking that came from a fit form: mark that form's saved request as booked, so the form starts fresh next time
+     instead of reopening the calendar (Funnel 5 reopens it until a booking is reported). */
+  try { var abs = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); if (abs && abs.done && !abs.booked) { abs.booked = true; localStorage.setItem('ab_apply_v1', JSON.stringify(abs)); } } catch (e) {}
   if (inFrame) {
     /* Inside the scheduler iframe on a booking page: hand the booking to that page, which owns the CRM post and tracking. */
     try { window.parent.postMessage({ event: 'iclosed.booked', payload: payload }, location.origin); } catch (e) {}
