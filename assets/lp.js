@@ -449,7 +449,7 @@
     tier = computeTier(answers); stage = 'answered'; save();
 
     send(tier);                                              // one record per completed form; stage = the tier
-    if (!botFlag && tier === 'qualified') fbqSingle('Lead', { eventID: EVENT_ID });
+    /* No Meta Lead from this form (Nick, Nov 8): Lead means one thing, a qualified /L1 lead, and only /L1 sends it. */
 
     if (tier === 'disqualified') showExit(); else unlock(false);
   }

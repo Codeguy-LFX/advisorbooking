@@ -29,7 +29,7 @@ window.AB_CONFIG = {
   // Google Tag Manager container, e.g. "GTM-ABC1234" (events: see assets/gtm.js).
   gtmId: "",
   // Meta Pixel ID (numbers only). /L1 fires Lead (qualified leads only); /booked fires Schedule.
-  metaPixelId: "",
+  metaPixelId: "1446221323631843",
   linkedinPartnerId: "",
   linkedinConversionId: "",
   // Hand-updated counters shown on the site.
