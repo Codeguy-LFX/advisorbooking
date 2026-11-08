@@ -176,7 +176,7 @@ body.in-frame .booked__card{box-shadow:none}
     if (navigator.globalPrivacyControl || trackOff) return;
     /* Same rule as the landing pages: only a qualified request counts as an ad conversion. */
     if (lp && lp.tier && lp.tier !== 'qualified') return;
-    if (typeof window.fbq === 'function') { try { window.fbq('track', 'Schedule'); } catch (e) {} }
+    /* No Meta event here: the only Meta event on the site is Lead, fired on /L1/Q/ (Nick, Nov 8). */
     if (typeof window.lintrk === 'function' && CFG.linkedinConversionId) { try { window.lintrk('track', { conversion_id: CFG.linkedinConversionId }); } catch (e) {} }
   }
   /* site.js loads the tags (deferred); give it a moment, then fire the conversion once. */

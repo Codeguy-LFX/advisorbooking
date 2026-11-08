@@ -12,8 +12,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/styles.css">
-<script>/* /l1 (lowercase) or /L1 without the slash: go to the form at /L1/, keeping the campaign tags. */
-if (/^\/l1(\/|\/index\.html)?$/i.test(location.pathname) && location.pathname.indexOf('/L1/') !== 0) location.replace('/L1/' + location.search + location.hash);</script>
+<script>/* /l1, /l1/q, /l1/dq in the wrong case (GitHub Pages paths are case-sensitive): go to the right page, keeping the campaign tags. */
+(function () { var m = /^\/l1(?:\/(q|dq))?\/?(?:index\.html)?$/i.exec(location.pathname); if (!m) return;
+  var want = '/L1/' + (m[1] ? m[1].toUpperCase() + '/' : ''); if (location.pathname !== want) location.replace(want + location.search + location.hash); })();</script>
 </head>
 <body>
 <main id="main">

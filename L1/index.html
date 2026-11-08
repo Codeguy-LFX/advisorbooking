@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="../assets/funnel.css">
 <link rel="stylesheet" href="../assets/qf.css">
 <script>window.AB_APPLY = {
- "FORM_VERSION": "ab-L1-2026-11-08c",
+ "FORM_VERSION": "ab-L1-2026-11-08d",
  "SOURCE": "advisorbooking-L1",
  "STORE_KEY": "ab_apply_v1",
  "CONSENT_TEXT_VERSION": "fit5-calls-texts-2026-11-08c",
@@ -45,15 +45,14 @@
  "QUALIFIED_ROUTE": [
   "qualified"
  ],
- "PIXEL_EVENTS": {
-  "ab_lead": "Lead",
-  "ab_booked": "Schedule"
- },
  "WEBHOOK_STAGES": [
   "complete",
   "booked"
  ],
- "UTM_TERM_PREFIX": "L1-",
+ "TRACK": false,
+ "WARM_HOSTS": [
+  "https://app.iclosed.io"
+ ],
  "QUESTIONS": [
   {
    "id": "firm_type",
@@ -262,19 +261,10 @@
   }
  ],
  "DEFAULT_ROUTE": "qualified",
- "BOOK": {
-  "routes": [
-   "qualified",
-   "dq"
-  ],
-  "url_key": "iclosedUrlFit5",
-  "title": "Pick a time for your call{first}.",
-  "sub": "Answer a few quick questions, then choose a time that works for you."
- },
  "REDIRECT_QUIET": true,
  "ROUTES": {
-  "qualified": "../book.html?call=main&form=L1",
-  "dq": "../book.html?call=main&form=L1"
+  "qualified": "Q/",
+  "dq": "DQ/"
  },
  "LAYOUT": "qf"
 };</script>
@@ -297,7 +287,6 @@
 </footer>
 </div>
 <script src="../assets/config.js"></script>
-<script src="../assets/gtm.js"></script>
 <script src="../assets/funnel.js" defer></script>
 </body>
 </html>

@@ -11,8 +11,9 @@ Static marketing site for Advisor Booking (De Jesus Ventures LLC). No build step
 | `pilot.html` | `/pilot` | Hidden founding-offer landing page for email and LinkedIn outreach (gated form, then the iClosed calendar). `noindex`, not linked from the nav. |
 | `meetings.html` | `/meetings` | Hidden v1 landing page, kept for later use. `noindex`. |
 | `founding-sprint.html` | `/founding-sprint` | Founding Sprint sales page (hidden lander for outreach). `noindex`, not linked from the nav, not in the sitemap. |
-| `L1/index.html` | `/L1/` | The qualifying funnel: six screens, then the iClosed calendar in the same card. `noindex`. See below. |
-| `booked.html` | `/booked` | Booking confirmation with next steps. iClosed sends people here after they book; it records the booking (CRM post, GTM `ab_booked`, Meta `Schedule` for qualified leads). `noindex`. |
+| `L1/index.html` | `/L1/` | The qualifying funnel: six screens, then `/L1/Q/` or `/L1/DQ/`. `noindex`. See below. |
+| `L1/Q/index.html`, `L1/DQ/index.html` | `/L1/Q/`, `/L1/DQ/` | The booking page (iClosed calendar, prefilled). Identical, except `Q/` carries the Meta pixel and fires one `Lead` event. `noindex`. |
+| `booked.html` | `/booked` | Booking confirmation with next steps. iClosed sends people here after they book; it records the booking (CRM post, GTM `ab_booked` for qualified leads). `noindex`. |
 | `fit/`, `fit5/` | `/fit/`, `/fit5/` | Old funnel links: forward to `/L1/` with the query string (campaign tags) intact. |
 | `privacy.html`, `terms.html` | `/privacy`, `/terms` | Privacy Policy and Terms of Use |
 | `404.html` | | Not-found page |
@@ -25,16 +26,20 @@ One funnel (Funnels 1 to 4 were retired on Nov 8, 2026). Engine: `assets/funnel.
 rules and settings: the `window.AB_APPLY` block at the top of `L1/index.html`.
 
 - Six screens: RIA status, role, AUM, advisors' calendars, new assets in the last 12 months, contact (with the required
-  calls/texts/voicemail consent box). Then the iClosed event (`iclosedUrlFit5`) opens in the same card, prefilled.
+  calls/texts/voicemail consent box). Then the booking page: `/L1/Q/` for a qualified lead, `/L1/DQ/` for a DQ lead.
+  Both show the iClosed event (`iclosedUrlFit5`), prefilled.
 - Nobody is turned away: every lead gets the same screens and the calendar. Two labels only: `qualified` (a
   financial advisor, including broker-dealer and wirehouse, at a firm with $50M+ AUM) or `dq` (not a financial
   advisor, or AUM under $50M), with `dq_reasons`. New assets is asked but never decides it.
-- Tracking: only qualified leads send anything to GTM or the Meta Pixel, and only after the contact screen is submitted: GTM loads then, the held `ab_*` events are released,
-  and Meta gets `Lead` (and `Schedule` on booking). Unqualified leads send nothing to either.
+- Meta: ONE event on the whole site, `Lead`, fired on `/L1/Q/` once per submission (`metaPixelLeadId`). No PageView,
+  no automatic events, nothing on `/L1/DQ/` or any other page (`metaPixelId` stays empty). The pixel code exists only
+  in `L1/Q/index.html`.
+- GTM (when `gtmId` is set): same rule. `gtm.js` is included only on `/L1/Q/` (one event, `ab_lead`, once per
+  submission) and `/booked` (`ab_booked`, qualified leads only). The form page and `/L1/DQ/` do not include it.
 - CRM: `ghlWebhookUrl` gets two form-encoded posts per lead: `stage=complete` (all answers, contact details,
   qualified, dq_reasons, consent text and time, campaign tags) and `stage=booked` (from `/booked`).
 - Landers (`/v2/`): the email-first button goes to `landerNext` (`L1/`) with the email prefilled.
-- Settings in `assets/config.js`: `ghlWebhookUrl`, `metaPixelId`, `gtmId`, `iclosedUrlFit5`.
+- Settings in `assets/config.js`: `ghlWebhookUrl`, `metaPixelLeadId`, `gtmId`, `iclosedUrlFit5`.
 
 ## Editing the site
 

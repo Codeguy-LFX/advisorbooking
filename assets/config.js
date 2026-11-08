@@ -28,8 +28,11 @@ window.AB_CONFIG = {
   // Tracking. Empty = the tag is not loaded. On /L1 both start only for qualified leads, after the contact screen.
   // Google Tag Manager container, e.g. "GTM-ABC1234" (events: see assets/gtm.js).
   gtmId: "",
-  // Meta Pixel ID (numbers only). /L1 fires Lead (qualified leads only); /booked fires Schedule.
-  metaPixelId: "1446221323631843",
+  // Meta Pixel. ONE event on the whole site: "Lead", fired on /L1/Q/ (the booking page a qualified /L1 lead lands on).
+  // No PageView, nothing on /L1/DQ/ or any other page. metaPixelLeadId is read only by L1/Q/index.html.
+  metaPixelLeadId: "1446221323631843",
+  // Legacy site-wide pixel (PageView on every page). Leave empty so Meta only ever sees the Lead event above.
+  metaPixelId: "",
   linkedinPartnerId: "",
   linkedinConversionId: "",
   // Hand-updated counters shown on the site.
