@@ -17,10 +17,10 @@
 <link rel="stylesheet" href="../assets/funnel.css">
 <link rel="stylesheet" href="../assets/qf.css">
 <script>window.AB_APPLY = {
- "FORM_VERSION": "ab-fit-f5-2026-11-08i",
+ "FORM_VERSION": "ab-fit-f5-2026-11-08k",
  "SOURCE": "advisorbooking-fit5",
  "STORE_KEY": "ab_apply_v1",
- "CONSENT_TEXT_VERSION": "fit-2026-11-07-a",
+ "CONSENT_TEXT_VERSION": "fit5-calls-texts-2026-11-08",
  "ADVANCE": "tap",
  "LOCK_CONTINUE": "filled",
  "PREFILL": true,
@@ -146,7 +146,7 @@
    "id": "growth",
    "type": "choice",
    "q": "How much in new assets did your firm bring in over the last 12 months?",
-   "sub": "New money from new and existing clients. Don\u2019t count market gains or acquisitions. If you don\u2019t own or lead the firm, answer for your own book of business.",
+   "sub": "New money from new and existing clients.<span class=\"ap-emw\"><strong class=\"ap-em\">Don\u2019t count market gains or acquisitions.</strong></span>If you don\u2019t own or lead the firm, answer for your own book of business.",
    "options": [
     {
      "label": "Less than $10M",
@@ -215,7 +215,7 @@
     {
      "id": "sms_optin",
      "type": "checkbox",
-     "label": "Yes, text me about my call. I agree to receive text messages from De Jesus Ventures LLC about my call. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help."
+     "label": "<strong>Yes, Advisor Booking can call and text me.</strong> I agree that De Jesus Ventures LLC d/b/a Advisor Booking may call me, text me, and leave me voicemails at the number above about my call and its services, including with automated dialing technology and prerecorded or artificial voice messages, even if my number is on a federal, state, or company Do Not Call list. Consent is not a condition of purchase. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. See our <a href=\"../privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> and <a href=\"../terms.html\" target=\"_blank\" rel=\"noopener\">Terms</a>."
     }
    ],
    "cta": "Continue",
@@ -300,6 +300,20 @@
   }
  ],
  "DEFAULT_ROUTE": "main",
+ "BOOK": {
+  "routes": [
+   "main",
+   "triage"
+  ],
+  "url_key": "iclosedUrlFit5",
+  "short_key": "iclosedUrlShortFit5",
+  "short_routes": [
+   "triage"
+  ],
+  "title": "Pick a time for your call{first}.",
+  "sub": "Answer a few quick questions, then choose a time that works for you."
+ },
+ "REDIRECT_QUIET": true,
  "ROUTES": {
   "dq": "not-a-fit.html",
   "triage": "../book.html?call=short&form=fit5",
