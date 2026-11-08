@@ -22,7 +22,7 @@
   window.AB_TRACKING_OFF = blocked;
   if (A && A.TRACK_GATE) {
     var s = state();
-    if (s && s.form_version === A.FORM_VERSION && !s.done && s.track === 'on') load();   // a returning visitor who already passed
+    if (s && (s.state_version || s.form_version) === (A.STATE_VERSION || A.FORM_VERSION) && !s.done && s.track === 'on') load();   // a returning visitor who already passed
     return;                                                                              // otherwise wait for the gate
   }
   load();
