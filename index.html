@@ -445,7 +445,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
       <a href="#faq">FAQ</a>
       <a href="blog/">Blog</a>
     </nav>
-    <a class="btn btn--sm" href="book.html" data-src="nav">Get More Booked Meetings<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    <a class="btn btn--sm" href="L1/" data-src="nav">Get More Booked Meetings<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
   </div>
 </header>
 
@@ -467,7 +467,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
         <p class="ec__err" role="alert" hidden>Enter a valid work email.</p>
         <p class="ec__fine">See the exact outbound and reactivation system we&rsquo;ll run for your firm.</p>
       </div>
-        <p class="v2-hero__alt"><a href="#how">See how the system works</a></p>
       <div class="journey" aria-label="Example: one prospect, from first message to a booked meeting">
         <ol class="journey__row">
           <li class="jstep" style="--i:0">
@@ -709,7 +708,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
       var href = a.getAttribute('href'), url;
       if (!href || /^(mailto:|tel:|#|javascript:)/i.test(href)) return;
       try { url = new URL(href, location.href); } catch (e) { return; }
-      if (!/(^|\/)book\.html$/.test(url.pathname)) return;
+      if (!/(^|\/)(book\.html|L1\/)$/.test(url.pathname)) return;
       var changed = false;
       keys.forEach(function (k) { if (!url.searchParams.has(k)) { url.searchParams.set(k, stored[k]); changed = true; } });
       var src = (a.getAttribute('data-src') || '').trim();
