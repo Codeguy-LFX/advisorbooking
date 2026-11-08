@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="../assets/funnel.css">
 <link rel="stylesheet" href="../assets/qf.css">
 <script>window.AB_APPLY = {
- "FORM_VERSION": "ab-L1-2026-11-08b",
+ "FORM_VERSION": "ab-L1-2026-11-08c",
  "SOURCE": "advisorbooking-L1",
  "STORE_KEY": "ab_apply_v1",
  "CONSENT_TEXT_VERSION": "fit5-calls-texts-2026-11-08c",
@@ -29,16 +29,13 @@
    "id": "firm_type",
    "in": [
     "independent_ria",
-    "hybrid_ria"
+    "hybrid_ria",
+    "bd_wirehouse"
    ]
   },
   {
    "id": "aum",
    "min": 50000000
-  },
-  {
-   "id": "growth",
-   "min": 10000000
   },
   {
    "id": "sms_optin",
@@ -62,7 +59,6 @@
    "id": "firm_type",
    "type": "choice",
    "q": "Is your firm a registered investment adviser (RIA)?",
-   "sub": "We work with independent and hybrid RIAs in the US.",
    "options": [
     {
      "label": "Yes, independent",
@@ -256,30 +252,10 @@
   },
   {
    "route": "dq",
-   "reason": "broker_dealer_or_wirehouse",
-   "any": [
-    [
-     "firm_type",
-     "bd_wirehouse"
-    ]
-   ]
-  },
-  {
-   "route": "dq",
    "reason": "aum_under_50m",
    "any": [
     [
      "aum",
-     0
-    ]
-   ]
-  },
-  {
-   "route": "dq",
-   "reason": "new_assets_under_10m",
-   "any": [
-    [
-     "growth",
      0
     ]
    ]
