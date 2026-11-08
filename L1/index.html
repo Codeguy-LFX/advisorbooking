@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="../assets/funnel.css">
 <link rel="stylesheet" href="../assets/qf.css">
 <script>window.AB_APPLY = {
- "FORM_VERSION": "ab-L1-2026-11-08a",
+ "FORM_VERSION": "ab-L1-2026-11-08b",
  "SOURCE": "advisorbooking-L1",
  "STORE_KEY": "ab_apply_v1",
  "CONSENT_TEXT_VERSION": "fit5-calls-texts-2026-11-08c",
@@ -46,8 +46,7 @@
   }
  ],
  "QUALIFIED_ROUTE": [
-  "main",
-  "triage"
+  "qualified"
  ],
  "PIXEL_EVENTS": {
   "ab_lead": "Lead",
@@ -284,59 +283,22 @@
      0
     ]
    ]
-  },
-  {
-   "route": "triage",
-   "reason": "edge",
-   "any": [
-    [
-     "aum",
-     [
-      500000000,
-      1000000000,
-      5000000000,
-      10000000000
-     ]
-    ],
-    [
-     "advisors",
-     [
-      1,
-      25,
-      50
-     ]
-    ],
-    [
-     "firm_type",
-     "hybrid_ria"
-    ],
-    [
-     "role",
-     "not_owner"
-    ]
-   ]
   }
  ],
- "DEFAULT_ROUTE": "main",
+ "DEFAULT_ROUTE": "qualified",
  "BOOK": {
   "routes": [
-   "main",
-   "triage",
+   "qualified",
    "dq"
   ],
   "url_key": "iclosedUrlFit5",
-  "short_key": "iclosedUrlShortFit5",
-  "short_routes": [
-   "triage"
-  ],
   "title": "Pick a time for your call{first}.",
   "sub": "Answer a few quick questions, then choose a time that works for you."
  },
  "REDIRECT_QUIET": true,
  "ROUTES": {
-  "dq": "../book.html?call=main&form=L1",
-  "triage": "../book.html?call=short&form=L1",
-  "main": "../book.html?call=main&form=L1"
+  "qualified": "../book.html?call=main&form=L1",
+  "dq": "../book.html?call=main&form=L1"
  },
  "LAYOUT": "qf"
 };</script>
