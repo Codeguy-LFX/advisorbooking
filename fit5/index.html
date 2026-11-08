@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="../assets/funnel.css">
 <link rel="stylesheet" href="../assets/qf.css">
 <script>window.AB_APPLY = {
- "FORM_VERSION": "ab-fit-f5-2026-11-08a",
+ "FORM_VERSION": "ab-fit-f5-2026-11-08e",
  "SOURCE": "advisorbooking-fit5",
  "STORE_KEY": "ab_apply_v1",
  "CONSENT_TEXT_VERSION": "fit-2026-11-07-a",
@@ -29,7 +29,6 @@
   "min": 50000000
  },
  "QUALIFIED_ROUTE": [
-  "priority",
   "main"
  ],
  "QUESTIONS": [
@@ -134,22 +133,34 @@
    ]
   },
   {
-   "id": "budget",
+   "id": "growth",
    "type": "choice",
-   "q": "Does $5,000 every 4 weeks fit your growth budget?",
-   "sub": "The first term is 3 cycles, about 90 days. No setup fee. No per-meeting fees.",
+   "q": "How much in new assets did your firm bring in over the last 12 months?",
+   "sub": "New money from new and existing clients. Don\u2019t count market gains or acquisitions. If you don\u2019t own or lead the firm, answer for your own clients.",
    "options": [
     {
-     "label": "Yes, that fits our budget",
-     "value": "yes"
+     "label": "Little or none (under $1M)",
+     "value": 0
     },
     {
-     "label": "We only want a one-time project",
-     "value": "one_time"
+     "label": "$1M to $5M",
+     "value": 1000000
     },
     {
-     "label": "Not right now",
-     "value": "not_now"
+     "label": "$5M to $10M",
+     "value": 5000000
+    },
+    {
+     "label": "$10M to $25M",
+     "value": 10000000
+    },
+    {
+     "label": "$25M or more",
+     "value": 25000000
+    },
+    {
+     "label": "I\u2019m not sure",
+     "value": "unsure"
     }
    ]
   },
@@ -199,185 +210,6 @@
    ],
    "cta": "Continue",
    "fine": "By continuing you agree to our <a href=\"../privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> and <a href=\"../terms.html\" target=\"_blank\" rel=\"noopener\">Terms</a>."
-  },
-  {
-   "id": "firm",
-   "type": "fields",
-   "q": "Tell us about your firm",
-   "sub": "A few more questions, then you pick a time. We look at your website before the call.",
-   "track": "part2_start",
-   "fields": [
-    {
-     "id": "firm",
-     "label": "Firm Name",
-     "autocomplete": "organization",
-     "error": "Enter your firm name."
-    },
-    {
-     "id": "website",
-     "label": "Firm Website",
-     "type": "url",
-     "autocomplete": "url",
-     "error": "Enter your firm website, like yourfirm.com."
-    }
-   ],
-   "cta": "Continue"
-  },
-  {
-   "id": "client_size",
-   "type": "choice",
-   "q": "How big is a typical new client?",
-   "sub": "In assets you manage for them. Your best estimate is fine.",
-   "options": [
-    {
-     "label": "Under $250K",
-     "value": 0
-    },
-    {
-     "label": "$250K to $1M",
-     "value": 250000
-    },
-    {
-     "label": "$1M to $5M",
-     "value": 1000000
-    },
-    {
-     "label": "$5M or more",
-     "value": 5000000
-    },
-    {
-     "label": "We don\u2019t manage assets (hourly or flat fee only)",
-     "value": "no_assets"
-    }
-   ]
-  },
-  {
-   "id": "niche",
-   "type": "choice",
-   "q": "Who are your best clients?",
-   "sub": "New outreach goes to people like them.",
-   "options": [
-    {
-     "label": "Business owners",
-     "value": "business_owners"
-    },
-    {
-     "label": "Executives and professionals",
-     "value": "executives"
-    },
-    {
-     "label": "Retirees and pre-retirees",
-     "value": "retirees"
-    },
-    {
-     "label": "A specific niche (doctors, attorneys, tech)",
-     "value": "specific"
-    },
-    {
-     "label": "We don\u2019t have a clear niche yet",
-     "value": "none"
-    }
-   ]
-  },
-  {
-   "id": "crm",
-   "type": "choice",
-   "q": "How many contacts are in your CRM or lists?",
-   "sub": "Past prospects, referrals and event lists all count. We work these first.",
-   "options": [
-    {
-     "label": "Under 1,000",
-     "value": 0
-    },
-    {
-     "label": "1,000 to 5,000",
-     "value": 1000
-    },
-    {
-     "label": "5,000 or more",
-     "value": 5000
-    },
-    {
-     "label": "I\u2019m not sure",
-     "value": "unsure"
-    }
-   ]
-  },
-  {
-   "id": "compliance",
-   "type": "choice",
-   "q": "Will compliance allow email and LinkedIn outreach?",
-   "sub": "Your CCO approves every message before anything sends.",
-   "options": [
-    {
-     "label": "Yes",
-     "value": "yes"
-    },
-    {
-     "label": "I\u2019d need to check",
-     "value": "check"
-    },
-    {
-     "label": "No",
-     "value": "no"
-    }
-   ]
-  },
-  {
-   "id": "capacity",
-   "type": "choice",
-   "q": "Can one advisor take 8 or more new first meetings a month?",
-   "sub": "We commit to at least 15 attended, qualified meetings in your first 90 days. Someone needs room for them.",
-   "options": [
-    {
-     "label": "Yes",
-     "value": "yes"
-    },
-    {
-     "label": "I\u2019m not sure",
-     "value": "unsure"
-    },
-    {
-     "label": "No",
-     "value": "no"
-    }
-   ]
-  },
-  {
-   "id": "timing",
-   "type": "choice",
-   "q": "When do you want new meetings starting?",
-   "options": [
-    {
-     "label": "As soon as possible",
-     "value": "now"
-    },
-    {
-     "label": "In the next 1 to 3 months",
-     "value": "soon"
-    },
-    {
-     "label": "Just researching for now",
-     "value": "researching"
-    }
-   ]
-  },
-  {
-   "id": "goal",
-   "type": "fields",
-   "q": "What\u2019s your growth goal for the next 12 months?",
-   "sub": "Optional. A sentence or two helps us prepare for your call.",
-   "fields": [
-    {
-     "id": "goal",
-     "label": "Your growth goal",
-     "type": "textarea",
-     "optional": true,
-     "srLabel": true,
-     "placeholder": "For example: more business-owner clients in our area"
-    }
-   ],
-   "cta": "See my next step"
   }
  ],
  "RULES": [
@@ -415,79 +247,13 @@
    ]
   },
   {
-   "route": "nurture",
-   "reason": "budget",
+   "route": "dq",
+   "reason": "growth",
    "early": "contact",
    "any": [
     [
-     "budget",
-     "not_now"
-    ]
-   ]
-  },
-  {
-   "route": "nurture",
-   "reason": "one_time",
-   "early": "contact",
-   "any": [
-    [
-     "budget",
-     "one_time"
-    ]
-   ]
-  },
-  {
-   "route": "dq",
-   "reason": "no_assets",
-   "early": true,
-   "any": [
-    [
-     "client_size",
-     "no_assets"
-    ]
-   ]
-  },
-  {
-   "route": "dq",
-   "reason": "crm",
-   "early": true,
-   "any": [
-    [
-     "crm",
+     "growth",
      0
-    ]
-   ]
-  },
-  {
-   "route": "dq",
-   "reason": "compliance",
-   "early": true,
-   "any": [
-    [
-     "compliance",
-     "no"
-    ]
-   ]
-  },
-  {
-   "route": "dq",
-   "reason": "capacity",
-   "early": true,
-   "any": [
-    [
-     "capacity",
-     "no"
-    ]
-   ]
-  },
-  {
-   "route": "nurture",
-   "reason": "researching",
-   "early": true,
-   "any": [
-    [
-     "timing",
-     "researching"
     ]
    ]
   },
@@ -520,92 +286,8 @@
      "not_owner"
     ],
     [
-     "client_size",
-     0
-    ],
-    [
-     "niche",
-     "none"
-    ],
-    [
-     "crm",
+     "growth",
      "unsure"
-    ],
-    [
-     "compliance",
-     "check"
-    ],
-    [
-     "capacity",
-     "unsure"
-    ]
-   ]
-  },
-  {
-   "route": "priority",
-   "reason": "priority",
-   "all": [
-    [
-     "firm_type",
-     "independent_ria"
-    ],
-    [
-     "role",
-     "owner"
-    ],
-    [
-     "aum",
-     [
-      50000000,
-      100000000
-     ]
-    ],
-    [
-     "advisors",
-     [
-      3,
-      6
-     ]
-    ],
-    [
-     "budget",
-     "yes"
-    ],
-    [
-     "client_size",
-     [
-      250000,
-      1000000,
-      5000000
-     ]
-    ],
-    [
-     "niche",
-     [
-      "business_owners",
-      "executives",
-      "retirees",
-      "specific"
-     ]
-    ],
-    [
-     "crm",
-     [
-      1000,
-      5000
-     ]
-    ],
-    [
-     "compliance",
-     "yes"
-    ],
-    [
-     "capacity",
-     "yes"
-    ],
-    [
-     "timing",
-     "now"
     ]
    ]
   }
@@ -613,10 +295,8 @@
  "DEFAULT_ROUTE": "main",
  "ROUTES": {
   "dq": "not-a-fit.html",
-  "nurture": "not-yet.html",
-  "triage": "../book.html?call=short",
-  "main": "../book.html?call=main",
-  "priority": "../book.html?call=main&fit=priority"
+  "triage": "../book.html?call=short&form=fit5",
+  "main": "../book.html?call=main&form=fit5"
  },
  "LAYOUT": "qf"
 };</script>

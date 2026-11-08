@@ -191,13 +191,17 @@
     try { c = new URLSearchParams(location.search).get('call') || ''; } catch (e) {}
     return c === 'short' || c === 'main' ? c : '';
   }
+  function formParam() { try { return new URLSearchParams(location.search).get('form') || ''; } catch (e) { return ''; } }
   function applyState() {
     if (!callType()) return null;
     try { var s = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); return s && s.answers ? s : null; } catch (e) { return null; }
   }
   function schedulerUrl() {
     if (CFG.scheduler !== 'iclosed') return calendlyUrl();
-    var base = String((callType() === 'short' && CFG.iclosedUrlShort) || CFG.iclosedUrl || '').trim();
+    /* Funnel 5 (/book?form=fit5) books into its own iClosed event when one is set; otherwise the events above. */
+    var fit5 = formParam() === 'fit5', short = callType() === 'short';
+    var base = String((fit5 && short && (CFG.iclosedUrlShortFit5 || CFG.iclosedUrlFit5)) || (fit5 && CFG.iclosedUrlFit5) ||
+                      (short && CFG.iclosedUrlShort) || CFG.iclosedUrl || '').trim();
     if (!base) return '';
     var u;
     try { u = new URL(base); } catch (e) { return ''; }
