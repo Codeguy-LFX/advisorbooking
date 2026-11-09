@@ -143,6 +143,8 @@ body.in-frame .booked__card{box-shadow:none}
     page_url: location.href, booked_at: new Date().toISOString(), forwarded_json: JSON.stringify(q),
     forwarded: q
   };
+  if (ap) payload.funnel_entry = String(CFG.funnelEntry || '');   /* only /L1 bookings; direct bookings send none */
+  payload.fbp = (function () { var m = document.cookie.match(/(?:^|;\s*)_fbp=([^;]+)/); return m ? decodeURIComponent(m[1]) : ''; })();
 
   /* A booking that came from /L1: mark the saved request as booked, so the form starts fresh next time. */
   try { var abs = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); if (abs && abs.done && !abs.booked) { abs.booked = true; localStorage.setItem('ab_apply_v1', JSON.stringify(abs)); } } catch (e) {}

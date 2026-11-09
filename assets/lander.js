@@ -56,7 +56,8 @@
       post({ stage: 'email_capture', email: v, page_url: location.href, cta: form.getAttribute('data-ec') || '',
              utm_source: utm.utm_source || '', utm_medium: utm.utm_medium || '', utm_campaign: utm.utm_campaign || '',
              utm_term: utm.utm_term || '', utm_content: utm.utm_content || '', gclid: utm.gclid || '', fbclid: utm.fbclid || '',
-             referrer: doc.referrer, bot_flag: bot ? 'true' : 'false', bot_reason: bot, submitted_at: new Date().toISOString() });
+             referrer: doc.referrer, bot_flag: bot ? 'true' : 'false', bot_reason: bot, submitted_at: new Date().toISOString(),
+             funnel_entry: String(CFG.funnelEntry || ''), fbp: (function () { var m = document.cookie.match(/(?:^|;\s*)_fbp=([^;]+)/); return m ? decodeURIComponent(m[1]) : ''; })() });
       var next = String(CFG.landerNext || 'L1/');
       var lander = doc.body.getAttribute('data-lander') || location.pathname, cta = form.getAttribute('data-ec') || '';
       if (/^(L[0-9]+|fit[0-9]*)\//.test(next)) {   // the qualifying form (L1/)

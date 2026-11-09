@@ -24,6 +24,9 @@ window.AB_CONFIG = {
   eventLength: "20 min",
   // GoHighLevel inbound webhook URL (Workflow trigger "Inbound Webhook"). Gets one post when an /L1 lead finishes
   // the form (stage=complete) and one when they book (stage=booked). Empty = nothing is saved anywhere.
+  // funnel_entry sent on every GHL post from the /L1 funnel (the home page email boxes, the form, and its bookings).
+  // Must match a GHL Funnel_Entry dropdown option exactly. Bookings that did not come through /L1 send none.
+  funnelEntry: "Quiz Funnel",
   ghlWebhookUrl: "https://services.leadconnectorhq.com/hooks/gk6KvBgga36JSqc48jhA/webhook-trigger/aa71cc07-560d-4c08-9236-9d13bd7b1c73",
   // Tracking. Empty = the tag is not loaded. On /L1 both start only for qualified leads, after the contact screen.
   // Google Tag Manager container, e.g. "GTM-ABC1234" (events: see assets/gtm.js).
