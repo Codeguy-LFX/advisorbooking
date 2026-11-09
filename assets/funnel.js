@@ -170,6 +170,8 @@
     // every choice answer by question id, as the words the person picked (firm_type, role, aum, advisors, growth...)
     Q.forEach(function (x) { if (x.type === 'choice') p[x.id] = L[x.id] === undefined ? '' : [].concat(L[x.id]).join(', '); });
     ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'].forEach(function (k) { p[k] = utm[k] || ''; });
+    p.funnel_entry = String(AB.funnelEntry || '');
+    p.fbp = (function () { var m = document.cookie.match(/(?:^|;\s*)_fbp=([^;]+)/); return m ? decodeURIComponent(m[1]) : ''; })();
     p.answers_json = JSON.stringify(a);
     if (extra) Object.keys(extra).forEach(function (k) { var v = extra[k]; p[k] = v && typeof v === 'object' ? JSON.stringify(v) : v; });
     postForm(url, p);
