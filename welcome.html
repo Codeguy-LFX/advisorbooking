@@ -47,6 +47,8 @@ a:focus-visible,button:focus-visible{outline:2px solid #3DDC97;outline-offset:3p
 .toast .x:focus-visible{border-radius:50%;outline-color:#0B5F4C}
 h1:focus{outline:none}
 [hidden]{display:none!important}
+.toast,.card,.legal{overflow-wrap:break-word}
+.foot a{overflow-wrap:anywhere}
 @media (max-width:480px){
   .card{padding:40px 20px 36px}
   .big{width:80px;height:80px;margin-bottom:24px}
@@ -58,7 +60,7 @@ h1:focus{outline:none}
   li{font-size:16px}
   .toast{font-size:16px;padding:16px 52px 16px 18px}
 }
-@media print{html,body,#abw{background:#fff}.toast .x{display:none}}
+@media print{html,body,#abw,.card,.box,.big{background:#fff!important}body,h1,h2,.box{color:#000!important}.sub,li,.foot,.foot a,.legal,.legal a{color:#333!important}.card,.box{border:1px solid #999}.card.is-alone{border-top:1px solid #999}.toast{border:1px solid #0B5F4C}.toast .x{display:none}}
 </style>
 </head>
 <body>
@@ -74,10 +76,37 @@ h1:focus{outline:none}
     <h1>Payment successful</h1>
     <p class="sub">Thank you for your payment. Your transaction has been processed successfully.</p>
 
-    <!-- Filled in by the script below; stays hidden if scripts are blocked, so it never shows an empty "Date:" -->
+    <!-- Filled in by the script right after it; stays hidden if scripts are blocked, so it never shows an empty "Date:" -->
     <div class="box" id="abw-box" hidden>
       <p><b>Date</b><span id="abw-date"></span></p>
     </div>
+    <script>
+    (function () {
+      'use strict';
+      /* Date of the payment: the moment this page was arrived at. A reload or Back/Forward keeps that time, so it does
+         not drift; any new arrival (a later payment, same tab or new) gets its own. Stripe sends no date to this page.
+         This runs right here, before anything below the box exists, so showing the box can never move the page. */
+      try {
+        var KEY = 'ab_welcome_at', at = NaN, nav = '';
+        try { var ne = performance.getEntriesByType('navigation'); nav = ne && ne[0] ? ne[0].type : ''; } catch (e) {}
+        if (!nav) { try { nav = ['navigate', 'reload', 'back_forward'][performance.navigation.type] || ''; } catch (e) {} }
+        if (nav === 'reload' || nav === 'back_forward') {
+          try { at = parseInt(sessionStorage.getItem(KEY) || '', 10); } catch (e) {}
+        }
+        if (!isFinite(at) || at <= 0 || at > Date.now()) {
+          at = Date.now();
+          try { sessionStorage.setItem(KEY, String(at)); } catch (e) {}
+        }
+        var d = new Date(at), text = '';
+        try {
+          text = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + ' at ' +
+                 d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        } catch (e) { text = d.toDateString(); }
+        var out = document.getElementById('abw-date'), box = document.getElementById('abw-box');
+        if (out && box && text) { out.textContent = text; box.hidden = false; }
+      } catch (e) {}
+    })();
+    </script>
 
     <h2>What happens next?</h2>
     <ul>
@@ -94,26 +123,6 @@ h1:focus{outline:none}
 <script>
 (function () {
   'use strict';
-  /* Each block is independent, so one failing (private mode, old browser) cannot break the rest of the page. */
-
-  /* Date of the payment: the moment this page first opened in this tab. A reload keeps that time, so it does not
-     drift; a later payment in a new tab gets its own. Stripe sends no date to this page. */
-  try {
-    var KEY = 'ab_welcome_at', at = NaN;
-    try { at = parseInt(sessionStorage.getItem(KEY) || '', 10); } catch (e) {}
-    if (!isFinite(at) || at <= 0 || at > Date.now()) {
-      at = Date.now();
-      try { sessionStorage.setItem(KEY, String(at)); } catch (e) {}
-    }
-    var d = new Date(at), text = '';
-    try {
-      text = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + ' at ' +
-             d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-    } catch (e) { text = d.toDateString(); }
-    var out = document.getElementById('abw-date'), box = document.getElementById('abw-box');
-    if (out && box && text) { out.textContent = text; box.hidden = false; }
-  } catch (e) {}
-
   /* The banner's close button: shown only when the script runs (so it always works), usable by keyboard. */
   try {
     var toast = document.getElementById('abw-toast'), btn = document.getElementById('abw-close'), card = document.getElementById('abw-card');
