@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Payment received | Advisor Booking</title>
+<!-- Post-payment thank-you page: advisorbooking.com/welcome
+     Stripe Payment Link "After payment" redirect: https://advisorbooking.com/welcome
+     Not in the sitemap and not indexed. No tracking, no pixel, no CRM post: it only confirms the payment went through.
+     Self-contained on purpose (styles and script inline, no web fonts), so nothing can fail to load after checkout. -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0E0E0E">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:#0E0E0E}
+body{margin:0;background:#0E0E0E;color:#fff;font-family:Geist,Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+#abw{min-height:100vh;min-height:100dvh;padding:24px 16px 48px;padding:max(24px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(48px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+.toast{max-width:640px;margin:0 auto;background:#E9F7F1;color:#0B5F4C;border-radius:16px 16px 0 0;padding:20px 56px 20px 24px;display:flex;align-items:center;gap:14px;font-weight:600;font-size:17px;line-height:1.35;position:relative}
+.toast .dot{width:28px;height:28px;border-radius:50%;background:#0F7A62;display:flex;align-items:center;justify-content:center;flex:0 0 28px}
+.toast .x{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:0;background:transparent;color:#0B5F4C;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+.toast .x:hover{background:#D3EEE4}
+.card{max-width:640px;margin:0 auto;background:#161616;border:1px solid #2A2A2A;border-top:none;border-radius:0 0 20px 20px;padding:56px 36px 48px;text-align:center}
+/* once the toast is closed (or the script is blocked and it was never shown), the card stands on its own */
+.card.is-alone{border-top:1px solid #2A2A2A;border-radius:20px}
+.big{width:96px;height:96px;border-radius:50%;background:#164A3C;display:flex;align-items:center;justify-content:center;margin:0 auto 32px}
+h1{font-size:34px;line-height:1.15;font-weight:800;letter-spacing:-0.02em;margin:0 0 14px;text-wrap:balance}
+.sub{color:#A3A8AE;font-size:19px;line-height:1.5;margin:0 auto 36px;max-width:420px}
+.box{background:#1F1F1F;border-radius:16px;padding:24px 20px;margin:0 0 40px;font-size:17px;line-height:1.5}
+.box p{margin:0}
+.box b{font-weight:700;display:block}
+#abw-date{display:block;text-wrap:balance}
+h2{text-align:left;font-size:24px;line-height:1.2;font-weight:800;margin:0 0 22px}
+ul{list-style:none;margin:0;padding:0;text-align:left}
+li{display:flex;gap:14px;align-items:flex-start;color:#B5BABF;font-size:17px;line-height:1.5;margin:0 0 18px}
+li:last-child{margin-bottom:0}
+li svg{flex:0 0 26px;margin-top:1px}
+.foot{color:#9299A0;font-size:14px;line-height:1.5;margin:28px 0 0}
+.foot a{color:#C9CED3;text-underline-offset:3px}
+.foot a:hover{color:#fff}
+.legal{max-width:640px;margin:20px auto 0;text-align:center;color:#8A9097;font-size:13px;line-height:1.5}
+.legal a{color:#A3A8AE;text-underline-offset:3px}
+.legal a:hover{color:#fff}
+a:focus-visible,button:focus-visible{outline:2px solid #3DDC97;outline-offset:3px;border-radius:8px}
+.toast .x:focus-visible{border-radius:50%;outline-color:#0B5F4C}
+h1:focus{outline:none}
+[hidden]{display:none!important}
+@media (max-width:480px){
+  .card{padding:40px 20px 36px}
+  .big{width:80px;height:80px;margin-bottom:24px}
+  .big svg{width:42px;height:42px}
+  h1{font-size:28px}
+  .sub{font-size:17px;margin-bottom:28px}
+  .box{margin-bottom:32px;font-size:16px}
+  h2{font-size:21px}
+  li{font-size:16px}
+  .toast{font-size:16px;padding:16px 52px 16px 18px}
+}
+@media print{html,body,#abw{background:#fff}.toast .x{display:none}}
+</style>
+</head>
+<body>
+<main id="abw">
+  <div class="toast" id="abw-toast" role="status">
+    <span class="dot" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+    <span>Payment processed successfully</span>
+    <button type="button" class="x" id="abw-close" aria-label="Dismiss this message" hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+
+  <div class="card" id="abw-card">
+    <div class="big" aria-hidden="true"><svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#3DDC97" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.1V12a9 9 0 1 1-5.3-8.2"/><path d="M21 4.5 12 13.5l-3-3"/></svg></div>
+    <h1>Payment successful</h1>
+    <p class="sub">Thank you for your payment. Your transaction has been processed successfully.</p>
+
+    <!-- Filled in by the script below; stays hidden if scripts are blocked, so it never shows an empty "Date:" -->
+    <div class="box" id="abw-box" hidden>
+      <p><b>Date</b><span id="abw-date"></span></p>
+    </div>
+
+    <h2>What happens next?</h2>
+    <ul>
+      <li><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3DDC97" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.1V12a9 9 0 1 1-5.3-8.2"/><path d="M21 4.5 12 13.5l-3-3"/></svg><span>You&rsquo;ll receive an email confirmation shortly</span></li>
+      <li><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3DDC97" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.1V12a9 9 0 1 1-5.3-8.2"/><path d="M21 4.5 12 13.5l-3-3"/></svg><span>Our team will confirm receipt of your payment and discuss next steps</span></li>
+    </ul>
+
+    <p class="foot">Questions? Email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a></p>
+  </div>
+
+  <p class="legal">&copy; 2026 De Jesus Ventures LLC. <span style="white-space:nowrap"><a href="/privacy.html">Privacy</a> &middot; <a href="/terms.html">Terms</a></span></p>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  /* Each block is independent, so one failing (private mode, old browser) cannot break the rest of the page. */
+
+  /* Date of the payment: the moment this page first opened in this tab. A reload keeps that time, so it does not
+     drift; a later payment in a new tab gets its own. Stripe sends no date to this page. */
+  try {
+    var KEY = 'ab_welcome_at', at = NaN;
+    try { at = parseInt(sessionStorage.getItem(KEY) || '', 10); } catch (e) {}
+    if (!isFinite(at) || at <= 0 || at > Date.now()) {
+      at = Date.now();
+      try { sessionStorage.setItem(KEY, String(at)); } catch (e) {}
+    }
+    var d = new Date(at), text = '';
+    try {
+      text = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + ' at ' +
+             d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+    } catch (e) { text = d.toDateString(); }
+    var out = document.getElementById('abw-date'), box = document.getElementById('abw-box');
+    if (out && box && text) { out.textContent = text; box.hidden = false; }
+  } catch (e) {}
+
+  /* The banner's close button: shown only when the script runs (so it always works), usable by keyboard. */
+  try {
+    var toast = document.getElementById('abw-toast'), btn = document.getElementById('abw-close'), card = document.getElementById('abw-card');
+    if (toast && btn && card) {
+      btn.hidden = false;
+      btn.addEventListener('click', function () {
+        toast.hidden = true;
+        card.classList.add('is-alone');
+        var h = card.querySelector('h1');
+        if (h) { h.setAttribute('tabindex', '-1'); try { h.focus({ preventScroll: true }); } catch (e) { h.focus(); } }
+      });
+    }
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>
