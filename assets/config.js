@@ -27,7 +27,7 @@ window.AB_CONFIG = {
   // funnel_entry sent on every GHL post from the /L1 funnel (the home page email boxes, the form, and its bookings).
   // Must match a GHL Funnel_Entry dropdown option exactly. Bookings that did not come through /L1 send none.
   funnelEntry: "Quiz Funnel",
-  ghlWebhookUrl: "https://services.leadconnectorhq.com/hooks/gk6KvBgga36JSqc48jhA/webhook-trigger/aa71cc07-560d-4c08-9236-9d13bd7b1c73",
+  ghlWebhookUrl: "https://services.leadconnectorhq.com/hooks/OlHSy0ie2GEU9CN03QfE/webhook-trigger/wxtAuWUMbK3oQ9rq2Ubz",
   // Tracking. Empty = the tag is not loaded. On /L1 both start only for qualified leads, after the contact screen.
   // Google Tag Manager container, e.g. "GTM-ABC1234" (events: see assets/gtm.js).
   gtmId: "",
