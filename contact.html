@@ -32,10 +32,6 @@ form{display:grid;gap:16px}
 label{display:grid;gap:6px;font-weight:500;font-size:15px}
 input,textarea{font:inherit;padding:12px 14px;border:1px solid #cfd6d3;border-radius:10px;background:#fff;color:inherit;width:100%}
 textarea{min-height:140px;resize:vertical}
-fieldset{border:0;margin:0;padding:0;display:grid;gap:12px}
-legend{font-weight:600;font-size:15px;padding:0;margin:0 0 4px}
-.chk{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:13px;line-height:1.5;color:#4b5350}
-.chk input{width:18px;height:18px;margin:2px 0 0;flex:0 0 18px;padding:0}
 .agree{font-size:13px;color:#4b5350;margin:0}
 button{font:inherit;font-weight:600;background:#0F7A62;color:#fff;border:0;border-radius:10px;padding:13px 22px;cursor:pointer;justify-self:start}
 button:hover{background:#0b6551}
@@ -68,18 +64,9 @@ footer a{color:#4b5350}
       <label>First name *<input type="text" name="first_name" autocomplete="given-name" required></label>
       <label>Last name *<input type="text" name="last_name" autocomplete="family-name" required></label>
     </div>
-    <div class="row">
-      <label>Email address *<input type="email" name="email" autocomplete="email" required></label>
-      <label>Phone number<input type="tel" name="phone" autocomplete="tel"></label>
-    </div>
+    <label>Email address *<input type="email" name="email" autocomplete="email" required></label>
     <label>Subject *<input type="text" name="subject" required></label>
     <label>Message *<textarea name="message" required></textarea></label>
-
-    <fieldset>
-      <legend>Communication preferences (optional)</legend>
-      <label class="chk"><input type="checkbox" name="sms_transactional_consent" value="yes"><span>By checking this box, I consent to receive transactional SMS text messages from De Jesus Ventures LLC regarding service inquiries, appointments, and account updates. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for assistance.</span></label>
-      <label class="chk"><input type="checkbox" name="sms_promotional_consent" value="yes"><span>By checking this box, I consent to receive promotional and transactional SMS text messages from De Jesus Ventures LLC regarding service inquiries, special offers, and updates. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for assistance.</span></label>
-    </fieldset>
 
     <p class="agree">By submitting this form, you agree to our <a href="/terms.html">Terms and Conditions</a> and <a href="/privacy.html">Privacy Policy</a>.</p>
     <button type="submit">Send message</button>
@@ -95,24 +82,16 @@ footer a{color:#4b5350}
 <script>
 (function () {
   var f = document.getElementById('cf'); if (!f) return;
-  var ph = f.querySelector('input[name=phone]'), boxes = f.querySelectorAll('fieldset input');
-  function check() {
-    var on = false; for (var i = 0; i < boxes.length; i++) if (boxes[i].checked) on = true;
-    ph.required = on; ph.setCustomValidity('');
-    if (on && !ph.value.trim()) ph.setCustomValidity('Enter your mobile number so we know which number the consent applies to.');
-  }
   try { var pre = JSON.parse(sessionStorage.getItem('ab_prefill') || '{}'), em = f.querySelector('input[name=email]'); if (pre && pre.email && em && !em.value) em.value = pre.email; } catch (e) {}
-  f.addEventListener('change', check); f.addEventListener('input', check); check();
-  /* No server behind the form: build the email in the visitor's own mail app, with the subject and consent choices in it. */
+  /* No server behind the form: build the email in the visitor's own mail app, with the subject in it. */
   f.addEventListener('submit', function (e) {
     e.preventDefault();
     var v = function (n) { var x = f.querySelector('[name=' + n + ']'); return x ? x.value.trim() : ''; };
-    var c = function (n) { var x = f.querySelector('[name=' + n + ']'); return x && x.checked ? 'yes' : 'no'; };
-    var body = 'Name: ' + v('first_name') + ' ' + v('last_name') + '\nEmail: ' + v('email') + '\nPhone: ' + v('phone') +
-      '\nTransactional text consent: ' + c('sms_transactional_consent') + '\nPromotional text consent: ' + c('sms_promotional_consent') + '\n\n' + v('message');
+    var body = 'Name: ' + v('first_name') + ' ' + v('last_name') + '\nEmail: ' + v('email') + '\n\n' + v('message');
     location.href = 'mailto:nick@advisorbooking.com?subject=' + encodeURIComponent(v('subject')) + '&body=' + encodeURIComponent(body);
   });
 })();
 </script>
+<script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6af85caff31f8c02e6cc46f3"></script>
 </body>
 </html>
