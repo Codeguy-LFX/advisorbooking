@@ -28,6 +28,9 @@ form{display:grid;gap:14px}
 label{display:grid;gap:6px;font-weight:500;font-size:15px}
 input,textarea{font:inherit;padding:12px 14px;border:1px solid #cfd6d3;border-radius:10px;background:#fff;color:inherit;width:100%}
 textarea{min-height:130px;resize:vertical}
+.consent{display:grid;gap:12px}
+.chk{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:13px;line-height:1.5;color:#4b5350}
+.chk input{width:18px;height:18px;margin:2px 0 0;flex:0 0 18px;padding:0}
 button{font:inherit;font-weight:600;background:#0F7A62;color:#fff;border:0;border-radius:10px;padding:13px 20px;cursor:pointer;justify-self:start}
 button:hover{background:#0b6551}
 .note{font-size:13px;color:#646c68;margin:0}
@@ -51,13 +54,28 @@ footer a{color:#646c68}
   <form id="cf" action="mailto:info@advisorbooking.com" method="post" enctype="text/plain">
     <label>Name<input type="text" name="name" autocomplete="name" required></label>
     <label>Email<input type="email" name="email" autocomplete="email" required></label>
-    <label>Phone (optional)<input type="tel" name="phone" autocomplete="tel"></label>
+    <label>Mobile phone (optional)<input type="tel" name="phone" autocomplete="tel"></label>
     <label>Message<textarea name="message" required></textarea></label>
+    <div class="consent">
+      <label class="chk"><input type="checkbox" name="sms_informational_consent" value="yes"><span>By submitting, you authorize De Jesus Ventures LLC to text/call the number above for informational/transactional messages, possibly using automated means. Msg/data rates apply, msg frequency varies. Consent is not a condition of purchase. See <a href="terms.html">terms</a> and <a href="privacy.html">privacy policy</a>. Text HELP for help and STOP to unsubscribe.</span></label>
+      <label class="chk"><input type="checkbox" name="sms_promotional_consent" value="yes"><span>By submitting, you authorize De Jesus Ventures LLC to text/call the number above for promotional messages, possibly using automated means. Msg/data rates apply, msg frequency varies. Consent is not a condition of purchase. See <a href="terms.html">terms</a> and <a href="privacy.html">privacy policy</a>. Text HELP for help and STOP to unsubscribe.</span></label>
+    </div>
     <button type="submit">Send message</button>
     <p class="note">This opens your email app with your message ready to send. You can also use the chat in the corner of this page.</p>
   </form>
 </main>
-<footer>&copy; 2026 De Jesus Ventures LLC. <a href="/privacy.html">Privacy</a> &middot; <a href="/terms.html">Terms</a></footer>
+<footer>&copy; 2026 De Jesus Ventures LLC. <a href="/contact.html">Contact</a> &middot; <a href="/privacy.html">Privacy</a> &middot; <a href="/terms.html">Terms</a></footer>
 <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6af85caff31f8c02e6cc46f3"></script>
+<script>
+(function () {
+  var f = document.getElementById('cf'); if (!f) return;
+  var ph = f.querySelector('input[name=phone]'), boxes = f.querySelectorAll('.consent input');
+  function check() {
+    var on = false; for (var i = 0; i < boxes.length; i++) if (boxes[i].checked) on = true;
+    ph.required = on; ph.setCustomValidity(''); if (on && !ph.value.trim()) ph.setCustomValidity('Enter your mobile number so we know which number the consent applies to.');
+  }
+  f.addEventListener('change', check); f.addEventListener('input', check); check();
+})();
+</script>
 </body>
 </html>
