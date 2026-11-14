@@ -58,10 +58,11 @@ footer a{color:#4b5350}
   <p class="lead">Have a question before booking? Fill out the form and our team will get back to you within 24 hours.</p>
 
   <div class="info">
-    <div><h2>Email us</h2><p><a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a></p></div>
+    <div><h2>Email us</h2><p><a href="mailto:nick@advisorbooking.com">nick@advisorbooking.com</a></p></div>
+    <div><h2>Call us</h2><p><a href="tel:+15614182043">561-418-2043</a></p></div>
   </div>
 
-  <form id="cf" action="mailto:info@advisorbooking.com" method="post" enctype="text/plain">
+  <form id="cf" action="mailto:nick@advisorbooking.com" method="post" enctype="text/plain">
     <div class="row">
       <label>First name *<input type="text" name="first_name" autocomplete="given-name" required></label>
       <label>Last name *<input type="text" name="last_name" autocomplete="family-name" required></label>
@@ -107,7 +108,7 @@ footer a{color:#4b5350}
     var c = function (n) { var x = f.querySelector('[name=' + n + ']'); return x && x.checked ? 'yes' : 'no'; };
     var body = 'Name: ' + v('first_name') + ' ' + v('last_name') + '\nEmail: ' + v('email') + '\nPhone: ' + v('phone') +
       '\nTransactional text consent: ' + c('sms_transactional_consent') + '\nPromotional text consent: ' + c('sms_promotional_consent') + '\n\n' + v('message');
-    location.href = 'mailto:info@advisorbooking.com?subject=' + encodeURIComponent(v('subject')) + '&body=' + encodeURIComponent(body);
+    location.href = 'mailto:nick@advisorbooking.com?subject=' + encodeURIComponent(v('subject')) + '&body=' + encodeURIComponent(body);
   });
 })();
 </script>
