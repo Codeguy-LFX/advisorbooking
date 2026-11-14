@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Contact Us | Advisor Booking</title>
-<meta name="description" content="Contact Advisor Booking, a marketing and appointment-setting company for independent RIAs. Email us or send a message.">
+<meta name="description" content="Contact Advisor Booking, an appointment-setting company for independent RIAs. Email us or send a message and our team will reply within 24 hours.">
 <link rel="canonical" href="https://advisorbooking.com/contact">
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
@@ -15,66 +15,101 @@ html{-webkit-text-size-adjust:100%}
 body{margin:0;background:#fff;color:#0d0f0e;font:400 16px/1.55 Geist,Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:#0F7A62;text-underline-offset:3px}
 a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #0F7A62;outline-offset:2px}
-.top{max-width:720px;margin:0 auto;padding:22px 20px 0}
-.top a{color:#0d0f0e;font-weight:600;text-decoration:none}
-main{max-width:720px;margin:0 auto;padding:36px 20px 56px}
+.nav{max-width:880px;margin:0 auto;padding:20px 20px 0;display:flex;flex-wrap:wrap;align-items:center;gap:8px 22px}
+.nav .brand{font-weight:700;font-size:18px;color:#0d0f0e;text-decoration:none;margin-right:auto}
+.nav a.l{color:#2a2f2d;text-decoration:none;font-size:15px;font-weight:500}
+.nav a.l:hover,.nav a[aria-current=page]{color:#0F7A62}
+main{max-width:880px;margin:0 auto;padding:36px 20px 56px}
 h1{font-size:clamp(32px,6vw,44px);line-height:1.1;letter-spacing:-.03em;font-weight:600;margin:0 0 10px}
-.lead{color:#4b5350;font-size:18px;margin:0 0 32px}
-.info{display:grid;gap:14px;background:#f4f6f5;border-radius:16px;padding:22px 22px;margin:0 0 36px}
+.lead{color:#4b5350;font-size:18px;margin:0 0 30px;max-width:60ch}
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:0 0 36px}
+.info div{background:#f4f6f5;border-radius:16px;padding:20px 22px}
+.info h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#646c68;font-weight:600;margin:0 0 4px}
 .info p{margin:0}
-.info small{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#646c68;font-weight:600;margin-bottom:2px}
-h2{font-size:22px;letter-spacing:-.02em;margin:0 0 16px}
-form{display:grid;gap:14px}
+form{display:grid;gap:16px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:560px){.row{grid-template-columns:1fr}}
 label{display:grid;gap:6px;font-weight:500;font-size:15px}
 input,textarea{font:inherit;padding:12px 14px;border:1px solid #cfd6d3;border-radius:10px;background:#fff;color:inherit;width:100%}
-textarea{min-height:130px;resize:vertical}
-.consent{display:grid;gap:12px}
+textarea{min-height:140px;resize:vertical}
+fieldset{border:0;margin:0;padding:0;display:grid;gap:12px}
+legend{font-weight:600;font-size:15px;padding:0;margin:0 0 4px}
 .chk{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:13px;line-height:1.5;color:#4b5350}
 .chk input{width:18px;height:18px;margin:2px 0 0;flex:0 0 18px;padding:0}
-button{font:inherit;font-weight:600;background:#0F7A62;color:#fff;border:0;border-radius:10px;padding:13px 20px;cursor:pointer;justify-self:start}
+.agree{font-size:13px;color:#4b5350;margin:0}
+button{font:inherit;font-weight:600;background:#0F7A62;color:#fff;border:0;border-radius:10px;padding:13px 22px;cursor:pointer;justify-self:start}
 button:hover{background:#0b6551}
 .note{font-size:13px;color:#646c68;margin:0}
-footer{max-width:720px;margin:0 auto;padding:0 20px 40px;font-size:13px;color:#646c68}
-footer a{color:#646c68}
+footer{max-width:880px;margin:0 auto;padding:28px 20px 40px;border-top:1px solid #e6eae8;font-size:14px;color:#646c68}
+footer .t{font-weight:700;color:#0d0f0e;margin:0}
+footer nav{display:flex;flex-wrap:wrap;gap:6px 18px;margin:12px 0}
+footer a{color:#4b5350}
 </style>
 </head>
 <body>
-<div class="top"><a href="/">Advisor Booking</a></div>
+<header class="nav">
+  <a class="brand" href="/">Advisor Booking</a>
+  <a class="l" href="/">Home</a>
+  <a class="l" href="/contact.html" aria-current="page">Contact Us</a>
+  <a class="l" href="/L1/">Book Appointment</a>
+</header>
 <main id="main">
-  <h1>Contact us</h1>
-  <p class="lead">Questions about Advisor Booking? Send us a message and we will get back to you.</p>
+  <h1>Get in touch</h1>
+  <p class="lead">Have a question before booking? Fill out the form and our team will get back to you within 24 hours.</p>
 
   <div class="info">
-    <p><small>Email</small><a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a></p>
-    <p><small>Company</small>Advisor Booking, operated by De Jesus Ventures LLC</p>
-    <p><small>Location</small>Boca Raton, Florida</p>
+    <div><h2>Email us</h2><p><a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a></p></div>
   </div>
 
-  <h2>Send a message</h2>
   <form id="cf" action="mailto:info@advisorbooking.com" method="post" enctype="text/plain">
-    <label>Name<input type="text" name="name" autocomplete="name" required></label>
-    <label>Email<input type="email" name="email" autocomplete="email" required></label>
-    <label>Mobile phone (optional)<input type="tel" name="phone" autocomplete="tel"></label>
-    <label>Message<textarea name="message" required></textarea></label>
-    <div class="consent">
-      <label class="chk"><input type="checkbox" name="sms_informational_consent" value="yes"><span>By submitting, you authorize De Jesus Ventures LLC to text/call the number above for informational/transactional messages, possibly using automated means. Msg/data rates apply, msg frequency varies. Consent is not a condition of purchase. See <a href="terms.html">terms</a> and <a href="privacy.html">privacy policy</a>. Text HELP for help and STOP to unsubscribe.</span></label>
-      <label class="chk"><input type="checkbox" name="sms_promotional_consent" value="yes"><span>By submitting, you authorize De Jesus Ventures LLC to text/call the number above for promotional messages, possibly using automated means. Msg/data rates apply, msg frequency varies. Consent is not a condition of purchase. See <a href="terms.html">terms</a> and <a href="privacy.html">privacy policy</a>. Text HELP for help and STOP to unsubscribe.</span></label>
+    <div class="row">
+      <label>First name *<input type="text" name="first_name" autocomplete="given-name" required></label>
+      <label>Last name *<input type="text" name="last_name" autocomplete="family-name" required></label>
     </div>
+    <div class="row">
+      <label>Email address *<input type="email" name="email" autocomplete="email" required></label>
+      <label>Phone number<input type="tel" name="phone" autocomplete="tel"></label>
+    </div>
+    <label>Subject *<input type="text" name="subject" required></label>
+    <label>Message *<textarea name="message" required></textarea></label>
+
+    <fieldset>
+      <legend>Communication preferences (optional)</legend>
+      <label class="chk"><input type="checkbox" name="sms_transactional_consent" value="yes"><span>By checking this box, I consent to receive transactional SMS text messages from De Jesus Ventures LLC regarding service inquiries, appointments, and account updates. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for assistance.</span></label>
+      <label class="chk"><input type="checkbox" name="sms_promotional_consent" value="yes"><span>By checking this box, I consent to receive promotional and transactional SMS text messages from De Jesus Ventures LLC regarding service inquiries, special offers, and updates. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for assistance.</span></label>
+    </fieldset>
+
+    <p class="agree">By submitting this form, you agree to our <a href="/terms.html">Terms and Conditions</a> and <a href="/privacy.html">Privacy Policy</a>.</p>
     <button type="submit">Send message</button>
     <p class="note">This opens your email app with your message ready to send. You can also use the chat in the corner of this page.</p>
   </form>
 </main>
-<footer>&copy; 2026 De Jesus Ventures LLC. <a href="/contact.html">Contact</a> &middot; <a href="/privacy.html">Privacy</a> &middot; <a href="/terms.html">Terms</a></footer>
+<footer>
+  <p class="t">Advisor Booking</p>
+  <p>Appointment setting for independent RIAs</p>
+  <nav aria-label="Footer"><a href="/">Home</a><a href="/contact.html">Contact</a><a href="/terms.html">Terms of Service</a><a href="/privacy.html">Privacy Policy</a></nav>
+  <p>&copy; 2026 De Jesus Ventures LLC. All rights reserved.</p>
+</footer>
 <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6af85caff31f8c02e6cc46f3"></script>
 <script>
 (function () {
   var f = document.getElementById('cf'); if (!f) return;
-  var ph = f.querySelector('input[name=phone]'), boxes = f.querySelectorAll('.consent input');
+  var ph = f.querySelector('input[name=phone]'), boxes = f.querySelectorAll('fieldset input');
   function check() {
     var on = false; for (var i = 0; i < boxes.length; i++) if (boxes[i].checked) on = true;
-    ph.required = on; ph.setCustomValidity(''); if (on && !ph.value.trim()) ph.setCustomValidity('Enter your mobile number so we know which number the consent applies to.');
+    ph.required = on; ph.setCustomValidity('');
+    if (on && !ph.value.trim()) ph.setCustomValidity('Enter your mobile number so we know which number the consent applies to.');
   }
   f.addEventListener('change', check); f.addEventListener('input', check); check();
+  /* No server behind the form: build the email in the visitor's own mail app, with the subject and consent choices in it. */
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = function (n) { var x = f.querySelector('[name=' + n + ']'); return x ? x.value.trim() : ''; };
+    var c = function (n) { var x = f.querySelector('[name=' + n + ']'); return x && x.checked ? 'yes' : 'no'; };
+    var body = 'Name: ' + v('first_name') + ' ' + v('last_name') + '\nEmail: ' + v('email') + '\nPhone: ' + v('phone') +
+      '\nTransactional text consent: ' + c('sms_transactional_consent') + '\nPromotional text consent: ' + c('sms_promotional_consent') + '\n\n' + v('message');
+    location.href = 'mailto:info@advisorbooking.com?subject=' + encodeURIComponent(v('subject')) + '&body=' + encodeURIComponent(body);
+  });
 })();
 </script>
 </body>
