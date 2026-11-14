@@ -1,96 +1,10 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pick a time for your call | Advisor Booking</title>
-<meta name="description" content="Pick a time for your 20-minute call with Advisor Booking.">
-<meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#0f7a62">
-<meta name="color-scheme" content="light">
-<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600;700&display=optional" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/lp.css">
-<link rel="stylesheet" href="../../assets/pilot.css">
-<link rel="stylesheet" href="../../assets/funnel.css">
-<link rel="stylesheet" href="../../assets/qf.css">
-<link rel="preconnect" href="https://app.iclosed.io">
+<html lang="en"><head><meta charset="utf-8">
+<title>Contact Us | Advisor Booking</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://advisorbooking.com/contact">
+<script>location.replace('/contact.html');</script>
+<meta http-equiv="refresh" content="0; url=/contact.html">
 </head>
-<body class="qf">
-<div class="lp">
-<header class="qf-head"><span class="qf-logo"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#fff"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#0f7a62"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#0f7a62"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#0f7a62"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#fff"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#0f7a62" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span></header>
-<main class="qf-main" id="main">
-  <div class="qf-col qf-col--wide">
-<div class="qf-book">
-      <h1 class="ap-q" id="bookH">Pick a time for your call</h1>
-      <p class="ap-sub" id="bookSub">Answer a few quick questions, then choose a time that works for you.</p>
-      <section id="calendar" aria-label="Pick a time for your call">
-        <div class="calendly-mount" data-fill>
-          <p class="notice">Loading the calendar. If it does not appear, email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will send you times.</p>
-        </div>
-      </section>
-    </div>
-  </div>
-</main>
-<footer class="qf-foot">
-  <div class="qf-foot__links"><a href="../../privacy.html" target="_blank" rel="noopener">Privacy Policy</a><a href="../../terms.html" target="_blank" rel="noopener">Terms of Service</a></div>
-  <p class="qf-foot__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
-</footer>
-</div>
-<script src="../../assets/config.js"></script>
-<script>
-(function () {
-  'use strict';
-  var CFG = window.AB_CONFIG || {}, LABEL = 'dq';
-  var st = null; try { st = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); } catch (e) {}
-  var a = (st && st.answers) || {};
-  var first = String(a.first || '').trim().split(/\s+/)[0];
-  if (first) document.getElementById('bookH').textContent = 'Pick a time for your call, ' + first + '.';
-  var utm = {}; try { utm = JSON.parse(sessionStorage.getItem('ab_utm') || '{}') || {}; } catch (e) {}
-  var base = String(CFG.iclosedUrlFit5 || CFG.iclosedUrl || '').trim(), url = '';
-  try {
-    var u = new URL(base);
-    Object.keys(utm).forEach(function (k) { if (k.indexOf('utm_') === 0) u.searchParams.set(k, utm[k]); });
-    var d = String(a.phone || '').replace(/\D/g, ''); if (d.length === 11 && d.charAt(0) === '1') d = d.slice(1);
-    var nm = [a.first, a.last].filter(Boolean).join(' ').trim();
-    if (nm) u.searchParams.set('iclosedName', nm);
-    if (a.first) u.searchParams.set('iclosedFirstName', String(a.first).trim());
-    if (a.last) u.searchParams.set('iclosedLastName', String(a.last).trim());
-    if (a.email) u.searchParams.set('iclosedEmail', a.email);
-    if (d.length === 10) u.searchParams.set('iclosedPhone', '+1' + d);
-    if (!u.searchParams.get('utm_term')) u.searchParams.set('utm_term', 'L1-' + LABEL);
-    url = u.toString();
-  } catch (e) {}
-  var mount = document.querySelector('.calendly-mount');
-  if (!url) return;   // no event link in config.js: the notice stays
-  mount.innerHTML = '';
-  var w = document.createElement('div'); w.className = 'iclosed-widget'; w.setAttribute('data-url', url); w.setAttribute('title', 'Pick a time for your call'); w.style.width = '100%';
-  mount.appendChild(w);
-  var settled = false, waited = 0, iv;
-  function fallback() {
-    if (settled) return; settled = true; clearInterval(iv);
-    if (mount.querySelector('iframe')) return;
-    mount.innerHTML = '';
-    var f = document.createElement('iframe'); f.className = 'calendly-frame'; f.title = 'Pick a time for your call'; f.src = url; mount.appendChild(f);
-    var p = document.createElement('p'); p.className = 'notice'; var l = document.createElement('a'); l.href = url; l.textContent = 'Calendar not showing? Open it here.'; p.appendChild(l); mount.appendChild(p);
-  }
-  var s = document.createElement('script'); s.async = true; s.src = 'https://app.iclosed.io/assets/widget.js'; s.onerror = fallback; document.body.appendChild(s);
-  iv = setInterval(function () { if (mount.querySelector('iframe')) { settled = true; clearInterval(iv); return; } if ((waited += 250) >= 8000) fallback(); }, 250);
-  /* The site's /booked page, when iClosed shows it inside the frame, reports the booking here: save it to the CRM, once. */
-  var bookedOnce = false;
-  window.addEventListener('message', function (e) {
-    var d = e.data || {};
-    if (e.origin !== location.origin || d.event !== 'iclosed.booked' || !d.payload || bookedOnce) return;
-    bookedOnce = true;
-    try { if (st && !st.booked) { st.booked = true; localStorage.setItem('ab_apply_v1', JSON.stringify(st)); } } catch (x) {}
-    var hook = String(CFG.ghlWebhookUrl || '').trim(); if (!hook) return;
-    var body = new URLSearchParams(), p = d.payload;
-    Object.keys(p).forEach(function (k) { if (k !== 'forwarded') body.append(k, p[k] === undefined || p[k] === null ? '' : String(p[k])); });
-    try { if (!(navigator.sendBeacon && navigator.sendBeacon(hook, body))) fetch(hook, { method: 'POST', mode: 'no-cors', keepalive: true, body: body }).catch(function () {}); } catch (x) {}
-  });
-})();
-</script>
-</body>
+<body><p><a href="/contact.html">Continue to the contact page</a></p></body>
 </html>

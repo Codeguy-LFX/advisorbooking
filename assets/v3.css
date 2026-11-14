@@ -83,7 +83,8 @@
 .v2-foot a:hover{color:var(--night-ink)}
 /* v3: the v2 hero copy sits in the v1 hero section, which keeps its spacing and the journey strip */
 .hero.v2-hero .hero__in{gap:0}
-.hero.v2-hero .ec-wrap{width:100%}
+.hero.v2-hero .ec-wrap{width:100%;display:flex;flex-direction:column;align-items:center;margin-top:30px}
+.v2-cta .ec-wrap{display:flex;flex-direction:column;align-items:center;margin-top:26px}
 .gets + #guarantee{padding-top:clamp(24px,4vw,56px)}
 .jwho{flex-wrap:wrap;row-gap:8px}
 .jwho .jtag{margin-left:40px}

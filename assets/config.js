@@ -15,7 +15,7 @@ window.AB_CONFIG = {
   bookedUrl: "https://advisorbooking.com/booked",
   // Where the landers' email-first "Book intro call" sends people (relative to the site root): "L1/" is the
   // qualifying form with the email prefilled; "book.html" skips the form.
-  landerNext: "L1/",
+  landerNext: "contact.html",   // 10DLC review: the quiz funnel (L1/) is off; restore "L1/" to turn it back on
   // Calendly (legacy): the 20-minute event URL, and whether book.html embeds it or links out to it.
   calendlyUrl: "",
   calendlyMode: "embed",
