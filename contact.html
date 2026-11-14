@@ -101,6 +101,7 @@ footer a{color:#4b5350}
     ph.required = on; ph.setCustomValidity('');
     if (on && !ph.value.trim()) ph.setCustomValidity('Enter your mobile number so we know which number the consent applies to.');
   }
+  try { var pre = JSON.parse(sessionStorage.getItem('ab_prefill') || '{}'), em = f.querySelector('input[name=email]'); if (pre && pre.email && em && !em.value) em.value = pre.email; } catch (e) {}
   f.addEventListener('change', check); f.addEventListener('input', check); check();
   /* No server behind the form: build the email in the visitor's own mail app, with the subject and consent choices in it. */
   f.addEventListener('submit', function (e) {
