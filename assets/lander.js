@@ -121,7 +121,7 @@
         jr.classList.add('is-in');
         if (!reduce && steps.length) setTimeout(function () { jnext(); jt = setInterval(jnext, 2200); }, 1200);
       }
-    }, { threshold: 0.25 }).observe(jr);
+    }).observe(jr);   // any part on screen counts: on a common laptop screen only the top quarter of the strip shows before scrolling
   }
 
   /* ---------- blog topic filter ---------- */
