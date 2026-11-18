@@ -728,7 +728,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
   })();
   var doc = document, root = doc.documentElement;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  root.classList.add('js'); root.classList.remove('no-js');
+  root.classList.add('js');   // "no-js" stays until assets/lander.js takes over the headline word, so the word never blinks out in between
   function $(s, c) { return (c || doc).querySelector(s); }
   function $$(s, c) { return Array.prototype.slice.call((c || doc).querySelectorAll(s)); }
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
@@ -881,7 +881,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
   });
 })();
 </script>
+<!-- Our own script runs before the chat widget's loader. It used to wait behind that third-party file, and until the file arrived the headline's green word was invisible. -->
+<script src="assets/lander.js"></script>
 <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6af85caff31f8c02e6cc46f3"></script>
-<script src="assets/lander.js" defer></script>
 </body>
 </html>
