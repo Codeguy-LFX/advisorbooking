@@ -434,6 +434,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
   .js [data-rv].pre{opacity:1;transform:none}
 }
+/* On paper or in a saved PDF everything shows: nothing waits for a scroll, and all three steps print at full strength */
+@media print{.js [data-rv].pre{opacity:1;transform:none;transition:none}.js .how.is-live .step{opacity:1;transition:none}}
 </style>
 <link rel="stylesheet" href="assets/v3.css">
 </head>
@@ -777,6 +779,12 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
     }, { threshold: 0.6 });
     counts.forEach(function (el) { el.textContent = '0'; cio.observe(el); });
   }
+
+  /* A printout or saved PDF shows everything, including the parts not scrolled to yet and the finished numbers */
+  window.addEventListener('beforeprint', function () {
+    rv.forEach(function (el) { el.classList.remove('pre'); });
+    counts.forEach(function (el) { el.textContent = el.getAttribute('data-count'); });
+  });
 
   /* Manifesto: words light up as the paragraph scrolls through the middle of the screen */
   (function words() {
