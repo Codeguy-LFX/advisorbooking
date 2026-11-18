@@ -797,29 +797,44 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
     window.addEventListener('resize', upd); upd();
   })();
 
-  /* How it works: the marker follows scroll through the three steps */
+  /* How it works: the marker follows scroll through the three steps. It only works while the section is on or near
+     the screen, and it only touches the page when something changes. Before, it re-measured and redrew the loop on
+     every scroll event anywhere on the page, which was about half of all the scrolling work on a phone. */
   (function how() {
     var sec = $('#how'), steps = $$('.step'), wrap = $('#steps'), track = $('#track'), done = $('#trackDone'), mark = $('#mark'), glow = $('#markGlow'), tags = $$('.loop__tag'), loopEl = $('#loop');
     if (!sec || !track || !track.getTotalLength) return;
     var L = track.getTotalLength(), names = ['Build', 'Launch', 'Grow'], target = 0, curP = 0, raf = 0, active = -1;
+    var live = true, lastP = -1, lit = -1, loopN = $('#loopN'), loopL = $('#loopL');
+    var at = tags.map(function (t) { return +t.getAttribute('data-at'); });
     done.style.strokeDasharray = L; done.style.strokeDashoffset = L;
+    /* The loop's shape, sampled once, so each frame is a lookup instead of a fresh path measurement. */
+    var N = 480, pts = [];
+    for (var i = 0; i <= N; i++) { var q = track.getPointAtLength(Math.min(i / N, 0.9999) * L); pts.push(q.x, q.y); }
+    function pointAt(p) {
+      var f = clamp(p, 0, 0.9999) * N, i0 = Math.min(Math.floor(f), N - 1), k = f - i0, j = i0 * 2;
+      return [pts[j] + (pts[j + 2] - pts[j]) * k, pts[j + 1] + (pts[j + 3] - pts[j + 1]) * k];
+    }
     function placeTags() {
       var W = loopEl.clientWidth, H = loopEl.clientHeight;
-      tags.forEach(function (t) {
-        var a = +t.getAttribute('data-at'), pt = track.getPointAtLength(a * L), w = t.offsetWidth;
-        t.style.left = clamp(pt.x / 520 * W, w / 2 + 2, W - w / 2 - 2) + 'px'; t.style.top = (pt.y / 360 * H) + 'px';
+      tags.forEach(function (t, i) {
+        var pt = pointAt(at[i]), w = t.offsetWidth;
+        t.style.left = clamp(pt[0] / 520 * W, w / 2 + 2, W - w / 2 - 2) + 'px'; t.style.top = (pt[1] / 360 * H) + 'px';
       });
     }
     placeTags(); window.addEventListener('resize', placeTags);
     if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(placeTags);
     function place(p) {
-      var pt = track.getPointAtLength(clamp(p, 0, 0.9999) * L);
-      mark.setAttribute('cx', pt.x); mark.setAttribute('cy', pt.y); glow.setAttribute('cx', pt.x); glow.setAttribute('cy', pt.y);
+      if (p === lastP) return;   // nothing moved since the last frame
+      lastP = p;
+      var pt = pointAt(p);
+      mark.setAttribute('cx', pt[0]); mark.setAttribute('cy', pt[1]); glow.setAttribute('cx', pt[0]); glow.setAttribute('cy', pt[1]);
       done.style.strokeDashoffset = L * (1 - p);
-      tags.forEach(function (t) { t.classList.toggle('on', p + 0.001 >= +t.getAttribute('data-at')); });
+      var n = 0;
+      for (var i = 0; i < at.length; i++) if (p + 0.001 >= at[i]) n |= 1 << i;
+      if (n !== lit) { lit = n; tags.forEach(function (t, k) { t.classList.toggle('on', !!(n & (1 << k))); }); }
       var s = clamp(Math.floor(p * 3 - 0.0001), 0, 2);
       if (p <= 0) s = 0;
-      if (s !== active) { active = s; steps.forEach(function (st, i) { st.classList.toggle('on', i === s); }); $('#loopN').textContent = '0' + (s + 1); $('#loopL').textContent = names[s]; }
+      if (s !== active) { active = s; steps.forEach(function (st, k) { st.classList.toggle('on', k === s); }); loopN.textContent = '0' + (s + 1); loopL.textContent = names[s]; }
     }
     function measure() {
       var r = wrap.getBoundingClientRect(), vh = window.innerHeight;
@@ -831,10 +846,19 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
       place(curP);
       if (curP !== target) raf = requestAnimationFrame(tick);
     }
-    function onScroll() { measure(); if (!raf) raf = requestAnimationFrame(tick); }
+    function onScroll() { if (!live) return; measure(); if (!raf) raf = requestAnimationFrame(tick); }
     sec.classList.add('is-live');
     window.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', onScroll);
     measure(); curP = target; place(curP);
+    if ('IntersectionObserver' in window) {
+      live = false;
+      new IntersectionObserver(function (es) {
+        var on = es[es.length - 1].isIntersecting;
+        if (on === live) return;
+        live = on;
+        if (on) { measure(); curP = target; place(curP); }   // while away it sat at one end of the loop; pick up from there
+      }, { rootMargin: '300px 0px' }).observe(sec);
+    }
   })();
 
   /* FAQ: smooth open and close */
