@@ -749,14 +749,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
     window.scrollTo({ top: id === 'top' ? 0 : t.getBoundingClientRect().top + window.scrollY + off, behavior: reduce ? 'auto' : 'smooth' });
   });
 
-  /* Journey strip: after the cards arrive, a highlight walks from first message to booked meeting */
-  (function journey() {
-    var steps = $$('.jstep'); if (!steps.length || reduce) return;
-    var i = -1, iv = null, vis = true;
-    function next() { if (!vis) return; i = (i + 1) % steps.length; steps.forEach(function (s, k) { s.classList.toggle('is-on', k === i); }); }
-    setTimeout(function () { next(); iv = setInterval(next, 2200); }, 1700);
-    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { vis = es[0].isIntersecting; }).observe($('.journey'));
-  })();
+  /* Journey strip: the walking highlight is driven by assets/lander.js alone. A second timer here used to run beside
+     it; the two fell out of step after a scroll and the highlight flashed between two cards. */
 
   /* Reveal: only items below the first screen start hidden */
   var rv = $$('[data-rv]');
