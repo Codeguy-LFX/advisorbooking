@@ -17,6 +17,7 @@
 <!-- Geist comes from this site (assets/fonts/geist.css, embedded) so it is ready at first paint: no font swap, no page jump. -->
 <link rel="preload" href="assets/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/fonts/geist.css">
+<script>document.fonts&&document.fonts.load("1em Geist")</script><!-- starts decoding the embedded font now, so it is done before the first paint instead of one frame after it -->
 <style>
 body{margin:0}
 img{max-width:100%}
@@ -807,13 +808,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
     var live = true, lastP = -1, lit = -1, loopN = $('#loopN'), loopL = $('#loopL');
     var at = tags.map(function (t) { return +t.getAttribute('data-at'); });
     done.style.strokeDasharray = L; done.style.strokeDashoffset = L;
-    /* The loop's shape, sampled once, so each frame is a lookup instead of a fresh path measurement. */
-    var N = 480, pts = [];
-    for (var i = 0; i <= N; i++) { var q = track.getPointAtLength(Math.min(i / N, 0.9999) * L); pts.push(q.x, q.y); }
-    function pointAt(p) {
-      var f = clamp(p, 0, 0.9999) * N, i0 = Math.min(Math.floor(f), N - 1), k = f - i0, j = i0 * 2;
-      return [pts[j] + (pts[j + 2] - pts[j]) * k, pts[j + 1] + (pts[j + 3] - pts[j + 1]) * k];
-    }
+    function pointAt(p) { var q = track.getPointAtLength(clamp(p, 0, 0.9999) * L); return [q.x, q.y]; }
     function placeTags() {
       var W = loopEl.clientWidth, H = loopEl.clientHeight;
       tags.forEach(function (t, i) {
@@ -846,17 +841,33 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
       place(curP);
       if (curP !== target) raf = requestAnimationFrame(tick);
     }
-    function onScroll() { if (!live) return; measure(); if (!raf) raf = requestAnimationFrame(tick); }
+    /* Where the section sits on the page. While it is off screen the loop simply rests at one end (the start while the
+       section is still below, the finish once it has gone past), so scrolling elsewhere needs no measuring at all. */
+    var top0 = 0, bot0 = 0;
+    function span() { var r = sec.getBoundingClientRect(), y = window.scrollY; top0 = r.top + y; bot0 = r.bottom + y; }
+    function onScroll() {
+      if (!live) {
+        var y = window.scrollY;
+        if (y + window.innerHeight < top0 || y > bot0) {
+          var end = y > bot0 ? 1 : 0;
+          if (end !== target) { target = end; if (!raf) raf = requestAnimationFrame(tick); }
+          return;
+        }
+      }
+      measure(); if (!raf) raf = requestAnimationFrame(tick);
+    }
     sec.classList.add('is-live');
-    window.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', onScroll);
+    span();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', function () { span(); onScroll(); });
     measure(); curP = target; place(curP);
     if ('IntersectionObserver' in window) {
       live = false;
       new IntersectionObserver(function (es) {
         var on = es[es.length - 1].isIntersecting;
         if (on === live) return;
-        live = on;
-        if (on) { measure(); curP = target; place(curP); }   // while away it sat at one end of the loop; pick up from there
+        live = on; span();
+        if (on) onScroll();   // back near the screen: measure again and carry on from where the loop was resting
       }, { rootMargin: '300px 0px' }).observe(sec);
     }
   })();
