@@ -102,3 +102,5 @@
 .ra-quiz .lp-lbl,.ra-quiz .lp-err,.ra-cal .k-cal__foot{font-size:16px}
 @media (min-width:700px) and (max-height:480px){.ra-nav{--nav-h:52px}.ra-main{padding-top:12px}.ra-eyebrow{margin-top:16px}.ra-quiz{margin-top:8px}.ra-quiz .ap-q{font-size:28px}.ra-quiz .ap-opts{margin-top:16px}}
 .ra-quiz .ap-next[disabled]{--c:#5f6763}
+/* The host strip without a photo or a name: the two chips only. */
+.ra-host__meta{display:flex;flex-wrap:wrap;gap:8px;margin:0}
