@@ -61,7 +61,8 @@
     window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
     window.gtag('js', new Date());
     if (!viaGtm) window.gtag('config', id);
-    /* The event snippet from Google Ads, as given, for a qualified submission only (AB_CONVERT is set by /qualified). */
+    /* The event snippet from Google Ads for a qualified submission only (AB_CONVERT is set by /qualified). send_to and
+       nothing else: the owner's final snippet carries no value and no currency, on purpose. */
     if (window.AB_QUALIFIED_OK === true && window.AB_CONVERT === true && /^AW-[0-9]{6,}\/[A-Za-z0-9_-]{6,}$/.test(conv)) {
       window.gtag('event', 'conversion', { 'send_to': conv });
     }

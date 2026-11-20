@@ -37,6 +37,8 @@
 .rm-line{margin-top:16px;font-size:16px;line-height:24px;font-weight:500;letter-spacing:-.01em;color:var(--k-accent);text-wrap:balance}
 .rm-quiz{margin-top:4px}
 #apBody{min-height:var(--rm-q1)}
+/* While the quiz script is still on its way: seven quiet rows where the seven answers will stand. Nothing moves. */
+#apBody:not(:has(.ap-screen,noscript p))::before{content:"";display:block;height:52px;transform:translateY(calc(var(--rm-q1) - 412px));border-radius:var(--k-r-md);background:var(--k-well);box-shadow:0 60px 0 var(--k-well),0 120px 0 var(--k-well),0 180px 0 var(--k-well),0 240px 0 var(--k-well),0 300px 0 var(--k-well),0 360px 0 var(--k-well)}
 /* phones and tablets: after an answer the engine brings the quiz to 12px below the top of the screen. The quiz
    keeps a screen of height from the start, so the sections below are never in view while it changes. */
 @media (max-width:959px){

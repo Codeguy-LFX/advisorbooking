@@ -31,11 +31,13 @@
   /* The engine moves the progress bar by setting a width, which jumps. This mirrors that width onto a copy of
      the fill as a transform, so the bar glides (260ms) and only a transform ever animates. */
   if (!bar) return;
-  var track = bar.parentNode, fill = d.createElement('div');
+  var track = bar.parentNode, fill = d.createElement('div'), cnt = d.getElementById('apCount');
   fill.className = 'rm-fill';
-  function sync() { fill.style.transform = 'scaleX(' + (parseFloat(bar.style.width) || 0) / 100 + ')'; }
+  /* Follow the step the count shows ("Step 2 of 6"), so the bar steps back with Previous; the engine's own bar never does. */
+  function sync() { var m = cnt && /(\d+)\D+(\d+)/.exec(cnt.textContent || ''), w = m && +m[2] ? 100 * m[1] / m[2] : (parseFloat(bar.style.width) || 0); fill.style.transform = 'scaleX(' + Math.min(100, w) / 100 + ')'; }
   sync();
   track.appendChild(fill);
   track.classList.add('rm-glide');
   new MutationObserver(sync).observe(bar, { attributes: true, attributeFilter: ['style'] });
+  if (cnt) new MutationObserver(sync).observe(cnt, { childList: true, characterData: true, subtree: true });
 })();
