@@ -216,3 +216,7 @@
 .rm-foot .k-legal__links{gap:0 8px;margin-bottom:0}
 .rm-foot .k-legal__links a{padding:14px 12px;font-size:16px;line-height:24px}
 .rm-foot .k-legal__disc{margin-top:4px;font-size:14px}
+
+/* the founder now stands above the FAQ, on the light page */
+.rm-sec--rule.rm-founder{padding-bottom:clamp(56px,6vw,88px)}
+.rm-sec--rule .rm-photo img{box-shadow:0 0 0 1px var(--k-line),0 24px 48px -24px rgba(10,30,22,.35)}
