@@ -19,7 +19,7 @@
 /* 2. FIRST SCREEN
    --rm-q1 is the height of the first question (heading, helper line, seven 52px answers). The quiz keeps it
    from the first paint, so nothing moves when the engine draws the question or when a shorter one follows. */
-.rm-hero{--k-glow-top:-640px;--rm-q1:486px;--rm-top:clamp(24px,calc(50vh - 310px),120px);--rm-pad:24px;min-height:100vh;min-height:100svh}
+.rm-hero{--k-glow-top:-640px;--rm-q1:486px;--rm-top:clamp(24px,calc(50vh - 310px),120px);--rm-pad:24px;}
 .rm-cols--hero{row-gap:0}
 .rm-copy{padding-top:calc(16px + env(safe-area-inset-top,0px))}
 .rm-brand{display:flex;width:max-content}
@@ -47,9 +47,7 @@
 #apBody:not(:has(.ap-screen,noscript p))::before{content:"";display:block;height:52px;transform:translateY(calc(var(--rm-q1) - 412px));border-radius:var(--k-r-md);background:var(--k-well);box-shadow:0 60px 0 var(--k-well),0 120px 0 var(--k-well),0 180px 0 var(--k-well),0 240px 0 var(--k-well),0 300px 0 var(--k-well),0 360px 0 var(--k-well)}
 /* phones and tablets: after an answer the engine brings the quiz to 12px below the top of the screen. The quiz
    keeps a screen of height from the start, so the sections below are never in view while it changes. */
-@media (max-width:959px){
-  .rm-book{min-height:calc(100vh - 12px);min-height:min(calc(100svh - 12px),760px)}
-}
+
 
 /* the quiz in the kit's compact rows: 52px answers 8px apart, a 26px question */
 .rm-quiz .ap-q{font-size:26px;line-height:30px;letter-spacing:-.035em}
@@ -220,3 +218,7 @@
 /* the founder now stands above the FAQ, on the light page */
 .rm-sec--rule.rm-founder{padding-bottom:clamp(56px,6vw,88px)}
 .rm-sec--rule .rm-photo img{box-shadow:0 0 0 1px var(--k-line),0 24px 48px -24px rgba(10,30,22,.35)}
+
+/* the gap between the first screen and the next section: one section's padding, no more */
+.rm-hero{padding-bottom:clamp(8px,2vw,24px)}
+.rm-book{padding-bottom:clamp(16px,3vw,32px)}
