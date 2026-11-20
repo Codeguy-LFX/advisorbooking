@@ -36,6 +36,8 @@
 body.in-frame .header,body.in-frame .legal-line{display:none}
 body.in-frame .booked{min-height:0;padding:16px 0}
 body.in-frame .booked__card{box-shadow:none}
+.booked>.container{min-width:0}
+#bookedTo{overflow-wrap:break-word;overflow-wrap:anywhere}
 </style>
 </head>
 <body>
@@ -156,6 +158,14 @@ body.in-frame .booked__card{box-shadow:none}
     return;
   }
   /* Opened as a full page, or framed by another site (then the parent cannot receive it): report from here. */
+
+  /* Nothing says a booking happened: no details forwarded in the address, no saved request in this browser, and the
+     visitor was not sent here by the scheduler or from one of our own pages. That is a typed address, a link preview or a
+     crawler: show the page but report nothing (no CRM record, no GTM event, no ad conversion). */
+  var hasDetail = Object.keys(qi).some(function (k) { return !!qi[k] && !/^(utm|fbclid|gclid|gbraid|wbraid|msclkid|ttclid|lifatid)/.test(k); });
+  var ref = String(document.referrer || '');
+  var sentHere = /^https?:\/\/([^\/?#]+\.)?iclosed\.io([:\/?#]|$)/i.test(ref) || ref.indexOf(location.origin + '/') === 0;
+  if (!hasDetail && !ap && !lp && !sentHere) return;
 
   /* Opened as a full page (iClosed sends the whole window here): report the booking once, not again on a refresh. */
   var seenKey = 'ab_booked_seen';

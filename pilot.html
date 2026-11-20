@@ -64,10 +64,9 @@ window.AB_LP = {
         <p class="lp-hero__sub2">For independent RIAs with <span class="nowrap">$50M to $250M AUM</span></p>
         <p class="lp-rate"><strong>Founding rate: $5,000 every 4 weeks.</strong> No per-meeting fees.</p>
       </div>
-      <!-- Video slot, empty for now. assets/lp.js removes the slot (and nothing else) while LP.VSL_OPENER_URL and
-           LP.VSL_OPENER_EMBED_HTML are both empty; the headline, description and CTA stay. Paste a video URL or
-           embed into lp.js later and the slot comes back. -->
-      <div class="lp-vsl" id="vslOpener"></div>
+      <!-- No video slot while there is no video: an empty slot showed as a black box until assets/lp.js removed it.
+           To add a video, put a div with class "lp-vsl" and id "vslOpener" back on this line AND set
+           LP.VSL_OPENER_URL or LP.VSL_OPENER_EMBED_HTML in assets/lp.js. -->
       <div class="lp-hero__desc">
         <!-- NEW COPY: built from the home page lead. .emk = a fact (black bold), .em = the one payoff (green). -->
         <p><b class="emk">One RIA. One pipeline system.</b> We build and run your outbound email, LinkedIn, list creation and reactivation so your team spends their time <b class="em">speaking to new clients, not chasing cold leads.</b></p>

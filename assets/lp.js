@@ -13,7 +13,7 @@
      (Calendly URL, GHL webhook, pixel IDs, email) stay in config.js.
      ============================================================ */
   var LP = {
-    // GoHighLevel inbound webhook. Every stage (contact, qualified/disqualified/low_intent, booked) POSTs here as JSON.
+    // GoHighLevel inbound webhook. Every stage (contact, qualified/disqualified/low_intent, booked) is a form-encoded POST.
     // Empty (the config.js default) = nothing is sent; the visitor still books.
     WEBHOOK_URL: AB.ghlWebhookUrl || '',
     // Stamped on every payload so a CRM record can be traced to the page build that sent it.
@@ -37,8 +37,9 @@
     // sees them on the booking. The visitor can edit or clear it.
     PREFILL_NOTES: true,
 
-    // Video slot. Empty (both) = the slot and nothing else is removed; the headline, description and CTA stay.
-    // Paste a YouTube/Vimeo/Wistia/.mp4 URL or a full player embed (single string) to bring the video back.
+    // Video slot. Empty (both) = no video; pilot.html and meetings.html ship without the #vslOpener div.
+    // To bring the video back: paste a YouTube/Vimeo/Wistia/.mp4 URL or a full player embed (single string) here
+    // AND re-add the div with class "lp-vsl" and id "vslOpener" after .lp-hero__copy in both pages.
     VSL_OPENER_URL: '',
     VSL_OPENER_EMBED_HTML: '',
 
@@ -105,6 +106,17 @@
   function cookie(n) { var m = doc.cookie.match('(?:^|; )' + n + '=([^;]*)'); return m ? decodeURIComponent(m[1]) : ''; }
   function announce(msg) { var l = $('live'); if (!l) return; l.textContent = ''; setTimeout(function () { l.textContent = msg; }, 40); }
   function focusEl(el) { if (!el) return; try { el.focus({ preventScroll: true }); } catch (e) { try { el.focus(); } catch (e2) {} } }
+  /* The form is far taller than the panel that replaces it, so after the swap the card's top is left above the screen.
+     Bring it back to just under the nav. */
+  function cardIntoView() {
+    var c = $('book'); if (!c) return;
+    var nav = $('nav') || doc.querySelector('.header');
+    var off = (nav ? Math.max(0, nav.getBoundingClientRect().bottom) : 64) + 12;
+    var top = c.getBoundingClientRect().top;
+    if (top >= off) return;
+    var y = Math.max(0, Math.round(top + (window.pageYOffset || 0) - off));
+    try { window.scrollTo({ top: y, behavior: REDUCED ? 'auto' : 'smooth' }); } catch (e) { window.scrollTo(0, y); }
+  }
   function uuid() {
     try { if (window.crypto && typeof window.crypto.randomUUID === 'function') return window.crypto.randomUUID(); } catch (e) {}
     return 'ab-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 12);
@@ -183,7 +195,7 @@
   }
   function wipe() { try { localStorage.removeItem(KEY); } catch (e) {} }
 
-  /* ---------- webhook (JSON to the GHL inbound webhook, site.js pattern, per-stage dedupe) ---------- */
+  /* ---------- webhook (form-encoded POST to the GHL inbound webhook, per-stage dedupe) ---------- */
   var attemptedPosts = Object.create(null);
   function consentText() {
     var l = $('consentText');
@@ -215,26 +227,19 @@
     if (extra) for (k in extra) if (Object.prototype.hasOwnProperty.call(extra, k)) p[k] = extra[k];
     return p;
   }
+  /* Form-encoded POST, the same as assets/funnel.js: a "simple" cross-site request (no preflight), so it is delivered
+     even though the CRM sends no CORS headers, and sendBeacon lets it finish while the page changes. A nested value
+     (the booking details) goes as one JSON string. */
   function send(st, extra) {
     var url = LP.WEBHOOK_URL;
-    if (!url || typeof fetch !== 'function') return;
-    if (!sid) return;
+    if (!url || !sid) return;
     var key = sid + ':' + st;
     if (attemptedPosts[key]) return;
     attemptedPosts[key] = true;
-    var body = JSON.stringify(payload(st, extra));
-    var controller = typeof AbortController === 'function' ? new AbortController() : null;
-    var timer = controller ? setTimeout(function () { controller.abort(); }, WEBHOOK_TIMEOUT_MS) : null;
-    function done() { if (timer) clearTimeout(timer); }
-    try {
-      fetch(url, { method: 'POST', keepalive: true, body: body, headers: { 'Content-Type': 'application/json' }, signal: controller ? controller.signal : undefined })
-        .then(done).catch(function (err) {
-          done();
-          if (err && err.name === 'AbortError') return;
-          /* CORS or network failure: resend as an opaque request. The UI never waits on this. */
-          try { fetch(url, { method: 'POST', mode: 'no-cors', keepalive: true, body: body }).catch(function () {}); } catch (e) {}
-        });
-    } catch (e) {}
+    var P = payload(st, extra), body;
+    try { body = new URLSearchParams(); Object.keys(P).forEach(function (k) { var v = P[k]; body.append(k, v === undefined || v === null ? '' : (typeof v === 'object' ? JSON.stringify(v) : String(v))); }); } catch (e) { return; }
+    try { if (navigator.sendBeacon && navigator.sendBeacon(url, body)) return; } catch (e) {}
+    try { fetch(url, { method: 'POST', mode: 'no-cors', keepalive: true, body: body }).catch(function () {}); } catch (e) {}
   }
 
   /* ---------- video slot (empty for now: the slot is removed; set LP.VSL_OPENER_URL to bring it back) ---------- */
@@ -463,6 +468,7 @@
       exitEl.hidden = false; exitEl.classList.add('show');
       announce(E.title + ' ' + E.body);
       focusEl($('exitH'));
+      if (!immediate) cardIntoView();
     };
     if (immediate || REDUCED) { finish(); return; }
     glass.style.transition = 'opacity .3s, transform .3s'; glass.style.opacity = '0'; glass.style.transform = 'scale(.98)';
@@ -484,6 +490,7 @@
       announce('Calendar unlocked. Pick a time that works.');
       focusEl($('schedHi'));
       openScheduler();
+      if (!immediate) cardIntoView();
     };
     if (immediate || REDUCED) { finish(); return; }
     glass.style.transition = 'opacity .3s, transform .3s'; glass.style.opacity = '0'; glass.style.transform = 'scale(.98)';
@@ -695,7 +702,8 @@
         extra.calendly_event_uri = (p.event && p.event.uri) || '';
         extra.calendly_invitee_uri = (p.invitee && p.invitee.uri) || '';
       } else if (d.payload && d.payload.forwarded) {
-        extra.booking = d.payload.forwarded;   /* what iClosed forwarded to /booked: event, host, time zone, UTMs */
+        extra.booking = d.payload.forwarded;   /* what iClosed forwarded to /booked: event, host, time zone, UTMs (sent as one JSON string) */
+        extra.event_start_time = d.payload.event_start_time || ''; extra.event_timezone = d.payload.event_timezone || ''; extra.event_name = d.payload.event_name || '';
       }
       send('booked', extra);
       if (!botFlag && tier === 'qualified') {
@@ -708,6 +716,7 @@
       bookedFlag = true; stage = 'booked'; answers = {};   // keep only the first name; drop everything else typed
       save();
       showBooked(firstName);
+      cardIntoView();
     });
   }
   /* Labels beside the calendar come from config.js (event name and length). */
@@ -784,6 +793,7 @@
       send('exit_book_anyway');                          // flagged in the CRM: booked despite the budget answer
       stage = 'answered_exit'; save();
       hideExit(); unlock(true);
+      cardIntoView();
     });
     $('exitBack').addEventListener('click', function () {
       hideExit();

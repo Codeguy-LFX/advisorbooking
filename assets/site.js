@@ -147,26 +147,15 @@
     }
   }
 
-  /* Webhook (used only for the "booked" event in v5) ----------------------- */
-  function postWebhook(payload) {
-    var url = CFG.ghlWebhookUrl;
-    if (!url || typeof fetch !== 'function') return;
-    var body = JSON.stringify(payload);
-    var controller = typeof AbortController === 'function' ? new AbortController() : null;
-    var timer = controller ? setTimeout(function () { controller.abort(); }, WEBHOOK_TIMEOUT_MS) : null;
-    function done() { if (timer) clearTimeout(timer); }
-    try {
-      fetch(url, {
-        method: 'POST', keepalive: true, body: body,
-        headers: { 'Content-Type': 'application/json' },
-        signal: controller ? controller.signal : undefined
-      }).then(done).catch(function (err) {
-        done();
-        if (err && err.name === 'AbortError') return;
-        /* CORS or network failure: resend as an opaque request. The UI never waits on this. */
-        try { fetch(url, { method: 'POST', mode: 'no-cors', keepalive: true, body: body }).catch(function () {}); } catch (e) { /* ignore */ }
-      });
-    } catch (e) { /* ignore */ }
+  /* Webhook (used only for the "booked" event in v5). Form-encoded POST, the same as assets/funnel.js: a "simple"
+     cross-site request (no preflight), so it is delivered even though the CRM sends no CORS headers, and sendBeacon
+     lets it finish while the page changes. A nested value goes as one JSON string. */
+  function postWebhook(P) {
+    var url = CFG.ghlWebhookUrl, body;
+    if (!url) return;
+    try { body = new URLSearchParams(); Object.keys(P).forEach(function (k) { var v = P[k]; body.append(k, v === undefined || v === null ? '' : (typeof v === 'object' ? JSON.stringify(v) : String(v))); }); } catch (e) { return; }
+    try { if (navigator.sendBeacon && navigator.sendBeacon(url, body)) return; } catch (e) { /* ignore */ }
+    try { fetch(url, { method: 'POST', mode: 'no-cors', keepalive: true, body: body }).catch(function () {}); } catch (e) { /* ignore */ }
   }
 
   /* 5. Calendly ----------------------------------------------------------- */
@@ -339,7 +328,15 @@
       if (typeof window.lintrk === 'function' && CFG.linkedinConversionId) {
         try { window.lintrk('track', { conversion_id: CFG.linkedinConversionId }); } catch (err) { /* ignore */ }
       }
-      postWebhook({ event: 'booked', scheduler: fromCalendly ? 'calendly' : 'iclosed', booking: (fromBookedPage && d.payload && d.payload.forwarded) || null, source: source, utm: utm, page: location.pathname, ts: new Date().toISOString() });
+      /* One flat record, like the /L1 booking pages send: the /booked page's own record when iClosed showed it inside the
+         frame (name, email, phone, start time, time zone, campaign tags, forwarded_json), plus where it was booked. */
+      var bp = (fromBookedPage && d.payload) || null, rec = {};
+      if (bp) Object.keys(bp).forEach(function (k) { if (k !== 'forwarded') rec[k] = bp[k]; });
+      rec.stage = 'booked'; rec.event = 'booked'; rec.scheduler = fromCalendly ? 'calendly' : 'iclosed';
+      if (source || !rec.source) rec.source = source || 'book';
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'].forEach(function (k) { if (!rec[k]) rec[k] = utm[k] || ''; });
+      rec.page = location.pathname; rec.ts = new Date().toISOString();
+      postWebhook(rec);
     });
   }
 

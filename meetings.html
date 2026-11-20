@@ -48,10 +48,9 @@ if (/claudeusercontent\.com$|\.claude\.ai$/.test(location.hostname)) window.__AB
         <h1 class="display h1">Want HNW individuals and business owners booked on <span class="ul">financial advisors&rsquo; calendars?</span></h1>
         <p class="lp-hero__sub2">For independent RIAs with <span class="nowrap">$50M to $250M AUM</span></p>
       </div>
-      <!-- Video slot, empty for now. assets/lp.js removes the slot (and nothing else) while LP.VSL_OPENER_URL and
-           LP.VSL_OPENER_EMBED_HTML are both empty; the headline, description and CTA stay. Paste a video URL or
-           embed into lp.js later and the slot comes back. -->
-      <div class="lp-vsl" id="vslOpener"></div>
+      <!-- No video slot while there is no video: an empty slot showed as a black box until assets/lp.js removed it.
+           To add a video, put a div with class "lp-vsl" and id "vslOpener" back on this line AND set
+           LP.VSL_OPENER_URL or LP.VSL_OPENER_EMBED_HTML in assets/lp.js. -->
       <div class="lp-hero__desc">
         <!-- NEW COPY: built from the home page lead. .emk = a fact (black bold), .em = the one payoff (green). -->
         <p>Advisor Booking is built for <b class="emk">independent RIAs with 2 to 10 advisors.</b> We find HNW individuals and business owners who fit your firm and reach out by email and LinkedIn with messages your compliance officer approves. When someone says yes, <b class="em">we put the first meeting on the financial advisor&rsquo;s calendar. You just take the meeting.</b></p>

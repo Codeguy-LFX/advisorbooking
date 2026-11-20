@@ -130,10 +130,13 @@
       if (!F.PREFILL) return;
       F.PREFILL_KEYS.forEach(function (k) {
         var v = String(pre[k] || '').trim().slice(0, 200);
-        if (!v || S.answers[k]) return;
+        if (!v) return;
+        /* A newer, different email from a lander's email box replaces the saved one (a corrected typo). */
+        if (S.answers[k] && !(k === 'email' && pre.at && pre.at > (S.prefill_at || 0))) return;
         if (k === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return;
-        S.answers[k] = v;
+        S.answers[k] = v; if (S.typed) delete S.typed[k];
       });
+      if (pre.at && pre.at > (S.prefill_at || 0)) S.prefill_at = pre.at;
     } catch (e) {}
   })();
   function save() { S.form_version = F.FORM_VERSION; S.state_version = SVER; try { if (STORE) STORE.setItem(F.STORE_KEY, JSON.stringify(S)); } catch (e) {} }
@@ -231,6 +234,9 @@
 
   /* ---------- rendering ---------- */
   var body = $('apBody'), bar = $('apBar'), count = $('apCount'), back = $('apBack'), meta = $('apMeta');
+  /* A double-click or double-tap must not also answer the next screen (or tick its consent box): clicks are ignored for
+     half a second after a screen is shown (never longer, even if the device clock steps backwards). */
+  var shownAt = 0; if (body) body.addEventListener('click', function (e) { var d = Date.now() - shownAt; if (d >= 0 && d < 500) { e.preventDefault(); e.stopPropagation(); } }, true);
   function counted(i) { var n = 0; for (var k = 0; k < i; k++) if (Q[k].type !== 'loader') n++; return n; }
   var total = F.PROGRESS_TOTAL || counted(Q.length);
   var QF = F.LAYOUT === 'qf' || doc.body.classList.contains('qf');
@@ -262,7 +268,7 @@
     screen.appendChild(q.type === 'choice' ? renderChoice(q, i) : renderFields(q, i));
     if (q.note) screen.appendChild(el('div', { class: 'ap-note', html: q.note }));
     if (QF && i > 0) screen.appendChild(prevBtn());
-    body.innerHTML = ''; body.appendChild(screen);
+    body.innerHTML = ''; body.appendChild(screen); shownAt = Date.now();
     if (focus !== false) {
       if (QF) { toTop(); focusEl(h); }   // heading only: never autofocus a field
       else { focusEl(h); keepInView(); }
@@ -288,7 +294,7 @@
   function renderChoice(q, i) {
     var wrap = el('div', { class: 'ap-opts' + (q.options.length === 2 && !q.multi ? ' ap-opts--2' : ''), role: 'group', 'aria-labelledby': 'apQ' });
     var tap = !q.multi && (q.advance || F.ADVANCE) === 'tap';
-    var picked = q.multi ? (S.answers[q.id] || []).slice() : (S.answers[q.id] ? [S.answers[q.id]] : []);
+    var picked = q.multi ? (S.answers[q.id] || []).slice() : (S.answers[q.id] === undefined || S.answers[q.id] === null || S.answers[q.id] === '' ? [] : [S.answers[q.id]]);
     q.options.forEach(function (opt, n) {
       var val = optValue(opt);
       var on = picked.indexOf(val) > -1;
@@ -358,7 +364,7 @@
         ? el('textarea', { id: 'ap-' + f.id, rows: '4', placeholder: f.placeholder || '' })
         : el('input', { type: f.type === 'url' ? 'text' : (f.type || 'text'), id: 'ap-' + f.id, autocomplete: f.autocomplete || 'off', placeholder: f.placeholder || '', inputmode: f.type === 'url' ? 'url' : null });
       if (f.type === 'tel') { input.setAttribute('inputmode', 'tel'); input.addEventListener('input', function () { input.value = phoneFmt(input.value); }); }
-      input.value = S.answers[f.id] || '';
+      input.value = S.typed && typeof S.typed[f.id] === 'string' ? S.typed[f.id] : (S.answers[f.id] || '');
       // qf: the label becomes the placeholder (LendFax shows "First Name", "Email Address" inside the box).
       var srOnly = f.srLabel || (QF && !f.showLabel);
       if (QF && !f.placeholder && !f.srLabel) input.setAttribute('placeholder', String(f.label).replace(/<[^>]+>/g, '') + (f.optional ? ' (optional)' : ''));
@@ -384,6 +390,10 @@
       form.addEventListener('input', relock); form.addEventListener('change', relock);
       relock();   // before the screen is shown, so the button never flashes between states
     }
+    /* Keep what has been typed, so Previous, Back or a reload does not empty the form. It is kept apart from the answers
+       (S.typed, this browser only): the booking pages and /booked read S.answers as what the lead actually submitted. */
+    var keep = function () { var T = S.typed || (S.typed = {}); (q.fields || []).forEach(function (f) { if (f.type === 'checkbox') return; var x = form.querySelector('#ap-' + f.id); if (x) T[f.id] = String(x.value || '').trim(); }); save(); };
+    form.addEventListener('input', keep); form.addEventListener('change', keep);
     if (q.fine) form.appendChild(el('p', { class: 'lp-priv', html: q.fine }));
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -408,7 +418,7 @@
         var first = form.querySelector('.invalid input, .invalid textarea'); if (first) first.focus();
         var msg = form.querySelector('.invalid .lp-err'); announce(msg ? msg.textContent : 'Check the highlighted field.'); return;
       }
-      Object.keys(vals).forEach(function (k) { S.answers[k] = vals[k]; });
+      Object.keys(vals).forEach(function (k) { S.answers[k] = vals[k]; }); delete S.typed;
       (q.fields || []).forEach(function (f) {
         if (f.type === 'checkbox') { var l = $('apl-' + f.id); S.consent_text = l ? (l.innerText || l.textContent || '').replace(/\s+/g, ' ').trim() : ''; S.consent_at = vals[f.id] ? new Date().toISOString() : ''; }
       });
@@ -469,7 +479,7 @@
     });
     screen.appendChild(list);
     screen.appendChild(el('div', { class: 'sr-only', 'aria-live': 'polite', id: 'apLoaderLive' }));
-    body.innerHTML = ''; body.appendChild(screen);
+    body.innerHTML = ''; body.appendChild(screen); shownAt = Date.now();
     if (QF) toTop();
     var beat = q.beat_ms || 900, minMs = q.min_ms || beat * stages.length, t0 = Date.now(), at = 0;
     function paint() {
@@ -600,7 +610,10 @@
   var start = Math.max(0, Math.min(S.step || 0, Q.length - 1, firstOpen()));
   if (Q[start].type === 'loader') start = Math.min(start + 1, Q.length - 1);   // a refresh mid-loader resumes after it
   /* One history entry per screen up to the current one, so Back always goes to the previous screen (never off the site). */
-  history.replaceState({ ap: 0 }, '');
-  for (var j = 1; j <= start; j++) history.pushState({ ap: j }, '');
+  var hs0 = null; try { hs0 = history.state; } catch (e) {}
+  if (!(hs0 && hs0.ap === start)) {   // a reload already has its entries: building them again doubled the Back presses
+    history.replaceState({ ap: 0 }, '');
+    for (var j = 1; j <= start; j++) history.pushState({ ap: j }, '');
+  }
   render(start, false);
 })();
