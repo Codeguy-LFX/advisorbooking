@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pick a time for your call | Advisor Booking</title>
+<meta name="description" content="Pick a time for your 20-minute call with Advisor Booking.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../../../assets/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../../assets/fonts/geist.css">
+<link rel="stylesheet" href="../../assets/kit.css">
+<link rel="stylesheet" href="../../assets/route-a.css">
+<script>
+/* No font flicker: the first paint waits until Geist (embedded in geist.css) and Geist Mono are ready, so no line
+   of text is ever set twice. A few milliseconds as a rule, 300 at most. Without JavaScript nothing is held back. */
+(function (d) { var h = d.documentElement, t; if (!d.fonts || !d.fonts.load || !window.Promise) return;
+  function go() { clearTimeout(t); h.classList.remove('ra-wait'); }
+  h.classList.add('ra-wait'); t = setTimeout(go, 300);
+  Promise.all([d.fonts.load('500 16px Geist'), d.fonts.load('500 12px "Geist Mono"')]).then(go, go); })(document);
+</script>
+<link rel="preconnect" href="https://app.iclosed.io">
+</head>
+<body>
+<div class="ra-stage k-glow">
+  <header class="k-nav k-nav--flow ra-nav ra-nav--book">
+    <div class="k-nav__pill">
+      <span class="k-brand k-brand--full"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect class="k-mb" x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect class="k-mp" x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect class="k-mp" x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect class="k-mp" x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span>
+    </div>
+  </header>
+  <main class="ra-main ra-main--book" id="main">
+    <div class="ra-book">
+      <p class="k-eyebrow ra-eyebrow">Pipeline Audit</p>
+      <h1 class="k-q ra-book__h" id="bookH">Pick a time.</h1>
+      <script>
+      /* Greets by first name before the heading is painted. Reads this preview's own saved answers. */
+      (function () { try { var s = JSON.parse(localStorage.getItem('ab_preview_a') || 'null'), f = String((s && s.answers && s.answers.first) || '').trim().split(/\s+/)[0]; if (f) document.getElementById('bookH').textContent = 'Pick a time, ' + f + '.'; } catch (e) {} })();
+      </script>
+      <p class="k-lead ra-book__sub">Your first step is a 20-minute call to see if your firm is a fit.</p>
+      <section class="k-cal ra-cal" id="calendar" aria-label="Pick a time for your call">
+        <header class="k-cal__bar ra-host">
+          <div class="k-person">
+            <img class="k-person__photo" src="../../../assets/nick-de-jesus.jpg" width="48" height="48" alt="Photo of Nick De Jesus">
+            <div class="k-person__body">
+              <p class="k-person__name">Nick De Jesus</p>
+              <p class="k-person__meta"><span class="k-pill">20 min</span><span class="k-pill k-pill--muted">Google Meet</span></p>
+            </div>
+          </div>
+        </header>
+        <div class="k-cal__body">
+          <div class="k-cal__skel"><p class="k-cal__note">Loading the calendar. If it does not appear, email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will send you times.</p></div>
+          <div class="k-cal__mount"></div>
+        </div>
+        <p class="k-cal__foot"><a id="calOpen">Calendar not showing? Open it here.</a></p>
+      </section>
+      <section class="ra-cover" aria-labelledby="coverH">
+        <h2 class="k-mono ra-cover__h" id="coverH">What we cover on the call</h2>
+        <ol class="ra-cover__list">
+          <li><span class="k-tag" aria-hidden="true">01</span><span>We look at your ideal client and your list.</span></li>
+          <li><span class="k-tag" aria-hidden="true">02</span><span>We look at your advisors’ time, and whether your firm has run outreach before.</span></li>
+          <li><span class="k-tag" aria-hidden="true">03</span><span>Then we tell you if this will work for your firm or not.</span></li>
+        </ol>
+      </section>
+    </div>
+  </main>
+</div>
+<footer class="k-legal k-legal--light ra-foot">
+  <nav class="k-legal__links" aria-label="Footer"><a href="../../../privacy.html" target="_blank" rel="noopener">Privacy Policy</a><a href="../../../terms.html" target="_blank" rel="noopener">Terms of Service</a></nav>
+  <p class="k-legal__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
+</footer>
+<p class="k-preview-note">Preview. This calendar is live: a booking here is real.</p>
+<script src="../../../assets/config.js"></script>
+<script>
+/* Preview: no ad or analytics tag is loaded and nothing is posted to the CRM from this page. */
+(function (c) { c.ghlWebhookUrl = ''; c.gtmId = ''; c.metaPixelId = ''; c.metaPixelLeadId = ''; })(window.AB_CONFIG = window.AB_CONFIG || {});
+</script>
+<script>
+/* The production booking logic (L1/Q/index.html): the iClosed widget, prefilled with the lead's name, email, phone
+   and utm tags, with an 8 second fallback to a plain frame. It reads this preview's own saved answers. Left out on
+   purpose: gtm.js, the Meta pixel and the CRM post. */
+(function () {
+  'use strict';
+  var CFG = window.AB_CONFIG || {}, LABEL = 'q';
+  var st = null; try { st = JSON.parse(localStorage.getItem('ab_preview_a') || 'null'); } catch (e) {}
+  if (st && st.route === 'dq') LABEL = 'dq';
+  var a = (st && st.answers) || {};
+  var utm = {}; try { utm = JSON.parse(sessionStorage.getItem('ab_utm') || '{}') || {}; } catch (e) {}
+  var base = String(CFG.iclosedUrlFit5 || CFG.iclosedUrl || '').trim(), url = '';
+  try {
+    var u = new URL(base);
+    Object.keys(utm).forEach(function (k) { if (k.indexOf('utm_') === 0) u.searchParams.set(k, utm[k]); });
+    var d = String(a.phone || '').replace(/\D/g, ''); if (d.length === 11 && d.charAt(0) === '1') d = d.slice(1);
+    var nm = [a.first, a.last].filter(Boolean).join(' ').trim();
+    if (nm) u.searchParams.set('iclosedName', nm);
+    if (a.first) u.searchParams.set('iclosedFirstName', String(a.first).trim());
+    if (a.last) u.searchParams.set('iclosedLastName', String(a.last).trim());
+    if (a.email) u.searchParams.set('iclosedEmail', a.email);
+    if (d.length === 10) u.searchParams.set('iclosedPhone', '+1' + d);
+    if (!u.searchParams.get('utm_term')) u.searchParams.set('utm_term', 'preview-a-' + LABEL);   // production: 'L1-' + LABEL
+    url = u.toString();
+  } catch (e) {}
+  var cal = document.getElementById('calendar'), mount = cal.querySelector('.k-cal__mount');
+  if (!url) return;   // no event link in config.js: the notice stays
+  document.getElementById('calOpen').href = url;
+  var w = document.createElement('div'); w.className = 'iclosed-widget'; w.setAttribute('data-url', url); w.setAttribute('title', 'Pick a time for your call'); w.style.width = '100%';
+  mount.appendChild(w);
+  var settled = false, waited = 0, iv;
+  /* A calendar frame is in place: let it take taps, and hide the loading drawing once it has loaded. */
+  function live(f) {
+    cal.classList.add('is-live');
+    var done = function () { cal.classList.add('is-ready'); };
+    f.addEventListener('load', done); setTimeout(done, 3000);
+  }
+  function fallback() {
+    if (settled) return; settled = true; clearInterval(iv);
+    var have = mount.querySelector('iframe'); if (have) { live(have); return; }
+    mount.innerHTML = '';
+    var f = document.createElement('iframe'); f.title = 'Pick a time for your call'; f.src = url; mount.appendChild(f); live(f);
+  }
+  var s = document.createElement('script'); s.async = true; s.src = 'https://app.iclosed.io/assets/widget.js'; s.onerror = fallback; document.body.appendChild(s);
+  iv = setInterval(function () { var f = mount.querySelector('iframe'); if (f) { settled = true; clearInterval(iv); live(f); return; } if ((waited += 250) >= 8000) fallback(); }, 250);
+  /* When the confirmation shows inside the calendar frame, mark the saved answers as booked, so the quiz starts fresh
+     next time. Production also posts the booking to the CRM here; the preview does not. */
+  var bookedOnce = false;
+  window.addEventListener('message', function (e) {
+    var d = e.data || {};
+    if (e.origin !== location.origin || d.event !== 'iclosed.booked' || !d.payload || bookedOnce) return;
+    bookedOnce = true;
+    try { if (st && !st.booked) { st.booked = true; localStorage.setItem('ab_preview_a', JSON.stringify(st)); } } catch (x) {}
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Funnel previews | Advisor Booking</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/fonts/geist.css">
+<link rel="stylesheet" href="assets/kit.css">
+<style>
+/* Presentation page for the owner. Not linked from the site, not indexed. Built on the preview kit. */
+.pv{padding-bottom:96px}
+.pv-top{position:relative;padding:28px 0 8px;isolation:isolate}
+.pv-hero{padding:56px 0 28px;max-width:860px}
+.pv-hero .k-display{font-size:clamp(38px,5.6vw,72px);margin:18px 0 20px}
+.pv-facts{display:grid;gap:12px;margin:36px 0 0;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.pv-fact{padding:18px 20px;border-radius:16px;background:var(--k-surface);box-shadow:0 0 0 1px var(--k-line);font-size:15px;line-height:1.5;color:var(--k-ink-2)}
+.pv-fact b{display:block;font-weight:600;color:var(--k-ink);margin-bottom:2px}
+.pv-route{padding:72px 0 0}
+.pv-route__head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px 40px;margin-bottom:28px}
+.pv-route__head h2{margin:10px 0 10px}
+.pv-route__head p{max-width:56ch;color:var(--k-muted);font-size:17px;line-height:1.55}
+.pv-links{display:flex;flex-wrap:wrap;gap:10px}
+.pv-shots{display:grid;gap:16px;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,2.35fr);align-items:start}
+.pv-shot{margin:0;border-radius:22px;overflow:hidden;background:var(--k-well);box-shadow:var(--shadow-soft)}
+.pv-shot img{display:block;width:100%;height:auto}
+.pv-shot figcaption{padding:10px 14px;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--k-muted);background:var(--k-surface);border-top:1px solid var(--k-line)}
+@media (max-width:860px){.pv-shots{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.pv-shot--wide{grid-column:1 / -1}}
+.pv-night .pv-shot{background:#0a0c0b}
+.pv-block{padding:72px 0 0}
+.pv-block h2{margin:10px 0 14px}
+.pv-block > p{max-width:62ch;color:var(--k-muted);font-size:17px;line-height:1.55}
+.pv-card{margin-top:24px;max-width:760px;border-radius:22px;overflow:hidden;box-shadow:var(--shadow-soft)}
+.pv-card img{display:block;width:100%;height:auto}
+.pv-card__meta{padding:14px 18px;border-top:1px solid var(--k-line);background:var(--k-well)}
+.pv-card__meta b{display:block;font-weight:600;font-size:15px}
+.pv-card__meta span{font-size:13px;color:var(--k-muted)}
+.pv-list{margin:22px 0 0;display:grid;gap:10px;max-width:820px}
+.pv-list li{position:relative;padding:14px 18px 14px 44px;border-radius:14px;background:var(--k-surface);box-shadow:0 0 0 1px var(--k-line);font-size:15.5px;line-height:1.5;color:var(--k-ink-2)}
+.pv-list li::before{content:"";position:absolute;left:18px;top:21px;width:8px;height:8px;border-radius:50%;background:var(--k-accent);box-shadow:0 0 0 4px var(--k-accent-soft)}
+.pv-list b{color:var(--k-ink);font-weight:600}
+.pv-foot{margin-top:72px;padding-top:24px;border-top:1px solid var(--k-line);font-size:13.5px;color:var(--k-muted)}
+</style>
+</head>
+<body>
+<div class="pv">
+  <div class="pv-top k-glow" style="--k-glow-top:-420px">
+    <div class="k-wrap">
+      <header class="k-nav k-nav--flow"><div class="k-nav__pill"><a class="k-brand k-brand--full" href="./" aria-label="Advisor Booking previews"><svg viewBox="0 0 32 32" aria-hidden="true"><rect class="k-mb" x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect class="k-mp" x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect class="k-mp" x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect class="k-mp" x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></a><span class="k-badge">Previews</span></div></header>
+      <div class="pv-hero">
+        <p class="k-eyebrow">For Nick. Not public.</p>
+        <h1 class="k-display">Three ways the quiz and booking page could look.</h1>
+        <p class="k-lead">Each one is a complete, working flow built from your home page's own type, colours and buttons. Your live site is untouched. Open each on your phone, then tell me which one to make live, or which parts to mix.</p>
+      </div>
+      <div class="pv-facts">
+        <p class="pv-fact"><b>Same quiz</b>Every question, answer, consent sentence and legal line is word for word what is live today. Only the look changed.</p>
+        <p class="pv-fact"><b>Nothing is sent</b>The previews send no lead to GoHighLevel and fire no ad pixel.</p>
+        <p class="pv-fact"><b>The calendar is real</b>The booking pages load your live iClosed calendar. Picking a time there books a real call.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="k-wrap">
+    <section class="pv-route" aria-labelledby="ra">
+      <div class="pv-route__head">
+        <div><p class="k-eyebrow">Route A</p><h2 class="k-h2 k-h2--md" id="ra">Continuation</h2><p>The home page simply carries on. Light, calm, one centred column, nothing extra. The safest choice.</p></div>
+        <div class="pv-links"><a class="k-btn k-btn--accent" href="a/">Open the quiz<span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="k-btn k-btn--light" href="a/book/">Booking page<span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
+      </div>
+      <div class="pv-shots">
+        <figure class="pv-shot"><img src="shots/a-phone-quiz.jpg" width="780" height="1328" alt="Route A, a quiz question on a phone" loading="lazy"><figcaption>Quiz, phone</figcaption></figure>
+        <figure class="pv-shot"><img src="shots/a-phone-book.jpg" width="780" height="1328" alt="Route A, the booking page on a phone" loading="lazy"><figcaption>Booking, phone</figcaption></figure>
+        <figure class="pv-shot pv-shot--wide"><img src="shots/a-desktop.jpg" width="1440" height="900" alt="Route A, the quiz on a desktop" loading="lazy"><figcaption>Quiz, desktop</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="pv-route" aria-labelledby="rb">
+      <div class="pv-route__head">
+        <div><p class="k-eyebrow">Route B</p><h2 class="k-h2 k-h2--md" id="rb">Concierge</h2><p>A person is there from the first question. A "Your call" panel shows your photo and fills in with the visitor's answers as they go, then carries those answers onto the booking page. My recommendation.</p></div>
+        <div class="pv-links"><a class="k-btn k-btn--accent" href="b/">Open the quiz<span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="k-btn k-btn--light" href="b/book/">Booking page<span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
+      </div>
+      <div class="pv-shots">
+        <figure class="pv-shot"><img src="shots/b-phone-quiz.jpg" width="780" height="1328" alt="Route B, a quiz question on a phone" loading="lazy"><figcaption>Quiz, phone</figcaption></figure>
+        <figure class="pv-shot"><img src="shots/b-phone-book.jpg" width="780" height="1328" alt="Route B, the booking page on a phone" loading="lazy"><figcaption>Booking, phone</figcaption></figure>
+        <figure class="pv-shot pv-shot--wide"><img src="shots/b-desktop.jpg" width="1440" height="900" alt="Route B, the quiz on a desktop" loading="lazy"><figcaption>Quiz, desktop</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="pv-route pv-night" aria-labelledby="rc">
+      <div class="pv-route__head">
+        <div><p class="k-eyebrow">Route C</p><h2 class="k-h2 k-h2--md" id="rc">Focus</h2><p>After the click the page dims to a dark, focused mode using the dark colours already on your home page. The boldest of the three.</p></div>
+        <div class="pv-links"><a class="k-btn k-btn--accent" href="c/">Open the quiz<span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="k-btn k-btn--light" href="c/book/">Booking page<span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
+      </div>
+      <div class="pv-shots">
+        <figure class="pv-shot"><img src="shots/c-phone-quiz.jpg" width="780" height="1328" alt="Route C, a quiz question on a phone" loading="lazy"><figcaption>Quiz, phone</figcaption></figure>
+        <figure class="pv-shot"><img src="shots/c-phone-book.jpg" width="780" height="1328" alt="Route C, the booking page on a phone" loading="lazy"><figcaption>Booking, phone</figcaption></figure>
+        <figure class="pv-shot pv-shot--wide"><img src="shots/c-desktop.jpg" width="1440" height="900" alt="Route C, the quiz on a desktop" loading="lazy"><figcaption>Quiz, desktop</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="pv-block" aria-labelledby="sc">
+      <p class="k-eyebrow">Link preview</p>
+      <h2 class="k-h2 k-h2--md" id="sc">What people see when you paste your link</h2>
+      <p>Your site has no share image today, so a link pasted into LinkedIn or an email has no picture. This is the card it would show. Every word on it is already on your home page.</p>
+      <div class="pv-card"><img src="share/advisor-booking-share.png" width="1200" height="630" alt="Share card: We fill financial advisors' calendars with business owners." loading="lazy"><div class="pv-card__meta"><b>Advisor Booking | We book first meetings for independent RIAs</b><span>advisorbooking.com</span></div></div>
+    </section>
+
+    <section class="pv-block" aria-labelledby="ok">
+      <p class="k-eyebrow">Needs your OK</p>
+      <h2 class="k-h2 k-h2--md" id="ok">The few words that are new</h2>
+      <p>The quiz wording did not change. The booking page did, because the live one tells people to answer more questions right after they answered six. These lines are taken from what your site already says about the call.</p>
+      <ul class="pv-list">
+        <li><b>Heading:</b> "Pick a time, [first name]." The live page says "Pick a time for your call, [first name]."</li>
+        <li><b>Line under it:</b> "Your first step is a 20-minute call to see if your firm is a fit." Word for word from your home page. It replaces "Answer a few quick questions, then choose a time that works for you."</li>
+        <li><b>Your name and photo,</b> with "20 min" and "Google Meet". No title and no biography. The photo is the one from your mailbox profile. Send a headshot if you want a different one.</li>
+        <li><b>What we cover:</b> your ideal client and your list, your advisors' time and whether your firm has run outreach before, then whether this will work for your firm or not. Shortened from the sentence on your /pilot page.</li>
+        <li><b>Route B only:</b> "Your call", "Your answers so far", "What you told us" and "Your call starts from these answers."</li>
+      </ul>
+    </section>
+
+    <section class="pv-block" aria-labelledby="nx">
+      <p class="k-eyebrow">Before any of this goes live</p>
+      <h2 class="k-h2 k-h2--md" id="nx">What is not done yet</h2>
+      <ul class="pv-list">
+        <li><b>Your pick.</b> One route, or parts of two. Then I wire it to the live quiz address, the CRM and the pixel, and test it again end to end.</li>
+        <li><b>iClosed questions.</b> If the iClosed event still asks its own questions before showing times, switch those off in iClosed. The site already hands it the name, email and phone.</li>
+        <li><b>A real phone.</b> These were built and tested in a desktop browser set to phone sizes. Open them on your own iPhone before deciding.</li>
+      </ul>
+    </section>
+
+    <p class="pv-foot">Preview pages. Not linked from the site and hidden from search engines. Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser.</p>
+  </div>
+</div>
+</body>
+</html>

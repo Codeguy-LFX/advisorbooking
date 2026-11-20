@@ -1,0 +1,130 @@
+/* Advisor Booking preview, route C "Focus" (route-c.css)
+   After the click the page dims to the home page's own night (the FAQ and footer band): one question, centred,
+   with air around it. Layout and night details only. Every colour, radius, type size and easing comes from
+   kit.css, which takes them from index.html. Loaded by /preview/c/ (the quiz) and /preview/c/book/ (booking).
+   Spacing sits on a 4px grid. Nothing here animates: the kit's 220ms screen entrance is the only movement. */
+
+/* 0. FONTS: the page is painted once, with its fonts in place (see the script in each page's head) */
+.rc-wait body{visibility:hidden}
+
+/* 1. STAGE: one full screen of night with a single soft light high on the page (the home hero glow, on dark).
+      The light fades to plain night at the top edge, so the phone's browser bar (theme-color) meets it without a seam.
+      The footer starts below the stage, so a taller or shorter question never moves anything the visitor can see. */
+.rc-stage{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;min-height:100vh;min-height:100svh;
+  /* chosen answer: the accent edge plus a soft green halo */
+  --k-chosen-shadow:0 0 0 1.5px var(--accent-bright),0 0 0 6px rgba(47,191,143,.12),0 20px 44px -18px rgba(47,191,143,.45)}
+.rc-stage::before{content:"";position:absolute;z-index:-1;left:50%;top:-240px;width:min(1360px,230vw);height:800px;transform:translateX(-50%);pointer-events:none;
+  background:linear-gradient(180deg,var(--night),rgba(10,12,11,0)) 0 240px/100% 136px no-repeat,
+    radial-gradient(closest-side,rgba(47,191,143,.19),rgba(47,191,143,.11) 34%,rgba(47,191,143,.04) 62%,rgba(47,191,143,0) 86%)}
+.rc-main{flex:1 0 auto;padding:32px 0 calc(64px + env(safe-area-inset-bottom,0px))}
+@media (min-width:700px){.rc-main{padding:clamp(48px,9vh,88px) 0 96px}}
+
+/* 2. HEADER: the home bar on night, as wide as the answers, so the bar and the cards share both edges.
+      The six dashes at the right are the progress bar (the engine still only sets one width).
+      576px, not the kit's 560: the longest answer ("...Wall Street firm (wirehouse)") then stays on one line. */
+.rc-nav{max-width:576px}
+.rc-nav .k-nav__pill{padding-right:18px}
+.rc-progress{flex:0 0 auto;width:72px}
+.rc-progress .k-progress__track{--k-seg-gap:4px;background:#3a4540} /* a step lighter than --night-line, to show on the bar (2 to 1) */
+@media (min-width:360px){.rc-progress{width:96px}}
+@media (min-width:480px){.rc-progress{width:120px}}
+
+/* 3. THE QUESTION: eyebrow, heading and helper centred, in the home page's eyebrow / h2 / lead order */
+.rc-col{max-width:calc(720px + 2*var(--gutter))}
+.rc-step{display:flex;justify-content:center;min-height:16px;margin:0;line-height:16px}
+.rc-step b{font-weight:500}
+.rc-step:has(#apCount:empty){visibility:hidden}
+.rc-quiz{margin-top:16px}
+.rc-quiz .ap-q,.rc-quiz .ap-sub{text-align:center;margin-inline:auto}
+.rc-quiz .ap-sub{max-width:46ch;text-wrap:balance}
+.rc-quiz .ap-opts,.rc-quiz form{max-width:576px;margin-inline:auto}
+.rc-quiz form{text-align:left}
+.rc-quiz .qf-prev{display:flex;margin:12px auto 0;padding:0 12px}
+.rc-quiz noscript p{max-width:46ch;margin-inline:auto;text-align:center;color:var(--k-muted)}
+.rc-quiz noscript a{color:var(--k-ink-2);text-underline-offset:3px}
+@media (min-width:700px){
+  .rc-quiz{margin-top:20px}
+  .rc-quiz .ap-opts,.rc-quiz form{margin-top:36px}
+  .rc-quiz .qf-prev{margin-top:16px}
+}
+
+/* 4. ANSWERS ON NIGHT: thin night-line edge (kit), a lighter surface on hover, a green tint when chosen.
+      The tint is painted by the kit's own ::before, so only its opacity moves. */
+.rc-quiz .ap-opt > span{position:relative;z-index:1}
+.rc-quiz .ap-opt > span:last-child{text-wrap:pretty}
+.rc-quiz .ap-opt::before{background:rgba(255,255,255,.045)}
+.rc-quiz .ap-opt[aria-pressed=true]::before{background:rgba(47,191,143,.09)}
+/* touch screens have no letter keys: the chip goes and the answer text gets its width (production hides it too) */
+@media (hover:none) and (pointer:coarse){
+  .rc-quiz .ap-key{display:none}
+  .rc-quiz .ap-opt{grid-template-columns:minmax(0,1fr) 20px;padding-left:20px}
+  .rc-quiz .ap-opt::after{grid-column:2} /* the kit puts the check mark in column 3; without the chip it is column 2 */
+}
+
+/* 5. CONTACT SCREEN: the kit fields on night. A browser's autofill paints its own pale background;
+      keep the field on the night surface with light text. */
+.rc-quiz .lp-field input:-webkit-autofill{-webkit-text-fill-color:var(--k-ink);caret-color:var(--k-ink);box-shadow:inset 0 0 0 1px var(--k-field-line),inset 0 0 0 100px var(--k-surface)}
+.rc-quiz .lp-field input:-webkit-autofill:focus{box-shadow:inset 0 0 0 1px var(--k-focus),inset 0 0 0 100px var(--k-surface),0 0 0 3px var(--k-focus)}
+.rc-quiz .lp-field input:autofill{-webkit-text-fill-color:var(--k-ink);caret-color:var(--k-ink);box-shadow:inset 0 0 0 1px var(--k-field-line),inset 0 0 0 100px var(--k-surface)}
+.rc-quiz .lp-field input:autofill:focus{box-shadow:inset 0 0 0 1px var(--k-focus),inset 0 0 0 100px var(--k-surface),0 0 0 3px var(--k-focus)}
+.rc-quiz .lp-field.invalid input:-webkit-autofill{box-shadow:inset 0 0 0 1px var(--k-bad),inset 0 0 0 100px var(--k-surface),0 0 0 2px var(--k-bad)}
+
+/* 6. BOOKING PAGE: the same stage. Heading block centred, then one frame: the host on night, and the
+      calendar on a white card set inside it, like a screen in a dark bezel. */
+.rc-book{text-align:center}
+.rc-book .rc-step{margin-bottom:16px}
+.rc-book__sub{margin:12px auto 0}
+.rc-frame{margin-top:32px;padding:4px;border-radius:24px;background:var(--night-2);text-align:left;
+  box-shadow:0 0 0 1px var(--night-line),0 40px 80px -40px rgba(0,0,0,.9),0 0 140px -60px rgba(47,191,143,.5)}
+.rc-host{display:grid;grid-template-columns:56px minmax(0,1fr);grid-template-areas:"f n" "f m";gap:8px 12px;align-items:center;padding:12px}
+.rc-face{grid-area:f;display:block;width:56px;height:56px;border-radius:50%;overflow:hidden;isolation:isolate;background:var(--k-well);box-shadow:0 0 0 1px var(--night-line)}
+.rc-face img{display:block;width:100%;height:100%;border-radius:0;box-shadow:none;transform:scale(1.55);transform-origin:50% 3%} /* closer on the face */
+.rc-host .k-person__name{grid-area:n;align-self:end;font-size:17px}
+.rc-host .k-person__meta{grid-area:m;align-self:start}
+.rc-host .k-pill{background:var(--k-well)}
+/* the white card: the light tokens again, inside the night scope (the third-party calendar is white) */
+.rc-cal{--k-page:var(--bg);--k-surface:#fff;--k-well:var(--well);--k-ink:var(--ink);--k-ink-2:var(--ink-2);--k-muted:var(--muted);--k-line:var(--line);
+  --k-accent:var(--accent);--k-accent-soft:var(--accent-soft);--k-focus:var(--accent);
+  --k-skel-img:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 56'%3E%3Crect x='4' y='4' width='48' height='48' rx='12' fill='%23f4f6f5'/%3E%3C/svg%3E");
+  border-radius:20px;box-shadow:none;color:var(--ink);color-scheme:light}
+.rc-cal .k-cal__skel{justify-content:center}
+@media (max-width:599px){.rc-cal .k-cal__skel{justify-content:flex-start}}
+.rc-cal:not(.is-live) .k-cal__mount{pointer-events:none} /* until a calendar frame exists, the email link under it takes the tap */
+.rc-cal .k-cal__foot{padding:0 16px}
+.rc-cal .k-cal__foot a{display:inline-block;padding:16px 8px} /* a 52px tap height */
+.rc-cal .k-cal__foot a:not([href]){text-decoration:none}
+.rc-cal .k-cal__foot a.rc-cal__mail{display:block;min-height:52px;padding:0 8px 16px;text-decoration:none;color:var(--k-muted)}
+.rc-cal__mail u{color:var(--k-ink-2);text-underline-offset:3px}
+@media (min-width:600px){
+  .rc-frame{padding:8px;border-radius:28px}
+  .rc-host{grid-template-columns:56px minmax(0,1fr) auto;grid-template-areas:"f n m";padding:12px 16px 12px 12px}
+  .rc-host .k-person__name,.rc-host .k-person__meta{align-self:center}
+}
+@media (min-width:700px){.rc-frame{margin-top:40px}.rc-book .rc-step{margin-bottom:20px}}
+
+/* 7. WHAT WE COVER: three plain lines in night-muted under the calendar */
+.rc-cover{margin-top:40px;text-align:left}
+.rc-cover__h{color:var(--night-muted)}
+.rc-cover__list{display:grid;margin-top:16px}
+.rc-cover__list li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;padding:16px 0;border-top:1px solid var(--night-line);font-size:16px;line-height:24px;color:var(--night-muted);text-wrap:pretty}
+.rc-cover__n{font:500 12px/24px var(--f-mono);letter-spacing:.04em;color:var(--accent-bright)}
+@media (min-width:820px){
+  .rc-cover{margin-top:56px}
+  .rc-cover__list{grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px}
+  .rc-cover__list li{grid-template-columns:minmax(0,1fr);align-content:start;gap:8px;padding:20px 0 0}
+}
+
+/* 8. FOOTER: the home fine print (already night). Links get a 52px tap height. */
+.rc-foot{padding-top:4px}
+.rc-foot .k-legal__links{margin-bottom:0}
+.rc-foot .k-legal__links a{padding:16px 8px}
+
+/* ---- After QA ---- */
+/* The dashes follow the screen shown, so they always agree with the step text (the engine's own bar never steps back). */
+.rc-stage:has(.ap-screen[data-q=firm_type]) #apBar{width:17%!important}
+.rc-stage:has(.ap-screen[data-q=role]) #apBar{width:33%!important}
+.rc-stage:has(.ap-screen[data-q=aum]) #apBar{width:50%!important}
+.rc-stage:has(.ap-screen[data-q=advisors]) #apBar{width:67%!important}
+.rc-stage:has(.ap-screen[data-q=growth]) #apBar{width:83%!important}
+/* Answer cards carry the same edge as the fields, so they read as controls against the night page. */
+.rc-quiz .ap-opts{--k-card-shadow:0 0 0 1px var(--k-field-line),0 10px 30px -12px rgba(0,0,0,.5)}

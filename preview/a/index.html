@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>See if your firm is a fit | Advisor Booking</title>
+<meta name="description" content="A few quick questions. If your firm is a fit, you pick a time for a 20-minute call.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../../assets/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/fonts/geist.css">
+<link rel="stylesheet" href="../assets/kit.css">
+<link rel="stylesheet" href="../assets/route-a.css">
+<script>
+/* No font flicker: the first paint waits until Geist (embedded in geist.css) and Geist Mono are ready, so no line
+   of text is ever set twice. A few milliseconds as a rule, 300 at most. Without JavaScript nothing is held back. */
+(function (d) { var h = d.documentElement, t; if (!d.fonts || !d.fonts.load || !window.Promise) return;
+  function go() { clearTimeout(t); h.classList.remove('ra-wait'); }
+  h.classList.add('ra-wait'); t = setTimeout(go, 300);
+  Promise.all([d.fonts.load('500 16px Geist'), d.fonts.load('500 12px "Geist Mono"')]).then(go, go); })(document);
+</script>
+<!-- Preview, route A "Continuation". The block below is the production quiz (L1/index.html) word for word.
+     Only STORE_KEY, the two ROUTES and the ../ prefix of the privacy and terms links differ. -->
+<script>window.AB_APPLY = {
+ "FORM_VERSION": "ab-L1-2026-11-08e",
+ "SOURCE": "advisorbooking-L1",
+ "STORE_KEY": "ab_preview_a",
+ "CONSENT_TEXT_VERSION": "fit5-calls-texts-2026-11-08c",
+ "ADVANCE": "tap",
+ "LOCK_CONTINUE": "filled",
+ "PREFILL": true,
+ "TRACK_GATE": [
+  {
+   "id": "firm_type",
+   "in": [
+    "independent_ria",
+    "hybrid_ria",
+    "bd_wirehouse"
+   ]
+  },
+  {
+   "id": "aum",
+   "min": 50000000
+  },
+  {
+   "id": "sms_optin",
+   "present": true
+  }
+ ],
+ "QUALIFIED_ROUTE": [
+  "qualified"
+ ],
+ "WEBHOOK_STAGES": [
+  "complete"
+ ],
+ "STATE_VERSION": "ab-L1-state-1",
+ "TRACK": false,
+ "QUESTIONS": [
+  {
+   "id": "firm_type",
+   "type": "choice",
+   "q": "Is your firm a registered investment adviser (RIA)?",
+   "options": [
+    {
+     "label": "Yes, independent",
+     "value": "independent_ria"
+    },
+    {
+     "label": "Yes, hybrid (RIA plus a broker-dealer)",
+     "value": "hybrid_ria"
+    },
+    {
+     "label": "No, I\u2019m with a broker-dealer or a big Wall Street firm (wirehouse)",
+     "value": "bd_wirehouse"
+    },
+    {
+     "label": "I\u2019m not a financial advisor",
+     "value": "not_advisor"
+    }
+   ]
+  },
+  {
+   "id": "role",
+   "type": "choice",
+   "q": "What\u2019s your role at your firm?",
+   "options": [
+    {
+     "label": "I own or lead the firm",
+     "value": "owner"
+    },
+    {
+     "label": "I don\u2019t own or lead the firm",
+     "value": "not_owner"
+    }
+   ]
+  },
+  {
+   "id": "aum",
+   "type": "choice",
+   "q": "What is your firm\u2019s AUM?",
+   "sub": "Your best estimate is fine.",
+   "options": [
+    {
+     "label": "Under $50 Million",
+     "value": 0
+    },
+    {
+     "label": "$50 Million to $100 Million",
+     "value": 50000000
+    },
+    {
+     "label": "$100 Million to $500 Million",
+     "value": 100000000
+    },
+    {
+     "label": "$500 Million to $1 Billion",
+     "value": 500000000
+    },
+    {
+     "label": "$1 Billion to $5 Billion",
+     "value": 1000000000
+    },
+    {
+     "label": "$5 Billion to $10 Billion",
+     "value": 5000000000
+    },
+    {
+     "label": "$10 Billion or more",
+     "value": 10000000000
+    }
+   ]
+  },
+  {
+   "id": "advisors",
+   "type": "choice",
+   "q": "How many financial advisors\u2019 calendars do you need to fill with qualified appointments?",
+   "sub": "Count yourself if you take meetings too.",
+   "options": [
+    {
+     "label": "1 to 2 advisors",
+     "value": 1
+    },
+    {
+     "label": "3 to 5 advisors",
+     "value": 3
+    },
+    {
+     "label": "6 to 24 advisors",
+     "value": 6
+    },
+    {
+     "label": "25 to 49 advisors",
+     "value": 25
+    },
+    {
+     "label": "50 or more advisors",
+     "value": 50
+    }
+   ]
+  },
+  {
+   "id": "growth",
+   "type": "choice",
+   "q": "How much in new assets did your firm bring in over the last 12 months?",
+   "sub": "New money from new and existing clients.<span class=\"ap-emw\"><strong class=\"ap-em\">Don\u2019t count market gains or acquisitions.</strong></span>If you don\u2019t own or lead the firm, answer for your own book of business.",
+   "options": [
+    {
+     "label": "Less than $10M",
+     "value": 0
+    },
+    {
+     "label": "$10M - $25M",
+     "value": 10000000
+    },
+    {
+     "label": "$25M - $50M",
+     "value": 25000000
+    },
+    {
+     "label": "$50M - $100M",
+     "value": 50000000
+    },
+    {
+     "label": "$100M - $250M",
+     "value": 100000000
+    },
+    {
+     "label": "$250M+",
+     "value": 250000000
+    }
+   ]
+  },
+  {
+   "id": "contact",
+   "type": "fields",
+   "q": "What\u2019s the best contact information to reach you?",
+   "sub": "No spam, ever. We don\u2019t sell your information.",
+   "fields": [
+    {
+     "id": "first",
+     "label": "First Name",
+     "autocomplete": "given-name",
+     "half": true,
+     "error": "Enter your first name."
+    },
+    {
+     "id": "last",
+     "label": "Last Name",
+     "autocomplete": "family-name",
+     "half": true,
+     "error": "Enter your last name."
+    },
+    {
+     "id": "email",
+     "label": "Work Email",
+     "type": "email",
+     "autocomplete": "email",
+     "error": "That email does not look right. Check it and try again."
+    },
+    {
+     "id": "phone",
+     "label": "Mobile Number",
+     "type": "tel",
+     "autocomplete": "tel-national",
+     "error": "That phone number does not look right. Check it and try again."
+    },
+    {
+     "id": "sms_optin",
+     "type": "checkbox",
+     "label": "<strong>Yes, you can call and text me.</strong> I agree that De Jesus Ventures LLC may call me, text me, and leave me voicemails at the number above about my call and its services, including with automated dialing technology and prerecorded or artificial voice messages, even if my number is on a federal, state, or company Do Not Call list. Consent is not a condition of purchase. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. See our <a href=\"../../privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> and <a href=\"../../terms.html\" target=\"_blank\" rel=\"noopener\">Terms</a>.",
+     "required": true,
+     "error": "Please check the box to continue."
+    }
+   ],
+   "cta": "Continue",
+   "fine": "By continuing you agree to our <a href=\"../../privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> and <a href=\"../../terms.html\" target=\"_blank\" rel=\"noopener\">Terms</a>."
+  }
+ ],
+ "RULES": [
+  {
+   "route": "dq",
+   "reason": "not_an_advisor",
+   "any": [
+    [
+     "firm_type",
+     "not_advisor"
+    ]
+   ]
+  },
+  {
+   "route": "dq",
+   "reason": "aum_under_50m",
+   "any": [
+    [
+     "aum",
+     0
+    ]
+   ]
+  }
+ ],
+ "DEFAULT_ROUTE": "qualified",
+ "REDIRECT_QUIET": true,
+ "ROUTES": {
+  "qualified": "book/",
+  "dq": "book/"
+ },
+ "LAYOUT": "qf"
+};</script>
+</head>
+<body>
+<div class="ra-stage k-glow">
+  <header class="k-nav k-nav--flow ra-nav">
+    <div class="k-nav__pill">
+      <span class="k-brand k-brand--full"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect class="k-mb" x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect class="k-mp" x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect class="k-mp" x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect class="k-mp" x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span>
+      <p class="k-progress__count ra-count" id="apCount" aria-live="polite"></p>
+    </div>
+  </header>
+  <main class="ra-main" id="main">
+    <div class="k-col">
+      <div class="k-progress k-progress--seg ra-progress" style="--k-steps:6">
+        <div class="k-progress__track" role="progressbar" aria-label="Progress"><div class="k-progress__fill" id="apBar"></div></div>
+      </div>
+      <h1 class="k-eyebrow ra-eyebrow">See if your firm is a fit</h1>
+      <div class="k-quiz k-quiz--labels k-quiz--enter ra-quiz">
+        <div id="apBody"><noscript><p>This form needs JavaScript. Email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will set up your call.</p></noscript></div>
+        <div class="k-hp" aria-hidden="true"><label for="apHp">Website</label><input type="text" id="apHp" name="website" tabindex="-1" autocomplete="off" data-1p-ignore="true" data-lpignore="true"></div>
+        <div class="sr-only" id="apLive" aria-live="polite" aria-atomic="true"></div>
+      </div>
+    </div>
+  </main>
+</div>
+<footer class="k-legal k-legal--light ra-foot">
+  <nav class="k-legal__links" aria-label="Footer"><a href="../../privacy.html" target="_blank" rel="noopener">Privacy Policy</a><a href="../../terms.html" target="_blank" rel="noopener">Terms of Service</a></nav>
+  <p class="k-legal__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
+</footer>
+<p class="k-preview-note">Preview. Nothing here is sent to the CRM.</p>
+<script src="../../assets/config.js"></script>
+<script>
+/* Preview: no lead is saved and no ad or analytics tag is loaded. Runs after config.js and before the engine. */
+(function (c) { c.ghlWebhookUrl = ''; c.gtmId = ''; c.metaPixelId = ''; c.metaPixelLeadId = ''; })(window.AB_CONFIG = window.AB_CONFIG || {});
+</script>
+<script src="../../assets/funnel.js" defer></script>
+<script src="../assets/route-a.js" defer></script>
+</body>
+</html>

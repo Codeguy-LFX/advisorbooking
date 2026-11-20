@@ -1,0 +1,396 @@
+/* Advisor Booking: preview kit (kit.css)
+   The home page's design system, extracted from index.html and assets/v3.css, plus the parts a quiz and a
+   booking page need, drawn in the same language. Component sheet: /preview/kit.html
+
+   FONTS: this file imports nothing. Every page links the embedded Geist itself, before this file:
+     <link rel="stylesheet" href="../../assets/fonts/geist.css">     (from /preview/<route>/...)
+     <link rel="stylesheet" href="../assets/kit.css">
+   No Google Fonts link. Geist has weights 400 to 600, Geist Mono 400 to 500: do not ask for 700.
+
+   RULES
+   - Every class starts with "k-". State classes: .is-chosen .is-bad .is-busy .is-scrolled .is-ready,
+     and .is-hover .is-focus .is-pressed (static copies of the pointer states, for the sheet and for tests).
+   - Night: put .k-night on <html>, <body> or any block. Everything inside switches to the night tokens.
+   - Engine bridge: put .k-quiz on the element that wraps #apBody. The markup assets/funnel.js builds
+     (.ap-q .ap-sub .ap-opts .ap-opt .ap-key .ap-next .qf-prev .lp-field .lp-lbl .lp-tel .qf-pair .lp-consent
+     .lp-err .lp-priv .sr-only) then takes the kit components with no extra CSS. Add .k-quiz--labels to show
+     the field labels above the boxes, .k-quiz--enter for the 220ms screen fade.
+   - Motion: new components move with opacity and transform only, 160 to 260ms, var(--k-ease). The buttons
+     keep the home page's own .3s hover. Everything stops under prefers-reduced-motion.
+   - Smooth scrolling is NOT copied from the home page: a quiz must jump to the top of each screen at once.
+   - Sizes sit on a 4px grid. Tap targets are 52px or taller. Inputs are 17px (16px or more stops iOS zoom).
+
+   CONTENTS  1 tokens  2 base  3 type  4 header  5 buttons  6 eyebrow, chips, pills  7 glow  8 cards
+             9 email box  10 answers  11 progress  12 back  13 fields  14 consent  15 person  16 summary
+             17 calendar  18 footer  19 preview label  20 engine extras  21 motion */
+
+/* 1. TOKENS ---------------------------------------------------------------------------------------- */
+:root{
+  /* copied from index.html :root, unchanged */
+  --bg:#ffffff; --ink:#0d0f0e; --ink-2:#2a2f2d; --muted:#646c68; --faint:#b9c1bd;
+  --line:#e6eae8; --well:#f4f6f5; --dot:#cfd8d4;
+  --accent:#0f7a62; --accent-hover:#0b6551; --accent-soft:#e7f3ee; --accent-bright:#2fbf8f;
+  --bad:#d4483b; --night:#0a0c0b; --night-2:#141816; --night-line:#232a27; --night-ink:#f2f5f4; --night-muted:#99a39f;
+  --f-sans:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.16,1,.3,1); --ease-snap:cubic-bezier(.22,1,.36,1);
+  --gutter:16px; --nav-h:64px;
+  --shadow-soft:0 1px 2px rgba(10,30,22,.04),0 10px 30px -12px rgba(10,30,22,.12),0 0 0 1px rgba(10,30,22,.06);
+  --shadow-float:0 14px 44px -14px rgba(10,30,22,.28),0 0 0 1px rgba(10,30,22,.06);
+  /* copied from assets/v3.css :root (the email box shadow and the card hover shadow) */
+  --shadow-lift:0 2px 4px rgba(10,30,22,.04),0 24px 48px -20px rgba(10,30,22,.22),0 0 0 1px rgba(10,30,22,.07);
+  color-scheme:light;
+
+  /* kit: roles. Components read these, so .k-night can swap them. In light they resolve to the home values. */
+  --k-page:var(--bg); --k-surface:#fff; --k-well:var(--well);
+  --k-ink:var(--ink); --k-ink-2:var(--ink-2); --k-muted:var(--muted); --k-line:var(--line);
+  --k-accent:var(--accent); --k-accent-soft:var(--accent-soft); --k-focus:var(--accent);
+  --k-mark-bg:var(--accent); --k-mark-ink:#fff;
+  --k-card-shadow:var(--shadow-soft); --k-card-shadow-lift:var(--shadow-lift);
+  --k-chosen-shadow:0 0 0 1.5px var(--accent),0 18px 40px -18px rgba(15,122,98,.45); /* the lit journey card */
+  --k-field-line:#848e8a;  /* field edge: 3.4 to 1 on white (WCAG 1.4.11) */
+  --k-err:#b03023;         /* the email box error text */
+  --k-bad:var(--bad);      /* the email box error ring */
+  --k-check-img:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.6 6.3 5 8.6 9.4 3.7' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --k-skel-img:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 56'%3E%3Crect x='4' y='4' width='48' height='48' rx='12' fill='%23f4f6f5'/%3E%3C/svg%3E");
+  /* kit: scales taken from the home page's own values */
+  --k-r-xs:8px; --k-r-sm:12px; --k-r-md:16px; --k-r-lg:22px; --k-r-xl:28px; --k-r-pill:999px;
+  --k-dur-fast:160ms; --k-dur:200ms; --k-dur-slow:260ms; --k-ease:var(--ease);
+  --k-cal-h:660px;  /* space kept for the calendar before it loads */
+}
+@supports (height:100svh){:root{--k-cal-h:max(660px,calc(100svh - 230px))}}
+@media (min-width:700px){:root{--gutter:28px}}
+
+/* night: the home page's FAQ and footer band, as a scope */
+.k-night{
+  --k-page:var(--night); --k-surface:var(--night-2); --k-well:#1c221f;
+  --k-ink:var(--night-ink); --k-ink-2:#d6dcd9; --k-muted:var(--night-muted); --k-line:var(--night-line);
+  --k-accent:var(--accent-bright); --k-accent-soft:rgba(47,191,143,.14); --k-focus:var(--accent-bright);
+  --k-mark-bg:var(--accent-bright); --k-mark-ink:var(--night);
+  --k-card-shadow:0 0 0 1px var(--night-line),0 10px 30px -12px rgba(0,0,0,.5);
+  --k-card-shadow-lift:0 0 0 1px #33403a,0 24px 48px -20px rgba(0,0,0,.7);
+  --k-chosen-shadow:0 0 0 1.5px var(--accent-bright),0 18px 40px -18px rgba(47,191,143,.35);
+  --k-field-line:#6b7571; --k-err:#ff9d8f; --k-bad:#ef6a5c;
+  --k-check-img:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.6 6.3 5 8.6 9.4 3.7' fill='none' stroke='%230a0c0b' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --k-skel-img:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 56'%3E%3Crect x='4' y='4' width='48' height='48' rx='12' fill='%231c221f'/%3E%3C/svg%3E");
+  background:var(--night);color:var(--night-ink);color-scheme:dark;
+}
+
+/* 2. BASE (index.html) ----------------------------------------------------------------------------- */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--k-page);color:var(--k-ink);font:400 16px/1.55 var(--f-sans);letter-spacing:-.006em;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
+img{max-width:100%}
+[hidden]{display:none!important}
+h1,h2,h3,p,ul,ol,figure{margin:0}
+ul,ol{padding:0;list-style:none}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible,.is-focus{outline:2px solid var(--k-focus);outline-offset:3px;border-radius:8px}
+.k-wrap{width:100%;max-width:1200px;margin-inline:auto;padding-left:max(var(--gutter),env(safe-area-inset-left,0px));padding-right:max(var(--gutter),env(safe-area-inset-right,0px))}
+.k-center{text-align:center}
+.k-mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+.k-sr-only,.k-quiz .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* the honeypot wrapper (assets/v3.css .lp-hp) */
+.k-hp{position:absolute!important;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden}
+/* kit: the one column of a quiz (560) and of a booking page (1040); a full-height page */
+.k-col{width:100%;max-width:calc(560px + 2*var(--gutter));margin-inline:auto;padding-left:max(var(--gutter),env(safe-area-inset-left,0px));padding-right:max(var(--gutter),env(safe-area-inset-right,0px))}
+.k-col--wide{max-width:calc(1040px + 2*var(--gutter))}
+.k-page{min-height:100vh;min-height:100svh;display:flex;flex-direction:column}
+.k-page__main{flex:1 0 auto}
+
+/* 3. TYPE (index.html type scale, v3.css hero) ----------------------------------------------------- */
+.k-display{font-weight:500;font-size:min(max(30px,10vw),max(38px,6vw),80px);line-height:1.02;letter-spacing:-.048em;color:var(--k-ink);max-width:14.5em;text-wrap:balance} /* .v2-h1, without its centering margin */
+.k-h2{font-weight:500;font-size:clamp(34px,4.8vw,64px);line-height:1.02;letter-spacing:-.042em;text-wrap:balance}
+.k-h2--md{font-size:clamp(30px,3.8vw,52px);line-height:1.06}
+.k-h3{font-weight:500;font-size:clamp(24px,2.4vw,32px);line-height:1.12;letter-spacing:-.03em;text-wrap:balance}
+.k-lead{font-size:clamp(17px,1.4vw,19px);line-height:1.55;color:var(--k-muted);max-width:60ch}
+/* kit: the question on a quiz screen and its helper line, in the .h2 voice */
+.k-q,.k-quiz .ap-q{margin:0;font-weight:500;font-size:clamp(28px,4.2vw,44px);line-height:1.08;letter-spacing:-.04em;color:var(--k-ink);text-wrap:balance}
+.k-quiz .ap-q:focus{outline:none} /* the engine moves focus to the heading; it is not a control */
+.k-q-sub,.k-quiz .ap-sub{font-size:16px;line-height:1.5;color:var(--k-muted)}
+.k-quiz .ap-sub{margin-top:12px}
+.k-fine,.k-quiz .lp-priv,.k-quiz .ap-note{font-size:13.5px;line-height:1.5;color:var(--k-muted)} /* .ec__fine */
+.k-fine a,.k-quiz .lp-priv a,.k-quiz .ap-note a{color:var(--k-ink-2);text-underline-offset:3px}
+.k-quiz .lp-priv,.k-quiz .ap-note{margin-top:16px;text-align:center}
+
+/* 4. HEADER: the floating rounded bar (index.html) ------------------------------------------------- */
+.k-nav{position:fixed;z-index:50;top:calc(env(safe-area-inset-top,0px) + 12px);left:max(var(--gutter),env(safe-area-inset-left,0px));right:max(var(--gutter),env(safe-area-inset-right,0px));max-width:1000px;margin-inline:auto}
+.k-nav__pill{display:flex;align-items:center;justify-content:space-between;gap:12px;height:var(--nav-h);padding:0 10px 0 22px;border-radius:999px;background:rgba(255,255,255,.94);
+  box-shadow:0 0 0 1px rgba(10,30,22,.06);transition:background-color .5s var(--ease)}
+.k-nav.is-scrolled .k-nav__pill{background:#fff;box-shadow:var(--shadow-float)}
+.k-brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:600;font-size:17px;letter-spacing:-.035em;white-space:nowrap}
+.k-brand svg{width:26px;height:26px}
+.k-nav__links{display:flex;gap:4px}
+.k-nav__links a{text-decoration:none;font-size:14.5px;color:var(--k-muted);padding:8px 12px;border-radius:999px;transition:color .15s,background-color .15s}
+.k-nav__links a:hover{color:var(--k-ink);background:var(--k-well)}
+@media (max-width:860px){.k-nav__links{display:none}}
+.k-nav .k-btn--sm{white-space:nowrap}
+@media (max-width:480px){.k-nav__pill{padding-left:16px}.k-nav .k-brand span{display:none}.k-nav .k-btn--sm{font-size:13.5px;padding-left:14px}}
+/* kit: on a 320px phone the home bar is 5px too narrow for its own button; tighten it there */
+@media (max-width:340px){.k-nav__pill{gap:8px;padding:0 8px 0 12px}}
+/* kit: keep the wordmark on phones (a quiz header has no button beside it); the bar in the page flow;
+   a 52px bar for screens where every pixel of height counts */
+.k-nav .k-brand--full span{display:inline}
+.k-nav--flow{position:relative;top:auto;left:auto;right:auto;z-index:2;width:calc(100% - max(var(--gutter),env(safe-area-inset-left,0px)) - max(var(--gutter),env(safe-area-inset-right,0px)));margin-top:calc(env(safe-area-inset-top,0px) + 12px)}
+.k-nav--compact{--nav-h:52px}
+.k-nav--compact .k-nav__pill{padding-left:16px}
+.k-nav--compact .k-brand{font-size:16px}
+.k-nav--compact .k-brand svg{width:24px;height:24px}
+.k-night .k-nav__pill{background:rgba(20,24,22,.94);box-shadow:0 0 0 1px var(--night-line)}
+.k-night .k-nav.is-scrolled .k-nav__pill{background:var(--night-2);box-shadow:0 14px 44px -14px rgba(0,0,0,.7),0 0 0 1px var(--night-line)}
+/* the logo on night, as in the home footer: give the rects class k-mb (body) and k-mp (cut-outs) */
+.k-night .k-brand{color:var(--night-ink)}
+.k-night .k-brand svg .k-mb{fill:var(--night-ink)}
+.k-night .k-brand svg .k-mp{fill:var(--night)}
+.k-night .k-nav .k-brand svg .k-mp{fill:var(--night-2)}
+
+/* 5. BUTTONS: sentence case, an arrow chip that slides on hover (index.html) ----------------------- */
+.k-btn,.k-quiz .ap-next{--b:var(--ink);--c:#fff;display:inline-flex;align-items:center;gap:14px;min-height:48px;padding:6px 6px 6px 20px;border-radius:12px;background:var(--b);color:var(--c);text-decoration:none;font-weight:500;font-size:15.5px;letter-spacing:-.01em;line-height:1.2;border:0;cursor:pointer;
+  transition:transform .3s var(--ease-snap),box-shadow .3s var(--ease-snap),background-color .15s ease}
+.k-btn__chip,.k-quiz .btn__chip{flex:0 0 auto;width:36px;height:36px;border-radius:9px;display:grid;place-items:center;background:rgba(255,255,255,.14);transition:transform .3s var(--ease-snap)}
+.k-btn__chip svg,.k-quiz .btn__chip svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@media (hover:hover) and (pointer:fine){.k-btn:hover,.k-quiz .ap-next:hover{transform:translateY(-1px)}.k-btn:hover .k-btn__chip,.k-quiz .ap-next:hover .btn__chip{transform:translateX(3px)}.k-btn--accent:hover,.k-quiz .ap-next:hover{--b:var(--accent-hover)}}
+.k-btn.is-hover{transform:translateY(-1px)}.k-btn.is-hover .k-btn__chip{transform:translateX(3px)}.k-btn--accent.is-hover{--b:var(--accent-hover)}
+.k-btn:active,.k-btn.is-pressed,.k-quiz .ap-next:active{transform:translateY(0) scale(.98)}
+.k-btn--accent,.k-quiz .ap-next{--b:var(--accent);box-shadow:0 14px 36px -12px rgba(15,122,98,.65),0 0 70px -16px rgba(47,191,143,.55)}
+.k-btn--xl{min-height:64px;padding:8px 8px 8px 28px;font-size:18px;border-radius:16px;gap:18px}
+.k-btn--xl .k-btn__chip{width:48px;height:48px;border-radius:12px}
+.k-btn--light{--b:#fff;--c:var(--ink)}
+.k-btn--light .k-btn__chip{background:var(--well)}
+.k-btn--sm{min-height:40px;padding:4px 4px 4px 16px;font-size:14.5px;gap:10px;border-radius:10px}
+.k-btn--sm .k-btn__chip{width:32px;height:32px;border-radius:8px}
+/* kit: the full-width form button, sized halfway between the default and --xl, as tall as a field;
+   locked and busy states (the home page has neither); the plain black button turns light on night */
+.k-btn--block,.k-quiz .ap-next{display:flex;width:100%;justify-content:space-between;min-height:56px;padding:8px 8px 8px 24px;font-size:16.5px;border-radius:14px;gap:16px;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.k-btn--block .k-btn__chip,.k-quiz .ap-next .btn__chip{width:40px;height:40px;border-radius:10px}
+.k-quiz .ap-next{margin-top:24px}
+.k-btn[disabled],.k-btn[aria-disabled=true],.k-quiz .ap-next[disabled]{--b:var(--k-line);--c:var(--k-muted);box-shadow:none;transform:none;cursor:not-allowed}
+.k-btn[disabled] .k-btn__chip,.k-btn[aria-disabled=true] .k-btn__chip,.k-quiz .ap-next[disabled] .btn__chip{background:rgba(100,108,104,.14);transform:none}
+.k-btn.is-busy,.k-quiz .ap-next.is-busy{opacity:.7;cursor:progress}
+.k-night .k-btn:not(.k-btn--accent):not([disabled]){--b:#fff;--c:var(--ink)}
+.k-night .k-btn:not(.k-btn--accent):not([disabled]) .k-btn__chip{background:var(--well)}
+
+/* 6. EYEBROW, CHIPS, PILLS (v3.css .eyebrow; index.html .chip .pill .jtag .device__tag) ------------- */
+/* Keep an eyebrow to one line: its dot narrows when the text wraps (the home page's does too). */
+.k-eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--k-accent)}
+.k-eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--k-accent);box-shadow:0 0 0 4px var(--k-accent-soft)}
+.k-eyebrow--muted{color:var(--k-muted)}
+.k-eyebrow--plain::before{display:none}
+.k-chip{display:inline-flex;align-items:center;gap:9px;padding:7px 14px 7px 10px;border-radius:999px;background:rgba(255,255,255,.8);box-shadow:0 0 0 1px var(--k-line);font-size:clamp(12.5px,3.3vw,14px);text-align:center;color:var(--k-ink-2)}
+.k-chip__dot{flex:0 0 auto;width:8px;height:8px;border-radius:50%;background:var(--k-accent);box-shadow:0 0 0 4px var(--k-accent-soft)}
+.k-pill{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;background:var(--k-surface);box-shadow:0 0 0 1px var(--k-line);font-size:13px;color:var(--k-ink-2)}
+.k-pill::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--k-accent)}
+.k-pill--muted::before{background:var(--faint)}
+.k-pill--plain::before{display:none}
+.k-tag{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;background:var(--k-accent-soft);color:var(--k-accent);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.02em;white-space:nowrap;justify-self:start}
+.k-badge{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--k-muted);padding:5px 9px;border-radius:999px;background:var(--k-well);flex:0 0 auto}
+.k-night .k-chip{background:rgba(20,24,22,.8)}
+
+/* 7. GLOW: the soft green light behind the hero (v3.css .v2-hero::before) --------------------------- */
+/* The light is a 1400px tall oval. Its brightest point is 700px below --k-glow-top and it fades out
+   490px above and below that. On a short page pull it up, for example style="--k-glow-top:-380px". */
+.k-glow{position:relative;overflow:hidden;isolation:isolate}
+.k-glow::before{content:"";position:absolute;left:50%;top:var(--k-glow-top,clamp(280px,38vw,420px));width:min(1800px,180vw);height:1400px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,var(--accent-soft),rgba(231,243,238,0) 70%);z-index:-1;pointer-events:none}
+/* night: the glow of the home page's closing band (.close::after) */
+.k-night.k-glow::before,.k-night .k-glow::before{top:var(--k-glow-top,55%);width:min(620px,90vw);height:260px;transform:translate(-50%,-50%);border-radius:0;background:radial-gradient(closest-side,rgba(15,122,98,.55),transparent)}
+
+/* 8. CARDS (index.html .price .jcard .pane .price--feat .opt) -------------------------------------- */
+.k-card{border-radius:var(--k-r-lg);background:var(--k-surface);box-shadow:var(--k-card-shadow);padding:28px}
+.k-card--sm{border-radius:var(--k-r-md);padding:16px}
+.k-card--xl{border-radius:var(--k-r-xl);padding:clamp(28px,4vw,52px)}
+.k-card--float{box-shadow:var(--shadow-float)}
+.k-card--feat{background:linear-gradient(var(--k-surface),var(--k-surface)) padding-box,linear-gradient(160deg,var(--accent-bright),var(--accent) 45%,rgba(15,122,98,.15)) border-box;border:1.5px solid transparent;box-shadow:0 30px 60px -30px rgba(15,122,98,.45),0 0 0 1px rgba(15,122,98,.04)}
+.k-well{border-radius:var(--k-r-md);background:var(--k-well);padding:16px}
+
+/* 9. EMAIL BOX (v3.css .ec): the model for every text field below ----------------------------------- */
+.k-ec{position:relative;display:flex;gap:8px;width:100%;max-width:520px;padding:6px;border-radius:16px;background:#fff;box-shadow:var(--shadow-lift)}
+.k-ec input[type=email]{flex:1 1 auto;min-width:0;border:0;background:transparent;padding:0 14px;font:inherit;font-size:16px;color:var(--ink);outline:none}
+.k-ec input[type=email]::placeholder{color:var(--ink-2)}
+.k-ec .k-btn{flex:0 0 auto;min-height:52px}
+.k-ec:focus-within,.k-ec.is-focus{box-shadow:var(--shadow-lift),0 0 0 3px var(--accent);outline:0;border-radius:16px}
+.k-ec.is-bad{box-shadow:var(--shadow-lift),0 0 0 2px #d4483b}
+.k-ec__err{margin:10px 0 0;font-size:13.5px;color:var(--k-err);font-weight:500}
+.k-ec__fine{margin:12px 0 0;font-size:13.5px;color:var(--k-muted)}
+@media (max-width:520px){.k-ec{flex-direction:column;padding:8px}.k-ec input[type=email]{min-height:50px}.k-ec .k-btn{width:100%;justify-content:space-between}}
+
+/* 10. ANSWER CARD (kit): the home page's tab row (.tab, .tab__ic) made into an answer --------------- */
+/* <button class="k-answer" aria-pressed="false"><span class="k-answer__key">A</span><span>Label</span></button>
+   The check mark is drawn by ::after, the hover and chosen shadows by ::before (only their opacity moves). */
+.k-answers,.k-quiz .ap-opts{display:grid;gap:8px}
+.k-quiz .ap-opts{margin-top:24px}
+@media (min-width:600px){.k-answers,.k-quiz .ap-opts{gap:12px}}
+.k-answer,.k-quiz .ap-opt{position:relative;display:grid;grid-template-columns:32px minmax(0,1fr) 20px;align-items:center;gap:12px;width:100%;min-height:56px;margin:0;padding:12px 16px 12px 12px;border:0;border-radius:var(--k-r-md);background:var(--k-surface);box-shadow:var(--k-card-shadow);font:500 16px/1.35 var(--f-sans);letter-spacing:-.015em;text-align:left;color:var(--k-ink);cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform var(--k-dur) var(--k-ease)}
+.k-answer::before,.k-quiz .ap-opt::before{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:var(--k-card-shadow-lift);opacity:0;pointer-events:none;transition:opacity var(--k-dur) var(--k-ease)}
+.k-answer::after,.k-quiz .ap-opt::after{content:"";grid-column:3;width:20px;height:20px;border-radius:50%;background:var(--k-mark-bg) var(--k-check-img) center/12px no-repeat;opacity:0;transform:scale(.6);transition:opacity var(--k-dur) var(--k-ease),transform var(--k-dur) var(--k-ease)}
+.k-answer__key,.k-quiz .ap-key{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:var(--k-well);color:var(--k-ink-2);font:500 12px/1 var(--f-mono);letter-spacing:0}
+@media (hover:hover) and (pointer:fine){
+  .k-answer:hover,.k-quiz .ap-opt:hover{transform:translateY(-1px)}
+  .k-answer:hover::before,.k-quiz .ap-opt:hover::before{opacity:1}
+  .k-answer:hover .k-answer__key,.k-quiz .ap-opt:hover .ap-key{background:var(--k-accent-soft);color:var(--k-accent)}
+}
+.k-answer.is-hover{transform:translateY(-1px)}
+.k-answer.is-hover::before{opacity:1}
+.k-answer.is-hover .k-answer__key{background:var(--k-accent-soft);color:var(--k-accent)}
+.k-answer:focus-visible,.k-answer.is-focus,.k-quiz .ap-opt:focus-visible{outline:2px solid var(--k-focus);outline-offset:3px;border-radius:var(--k-r-md)}
+.k-answer:active,.k-answer.is-pressed,.k-quiz .ap-opt:active{transform:scale(.985)}
+.k-answer[aria-pressed=true]::before,.k-answer.is-chosen::before,.k-quiz .ap-opt[aria-pressed=true]::before{box-shadow:var(--k-chosen-shadow);opacity:1}
+.k-answer[aria-pressed=true]::after,.k-answer.is-chosen::after,.k-quiz .ap-opt[aria-pressed=true]::after{opacity:1;transform:none}
+.k-answer[aria-pressed=true] .k-answer__key,.k-answer.is-chosen .k-answer__key,.k-quiz .ap-opt[aria-pressed=true] .ap-key{background:var(--k-mark-bg);color:var(--k-mark-ink)}
+
+/* 11. PROGRESS (kit) -------------------------------------------------------------------------------- */
+/* Plain bar:  <div class="k-progress"><p class="k-progress__count" id="apCount"></p>
+                 <div class="k-progress__track" role="progressbar" aria-label="Progress"><div class="k-progress__fill" id="apBar"></div></div></div>
+   Segmented:  add k-progress--seg and style="--k-steps:6". Same markup: the track is cut into segments by a
+               mask, so the engine still only sets the width of #apBar. The width does not animate (it is a
+               layout property). Hand-built segments: <div class="k-steps"><i class="is-done"></i><i class="is-current"></i><i></i></div> */
+.k-progress{display:grid;gap:8px}
+.k-progress__count{font-family:var(--f-mono);font-size:12px;line-height:1.35;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--k-muted)}
+.k-progress__count b{font-weight:500;color:var(--k-ink)}
+.k-progress__track{height:4px;border-radius:999px;background:var(--k-line);overflow:hidden}
+.k-progress__fill{height:100%;width:0;border-radius:inherit;background:var(--k-accent)}
+/* each segment sits in the middle of its share of the track, so the engine's rounded percentages
+   (17, 33, 50, 67, 83) always end inside a gap. Good for tracks up to 600px wide. */
+.k-progress--seg .k-progress__track{--k-seg-gap:6px;margin-inline:calc(var(--k-seg-gap)/-2);border-radius:0;
+  -webkit-mask-image:repeating-linear-gradient(90deg,transparent 0,transparent calc(var(--k-seg-gap)/2),#000 0,#000 calc(100%/var(--k-steps,6) - var(--k-seg-gap)/2),transparent 0,transparent calc(100%/var(--k-steps,6)));
+  mask-image:repeating-linear-gradient(90deg,transparent 0,transparent calc(var(--k-seg-gap)/2),#000 0,#000 calc(100%/var(--k-steps,6) - var(--k-seg-gap)/2),transparent 0,transparent calc(100%/var(--k-steps,6)))}
+.k-progress--seg .k-progress__fill{border-radius:0}
+.k-steps{display:flex;gap:6px}
+.k-steps > *{flex:1 1 0;height:4px;border-radius:0;background:var(--k-line)}
+.k-steps > .is-done{background:var(--k-accent)}
+.k-steps > .is-current{background:linear-gradient(90deg,var(--k-accent) 50%,var(--k-line) 50%)}
+
+/* 12. BACK: a quiet text button with an arrow (kit, in the voice of the nav links) ------------------ */
+/* No left padding: the arrow lines up with the column edge and the button stays out of the gutter. */
+.k-back,.k-quiz .qf-prev{display:inline-flex;align-items:center;gap:8px;min-height:52px;margin:0;padding:0 12px 0 0;border:0;border-radius:8px;background:transparent;font:400 15px/1.2 var(--f-sans);letter-spacing:-.006em;color:var(--k-muted);text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.k-back svg,.k-quiz .qf-prev svg{flex:0 0 auto;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--k-dur) var(--k-ease)}
+@media (hover:hover) and (pointer:fine){.k-back:hover,.k-quiz .qf-prev:hover{color:var(--k-ink)}.k-back:hover svg,.k-quiz .qf-prev:hover svg{transform:translateX(-3px)}}
+.k-back.is-hover{color:var(--k-ink)}.k-back.is-hover svg{transform:translateX(-3px)}
+.k-back:focus-visible,.k-back.is-focus,.k-quiz .qf-prev:focus-visible{outline:2px solid var(--k-focus);outline-offset:4px;border-radius:8px;color:var(--k-ink)}
+.k-back:active,.k-quiz .qf-prev:active{color:var(--k-ink)}
+.k-back[disabled]{opacity:.45;cursor:default}
+.k-quiz .qf-prev{margin:8px 0 0}
+
+/* 13. FIELDS (kit, from the email box: white box, 16px+ text, a 3px accent ring on focus, a red ring
+   and 500-weight message on error) --------------------------------------------------------------- */
+/* <div class="k-field [is-bad]"><label class="k-label" for="x">Work Email</label>
+     <input class="k-input" id="x" type="email"><p class="k-field__hint">…</p><p class="k-field__err">…</p></div> */
+.k-field,.k-quiz .lp-field{display:grid;gap:8px;min-width:0;margin:0 0 12px}
+.k-label,.k-quiz .lp-lbl{font-size:14px;font-weight:500;line-height:1.3;letter-spacing:-.01em;color:var(--k-ink-2)}
+.k-input,.k-quiz .lp-field input,.k-quiz .lp-field textarea{display:block;width:100%;min-width:0;min-height:56px;margin:0;padding:0 16px;border:0;border-radius:var(--k-r-sm);background:var(--k-surface);box-shadow:inset 0 0 0 1px var(--k-field-line),0 1px 2px rgba(10,30,22,.04);font:400 17px/1.3 var(--f-sans);letter-spacing:-.006em;color:var(--k-ink);outline:2px solid transparent;outline-offset:2px;-webkit-appearance:none;appearance:none}
+textarea.k-input,.k-quiz .lp-field textarea{min-height:132px;padding:16px;line-height:1.5;resize:vertical}
+.k-input::placeholder,.k-quiz .lp-field input::placeholder,.k-quiz .lp-field textarea::placeholder{color:var(--k-muted);opacity:1}
+.k-input:focus,.k-input.is-focus,.k-quiz .lp-field input:focus,.k-quiz .lp-field textarea:focus{box-shadow:inset 0 0 0 1px var(--k-focus),0 0 0 3px var(--k-focus);border-radius:var(--k-r-sm)}
+.k-field.is-bad .k-input,.k-quiz .lp-field.invalid input,.k-quiz .lp-field.invalid textarea{box-shadow:inset 0 0 0 1px var(--k-bad),0 0 0 2px var(--k-bad)}
+.k-field__hint,.k-quiz .lp-hint{font-size:14px;line-height:1.45;color:var(--k-muted)}
+.k-field__err,.k-quiz .lp-err{display:none;font-size:14px;line-height:1.4;font-weight:500;color:var(--k-err)}
+.is-bad > .k-field__err,.k-quiz .invalid > .lp-err{display:block}
+.k-quiz .ap-err{margin-top:12px}
+.k-quiz .ap-optional{font-weight:400;color:var(--k-muted)}
+/* phone: a "+1" box beside the input; two fields side by side */
+.k-tel,.k-quiz .lp-tel{display:flex;gap:8px}
+.k-tel > .k-input,.k-quiz .lp-tel > input{flex:1 1 auto}
+.k-tel__cc,.k-quiz .lp-tel__cc{flex:0 0 auto;display:grid;place-items:center;width:56px;height:56px;border-radius:var(--k-r-sm);background:var(--k-well);box-shadow:inset 0 0 0 1px var(--k-line);font-size:17px;color:var(--k-ink-2)}
+.k-pair,.k-quiz .qf-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 12px;align-items:start}
+.k-quiz form{margin-top:24px}
+/* engine labels are screen-reader only in its "qf" layout (the placeholder carries the label).
+   .k-quiz--labels shows them above the box and clears the duplicate placeholder. */
+.k-quiz--labels .lp-lbl.sr-only{position:static;width:auto;height:auto;margin:0;overflow:visible;clip:auto;white-space:normal}
+.k-quiz--labels .lp-field input::placeholder{color:transparent}
+
+/* 14. CONSENT: a checkbox beside a sentence several lines long (kit) -------------------------------- */
+/* <div class="k-consent [is-bad]"><div class="k-check"><input type="checkbox" id="c"><label for="c">…</label></div>
+     <p class="k-field__err">…</p></div>     The box is 24px with a 52px tap area; the label is tappable too. */
+.k-consent,.k-quiz .lp-consent{margin:16px 0 0}
+.k-check,.k-quiz .lp-consent__row{display:grid;grid-template-columns:24px minmax(0,1fr);gap:12px;align-items:start}
+.k-check input[type=checkbox],.k-quiz .lp-consent__row input[type=checkbox]{-webkit-appearance:none;appearance:none;position:relative;width:24px;height:24px;margin:0;border:0;border-radius:7px;background:var(--k-surface);box-shadow:inset 0 0 0 1.5px var(--k-field-line);cursor:pointer}
+.k-check input[type=checkbox]::before,.k-quiz .lp-consent__row input[type=checkbox]::before{content:"";position:absolute;inset:-14px}
+.k-check input[type=checkbox]::after,.k-quiz .lp-consent__row input[type=checkbox]::after{content:"";position:absolute;inset:0;background:var(--k-check-img) center/14px no-repeat;opacity:0;transform:scale(.6);transition:opacity var(--k-dur-fast) var(--k-ease),transform var(--k-dur-fast) var(--k-ease)}
+.k-check input[type=checkbox]:checked,.k-quiz .lp-consent__row input[type=checkbox]:checked{background:var(--k-mark-bg);box-shadow:none}
+.k-check input[type=checkbox]:checked::after,.k-quiz .lp-consent__row input[type=checkbox]:checked::after{opacity:1;transform:none}
+.k-check input[type=checkbox]:focus-visible,.k-check input.is-focus,.k-quiz .lp-consent__row input[type=checkbox]:focus-visible{outline:2px solid var(--k-focus);outline-offset:3px;border-radius:7px}
+.k-check label,.k-quiz .lp-consent__row label{font-size:13.5px;line-height:1.5;color:var(--k-muted);cursor:pointer}
+.k-check label strong,.k-quiz .lp-consent__row label strong{font-weight:600;color:var(--k-ink)}
+.k-check label a,.k-quiz .lp-consent__row label a{color:var(--k-ink-2);text-underline-offset:3px}
+.k-consent.is-bad input[type=checkbox]:not(:checked),.k-quiz .lp-consent.invalid input[type=checkbox]:not(:checked){box-shadow:inset 0 0 0 1.5px var(--k-bad),0 0 0 2px var(--k-bad)}
+.k-consent > .k-field__err,.k-quiz .lp-consent > .lp-err{margin:8px 0 0 36px}
+
+/* 15. PERSON: round photo, name, a line of chips (kit) ---------------------------------------------- */
+/* <div class="k-person [k-person--lg]"><img class="k-person__photo" src="…/nick-de-jesus.jpg" width="48" height="48" alt="">
+     <div class="k-person__body"><p class="k-person__name">Nick De Jesus</p><p class="k-person__meta"><span class="k-pill">…</span></p></div></div> */
+.k-person{display:flex;align-items:center;gap:12px;min-width:0}
+.k-person__photo{flex:0 0 auto;width:48px;height:48px;border-radius:50%;object-fit:cover;background:var(--k-well);box-shadow:0 0 0 1px var(--k-line)}
+.k-person__body{display:grid;gap:8px;min-width:0}
+.k-person__name{font-weight:600;font-size:16px;line-height:1.25;letter-spacing:-.015em;color:var(--k-ink)}
+.k-person__meta{display:flex;flex-wrap:wrap;gap:6px}
+.k-person--lg{gap:16px}
+.k-person--lg .k-person__photo{width:72px;height:72px}
+.k-person--lg .k-person__name{font-size:19px;letter-spacing:-.025em}
+
+/* 16. SUMMARY: the answers given, as a row of chips (kit, from .pill) ------------------------------- */
+/* <ul class="k-summary"><li><span class="k-summary__k">AUM</span>$100 Million to $500 Million</li></ul> */
+.k-summary{display:flex;flex-wrap:wrap;gap:8px}
+.k-summary > *{display:inline-flex;align-items:baseline;gap:8px;max-width:100%;padding:7px 12px;border-radius:999px;background:var(--k-surface);box-shadow:0 0 0 1px var(--k-line);font-size:13px;line-height:1.35;color:var(--k-ink-2)}
+.k-summary__k{flex:0 0 auto;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--k-muted)}
+
+/* 17. CALENDAR FRAME (kit, from the home page's device card) ---------------------------------------- */
+/* <section class="k-cal"><header class="k-cal__bar"><p class="k-cal__title"><b>Pipeline Audit</b><span>20 min on Google Meet</span></p><span class="k-badge">…</span></header>
+     <div class="k-cal__body"><div class="k-cal__skel"><p class="k-cal__note">Loading the calendar.</p></div><div class="k-cal__mount"></div></div></section>
+   .k-cal__body keeps --k-cal-h of height from the first paint, so nothing moves when the calendar arrives.
+   The skeleton is a still drawing (no shimmer) that sits UNDER the mount and reads as finished on its own.
+   The calendar iframe covers it. If the embed turns out to be see-through, add .is-ready to .k-cal on load. */
+.k-cal{border-radius:var(--k-r-xl);background:var(--k-surface);box-shadow:var(--k-card-shadow);overflow:hidden}
+.k-cal__bar{display:flex;align-items:center;gap:12px;min-height:64px;padding:12px 20px;border-bottom:1px solid var(--k-line)}
+.k-cal__title{display:grid;gap:2px;min-width:0;line-height:1.25}
+.k-cal__title b{font-weight:600;font-size:15px;letter-spacing:-.015em;color:var(--k-ink)}
+.k-cal__title span{font-size:13px;color:var(--k-muted)}
+.k-cal__bar > .k-badge,.k-cal__bar > .k-tag{margin-left:auto}
+.k-cal__body{position:relative;min-height:var(--k-cal-h)}
+.k-cal__skel{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;gap:24px;padding:32px 20px;overflow:hidden}
+.k-cal__skel::before{content:"";flex:0 0 auto;width:136px;height:12px;border-radius:6px;background:var(--k-line)}
+.k-cal__skel::after{content:"";order:1;flex:0 0 auto;width:min(100%,392px);aspect-ratio:7/5;background:var(--k-skel-img) 0 0/calc(100%/7) auto}
+.k-cal__note{order:2;max-width:38ch;text-align:center;font-size:15px;line-height:1.5;color:var(--k-muted)}
+.k-cal__note a{color:var(--k-ink-2);text-underline-offset:3px}
+.k-cal__mount{position:relative;z-index:1;min-height:var(--k-cal-h)}
+.k-cal__mount iframe,.k-cal__mount .iclosed-widget{display:block;width:100%;min-height:var(--k-cal-h);border:0}
+.k-cal.is-ready .k-cal__skel{visibility:hidden}
+.k-cal__foot{padding:12px 20px 16px;border-top:1px solid var(--k-line);text-align:center;font-size:13.5px;line-height:1.5;color:var(--k-muted)}
+.k-cal__foot a{color:var(--k-ink-2);text-underline-offset:3px}
+
+/* 18. FOOTER FINE PRINT (v3.css .legal-line, .v2-foot): night by default, as on the home page ------- */
+.k-legal{background:var(--night);border-top:1px solid var(--night-line);text-align:center;padding:16px 20px calc(20px + env(safe-area-inset-bottom,0px));font-size:14px;color:var(--night-muted)}
+.k-legal a{display:inline-block;color:var(--night-muted);text-decoration:none;padding:10px 8px;transition:color .15s}
+.k-legal a:hover,.k-legal a:focus-visible{color:var(--night-ink)}
+.k-legal :focus-visible{outline-color:var(--accent-bright)}
+.k-legal span{padding:0 2px}
+.k-legal__links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-bottom:4px}
+.k-legal__links a{color:var(--night-muted);text-decoration:none;font-size:14px;padding:6px 2px}
+.k-legal__links a:hover{color:var(--night-ink)}
+.k-legal__disc{max-width:640px;margin:8px auto 4px;font-size:13px;line-height:1.55;color:var(--night-muted);text-wrap:pretty}
+/* kit: the same footer on a white page */
+.k-legal--light{background:transparent;border-top-color:var(--line);color:var(--muted)}
+.k-legal--light a,.k-legal--light .k-legal__links a,.k-legal--light .k-legal__disc{color:var(--muted)}
+.k-legal--light a:hover,.k-legal--light a:focus-visible,.k-legal--light .k-legal__links a:hover{color:var(--ink)}
+.k-legal--light :focus-visible{outline-color:var(--accent)}
+
+/* 19. PREVIEW LABEL (kit): fixed at the bottom left, running UP the page gutter ---------------------- */
+/* <p class="k-preview-note">Preview. Nothing here is sent to the CRM.</p>
+   A flat label in the corner would sit on whatever scrolls under it (the seventh answer on a phone, the
+   calendar on a laptop). The gutter is the one strip no control ever enters, because .k-wrap, .k-col and
+   .k-nav all keep --gutter clear. So the label is 14px wide and stands in it. It never takes a tap. */
+.k-preview-note{position:fixed;z-index:40;left:max(calc((var(--gutter) - 14px)/2),calc(env(safe-area-inset-left,0px) - 15px));bottom:max(12px,env(safe-area-inset-bottom,0px));margin:0;padding:6px 0;border-radius:4px;background:rgba(255,255,255,.92);font-family:var(--f-mono);font-size:11px;line-height:14px;letter-spacing:.02em;white-space:nowrap;color:var(--muted);writing-mode:vertical-rl;transform:rotate(180deg);pointer-events:none}
+.k-night .k-preview-note,.k-preview-note.k-night{background:rgba(10,12,11,.92);color:var(--night-muted)}
+
+/* 20. ENGINE EXTRAS: what funnel.js builds that has no kit twin ------------------------------------- */
+.k-quiz .ap-screen{min-width:0}
+.k-quiz .ap-sub .ap-emw{display:block;margin:8px 0}
+.k-quiz .ap-sub .ap-em{font-weight:600;color:var(--k-ink)}
+.k-quiz .ap-sending{padding:24px 0}
+.k-quiz .ap-sending p{margin-top:12px;color:var(--k-muted)}
+
+/* 21. MOTION ---------------------------------------------------------------------------------------- */
+@keyframes k-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.k-enter,.k-quiz--enter .ap-screen{animation:k-in 220ms var(--k-ease) both}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}

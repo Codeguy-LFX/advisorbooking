@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<title>Share card source (1200 x 630) | Advisor Booking preview</title>
+<link rel="stylesheet" href="../../assets/fonts/geist.css">
+<style>
+/* Source for the link preview image. Rendered to advisor-booking-share.png at exactly 1200 x 630.
+   Every word on it is already on the home page. Colours, type and logo are the home page's. */
+:root{--ink:#0d0f0e;--muted:#646c68;--line:#e6eae8;--accent:#0f7a62;--accent-soft:#e7f3ee;
+  --f-sans:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{width:1200px;height:630px;overflow:hidden;background:#fff;color:var(--ink);font-family:var(--f-sans);-webkit-font-smoothing:antialiased}
+.card{position:relative;width:1200px;height:630px;padding:64px 72px 60px;display:flex;flex-direction:column;justify-content:space-between;isolation:isolate}
+.card::before{content:"";position:absolute;inset:0;z-index:-1;
+  background:radial-gradient(760px 420px at 78% 108%,rgba(15,122,98,.20),rgba(15,122,98,0) 70%),
+             radial-gradient(520px 300px at 8% -12%,rgba(15,122,98,.10),rgba(15,122,98,0) 70%)}
+.card::after{content:"";position:absolute;inset:20px;border-radius:28px;box-shadow:0 0 0 1px var(--line);z-index:-1}
+.top{display:flex;align-items:center;justify-content:space-between}
+.brand{display:inline-flex;align-items:center;gap:16px;font-weight:600;font-size:34px;letter-spacing:-.035em}
+.brand svg{width:50px;height:50px}
+.chip{display:inline-flex;align-items:center;gap:14px;padding:13px 26px 13px 18px;border-radius:999px;background:rgba(255,255,255,.85);box-shadow:0 0 0 1px var(--line);
+  font-family:var(--f-mono);font-size:23px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--accent)}
+.chip i{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px var(--accent-soft)}
+h1{margin:0;font-weight:600;font-size:96px;line-height:.98;letter-spacing:-.05em;white-space:nowrap}
+h1 em{font-style:normal;color:var(--accent)}
+.foot{display:flex;align-items:flex-end;justify-content:space-between;gap:40px}
+.sub{margin:0;font-size:25px;line-height:1.4;color:var(--muted);max-width:720px;letter-spacing:-.01em}
+.sub b{color:var(--ink);font-weight:600}
+.url{font-family:var(--f-mono);font-size:22px;letter-spacing:.06em;color:var(--ink);white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="top">
+    <span class="brand"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span>
+    <span class="url">advisorbooking.com</span>
+  </div>
+  <h1>We fill financial advisors&rsquo;<br>calendars with<br><em>business owners.</em></h1>
+  <div class="foot">
+    <span class="chip"><i></i>For independent RIAs with $50M to $250M+ AUM</span>
+  </div>
+</div>
+</body>
+</html>

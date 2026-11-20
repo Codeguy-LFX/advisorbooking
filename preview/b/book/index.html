@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pick a time for your call | Advisor Booking</title>
+<meta name="description" content="Pick a time for your 20-minute call with Advisor Booking.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../../../assets/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../../assets/fonts/geist.css">
+<link rel="stylesheet" href="../../assets/kit.css">
+<link rel="stylesheet" href="../../assets/route-b.css">
+<!-- Starts both fonts before the page is drawn, so no text is measured in a stand-in font first. Optional. -->
+<script>try { document.fonts.load('500 1em Geist'); document.fonts.load('500 12px "Geist Mono"'); } catch (e) {}</script>
+<!-- Preview, route B "Concierge": the booking page. config.js loads here, before the page is drawn, so the
+     greeting and the answers are in place at the first paint and nothing moves afterwards. -->
+<script src="../../../assets/config.js"></script>
+</head>
+<body class="k-page b-page">
+<div class="b-bg k-glow" aria-hidden="true"></div>
+<header class="k-nav k-nav--flow k-nav--compact b-nav b-nav--wide">
+  <div class="k-nav__pill">
+    <span class="k-brand k-brand--full"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect class="k-mb" x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect class="k-mp" x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect class="k-mp" x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect class="k-mp" x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span>
+  </div>
+  <div class="k-progress__track b-track" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><div class="k-progress__fill" style="width:100%"></div></div>
+</header>
+<main class="k-page__main b-main" id="main">
+  <div class="k-col k-col--wide b-bgrid">
+    <div class="b-bhead">
+      <p class="k-eyebrow">Your call</p>
+      <h1 class="k-q b-bh" id="bookH">Pick a time for your call</h1>
+      <div class="k-person b-bhost">
+        <img class="k-person__photo" src="../../../assets/nick-de-jesus.jpg" width="72" height="72" alt="Photo of Nick De Jesus" decoding="async">
+        <div class="k-person__body">
+          <p class="k-person__name">Nick De Jesus</p>
+          <p class="k-person__meta"><span class="k-pill">20 min</span><span class="k-pill">Google Meet</span></p>
+        </div>
+      </div>
+    </div>
+
+    <section class="k-cal b-cal" id="calendar" aria-label="Pick a time for your call">
+      <header class="k-cal__bar">
+        <p class="k-cal__title"><b>Pipeline Audit</b><span class="b-swap"><span>Choose a time that works for you.</span><a id="calOpen" href="mailto:info@advisorbooking.com">Calendar not showing? Open it here.</a></span></p>
+      </header>
+      <div class="k-cal__body">
+        <div class="k-cal__skel"><p class="k-cal__note">Loading the calendar.</p></div>
+        <div class="k-cal__mount"></div>
+      </div>
+      <p class="k-cal__foot">If it does not appear, email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will send you times.</p>
+    </section>
+
+    <div class="b-bnotes">
+      <section class="b-told" id="bTold" aria-labelledby="bToldT" hidden>
+        <h2 class="k-mono b-label" id="bToldT">What you told us</h2>
+        <ul class="k-summary" id="bSum"></ul>
+        <p class="k-fine">Your call starts from these answers.</p>
+      </section>
+      <section aria-labelledby="bCoverT">
+        <h2 class="k-mono b-label" id="bCoverT">What we cover</h2>
+        <ol class="b-cover">
+          <li><span class="b-cover__n" aria-hidden="true">01</span>Your ideal client and your list.</li>
+          <li><span class="b-cover__n" aria-hidden="true">02</span>Your advisors&rsquo; time, and whether your firm has run outreach before.</li>
+          <li><span class="b-cover__n" aria-hidden="true">03</span>We tell you if this will work for your firm. Yes or no.</li>
+        </ol>
+      </section>
+    </div>
+    <script>
+    /* Greeting and "What you told us", from the answers the quiz saved in this browser. Runs before the first paint. */
+    (function () {
+      'use strict';
+      var st = null; try { st = JSON.parse(localStorage.getItem('ab_preview_b') || 'null'); } catch (e) {}
+      if (!st) return;
+      var first = String((st.answers || {}).first || '').trim().split(/\s+/)[0];
+      if (first) document.getElementById('bookH').textContent = 'Pick a time, ' + first + '.';
+      var L = st.labels || {}, sum = document.getElementById('bSum'), n = 0;
+      [['firm_type', 'Firm'], ['role', 'Role'], ['aum', 'AUM'], ['advisors', 'Advisors'], ['growth', 'New assets']].forEach(function (r) {
+        var t = L[r[0]]; if (t === undefined || t === null || t === '') return;
+        var li = document.createElement('li'), k = document.createElement('span');
+        k.className = 'k-summary__k'; k.textContent = r[1];
+        li.appendChild(k); li.appendChild(document.createTextNode(String(t))); sum.appendChild(li); n++;
+      });
+      if (n) document.getElementById('bTold').hidden = false;
+    })();
+    </script>
+  </div>
+</main>
+<footer class="k-legal k-legal--light">
+  <nav class="k-legal__links" aria-label="Footer"><a href="../../../privacy.html" target="_blank" rel="noopener">Privacy Policy</a><a href="../../../terms.html" target="_blank" rel="noopener">Terms of Service</a></nav>
+  <p class="k-legal__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
+</footer>
+<p class="k-preview-note">Preview. This calendar is live: a booking here is real.</p>
+<script>
+/* The calendar: production logic (L1/Q/index.html), reading this route's saved answers. Left out on purpose for
+   the preview: gtm.js, the Meta pixel, and the CRM post when a booking is reported. */
+(function () {
+  'use strict';
+  var CFG = window.AB_CONFIG || {}, KEY = 'ab_preview_b';
+  var st = null; try { st = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
+  var a = (st && st.answers) || {};
+  var utm = {}; try { utm = JSON.parse(sessionStorage.getItem('ab_utm') || '{}') || {}; } catch (e) {}
+  var base = String(CFG.iclosedUrlFit5 || CFG.iclosedUrl || '').trim(), url = '';
+  try {
+    var u = new URL(base);
+    Object.keys(utm).forEach(function (k) { if (k.indexOf('utm_') === 0) u.searchParams.set(k, utm[k]); });
+    var d = String(a.phone || '').replace(/\D/g, ''); if (d.length === 11 && d.charAt(0) === '1') d = d.slice(1);
+    var nm = [a.first, a.last].filter(Boolean).join(' ').trim();
+    if (nm) u.searchParams.set('iclosedName', nm);
+    if (a.first) u.searchParams.set('iclosedFirstName', String(a.first).trim());
+    if (a.last) u.searchParams.set('iclosedLastName', String(a.last).trim());
+    if (a.email) u.searchParams.set('iclosedEmail', a.email);
+    if (d.length === 10) u.searchParams.set('iclosedPhone', '+1' + d);
+    if (!u.searchParams.get('utm_term')) u.searchParams.set('utm_term', 'preview-b');   // production: 'L1-q'
+    url = u.toString();
+  } catch (e) {}
+  var cal = document.getElementById('calendar'), mount = cal.querySelector('.k-cal__mount');
+  if (!url) return;   // no event link in config.js: the loading note and the email line stay
+  document.getElementById('calOpen').href = url;
+  var w = document.createElement('div'); w.className = 'iclosed-widget'; w.setAttribute('data-url', url); w.setAttribute('title', 'Pick a time for your call'); w.style.width = '100%';
+  mount.appendChild(w);
+  /* Once a calendar frame has loaded, the still drawing under it is switched off. */
+  function ready(f) { var on = function () { cal.classList.add('is-ready'); }; f.addEventListener('load', on); setTimeout(on, 4000); }
+  var settled = false, waited = 0, iv;
+  function fallback() {
+    if (settled) return; settled = true; clearInterval(iv);
+    if (mount.querySelector('iframe')) return;
+    mount.innerHTML = '';
+    var f = document.createElement('iframe'); f.title = 'Pick a time for your call'; f.src = url; ready(f); mount.appendChild(f);
+    cal.classList.add('is-fallback');   // the bar's second line becomes "Calendar not showing? Open it here."
+  }
+  var s = document.createElement('script'); s.async = true; s.src = 'https://app.iclosed.io/assets/widget.js'; s.onerror = fallback; document.body.appendChild(s);
+  iv = setInterval(function () { var f = mount.querySelector('iframe'); if (f) { settled = true; clearInterval(iv); ready(f); return; } if ((waited += 250) >= 8000) fallback(); }, 250);
+  /* The site's /booked page, when iClosed shows it inside the frame, reports the booking here. Production also posts
+     it to the CRM; the preview only remembers it in this browser. */
+  var bookedOnce = false;
+  window.addEventListener('message', function (e) {
+    var m = e.data || {};
+    if (e.origin !== location.origin || m.event !== 'iclosed.booked' || !m.payload || bookedOnce) return;
+    bookedOnce = true;
+    try { if (st && !st.booked) { st.booked = true; localStorage.setItem(KEY, JSON.stringify(st)); } } catch (x) {}
+  });
+})();
+</script>
+</body>
+</html>

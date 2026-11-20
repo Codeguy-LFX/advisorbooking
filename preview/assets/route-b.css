@@ -1,0 +1,124 @@
+/* Advisor Booking preview, route B "Concierge" (light).
+   Loads after kit.css and holds only what the kit does not: the page frame, the "Your call" panel
+   (a slim strip on phones, a sticky card from 900px) and the booking page layout.
+   Motion: opacity and transform only (the kit's k-in). Sizes on a 4px grid. */
+
+/* 1. PAGE ------------------------------------------------------------------------------------------- */
+html{scrollbar-gutter:stable}
+.b-page{--b-head:80px;position:relative;isolation:isolate}
+/* the home hero light, on its own layer so nothing above the sticky panel clips or scrolls */
+.b-bg{position:absolute;inset:0;z-index:-1;pointer-events:none}
+/* the footer always starts below the first screen, so a taller or shorter question never moves it in view */
+.b-main{min-height:calc(100vh - var(--b-head));min-height:calc(100svh - var(--b-head));padding-bottom:48px}
+
+/* 2. HEADER: the floating bar, the step count inside it, the slim progress bar under it ------------- */
+.b-nav{max-width:560px}
+.b-nav--wide{max-width:720px}
+.b-nav .k-nav__pill{padding-right:16px}
+.b-count{white-space:nowrap}
+.b-track{margin-top:12px}
+
+/* 3. "YOUR CALL" PANEL: shared parts ---------------------------------------------------------------- */
+.b-call__photo{flex:0 0 auto;border-radius:50%;object-fit:cover;background:var(--k-well);box-shadow:0 0 0 1px var(--k-line)}
+.b-sheet__k{flex:0 0 auto;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--k-muted)}
+
+/* phones and tablets: one slim strip, 56px in all. Line 1: photo and one sentence. Line 2: the answers so
+   far, in a row that scrolls sideways inside itself. Its 24px are kept from the first paint. */
+@media (max-width:899px){
+  .b-grid{max-width:calc(560px + 2*var(--gutter))}
+  .b-call{display:grid;grid-template-rows:28px 24px;row-gap:4px;height:56px;margin-top:16px}
+  .b-call__title,.b-call__sub{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+  .b-call__host{display:flex;align-items:center;gap:8px;min-width:0}
+  .b-call__photo{width:28px;height:28px}
+  .b-call__name,.b-call__meta{display:none}
+  .b-call__line{font-size:14.5px;font-weight:500;line-height:20px;letter-spacing:-.012em;color:var(--k-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .b-call__notes{min-width:0}
+  .b-sheet{display:flex;gap:6px;height:24px;margin:0 -16px;padding:0 16px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    -webkit-mask-image:linear-gradient(90deg,transparent 12px,#000 var(--b-fl,16px),#000 calc(100% - 16px),transparent);mask-image:linear-gradient(90deg,transparent 12px,#000 var(--b-fl,16px),#000 calc(100% - 16px),transparent)}
+  .b-sheet::-webkit-scrollbar{display:none}
+  .b-sheet li{display:none;flex:0 0 auto;align-items:baseline;gap:6px;max-width:272px;height:24px;padding:4px 10px;border-radius:999px;background:var(--k-surface);box-shadow:inset 0 0 0 1px var(--k-line);font-size:13px;line-height:16px;color:var(--k-ink-2);white-space:nowrap}
+  .b-sheet li.is-past{display:flex;animation:k-in 220ms var(--k-ease) both}
+  .b-sheet__v{min-width:0;overflow:hidden;text-overflow:ellipsis}
+  .b-quiz{margin-top:20px}
+}
+
+/* 900px and up: two columns. The question takes 58 percent; the panel is a card that stays in view.
+   Its five rows are there from the start, so an answer landing in one never moves another. */
+@media (min-width:900px){
+  .b-page{--b-head:92px}
+  .b-nav,.b-nav--wide{max-width:1040px;--nav-h:64px}
+  .b-nav .k-nav__pill{padding:0 24px}
+  .b-nav .k-brand{font-size:17px}
+  .b-nav .k-brand svg{width:26px;height:26px}
+  .b-grid{max-width:calc(1040px + 2*var(--gutter));display:grid;grid-template-columns:58% minmax(0,1fr);column-gap:48px;align-items:start;padding-top:clamp(48px,calc(16vh - 72px),140px)}
+  .b-quiz{grid-area:1/1}
+  .b-quiz .ap-q{font-size:clamp(30px,2.9vw,40px)}
+  .b-call{grid-area:1/2;position:sticky;top:24px;padding:28px;border-radius:var(--k-r-lg);background:var(--k-surface);box-shadow:var(--k-card-shadow)}
+  .b-call__host{display:flex;align-items:center;gap:12px;margin-top:20px}
+  .b-call__photo{width:48px;height:48px}
+  .b-call__name{font-weight:600;font-size:16px;line-height:20px;letter-spacing:-.015em;color:var(--k-ink)}
+  .b-call__meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .b-call__line{display:none}
+  .b-call__notes{margin-top:24px;padding-top:24px;border-top:1px solid var(--k-line)}
+  .b-call__sub{color:var(--k-muted);line-height:16px}
+  .b-sheet{margin-top:12px}
+  .b-sheet li{display:grid;grid-template-columns:80px minmax(0,1fr);align-items:center;min-height:36px;padding:4px 0}
+  .b-sheet__v{justify-self:start;max-width:100%;min-height:28px;padding:5px 12px;border-radius:14px;font-size:13px;line-height:18px;color:var(--k-ink-2)}
+  .b-sheet li.is-set .b-sheet__v{box-shadow:inset 0 0 0 1px var(--k-line);animation:k-in 220ms var(--k-ease) both}
+  /* not answered yet: a short rule. The question on screen: the eyebrow dot. Both are drawn inside the
+     chip's own box, so the box is the same size before and after the answer lands. */
+  .b-sheet__v:empty::before{content:"";display:block;width:16px;height:16px;margin:1px 0 0 -12px;background:linear-gradient(var(--k-line),var(--k-line)) 0 50%/16px 2px no-repeat}
+  .b-sheet li.is-now .b-sheet__v:empty::before{background:radial-gradient(circle at 50% 50%,var(--k-accent) 0 3.5px,var(--k-accent-soft) 4.5px 7.5px,transparent 8px)}
+  .b-sheet li.is-now .b-sheet__k{color:var(--k-ink)}
+}
+@media (min-width:900px) and (max-width:1099px){.b-call{padding:20px}}
+
+/* contact screen: the same rhythm as route A, so the two previews differ in layout, not in the form */
+.b-quiz .lp-field{margin-bottom:16px}
+.b-quiz .lp-consent{margin-top:16px;padding-top:16px;border-top:1px solid var(--k-line)}
+.b-quiz .ap-next{margin-top:16px}
+.b-quiz .lp-priv{margin-top:12px}
+@media (max-width:359px){.b-quiz .qf-pair{grid-template-columns:minmax(0,1fr)}}
+
+/* 4. BOOKING PAGE ----------------------------------------------------------------------------------- */
+.b-bgrid{display:grid;grid-template-columns:minmax(0,1fr);row-gap:24px;padding-top:24px}
+.b-bh{margin-top:12px}
+.b-bhost{margin-top:20px}
+.b-label{color:var(--k-muted);line-height:16px}
+.b-bnotes{display:grid;row-gap:32px;padding-top:8px}
+.b-told .k-summary{margin-top:12px}
+.b-told .k-summary > *{border-radius:16px}
+.b-told .k-fine{margin-top:12px}
+.b-cover{margin-top:4px}
+.b-cover li{display:grid;grid-template-columns:28px minmax(0,1fr);column-gap:8px;padding:12px 0;border-top:1px solid var(--k-line);font-size:16px;line-height:24px;color:var(--k-ink-2);text-wrap:balance}
+.b-cover li:first-child{border-top:0}
+.b-cover__n{font:500 12px/24px var(--f-mono);letter-spacing:.04em;color:var(--k-accent)}
+/* calendar card: the second line of its bar swaps to the "open it here" link if the calendar has to
+   fall back. Both lines sit in one grid cell, so the swap changes no height. */
+.b-swap{display:grid}
+.b-swap > *{grid-area:1/1;font-size:13px;line-height:18px}
+.b-swap > a{position:relative;visibility:hidden;font-size:14px;font-weight:500;color:var(--k-ink);text-underline-offset:3px}
+.b-swap > a::after{content:"";position:absolute;inset:-17px 0}
+.is-fallback .b-swap > span{visibility:hidden}
+.is-fallback .b-swap > a{visibility:visible}
+.b-cal .k-cal__foot{text-wrap:balance}
+.b-cal .k-cal__foot a{display:inline-block;padding:16px 0;margin:-12px 0}
+.b-cal .k-cal__skel::before{display:none}
+.b-cal .k-cal__note{order:0}
+.b-page .k-legal{padding-top:4px}
+.b-page .k-legal__links{gap:0 12px;margin-bottom:0}
+.b-page .k-legal__links a{display:inline-flex;align-items:center;min-height:52px;padding:0 8px}
+.b-quiz .ap-next[disabled]{--c:#565e5a}
+@media (max-width:899px){
+  .b-bgrid{max-width:calc(720px + 2*var(--gutter))}
+}
+@media (min-width:900px){
+  .b-bgrid{grid-template-columns:minmax(0,1fr) 58%;grid-template-rows:auto 1fr;column-gap:56px;row-gap:40px;padding-top:clamp(48px,calc(16vh - 72px),140px)}
+  .b-bhead{grid-area:1/1}
+  .b-bh{font-size:clamp(30px,2.9vw,40px)}
+  .b-bhost{gap:16px;margin-top:28px}
+  .b-bhost .k-person__photo{width:72px;height:72px}
+  .b-bhost .k-person__name{font-size:19px;letter-spacing:-.025em}
+  .b-bnotes{grid-area:2/1;align-self:start;padding-top:0}
+  .b-cal{grid-area:1/2/3/3;position:sticky;top:24px;align-self:start}
+}

@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Preview kit: component sheet | Advisor Booking</title>
+<meta name="description" content="Component sheet for the Advisor Booking preview pages. Not a public page.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<!-- Fonts first, then the kit. From /preview/<route>/ the two paths are ../../assets/fonts/geist.css and ../assets/kit.css -->
+<link rel="preload" href="../assets/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/fonts/geist.css">
+<link rel="stylesheet" href="assets/kit.css">
+<style>
+/* Sheet-only layout (ks-). Nothing here belongs to the kit. */
+.ks{padding-bottom:96px}
+.ks-top{display:grid;gap:16px;padding:56px 0 40px}
+.ks-top ul{display:grid;gap:8px;max-width:76ch;color:var(--ink-2)}
+.ks-top li{display:grid;grid-template-columns:16px minmax(0,1fr);gap:8px}
+.ks-top li::before{content:"";width:6px;height:6px;margin-top:.62em;border-radius:50%;background:var(--accent)}
+.ks-sec{display:grid;gap:20px;padding:40px 0;border-top:1px solid var(--line)}
+.ks-head{display:grid;gap:8px}
+.ks-head p{max-width:84ch;color:var(--muted)}
+code{font-family:var(--f-mono);font-size:12px;padding:2px 6px;border-radius:6px;background:var(--k-well);color:var(--k-ink-2);white-space:nowrap}
+.ks-cls{display:flex;flex-wrap:wrap;gap:6px}
+.ks-grid{display:grid;gap:16px;align-items:start}
+@media (min-width:1000px){.ks-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.ks-grid--1{grid-template-columns:minmax(0,1fr)}}
+.ks-pane{display:grid;gap:24px;align-content:start;min-width:0;padding:24px;border-radius:22px;box-shadow:0 0 0 1px var(--k-line)}
+@media (max-width:480px){.ks-pane{padding:16px}}
+.ks-mode{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--k-muted)}
+.ks-row{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;min-width:0}
+.ks-over{overflow-x:auto;margin:-8px;padding:8px}
+.ks-over > .k-nav{min-width:288px}
+.ks-lab{font-family:var(--f-mono);font-size:11px;letter-spacing:.04em;color:var(--k-muted)}
+.ks-flex{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.ks-two{display:grid;gap:16px}
+@media (min-width:600px){.ks-two{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.ks-sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px}
+.ks-sw li{display:grid;gap:8px;font-family:var(--f-mono);font-size:11px;line-height:1.4;color:var(--muted)}
+.ks-sw i{display:block;height:56px;border-radius:12px;box-shadow:inset 0 0 0 1px rgba(10,30,22,.08)}
+.ks-sw b{font-weight:500;color:var(--ink)}
+.ks-glow{height:220px;border-radius:16px;--k-glow-top:-380px;display:grid;place-items:center;box-shadow:0 0 0 1px var(--k-line)}
+.ks-phones{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start}
+.ks-phone{--gutter:16px;width:min(390px,100%);min-height:664px;border-radius:28px;box-shadow:0 0 0 1px var(--k-line);background:var(--k-page);overflow:hidden}
+.ks-phone .k-q{font-size:28px}
+.ks-phone__main{display:grid;gap:24px;align-content:start;padding-top:20px;padding-bottom:32px}
+.ks-phone__main > .k-q + .k-q-sub{margin-top:-12px}
+.ks-stack{display:grid;gap:16px}
+</style>
+</head>
+<body>
+<div class="k-wrap ks">
+
+<header class="ks-top">
+  <p class="k-eyebrow">Preview kit</p>
+  <h1 class="k-h2 k-h2--md">Component sheet</h1>
+  <p class="k-lead">One stylesheet for every preview page: <code>preview/assets/kit.css</code>. Sections 1 to 7 and the footer in 12 are copied from the home page. Sections 8 to 11 are new, drawn in the same language.</p>
+  <ul>
+    <li>Link the embedded Geist first, then the kit. The kit imports nothing.</li>
+    <li>Every class starts with <code>k-</code>. Each block below lists its class names.</li>
+    <li>Night: put <code>.k-night</code> on the page or on any block. The right column shows it.</li>
+    <li>Quiz engine: put <code>.k-quiz</code> on the element around <code>#apBody</code>. The engine's own markup then takes these components (section 13).</li>
+    <li>States shown side by side use <code>.is-hover</code> <code>.is-focus</code> <code>.is-pressed</code>. They mirror the real pointer states.</li>
+  </ul>
+</header>
+
+<section class="ks-sec" id="tokens">
+  <div class="ks-head"><h2 class="k-h3">1. Tokens</h2><p>Copied from the home page, same names. Kit additions start with <code>--k-</code> and switch under <code>.k-night</code>.</p></div>
+  <ul class="ks-sw">
+    <li><i style="background:var(--bg)"></i><span><b>--bg</b><br>#ffffff</span></li>
+    <li><i style="background:var(--ink)"></i><span><b>--ink</b><br>#0d0f0e</span></li>
+    <li><i style="background:var(--ink-2)"></i><span><b>--ink-2</b><br>#2a2f2d</span></li>
+    <li><i style="background:var(--muted)"></i><span><b>--muted</b><br>#646c68</span></li>
+    <li><i style="background:var(--faint)"></i><span><b>--faint</b><br>#b9c1bd, never text</span></li>
+    <li><i style="background:var(--line)"></i><span><b>--line</b><br>#e6eae8</span></li>
+    <li><i style="background:var(--well)"></i><span><b>--well</b><br>#f4f6f5</span></li>
+    <li><i style="background:var(--accent)"></i><span><b>--accent</b><br>#0f7a62</span></li>
+    <li><i style="background:var(--accent-hover)"></i><span><b>--accent-hover</b><br>#0b6551</span></li>
+    <li><i style="background:var(--accent-soft)"></i><span><b>--accent-soft</b><br>#e7f3ee</span></li>
+    <li><i style="background:var(--accent-bright)"></i><span><b>--accent-bright</b><br>#2fbf8f</span></li>
+    <li><i style="background:var(--bad)"></i><span><b>--bad</b><br>#d4483b</span></li>
+    <li><i style="background:var(--k-field-line)"></i><span><b>--k-field-line</b><br>#848e8a, kit</span></li>
+    <li><i style="background:var(--k-err)"></i><span><b>--k-err</b><br>#b03023</span></li>
+    <li><i style="background:var(--night)"></i><span><b>--night</b><br>#0a0c0b</span></li>
+    <li><i style="background:var(--night-2)"></i><span><b>--night-2</b><br>#141816</span></li>
+    <li><i style="background:var(--night-line)"></i><span><b>--night-line</b><br>#232a27</span></li>
+    <li><i style="background:var(--night-ink)"></i><span><b>--night-ink</b><br>#f2f5f4</span></li>
+    <li><i style="background:var(--night-muted)"></i><span><b>--night-muted</b><br>#99a39f</span></li>
+    <li><i style="background:#fff;box-shadow:var(--shadow-soft)"></i><span><b>--shadow-soft</b><br>cards</span></li>
+    <li><i style="background:#fff;box-shadow:var(--shadow-lift)"></i><span><b>--shadow-lift</b><br>email box, hover</span></li>
+    <li><i style="background:#fff;box-shadow:var(--shadow-float)"></i><span><b>--shadow-float</b><br>scrolled header</span></li>
+    <li><i style="background:var(--well);border-radius:var(--k-r-sm)"></i><span><b>--k-r-sm 12</b><br>buttons, fields</span></li>
+    <li><i style="background:var(--well);border-radius:var(--k-r-md)"></i><span><b>--k-r-md 16</b><br>answers, small cards</span></li>
+    <li><i style="background:var(--well);border-radius:var(--k-r-lg)"></i><span><b>--k-r-lg 22</b><br>cards</span></li>
+    <li><i style="background:var(--well);border-radius:var(--k-r-xl)"></i><span><b>--k-r-xl 28</b><br>large panels</span></li>
+  </ul>
+  <p class="k-fine">Motion: <code>--k-ease</code> is the home curve cubic-bezier(.16,1,.3,1). <code>--k-dur-fast</code> 160ms, <code>--k-dur</code> 200ms, <code>--k-dur-slow</code> 260ms. Opacity and transform only.</p>
+</section>
+
+<section class="ks-sec" id="type">
+  <div class="ks-head"><h2 class="k-h3">2. Type</h2><div class="ks-cls"><code>.k-display</code><code>.k-h2</code><code>.k-h2--md</code><code>.k-h3</code><code>.k-q</code><code>.k-q-sub</code><code>.k-lead</code><code>.k-eyebrow</code><code>.k-mono</code><code>.k-fine</code></div></div>
+  <div class="ks-grid">
+    <div class="ks-pane">
+      <p class="ks-mode">Light</p>
+      <div class="ks-row"><p class="ks-lab">.k-eyebrow</p><p><span class="k-eyebrow" id="fx-eyebrow">For independent RIAs with $50M to $250M+ AUM</span></p></div>
+      <div class="ks-row"><p class="ks-lab">.k-display (the home hero heading)</p><p class="k-display" id="fx-display">We fill financial advisors&rsquo; calendars with business owners.</p></div>
+      <div class="ks-row"><p class="ks-lab">.k-h2</p><p class="k-h2" id="fx-h2">See if your firm is a fit</p></div>
+      <div class="ks-row"><p class="ks-lab">.k-h3</p><p class="k-h3" id="fx-h3">Pick a time for your call</p></div>
+      <div class="ks-row"><p class="ks-lab">.k-q with .k-q-sub (a quiz question and its helper)</p><p class="k-q">What is your firm&rsquo;s AUM?</p><p class="k-q-sub">Your best estimate is fine.</p></div>
+      <div class="ks-row"><p class="ks-lab">.k-lead</p><p class="k-lead" id="fx-lead">Your first step is a 20-minute call to see if your firm is a fit.</p></div>
+      <div class="ks-row"><p class="ks-lab">body, 16px</p><p id="fx-body">We work your dormant CRM first, then reach new people by email and LinkedIn.</p></div>
+      <div class="ks-row"><p class="ks-lab">.k-mono</p><p class="k-mono" id="fx-mono">Written into your services agreement</p></div>
+      <div class="ks-row"><p class="ks-lab">.k-fine</p><p class="k-fine">By continuing you agree to our <a href="../privacy.html" target="_blank" rel="noopener">Privacy Policy</a> and <a href="../terms.html" target="_blank" rel="noopener">Terms</a>.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="ks-sec" id="header">
+  <div class="ks-head"><h2 class="k-h3">3. Header</h2><div class="ks-cls"><code>.k-nav</code><code>.k-nav__pill</code><code>.k-brand</code><code>.k-nav__links</code><code>.k-nav--flow</code><code>.k-nav--compact</code><code>.k-brand--full</code><code>.is-scrolled</code><code>svg .k-mb .k-mp</code></div>
+  <p><code>.k-nav</code> alone is fixed to the top, as on the home page. <code>.k-nav--flow</code> puts it in the page. Under 480px the wordmark hides unless the brand has <code>.k-brand--full</code>.</p></div>
+  <div class="ks-grid">
+    <div class="ks-pane" style="--gutter:0px">
+      <p class="ks-mode">Light</p>
+      <div class="ks-row"><p class="ks-lab">home header: .k-nav .k-nav--flow</p>
+        <div class="ks-over"><header class="k-nav k-nav--flow" id="fx-nav"><div class="k-nav__pill">
+          <a class="k-brand" href="#header" aria-label="Advisor Booking" id="fx-brand"><svg viewBox="0 0 32 32" aria-hidden="true"><rect class="k-mb" x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect class="k-mp" x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect class="k-mp" x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect class="k-mp" x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></a>
+          <a class="k-btn k-btn--sm" href="#header" id="fx-btn-black">Get More Booked Meetings<span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        </div></header></div></div>
+      <div class="ks-row"><p class="ks-lab">.is-scrolled</p>
+        <div class="k-nav k-nav--flow is-scrolled"><div class="k-nav__pill">
+          <span class="k-brand k-brand--full"><svg viewBox="0 0 32 32" aria-hidden="true"><rect class="k-mb" x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect class="k-mp" x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect class="k-mp" x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect class="k-mp" x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span>
+          <span class="k-badge">Step 2 of 6</span>
+        </div></div></div>
+      <div class="ks-row"><p class="ks-lab">.k-nav--compact (52px) with .k-brand--full</p>
+        <div class="k-nav k-nav--flow k-nav--compact"><div class="k-nav__pill">
+          <span class="k-brand k-brand--full"><svg viewBox="0 0 32 32" aria-hidden="true"><rect class="k-mb" x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect class="k-mp" x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect class="k-mp" x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect class="k-mp" x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span>
+          <span class="k-badge">20 min</span>
+        </div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="ks-sec" id="buttons">
+  <div class="ks-head"><h2 class="k-h3">4. Buttons</h2><div class="ks-cls"><code>.k-btn</code><code>.k-btn__chip</code><code>.k-btn--accent</code><code>.k-btn--sm</code><code>.k-btn--block</code><code>.k-btn--xl</code><code>.k-btn--light</code><code>[disabled]</code><code>.is-busy</code></div>
+  <p>Black is the header button. Green is the one primary action on a screen. <code>.k-btn--block</code> is the full-width form button (56px). On night the black button turns white by itself.</p></div>
+  <div class="ks-grid">
+    <div class="ks-pane">
+      <p class="ks-mode">Light</p>
+      <div class="ks-row"><p class="ks-lab">.k-btn: default, hover, focus, pressed</p><div class="ks-flex">
+        <a class="k-btn" href="#buttons" id="fx-btn-black-md">Get More Booked Meetings<span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a class="k-btn is-hover" href="#buttons">Hover<span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a class="k-btn is-focus" href="#buttons">Focus<span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a class="k-btn is-pressed" href="#buttons">Pressed<span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div></div>
+      <div class="ks-row"><p class="ks-lab">.k-btn--accent: default, hover, focus, pressed</p><div class="ks-flex">
+        <button type="button" class="k-btn k-btn--accent" id="fx-btn-green"><span>Book intro call</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+        <button type="button" class="k-btn k-btn--accent is-hover"><span>Hover</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+        <button type="button" class="k-btn k-btn--accent is-focus"><span>Focus</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+        <button type="button" class="k-btn k-btn--accent is-pressed"><span>Pressed</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button></div></div>
+      <div class="ks-row"><p class="ks-lab">.k-btn--accent .k-btn--block: ready, [disabled], .is-busy</p><div class="ks-stack">
+        <button type="button" class="k-btn k-btn--accent k-btn--block"><span>Continue</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+        <button type="button" class="k-btn k-btn--accent k-btn--block" disabled><span>Continue</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+        <button type="button" class="k-btn k-btn--accent k-btn--block is-busy" disabled><span>Continue</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button></div></div>
+      <div class="ks-row"><p class="ks-lab">sizes: .k-btn--sm 40, default 48, .k-btn--xl 64. Then .k-btn--light</p><div class="ks-flex">
+        <a class="k-btn k-btn--sm" href="#buttons">Small<span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a class="k-btn k-btn--accent" href="#buttons">Default<span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a class="k-btn k-btn--accent k-btn--xl" href="#buttons">Extra large<span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a class="k-btn k-btn--light" href="#buttons" style="box-shadow:0 0 0 1px var(--line)">Light<span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="ks-sec" id="chips">
+  <div class="ks-head"><h2 class="k-h3">5. Eyebrow, chips, pills</h2><div class="ks-cls"><code>.k-eyebrow</code><code>.k-eyebrow--muted</code><code>.k-eyebrow--plain</code><code>.k-chip</code><code>.k-chip__dot</code><code>.k-pill</code><code>.k-pill--muted</code><code>.k-pill--plain</code><code>.k-tag</code><code>.k-badge</code></div></div>
+  <div class="ks-grid">
+    <div class="ks-pane">
+      <p class="ks-mode">Light</p>
+      <div class="ks-row"><p class="ks-lab">.k-eyebrow, --muted, --plain</p><div class="ks-flex"><span class="k-eyebrow">Step 2 of 6</span><span class="k-eyebrow k-eyebrow--muted">20 min</span><span class="k-eyebrow k-eyebrow--plain">Pipeline Audit</span></div></div>
+      <div class="ks-row"><p class="ks-lab">.k-chip with .k-chip__dot</p><div class="ks-flex"><span class="k-chip"><span class="k-chip__dot"></span>For independent RIAs with $50M to $250M+ AUM</span></div></div>
+      <div class="ks-row"><p class="ks-lab">.k-pill, .k-pill--muted, .k-pill--plain</p><div class="ks-flex"><span class="k-pill" id="fx-pill">20 min</span><span class="k-pill k-pill--muted">Google Meet</span><span class="k-pill k-pill--plain">Pipeline Audit</span></div></div>
+      <div class="ks-row"><p class="ks-lab">.k-tag, .k-badge (small labels, never body copy)</p><div class="ks-flex"><span class="k-tag">Ideal client</span><span class="k-badge">20 min</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="ks-sec" id="cards">
+  <div class="ks-head"><h2 class="k-h3">6. Cards and glow</h2><div class="ks-cls"><code>.k-card</code><code>.k-card--sm</code><code>.k-card--xl</code><code>.k-card--float</code><code>.k-card--feat</code><code>.k-well</code><code>.k-glow</code><code>--k-glow-top</code></div>
+  <p>Cards have no border line: the edge is the 1px ring inside <code>--shadow-soft</code>. <code>.k-glow</code> goes on a section. Its light sits behind the content and never takes a tap. The brightest point is 700px below <code>--k-glow-top</code>.</p></div>
+  <div class="ks-grid">
+    <div class="ks-pane">
+      <p class="ks-mode">Light</p>
+      <div class="ks-two">
+        <div class="ks-row"><p class="ks-lab">.k-card (22px radius, 28px padding)</p><div class="k-card" id="fx-card"><p class="k-mono">Pipeline Audit</p><p style="margin-top:12px;color:var(--k-muted)">Your first step is a 20-minute call to see if your firm is a fit.</p></div></div>
+        <div class="ks-row"><p class="ks-lab">.k-card .k-card--feat</p><div class="k-card k-card--feat"><p class="k-mono">Pipeline Audit</p><p style="margin-top:12px;color:var(--k-muted)">Your first step is a 20-minute call to see if your firm is a fit.</p></div></div>
+        <div class="ks-row"><p class="ks-lab">.k-card .k-card--sm (16px radius)</p><div class="k-card k-card--sm"><p style="color:var(--k-ink-2)">A real person books every meeting.</p></div></div>
+        <div class="ks-row"><p class="ks-lab">.k-well</p><div class="k-well"><p style="color:var(--k-ink-2)">A real person books every meeting.</p></div></div>
+      </div>
+      <div class="ks-row"><p class="ks-lab">.k-glow (here with --k-glow-top:-380px)</p><div class="k-glow ks-glow"><p class="k-h3">Pick a time for your call</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="ks-sec" id="email">
+  <div class="ks-head"><h2 class="k-h3">7. Email box</h2><div class="ks-cls"><code>.k-ec</code><code>.k-ec__err</code><code>.k-ec__fine</code><code>.is-bad</code></div><p>The home page's email box, unchanged. It stays white on night, as it does on the home page's dark band. It is the model for the fields in section 10.</p></div>
+  <div class="ks-grid">
+    <div class="ks-pane">
+      <p class="ks-mode">Light</p>
+      <div class="ks-row"><p class="ks-lab">default</p>
+        <form class="k-ec" id="fx-ec" action="#email" onsubmit="return false" novalidate><label class="k-sr-only" for="ks-ec1">Work email</label><input type="email" id="ks-ec1" name="email" placeholder="Your work email" autocomplete="off" inputmode="email"><button type="submit" class="k-btn k-btn--accent" id="fx-ec-btn"><span>Book intro call</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button></form>
+        <p class="k-ec__fine" id="fx-ec-fine">See the exact outbound and reactivation system we&rsquo;ll run for your firm.</p></div>
+      <div class="ks-row"><p class="ks-lab">focus</p>
+        <div class="k-ec is-focus"><label class="k-sr-only" for="ks-ec2">Work email</label><input type="email" id="ks-ec2" placeholder="Your work email" autocomplete="off" value="test.visitor@example.org"><button type="button" class="k-btn k-btn--accent"><span>Book intro call</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button></div></div>
+      <div class="ks-row"><p class="ks-lab">.is-bad with .k-ec__err</p>
+        <div class="k-ec is-bad"><label class="k-sr-only" for="ks-ec3">Work email</label><input type="email" id="ks-ec3" placeholder="Your work email" autocomplete="off" value="test.visitor@"><button type="button" class="k-btn k-btn--accent"><span>Book intro call</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button></div>
+        <p class="k-ec__err" id="fx-ec-err">Enter a valid work email.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="ks-sec" id="answers">
+  <div class="ks-head"><h2 class="k-h3">8. Answer card</h2><div class="ks-cls"><code>.k-answers</code><code>.k-answer</code><code>.k-answer__key</code><code>[aria-pressed=true]</code><code>.is-chosen</code></div>
+  <p>A full-width button, 56px or taller. Mono letter chip on the left (the engine's letter keys), the label, and a check mark that appears when chosen. The check mark's space is always kept, so nothing moves.</p></div>
+  <div class="ks-grid">
+    <div class="ks-pane">
+      <p class="ks-mode">Light</p>
+      <div class="ks-row"><p class="ks-lab">a group of four: default, default, default, chosen</p>
+        <div class="k-answers" role="group" aria-label="Example answers" id="fx-answers">
+          <button type="button" class="k-answer" aria-pressed="false"><span class="k-answer__key" aria-hidden="true">A</span><span>Yes, independent</span></button>
+          <button type="button" class="k-answer" aria-pressed="false"><span class="k-answer__key" aria-hidden="true">B</span><span>Yes, hybrid (RIA plus a broker-dealer)</span></button>
+          <button type="button" class="k-answer" aria-pressed="false"><span class="k-answer__key" aria-hidden="true">C</span><span>No, I&rsquo;m with a broker-dealer or a big Wall Street firm (wirehouse)</span></button>
+          <button type="button" class="k-answer" aria-pressed="true"><span class="k-answer__key" aria-hidden="true">D</span><span>I&rsquo;m not a financial advisor</span></button>
+        </div></div>
+      <div class="ks-row"><p class="ks-lab">hover</p><button type="button" class="k-answer is-hover" aria-pressed="false"><span class="k-answer__key" aria-hidden="true">A</span><span>1 to 2 advisors</span></button></div>
+      <div class="ks-row"><p class="ks-lab">focus</p><button type="button" class="k-answer is-focus" aria-pressed="false"><span class="k-answer__key" aria-hidden="true">B</span><span>3 to 5 advisors</span></button></div>
+      <div class="ks-row"><p class="ks-lab">pressed</p><button type="button" class="k-answer is-pressed" aria-pressed="false"><span class="k-answer__key" aria-hidden="true">C</span><span>$100 Million to $500 Million</span></button></div>
+    </div>
+  </div>
+</section>
+
+<section class="ks-sec" id="progress">
+  <div class="ks-head"><h2 class="k-h3">9. Progress and back</h2><div class="ks-cls"><code>.k-progress</code><code>.k-progress__count</code><code>.k-progress__track</code><code>.k-progress__fill</code><code>.k-progress--seg</code><code>--k-steps</code><code>.k-steps</code><code>.is-done</code><code>.is-current</code><code>.k-back</code></div>
+  <p>The engine sets only the width of <code>#apBar</code>. Give that id to <code>.k-progress__fill</code>. The segmented look is a mask on the track, so it needs no extra markup. <code>.k-back</code> is 52px tall with a quiet label.</p></div>
+  <div class="ks-grid">
+    <div class="ks-pane">
+      <p class="ks-mode">Light</p>
+      <div class="ks-row"><p class="ks-lab">.k-progress (plain bar) with .k-progress__count</p>
+        <div class="k-progress"><p class="k-progress__count">Step <b>2</b> of 6</p><div class="k-progress__track" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="33"><div class="k-progress__fill" style="width:33%"></div></div></div></div>
+      <div class="ks-row"><p class="ks-lab">.k-progress .k-progress--seg, style="--k-steps:6", fill at 33%</p>
+        <div class="k-progress k-progress--seg" style="--k-steps:6"><div class="k-progress__track" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="33"><div class="k-progress__fill" style="width:33%"></div></div></div></div>
+      <div class="ks-row"><p class="ks-lab">.k-steps: .is-done, .is-done, .is-current, then three to go</p>
+        <div class="k-steps" aria-hidden="true"><i class="is-done"></i><i class="is-done"></i><i class="is-current"></i><i></i><i></i><i></i></div></div>
+      <div class="ks-row"><p class="ks-lab">.k-back: default, hover, focus, [disabled]</p><div class="ks-flex">
+        <button type="button" class="k-back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span>Previous</span></button>
+        <button type="button" class="k-back is-hover"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span>Previous</span></button>
+        <button type="button" class="k-back is-focus"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span>Previous</span></button>
+        <button type="button" class="k-back" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span>Previous</span></button></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="ks-sec" id="fields">
+  <div class="ks-head"><h2 class="k-h3">10. Fields and consent</h2><div class="ks-cls"><code>.k-field</code><code>.k-label</code><code>.k-input</code><code>.k-field__hint</code><code>.k-field__err</code><code>.is-bad</code><code>.k-pair</code><code>.k-tel</code><code>.k-tel__cc</code><code>.k-consent</code><code>.k-check</code></div>
+  <p>Label above, 56px box, 17px text. Focus is the email box's 3px accent ring. Error is its red ring and a 500-weight message. The checkbox is 24px with a 52px tap area, and the whole sentence is tappable.</p></div>
+  <div class="ks-grid">
+    <div class="ks-pane">
+      <p class="ks-mode">Light</p>
+      <div class="k-pair">
+        <div class="k-field"><label class="k-label" for="ks-f1">First Name</label><input class="k-input" id="ks-f1" type="text" autocomplete="off" value="Test"></div>
+        <div class="k-field"><label class="k-label" for="ks-f2">Last Name</label><input class="k-input" id="ks-f2" type="text" autocomplete="off" placeholder="Last Name"></div>
+      </div>
+      <div class="ks-row"><p class="ks-lab">focus</p><div class="k-field"><label class="k-label" for="ks-f3">Work Email</label><input class="k-input is-focus" id="ks-f3" type="email" autocomplete="off" value="test.visitor@example.org"></div></div>
+      <div class="ks-row"><p class="ks-lab">.k-field.is-bad</p><div class="k-field is-bad"><label class="k-label" for="ks-f4">Work Email</label><input class="k-input" id="ks-f4" type="email" autocomplete="off" value="test.visitor@" aria-invalid="true" aria-describedby="ks-f4e"><p class="k-field__err" id="ks-f4e">That email does not look right. Check it and try again.</p></div></div>
+      <div class="ks-row"><p class="ks-lab">.k-tel with .k-tel__cc, and a .k-field__hint</p><div class="k-field"><label class="k-label" for="ks-f5">Mobile Number</label><div class="k-tel"><span class="k-tel__cc" aria-hidden="true">+1</span><input class="k-input" id="ks-f5" type="tel" inputmode="tel" autocomplete="off" value="(561) 555-0123" aria-describedby="ks-f5h"></div><p class="k-field__hint" id="ks-f5h">No spam, ever. We don&rsquo;t sell your information.</p></div></div>
+      <div class="ks-row"><p class="ks-lab">.k-consent with .k-check: not checked</p>
+        <div class="k-consent"><div class="k-check"><input type="checkbox" id="ks-c1"><label for="ks-c1"><strong>Yes, you can call and text me.</strong> I agree that De Jesus Ventures LLC may call me, text me, and leave me voicemails at the number above about my call and its services, including with automated dialing technology and prerecorded or artificial voice messages, even if my number is on a federal, state, or company Do Not Call list. Consent is not a condition of purchase. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="../privacy.html" target="_blank" rel="noopener">Privacy Policy</a> and <a href="../terms.html" target="_blank" rel="noopener">Terms</a>.</label></div><p class="k-field__err">Please check the box to continue.</p></div></div>
+      <div class="ks-row"><p class="ks-lab">checked</p>
+        <div class="k-consent"><div class="k-check"><input type="checkbox" id="ks-c2" checked><label for="ks-c2"><strong>Yes, you can call and text me.</strong> Consent is not a condition of purchase. Reply STOP to opt out, HELP for help.</label></div></div></div>
+      <div class="ks-row"><p class="ks-lab">.k-consent.is-bad</p>
+        <div class="k-consent is-bad"><div class="k-check"><input type="checkbox" id="ks-c3" aria-describedby="ks-c3e"><label for="ks-c3"><strong>Yes, you can call and text me.</strong> Consent is not a condition of purchase. Reply STOP to opt out, HELP for help.</label></div><p class="k-field__err" id="ks-c3e">Please check the box to continue.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="ks-sec" id="person">
+  <div class="ks-head"><h2 class="k-h3">11. Person, summary, calendar</h2><div class="ks-cls"><code>.k-person</code><code>.k-person--lg</code><code>.k-person__photo</code><code>.k-person__body</code><code>.k-person__name</code><code>.k-person__meta</code><code>.k-summary</code><code>.k-summary__k</code><code>.k-cal</code><code>.k-cal__bar</code><code>.k-cal__title</code><code>.k-cal__body</code><code>.k-cal__skel</code><code>.k-cal__note</code><code>.k-cal__mount</code><code>.k-cal__foot</code><code>.is-ready</code><code>--k-cal-h</code></div>
+  <p>The calendar card keeps <code>--k-cal-h</code> of height from the first paint (660px or the screen height, whichever is larger). The sheet sets it to 420px to save room. The loading drawing is still: no shimmer, no spinner.</p></div>
+  <div class="ks-grid">
+    <div class="ks-pane">
+      <p class="ks-mode">Light</p>
+      <div class="ks-row"><p class="ks-lab">.k-person (48px photo)</p>
+        <div class="k-person"><img class="k-person__photo" src="../assets/nick-de-jesus.jpg" width="48" height="48" alt="Photo of Nick De Jesus"><div class="k-person__body"><p class="k-person__name">Nick De Jesus</p><p class="k-person__meta"><span class="k-pill">20 min</span><span class="k-pill k-pill--muted">Google Meet</span></p></div></div></div>
+      <div class="ks-row"><p class="ks-lab">.k-person .k-person--lg (72px photo)</p>
+        <div class="k-person k-person--lg"><img class="k-person__photo" src="../assets/nick-de-jesus.jpg" width="72" height="72" alt="Photo of Nick De Jesus"><div class="k-person__body"><p class="k-person__name">Nick De Jesus</p><p class="k-person__meta"><span class="k-pill">20 min</span><span class="k-pill k-pill--muted">Google Meet</span><span class="k-pill k-pill--muted">Pipeline Audit</span></p></div></div></div>
+      <div class="ks-row"><p class="ks-lab">.k-summary with .k-summary__k</p>
+        <ul class="k-summary"><li><span class="k-summary__k">Firm</span>Yes, independent</li><li><span class="k-summary__k">AUM</span>$100 Million to $500 Million</li><li><span class="k-summary__k">Advisors</span>3 to 5 advisors</li></ul></div>
+      <div class="ks-row"><p class="ks-lab">.k-cal: loading state</p>
+        <section class="k-cal" style="--k-cal-h:420px" aria-label="Calendar example">
+          <header class="k-cal__bar"><p class="k-cal__title"><b>Pipeline Audit</b><span>20 min on Google Meet</span></p><span class="k-badge">20 min</span></header>
+          <div class="k-cal__body"><div class="k-cal__skel"><p class="k-cal__note">Loading the calendar.</p></div><div class="k-cal__mount"></div></div>
+          <p class="k-cal__foot">If it does not appear, email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will send you times.</p>
+        </section></div>
+    </div>
+  </div>
+</section>
+
+<section class="ks-sec" id="footer">
+  <div class="ks-head"><h2 class="k-h3">12. Footer and preview label</h2><div class="ks-cls"><code>.k-legal</code><code>.k-legal__links</code><code>.k-legal__disc</code><code>.k-legal--light</code><code>.k-preview-note</code></div>
+  <p>The home footer is night by default. <code>.k-legal--light</code> is the same block on a white page. The preview label is fixed at the bottom left of this page and runs up the gutter, the one strip no control enters, so it can never sit on one.</p></div>
+  <div class="ks-grid ks-grid--1">
+    <footer class="k-legal" id="fx-legal" style="border-radius:22px">
+      <nav class="k-legal__links" aria-label="Footer example, night"><a href="../privacy.html" target="_blank" rel="noopener">Privacy Policy</a><a href="../terms.html" target="_blank" rel="noopener">Terms of Service</a></nav>
+      <p class="k-legal__disc" id="fx-legal-disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
+    </footer>
+    <footer class="k-legal k-legal--light" style="border-radius:22px;box-shadow:0 0 0 1px var(--line);border-top:0">
+      <nav class="k-legal__links" aria-label="Footer example, light"><a href="../privacy.html" target="_blank" rel="noopener">Privacy Policy</a><a href="../terms.html" target="_blank" rel="noopener">Terms of Service</a></nav>
+      <p class="k-legal__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
+    </footer>
+  </div>
+</section>
+
+<section class="ks-sec" id="engine">
+  <div class="ks-head"><h2 class="k-h3">13. Engine bridge</h2><div class="ks-cls"><code>.k-quiz</code><code>.k-quiz--labels</code><code>.k-quiz--enter</code><code>.k-hp</code><code>.k-sr-only</code></div>
+  <p>This block is the exact markup <code>assets/funnel.js</code> builds, with its own class names, inside <code>.k-quiz .k-quiz--labels</code>. No other CSS is applied. It should look the same as sections 8 to 10.</p></div>
+  <div class="ks-grid">
+    <div class="ks-pane k-quiz k-quiz--labels" id="fx-bridge">
+      <p class="ks-mode">Light</p>
+      <div class="ap-screen" data-q="role">
+        <h3 class="ap-q" id="ks-apQ1" tabindex="-1">What&rsquo;s your role at your firm?</h3>
+        <div class="ap-opts ap-opts--2" role="group" aria-labelledby="ks-apQ1">
+          <button type="button" class="ap-opt" aria-pressed="true"><span class="ap-key" aria-hidden="true">A</span><span>I own or lead the firm</span></button>
+          <button type="button" class="ap-opt" aria-pressed="false"><span class="ap-key" aria-hidden="true">B</span><span>I don&rsquo;t own or lead the firm</span></button>
+        </div>
+        <button type="button" class="qf-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span>Previous</span></button>
+      </div>
+      <div class="ap-screen" data-q="contact">
+        <h3 class="ap-q" id="ks-apQ2" tabindex="-1">What&rsquo;s the best contact information to reach you?</h3>
+        <p class="ap-sub">No spam, ever. We don&rsquo;t sell your information.</p>
+        <form novalidate onsubmit="return false">
+          <div class="qf-pair">
+            <div class="lp-field" id="ks-apf-first"><label class="lp-lbl sr-only" for="ks-ap-first">First Name</label><input type="text" id="ks-ap-first" autocomplete="off" placeholder="First Name" value="Test"><div class="lp-err">Enter your first name.</div></div>
+            <div class="lp-field invalid" id="ks-apf-last"><label class="lp-lbl sr-only" for="ks-ap-last">Last Name</label><input type="text" id="ks-ap-last" autocomplete="off" placeholder="Last Name" aria-invalid="true"><div class="lp-err">Enter your last name.</div></div>
+          </div>
+          <div class="lp-field" id="ks-apf-phone"><label class="lp-lbl sr-only" for="ks-ap-phone">Mobile Number</label><div class="lp-tel"><span class="lp-tel__cc" aria-hidden="true">+1</span><input type="tel" id="ks-ap-phone" autocomplete="off" placeholder="Mobile Number" inputmode="tel"></div><div class="lp-err">That phone number does not look right. Check it and try again.</div></div>
+          <div class="lp-consent invalid" id="ks-apf-sms"><div class="lp-consent__row"><input type="checkbox" id="ks-ap-sms"><label for="ks-ap-sms"><strong>Yes, you can call and text me.</strong> Consent is not a condition of purchase. Reply STOP to opt out, HELP for help.</label></div><div class="lp-err">Please check the box to continue.</div></div>
+          <button type="submit" class="btn btn--accent lp-btn-block ap-next"><span>Continue</span><span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+          <p class="lp-priv">By continuing you agree to our <a href="../privacy.html" target="_blank" rel="noopener">Privacy Policy</a> and <a href="../terms.html" target="_blank" rel="noopener">Terms</a>.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ks-sec" id="screens">
+  <div class="ks-head"><h2 class="k-h3">14. Put together, at phone width</h2><p>Three 390 by 664 frames built only from kit classes, to show spacing and rhythm. They are examples, not a route design. Question copy is the production copy.</p></div>
+  <div class="ks-phones">
+    <div class="ks-phone" id="fx-phone-q">
+      <div class="k-nav k-nav--flow"><div class="k-nav__pill"><span class="k-brand k-brand--full"><svg viewBox="0 0 32 32" aria-hidden="true"><rect class="k-mb" x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect class="k-mp" x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect class="k-mp" x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect class="k-mp" x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span><span class="k-badge">Step 1 of 6</span></div></div>
+      <div class="k-col ks-phone__main">
+        <div class="k-progress k-progress--seg" style="--k-steps:6"><div class="k-progress__track" role="progressbar" aria-label="Progress, example" aria-valuemin="0" aria-valuemax="100" aria-valuenow="17"><div class="k-progress__fill" style="width:17%"></div></div></div>
+        <p class="k-q">Is your firm a registered investment adviser (RIA)?</p>
+        <div class="k-answers" role="group" aria-label="Example question">
+          <button type="button" class="k-answer" aria-pressed="false"><span class="k-answer__key" aria-hidden="true">A</span><span>Yes, independent</span></button>
+          <button type="button" class="k-answer" aria-pressed="false"><span class="k-answer__key" aria-hidden="true">B</span><span>Yes, hybrid (RIA plus a broker-dealer)</span></button>
+          <button type="button" class="k-answer" aria-pressed="false"><span class="k-answer__key" aria-hidden="true">C</span><span>No, I&rsquo;m with a broker-dealer or a big Wall Street firm (wirehouse)</span></button>
+          <button type="button" class="k-answer" aria-pressed="false"><span class="k-answer__key" aria-hidden="true">D</span><span>I&rsquo;m not a financial advisor</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="ks-phone" id="fx-phone-c">
+      <div class="k-nav k-nav--flow"><div class="k-nav__pill"><span class="k-brand k-brand--full"><svg viewBox="0 0 32 32" aria-hidden="true"><rect class="k-mb" x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect class="k-mp" x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect class="k-mp" x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect class="k-mp" x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span><span class="k-badge">Step 6 of 6</span></div></div>
+      <div class="k-col ks-phone__main">
+        <div class="k-progress k-progress--seg" style="--k-steps:6"><div class="k-progress__track" role="progressbar" aria-label="Progress, example" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><div class="k-progress__fill" style="width:100%"></div></div></div>
+        <p class="k-q">What&rsquo;s the best contact information to reach you?</p>
+        <p class="k-q-sub">No spam, ever. We don&rsquo;t sell your information.</p>
+        <div>
+          <div class="k-pair">
+            <div class="k-field"><label class="k-label" for="ks-p1">First Name</label><input class="k-input" id="ks-p1" type="text" autocomplete="off" value="Test"></div>
+            <div class="k-field"><label class="k-label" for="ks-p2">Last Name</label><input class="k-input" id="ks-p2" type="text" autocomplete="off" value="Visitor"></div>
+          </div>
+          <div class="k-field"><label class="k-label" for="ks-p3">Work Email</label><input class="k-input" id="ks-p3" type="email" autocomplete="off" value="test.visitor@example.org"></div>
+          <div class="k-field"><label class="k-label" for="ks-p4">Mobile Number</label><div class="k-tel"><span class="k-tel__cc" aria-hidden="true">+1</span><input class="k-input" id="ks-p4" type="tel" inputmode="tel" autocomplete="off" value="(561) 555-0123"></div></div>
+          <div class="k-consent"><div class="k-check"><input type="checkbox" id="ks-p5" checked><label for="ks-p5"><strong>Yes, you can call and text me.</strong> I agree that De Jesus Ventures LLC may call me, text me, and leave me voicemails at the number above about my call and its services, including with automated dialing technology and prerecorded or artificial voice messages, even if my number is on a federal, state, or company Do Not Call list. Consent is not a condition of purchase. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="../privacy.html" target="_blank" rel="noopener">Privacy Policy</a> and <a href="../terms.html" target="_blank" rel="noopener">Terms</a>.</label></div></div>
+          <button type="button" class="k-btn k-btn--accent k-btn--block" style="margin-top:24px"><span>Continue</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+          <p class="k-fine k-center" style="margin-top:16px">By continuing you agree to our <a href="../privacy.html" target="_blank" rel="noopener">Privacy Policy</a> and <a href="../terms.html" target="_blank" rel="noopener">Terms</a>.</p>
+          <button type="button" class="k-back" style="margin-top:8px"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span>Previous</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="ks-phone" id="fx-phone-b">
+      <div class="k-nav k-nav--flow"><div class="k-nav__pill"><span class="k-brand k-brand--full"><svg viewBox="0 0 32 32" aria-hidden="true"><rect class="k-mb" x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect class="k-mp" x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect class="k-mp" x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect class="k-mp" x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></span><span class="k-badge">20 min</span></div></div>
+      <div class="k-col ks-phone__main">
+        <p class="k-q">Pick a time for your call, Test.</p>
+        <div class="k-person"><img class="k-person__photo" src="../assets/nick-de-jesus.jpg" width="48" height="48" alt="Photo of Nick De Jesus"><div class="k-person__body"><p class="k-person__name">Nick De Jesus</p><p class="k-person__meta"><span class="k-pill">20 min</span><span class="k-pill k-pill--muted">Google Meet</span></p></div></div>
+        <section class="k-cal" style="--k-cal-h:400px" aria-label="Calendar example, phone">
+          <header class="k-cal__bar"><p class="k-cal__title"><b>Pipeline Audit</b><span>20 min on Google Meet</span></p></header>
+          <div class="k-cal__body"><div class="k-cal__skel"><p class="k-cal__note">Loading the calendar.</p></div><div class="k-cal__mount"></div></div>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+<p class="k-preview-note">Preview. Nothing here is sent to the CRM.</p>
+<script>
+/* Sheet only: copy each light block into a night twin, so the two can never drift apart. */
+(function () {
+  var seen = 0;
+  function twin(el) {
+    var n = el.cloneNode(true); seen++;
+    n.classList.add('k-night'); n.setAttribute('data-night', '');
+    var fix = function (attr) { Array.prototype.forEach.call(n.querySelectorAll('[' + attr + ']'), function (x) { x.setAttribute(attr, x.getAttribute(attr) + '-n'); }); };
+    if (n.id) n.id += '-n';
+    fix('id'); fix('for'); fix('aria-labelledby'); fix('aria-describedby');
+    Array.prototype.forEach.call(n.querySelectorAll('[aria-label]'), function (x) { x.setAttribute('aria-label', x.getAttribute('aria-label') + ', night'); });
+    var m = n.querySelector('.ks-mode'); if (m) m.textContent = 'Night (.k-night)';
+    el.parentNode.insertBefore(n, el.nextSibling);
+  }
+  Array.prototype.slice.call(document.querySelectorAll('.ks-pane, .ks-phone')).forEach(twin);
+})();
+</script>
+</body>
+</html>
