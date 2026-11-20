@@ -147,13 +147,21 @@ body.in-frame .booked__card{box-shadow:none}
   };
   if (ap) payload.funnel_entry = String(CFG.funnelEntry || '');   /* only /L1 bookings; direct bookings send none */
   payload.fbp = (function () { var m = document.cookie.match(/(?:^|;\s*)_fbp=([^;]+)/); return m ? decodeURIComponent(m[1]) : ''; })();
+  /* Ad click ids, the same ones the lead record carries. Sent only when this visit has them, so a booking made on a later
+     visit never sends a blank that could overwrite the id saved with the lead. */
+  if (utm.fbclid) payload.fbclid = utm.fbclid;
+  if (utm.gclid) payload.gclid = utm.gclid;
 
   /* A booking that came from /L1: mark the saved request as booked, so the form starts fresh next time. */
   try { var abs = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); if (abs && abs.done && !abs.booked) { abs.booked = true; localStorage.setItem('ab_apply_v1', JSON.stringify(abs)); } } catch (e) {}
+  /* A short fingerprint of this confirmation address: enough to tell a new booking from a repeat of the same one, without
+     keeping the visitor's details on the device. */
+  var bookedMark = (function (s) { for (var h = 5381, i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return 'b' + (h >>> 0).toString(36) + '.' + s.length; })(location.search);
   var sameOriginParent = false;
   try { sameOriginParent = inFrame && !!window.parent.location.href; } catch (e) { sameOriginParent = false; }
   if (sameOriginParent) {
     /* Inside the scheduler frame on one of our booking pages: hand the booking to that page, which posts it to the CRM. */
+    try { localStorage.setItem('ab_booked_seen', bookedMark); } catch (e) {}   /* the booking page reports it: a later full-page open of this address must not */
     try { window.parent.postMessage({ event: 'iclosed.booked', payload: payload }, location.origin); } catch (e) {}
     return;
   }
@@ -164,6 +172,8 @@ body.in-frame .booked__card{box-shadow:none}
      crawler: show the page but report nothing (no CRM record, no GTM event, no ad conversion). */
   var hasDetail = Object.keys(qi).some(function (k) { return !!qi[k] && !/^(utm|fbclid|gclid|gbraid|wbraid|msclkid|ttclid|lifatid)/.test(k); });
   var ref = String(document.referrer || '');
+  /* Sent on by the not-found page from /booked/ or /Booked: that is a typed address, not a sign of a booking. */
+  try { var ru = new URL(ref); if (ru.origin === location.origin && /^\/booked(?:\.html)?\/*$/i.test(ru.pathname)) ref = ''; } catch (e) {}
   var sentHere = /^https?:\/\/([^\/?#]+\.)?iclosed\.io([:\/?#]|$)/i.test(ref) || ref.indexOf(location.origin + '/') === 0;
   if (!hasDetail && !ap && !lp && !sentHere) return;
 
@@ -171,7 +181,11 @@ body.in-frame .booked__card{box-shadow:none}
   var seenKey = 'ab_booked_seen';
   var seen = false;
   try { seen = sessionStorage.getItem(seenKey) === location.search; sessionStorage.setItem(seenKey, location.search); } catch (e) {}
-  if (lp && lp.booked) seen = true;
+  /* The same confirmation opened again in another tab or on another day is not a second booking. */
+  if (hasDetail) { try { if (localStorage.getItem(seenKey) === bookedMark) seen = true; localStorage.setItem(seenKey, bookedMark); } catch (e) {} }
+  /* A browser that already booked through a landing page: a bare open is not a new booking, but one that arrives with
+     its own details is (a rebooking, or a later booking through the quiz). */
+  if (lp && lp.booked && !hasDetail) seen = true;
   if (seen) return;
   if (lp) {
     try { lp.booked = true; lp.stage = 'booked'; lp.firstName = lp.firstName || ((lp.answers && lp.answers.first) || ''); lp.answers = {}; localStorage.setItem('ab_lp_v1', JSON.stringify(lp)); } catch (e) {}

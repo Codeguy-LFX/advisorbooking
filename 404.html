@@ -3,6 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>/* Near misses of a real address go to the real page, keeping the campaign tags. This runs before the stylesheets so the
+   visitor is not left waiting on them. It only ever goes to an address on this site that is known to exist:
+   1. /l1, /l1/q, /l1/dq in the wrong case (GitHub Pages paths are case-sensitive).
+   2. A known page typed with a trailing slash or with capitals (/booked/, /Pilot, /Blog/, a blog post with a slash). */
+(function () { var p = location.pathname, m = /^\/l1(?:\/(q|dq))?\/?(?:index\.html)?$/i.exec(p);
+  if (m) { var want = '/L1/' + (m[1] ? m[1].toUpperCase() + '/' : ''); if (p !== want) location.replace(want + location.search + location.hash); return; }
+  var low = p.toLowerCase().replace(/\/+$/, ''), to = '';
+  var page = /^\/(book|booked|pilot|meetings|founding-sprint|contact|about|privacy|terms|welcome)(?:\.html)?$/.exec(low);
+  if (page) to = '/' + page[1];
+  else if (/^\/(blog|v1|v2)$/.test(low)) to = low + '/';
+  else if (/^\/blog\/[a-z0-9-]+$/.test(low)) to = low;
+  if (!to || to === p) return;
+  if (String(document.referrer || '').split(/[?#]/)[0] === location.origin + p) return;   /* the server sent our own forward back here: stop */
+  location.replace(to + location.search + location.hash); })();</script>
 <title>Page not found | Advisor Booking</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#ffffff">
@@ -12,9 +26,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/styles.css">
-<script>/* /l1, /l1/q, /l1/dq in the wrong case (GitHub Pages paths are case-sensitive): go to the right page, keeping the campaign tags. */
-(function () { var m = /^\/l1(?:\/(q|dq))?\/?(?:index\.html)?$/i.exec(location.pathname); if (!m) return;
-  var want = '/L1/' + (m[1] ? m[1].toUpperCase() + '/' : ''); if (location.pathname !== want) location.replace(want + location.search + location.hash); })();</script>
 </head>
 <body>
 <main id="main">

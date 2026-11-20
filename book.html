@@ -29,9 +29,12 @@ if (/claudeusercontent\.com$|\.claude\.ai$/.test(location.hostname)) window.__AB
 .book-full .iclosed-widget,.book-full .calendly-frame{display:block;width:100%;border:0;border-radius:12px;
   height:calc(100vh - 150px);height:calc(100dvh - 150px);min-height:660px}
 .book-full .notice{text-align:left;max-width:640px;margin:24px auto 0}
+/* The calendar's height is held from the first paint, so the footer does not jump when the calendar replaces the note. */
+.book-full .calendly-mount{display:flow-root;min-height:660px;min-height:max(660px,calc(100vh - 150px));min-height:max(660px,calc(100dvh - 150px))}
 .book-foot{padding:4px 20px 22px;text-align:center}
 .book-foot .fine{max-width:640px;margin:0 auto}
 </style>
+<noscript><style>.book-full .calendly-mount{display:block;min-height:200px}</style></noscript>
 </head>
 <body class="page-book">
 <a class="skip-link" href="#main">Skip to content</a>

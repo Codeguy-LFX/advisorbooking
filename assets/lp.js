@@ -210,8 +210,9 @@
       utm_source: utm.utm_source || '', utm_medium: utm.utm_medium || '', utm_campaign: utm.utm_campaign || '',
       utm_term: utm.utm_term || '', utm_content: utm.utm_content || '',
       gclid: utm.gclid || '', fbclid: utm.fbclid || '', fbp: cookie('_fbp'), fbc: cookie('_fbc'),
-      sms_consent: !!A.consent, consent_text: consentText(), consent_text_version: LP.CONSENT_TEXT_VERSION,
-      consent_timestamp: new Date().toISOString(),
+      /* No consent wording and no consent time on a record whose box is not ticked. */
+      sms_consent: !!A.consent, consent_text: A.consent ? consentText() : '', consent_text_version: LP.CONSENT_TEXT_VERSION,
+      consent_timestamp: A.consent ? (A.consentAt || new Date().toISOString()) : '',
       bot_flag: botFlag ? 'true' : 'false', bot_reason: botReason,
       test_mode: LP.TEST_MODE ? 'true' : 'false'
     };
@@ -398,6 +399,8 @@
     answers.first = val('in-first'); answers.last = val('in-last');
     answers.name = (answers.first + ' ' + answers.last).trim();
     answers.phone = val('in-phone'); answers.email = val('in-email'); answers.consent = consentChecked();
+    /* The moment the box was ticked, kept with the answers, so every later record carries that time and not its own. */
+    if (!answers.consent) answers.consentAt = ''; else if (!answers.consentAt) answers.consentAt = new Date().toISOString();
   }
   function contactComplete() { return contactTrigger() && emailOk(val('in-email')); }
   function tooFast() { return !resumed && (Date.now() - T0) / 1000 < (LP.MIN_SECONDS_TO_SUBMIT || 0); }
@@ -780,7 +783,11 @@
       var t = ev.target; if (!t || !t.id) return;
       if (t.id === 'in-phone' || t.id === 'in-first' || t.id === 'in-last' || t.id === 'in-email') maybeContact();
     });
-    $('in-consent').addEventListener('change', maybeContact);
+    $('in-consent').addEventListener('change', function () {   // the consent time is the moment of this tick; an untick clears it
+      answers.consent = consentChecked(); answers.consentAt = answers.consent ? new Date().toISOString() : '';
+      if (sid && !bookedFlag) save();
+      maybeContact();
+    });
     window.addEventListener('pagehide', maybeContact);
     doc.addEventListener('visibilitychange', function () { if (doc.visibilityState === 'hidden') maybeContact(); });
 

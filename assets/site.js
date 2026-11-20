@@ -319,14 +319,21 @@
 
   /* 6. Booking confirmed (Calendly postMessage) --------------------------- */
   function initCalendlyListener() {
+    var reported = {}, converted = false;   /* the calendar frame can load its confirmation twice: report each booking once */
     window.addEventListener('message', function (e) {
       var d = e.data || {};
       var fromCalendly = d.event === 'calendly.event_scheduled' && (!e.origin || /(^|\.)calendly\.com$/.test(String(e.origin).replace(/^https?:\/\//, '')));
       var fromBookedPage = d.event === 'iclosed.booked' && e.origin === location.origin;
       if (!fromCalendly && !fromBookedPage) return;
-      if (typeof window.fbq === 'function') { try { window.fbq('track', 'Schedule'); } catch (err) { /* ignore */ } }
-      if (typeof window.lintrk === 'function' && CFG.linkedinConversionId) {
-        try { window.lintrk('track', { conversion_id: CFG.linkedinConversionId }); } catch (err) { /* ignore */ }
+      var bk = fromBookedPage ? String((d.payload || {}).forwarded_json || '') : 'calendly';
+      if (reported[bk]) return;
+      reported[bk] = true;
+      if (!converted) {   /* ad conversions: once per page load, however many times the visitor rebooks */
+        converted = true;
+        if (typeof window.fbq === 'function') { try { window.fbq('track', 'Schedule'); } catch (err) { /* ignore */ } }
+        if (typeof window.lintrk === 'function' && CFG.linkedinConversionId) {
+          try { window.lintrk('track', { conversion_id: CFG.linkedinConversionId }); } catch (err) { /* ignore */ }
+        }
       }
       /* One flat record, like the /L1 booking pages send: the /booked page's own record when iClosed showed it inside the
          frame (name, email, phone, start time, time zone, campaign tags, forwarded_json), plus where it was booked. */
