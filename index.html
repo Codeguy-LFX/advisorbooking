@@ -15,7 +15,6 @@
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "Advisor Booking", "legalName": "De Jesus Ventures LLC", "url": "https://advisorbooking.com", "description": "Marketing and appointment-setting company for independent registered investment advisers.", "email": "nick@advisorbooking.com", "telephone": "+1-561-418-2043", "address": {"@type": "PostalAddress", "streetAddress": "19657 Dinner Key Dr", "addressLocality": "Boca Raton", "addressRegion": "FL", "postalCode": "33498", "addressCountry": "US"}}</script>
 <!-- Geist comes from this site (assets/fonts/geist.css, embedded) so it is ready at first paint: no font swap, no page jump. -->
 <link rel="preload" href="assets/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/fonts/geist.css">
@@ -437,13 +436,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
 }
 /* On paper or in a saved PDF everything shows: nothing waits for a scroll, and all three steps print at full strength */
 @media print{.js [data-rv].pre{opacity:1;transform:none;transition:none}.js .how.is-live .step{opacity:1;transition:none}}
-/* Company details in the footer: who runs the site, what it does, how to reach it */
-.co{max-width:720px;margin:8px auto 14px;font-size:14.5px;line-height:1.6;color:var(--night-ink);text-wrap:pretty}
-.co p{margin:0 0 10px}
-.co .co__name{font-size:16px;font-weight:600;color:var(--night-ink);margin-bottom:6px}
-.legal-line .co a{display:inline;padding:0;color:var(--night-ink);text-decoration:underline;text-underline-offset:3px}
-.co__i{display:inline-block;white-space:nowrap;margin:0 7px}
-@media (max-width:960px){.nav__links .nav__about{display:none}}
 </style>
 <link rel="stylesheet" href="assets/v3.css">
 </head>
@@ -456,9 +448,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
       <a href="#guarantee">Our guarantee</a>
       <a href="#faq">FAQ</a>
       <a href="blog/">Blog</a>
-      <a class="nav__about" href="about.html">About</a>
     </nav>
-    <a class="btn btn--sm" href="contact.html" data-src="nav">Get More Booked Meetings<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    <a class="btn btn--sm" href="L1/" data-src="nav">Get More Booked Meetings<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
   </div>
 </header>
 
@@ -471,7 +462,13 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
     </h1>
     <p class="v2-sub">We work your dormant CRM first, then reach new people by email and LinkedIn. <b>Your Compliance Team approves every message. A real person books every meeting.</b></p>
     <div class="ec-wrap">
-        <a class="btn btn--accent btn--xl" href="contact.html" data-src="cta">Contact us<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <form class="ec" data-ec="hero" action="L1/" method="get" novalidate>
+          <label class="sr-only" for="ec-hero">Work email</label>
+          <input type="email" id="ec-hero" name="email" placeholder="Your work email" autocomplete="email" inputmode="email" required>
+          <button type="submit" class="btn btn--accent"><span>Book intro call</span><span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+          <div class="lp-hp" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off" data-1p-ignore="true" data-lpignore="true"></div>
+        </form>
+        <p class="ec__err" role="alert" hidden>Enter a valid work email.</p>
         <p class="ec__fine">See the exact outbound and reactivation system we&rsquo;ll run for your firm.</p>
       </div>
       <div class="journey" aria-label="Example: one prospect, from first message to a booked meeting">
@@ -597,7 +594,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
           </div>
         </div>
       </div>
-      <div class="how__cta"><p class="how__next">Your first step is a message to our team.</p><a class="btn btn--accent btn--xl" href="contact.html" data-src="how">Get More Booked Meetings<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
+      <div class="how__cta"><p class="how__next">Your first step is a 20-minute call to see if your firm is a fit.</p><a class="btn btn--accent btn--xl" href="L1/" data-src="how">Get More Booked Meetings<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
     </div>
   </section>
 
@@ -656,11 +653,17 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
 <section class="v2-sec v2-sec--tight" id="start" aria-labelledby="start-h">
   <div class="wrap">
     <div class="v2-cta" data-rv>
-      <h2 class="h2" id="start-h">Have a question? Get in touch.</h2>
-      <p class="lead">Send us a message and our team will reply within 24 hours.</p>
+      <h2 class="h2" id="start-h">Your first step is a 20-minute call.</h2>
+      <p class="lead">Start with your work email. A few quick questions, then pick a time to see if your firm is a fit.</p>
       <div class="ec-wrap">
-        <a class="btn btn--accent btn--xl" href="contact.html" data-src="cta">Contact us<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-        <p class="ec__fine">Our team replies within 24 hours.</p>
+        <form class="ec" data-ec="footer" action="L1/" method="get" novalidate>
+          <label class="sr-only" for="ec-foot">Work email</label>
+          <input type="email" id="ec-foot" name="email" placeholder="Your work email" autocomplete="email" inputmode="email" required>
+          <button type="submit" class="btn btn--accent"><span>Book intro call</span><span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+          <div class="lp-hp" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off" data-1p-ignore="true" data-lpignore="true"></div>
+        </form>
+        <p class="ec__err" role="alert" hidden>Enter a valid work email.</p>
+        <p class="ec__fine">Next: a few quick questions, then you pick a time.</p>
       </div>
     </div>
   </div>
@@ -671,7 +674,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
     <div class="faq__grid">
       <div class="faq__side">
         <h2 class="h2" id="faq-h">FAQ</h2>
-        <a class="btn btn--light" href="contact.html" data-src="faq">Contact us<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a class="btn btn--light" href="L1/" data-src="faq">Book intro call<span class="btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
       </div>
       <div class="qa">
 <details open><summary>How fast do meetings start?<span class="qa__x" aria-hidden="true"></span></summary><div class="qa__a"><div><p>We plan to launch within 21 days of kickoff, unless compliance review takes longer. Meetings book as replies come in. The guarantee&rsquo;s 90 days start at launch, so review time never counts against it.</p></div></div></details>
@@ -684,13 +687,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
 </section>
 </main>
 <footer class="legal-line">
-  <div class="co">
-    <p class="co__name">Advisor Booking</p>
-    <p>Advisor Booking is a marketing and appointment-setting company for independent financial advisory firms (registered investment advisers). We build prospect lists, send email and LinkedIn outreach that each firm approves, answer replies, and book qualified first meetings onto advisors&rsquo; calendars. <a href="about.html">About us</a></p>
-    <p><span class="co__i">Operated by De Jesus Ventures LLC</span> <span class="co__i">19657 Dinner Key Dr, Boca Raton, FL 33498</span> <span class="co__i"><a href="tel:+15614182043">561-418-2043</a></span> <span class="co__i"><a href="mailto:nick@advisorbooking.com">nick@advisorbooking.com</a></span></p>
-    <p>Text messages: if you opt in through the chat on this site, De Jesus Ventures LLC (Advisor Booking) may text you about your questions and your call with us. Message frequency varies. Message and data rates may apply. Reply STOP to stop, HELP for help. Consent is not a condition of purchase. See our <a href="privacy.html">Privacy Policy</a> and <a href="terms.html">Terms of Service</a>.</p>
-  </div>
-  <nav class="v2-foot" aria-label="Footer"><a href="/">Home</a><a href="about.html">About</a><a href="blog/">Blog</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></nav>
+  <nav class="v2-foot" aria-label="Footer"><a href="/">Home</a><a href="blog/">Blog</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
   <p class="legal-line__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance. &copy; 2026 De Jesus Ventures LLC. Boca Raton, FL.</p>
 </footer>
 
@@ -780,8 +777,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
       es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.remove('pre'); io.unobserve(e.target); } });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
     rv.forEach(function (el) { if (el.classList.contains('pre')) io.observe(el); });
-    /* If nobody scrolls (a screenshot tool, a preview), show everything a few seconds after the page loads */
-    window.addEventListener('load', function () { setTimeout(function () { if (window.scrollY < 40) rv.forEach(function (el) { el.classList.remove('pre'); }); }, 4000); });
   }
 
   /* Count up the dot-matrix numbers once */
@@ -918,8 +913,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
   });
 })();
 </script>
-<!-- Our own script runs before the chat widget's loader. It used to wait behind that third-party file, and until the file arrived the headline's green word was invisible. -->
 <script src="assets/lander.js"></script>
-<script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6af85caff31f8c02e6cc46f3"></script>
 </body>
 </html>

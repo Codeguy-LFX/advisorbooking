@@ -18,23 +18,10 @@ Static marketing site for Advisor Booking (De Jesus Ventures LLC). No build step
 | `v2/index.html` | `/v2/` | The home lander (hero with the rotating word, email-first "Book intro call" box). `noindex`: a variant of `/`. Generated. |
 | `v2/blog/` | `/v2/blog/` + 3 posts | Value-only posts from Nick's emails (no CTA in the text, no pricing, no claims), indexable, with BlogPosting, FAQPage and BreadcrumbList data and sitemap entries. Generated. |
 | `v2/methodology.html` | `/v2/methodology` | Retired Nov 8, 2026: forwards to `/v2/`. The three original post URLs forward to `/v2/blog/`. |
-| `about.html` | `/about` | About page: who runs the site (De Jesus Ventures LLC), what the service is, who it is for, how text messages work, and contact details. Added for the 10DLC website review. |
-| `contact.html` | `/contact` | Contact page: email, office address, phone, a contact form that opens the visitor's email app, and the text-message notice. The form has no phone field: the chat widget is the only text opt-in. |
 | `privacy.html`, `terms.html` | `/privacy`, `/terms` | Privacy Policy and Terms of Use |
 | `404.html` | | Not-found page |
 
 GitHub Pages serves `page.html` at `/page`, so the clean URLs above work without redirects.
-
-## What the text-messaging (10DLC) review needs from the site
-
-The campaign was rejected once (error 30919, "Website lacks business information"). Keep these in place:
-
-- Every page links Home, About, Contact, Privacy Policy and Terms of Service, and shows the legal name De Jesus Ventures LLC.
-- The home page footer, `/about` and `/contact` each say in plain words what the business is, give the street address,
-  phone and email, and say that the business sends text messages, how people opt in, and the STOP / HELP / rates lines.
-- The chat widget is on every page and is the only place a visitor can give a mobile number and agree to texts.
-  Do not add phone fields or text-consent boxes to any form on the site.
-- No placeholder text on any page, and the name, address, phone and email match the brand registration exactly.
 
 ## The /L1 funnel
 
