@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>RIA appointment setting. Not leads. Attended meetings. | Advisor Booking</title>
-<meta name="description" content="We work your own CRM first, then email and LinkedIn. A real person handles every reply and books attended first meetings with business owners and execs. For independent RIAs with $50M to $250M AUM.">
+<meta name="description" content="For independent RIAs with $50M to $250M AUM. At least 15 attended, qualified meetings in your first 90 days from launch, or we keep working at our cost. We start with the past prospects already in your CRM.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
@@ -33,13 +33,20 @@
 </head>
 <body>
 <main id="main">
+  <!-- A. HEADLINE: five versions, picked by ?v= (the script after the quiz card's two lines). -->
   <div class="rm-hero k-glow">
     <div class="rm-wrap rm-cols rm-cols--hero">
       <div class="rm-copy">
         <p class="k-brand rm-brand"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></p>
         <div class="rm-copy__in">
+          <p class="k-chip rm-who"><span class="k-chip__dot" aria-hidden="true"></span>For independent RIAs with $50M to $250M AUM</p>
           <h1 class="k-display rm-h1" id="rmH">RIA appointment setting. Not leads. Attended meetings.</h1>
-          <p class="rm-sub" id="rmS">We work your own CRM first, then email and LinkedIn. A real person handles every reply and books attended first meetings with business owners and execs. For independent RIAs with $50M to $250M AUM.</p>
+          <p class="rm-sub" id="rmS">At least 15 attended, qualified meetings in your first 90 days from launch, or we keep working at our cost. We start with the past prospects already in your CRM.</p>
+          <ul class="rm-facts" id="rmF" role="list">
+            <li><span>Flat fee. No <span class="rm-nb">per-meeting</span> fees.</span></li>
+            <li><span>Your compliance team approves every message.</span></li>
+            <li><span>Booked for your firm only.</span></li>
+          </ul>
         </div>
       </div>
       <section class="rm-book" id="book" aria-labelledby="rmL">
@@ -49,6 +56,7 @@
             <p class="k-progress__count rm-count" id="apCount" aria-live="polite">Step <b>1</b> of 6</p>
           </div>
           <p class="rm-line" id="rmL">See if we’re a fit. Takes 60 seconds.</p>
+          <p class="rm-gift" id="rmG">You get the <a href="#playbook">Past Prospect Playbook</a> either way.</p>
           <script>
           /* The headline for this visit (see the first script). Runs before the words above are painted. */
           (function (d) {
@@ -64,6 +72,9 @@
                 if (v === 'playbook') {
                   d.getElementById('rmS').textContent = 'A step-by-step campaign to restart conversations with past prospects in your CRM. Answer 5 quick questions and we’ll email it to you.';
                   d.getElementById('rmL').textContent = 'Start the 60-second check and we’ll send the Playbook.';
+                  d.getElementById('rmG').innerHTML = 'Yours either way. <a href="#playbook">See what’s inside.</a>';
+                  var F = ['Who to pull from your CRM, and who to leave out.', 'Six email templates and the call scripts.', 'A tracker, and a checklist for your compliance team.'], f = d.querySelectorAll('#rmF > li > span');
+                  for (var i = 0; i < f.length && i < F.length; i++) f[i].textContent = F[i];
                 }
               }
             } catch (e) {}
@@ -80,29 +91,259 @@
     </div>
   </div>
 
-  <section class="rm-sec rm-sec--rule" id="how" aria-labelledby="howH">
+  <!-- B. THE CALL-OUT -->
+  <section class="rm-sec rm-sec--rule" id="open" aria-labelledby="openH">
     <div class="rm-wrap rm-cols">
-      <h2 class="k-h2" id="howH">How it works</h2>
-      <ol class="rm-list rm-list--num" role="list">
-        <li><span class="rm-n" aria-hidden="true">1</span><span>We start with your own CRM: past prospects who went quiet.</span></li>
-        <li><span class="rm-n" aria-hidden="true">2</span><span>Then email and LinkedIn outreach to business owners and execs who match your written criteria. Your compliance team approves every message before it goes out.</span></li>
-        <li><span class="rm-n" aria-hidden="true">3</span><span>A real person handles every reply and books the meeting on your calendar. You take the meeting.</span></li>
-      </ol>
+      <div class="rm-head">
+        <h2 class="k-h2" id="openH">There are first meetings sitting in your CRM right now.</h2>
+      </div>
+      <div class="rm-prose">
+        <p>People who took a meeting with your firm, never became clients, and have not heard from you in six months or more.</p>
+        <p>They know your name. They once shared real details about their money with you. Their situation has almost certainly changed since.</p>
+        <p><strong>And following up with them is nobody’s job.</strong></p>
+        <p>That list is where we start. It is also what the Playbook below shows you how to work yourself.</p>
+      </div>
     </div>
   </section>
 
+  <!-- THE LEAD MAGNET: what the Past Prospect Playbook is, what is in it and how to get it. Every line here describes
+       the guide as it is written (10 steps, a 7-business-day schedule, six emails, call scripts, a tracker and a
+       checklist). Change this section when the guide changes. -->
+  <section class="rm-sec rm-pb" id="playbook" tabindex="-1" aria-labelledby="pbH">
+    <div class="rm-wrap rm-cols">
+      <div class="rm-head rm-head--flow">
+        <p class="k-eyebrow">Free with the fit check</p>
+        <h2 class="k-h2 k-h2--md" id="pbH">The Past Prospect Playbook</h2>
+        <p class="k-lead">A step-by-step guide to finding the meetings that already exist in your CRM. One <span class="rm-nb">7-day</span> sequence you can run yourself, without buying a single new lead.</p>
+        <ul class="rm-list rm-list--yes rm-pb__in" role="list" aria-label="What’s inside">
+          <li><span>Who to pull from your CRM, and who to leave out</span></li>
+          <li><span>The <span class="rm-nb">7-day</span> schedule: what goes out each day, and why</span></li>
+          <li><span>Six email templates, the short notes that point to them, and call scripts</span></li>
+          <li><span>What to say when they reply</span></li>
+          <li><span>How to confirm the meeting and run a <span class="rm-nb">20-minute</span> review</span></li>
+          <li><span>A tracker, and a checklist to send your compliance team</span></li>
+        </ul>
+        <p class="rm-note"><strong>How to get it:</strong> finish the <a href="#book"><span class="rm-nb">60-second</span> fit check</a> and we’ll email it to you, whether we’re a fit or not.</p>
+      </div>
+      <figure class="k-card rm-peek">
+        <figcaption class="rm-peek__cap"><span class="k-eyebrow k-eyebrow--muted k-eyebrow--plain">Inside the Playbook</span><span class="k-badge">Preview</span></figcaption>
+        <p class="rm-peek__t">The <span class="rm-nb">7-day</span> schedule</p>
+        <ol class="rm-days" role="list">
+          <li><span class="rm-day">Day 1</span><span>A short heads-up: a note is coming tomorrow</span></li>
+          <li><span class="rm-day">Day 2</span><span>Email 1, the reconnect. A call that afternoon.</span></li>
+          <li><span class="rm-day">Day 3</span><span>Email 2, the recap</span></li>
+          <li><span class="rm-day">Day 4</span><span>A one-line reminder</span></li>
+          <li><span class="rm-day">Day 5</span><span>Email 3, the update. A second call.</span></li>
+          <li><span class="rm-day">Day 6</span><span>Email 4, one more reason to meet</span></li>
+          <li><span class="rm-day">Day 7</span><span>Email 5, the last call. Email 6 closes the loop.</span></li>
+        </ol>
+        <p class="rm-peek__f">Short notes notify. Emails explain. Calls book.</p>
+      </figure>
+    </div>
+  </section>
+
+  <!-- C. FUTURE PACING -->
+  <section class="rm-sec rm-sec--rule" id="week" aria-labelledby="weekH">
+    <div class="rm-wrap rm-cols">
+      <div class="rm-head">
+        <h2 class="k-h2" id="weekH">What a week looks like once it’s running</h2>
+      </div>
+      <div>
+        <ol class="rm-list rm-list--when" role="list">
+          <li><span class="rm-when">Monday</span><span><strong>One report lands in your inbox.</strong> Messages sent, replies, meetings booked, meetings attended, and what each attended, qualified meeting cost.</span></li>
+          <li><span class="rm-when">Every day</span><span><strong>Replies get handled without you.</strong> A real person reads each one, checks the prospect against your written criteria and books the ones who fit.</span></li>
+          <li><span class="rm-when">On the calendar</span><span><strong>First meetings are already there.</strong> Business owners and executives who match your criteria, each with a short note on why you’re meeting. Reminders go out before every call.</span></li>
+          <li><span class="rm-when">Your part</span><span><strong>Take the meetings.</strong> Plus one short call a week to decide what to do more of and what to cut.</span></li>
+        </ol>
+        <p class="rm-aside">We commit to the meetings. Winning the client is yours.</p>
+        <!-- PROOF SLOT (not shown): a sample weekly report, labelled "Example", once one exists. -->
+      </div>
+    </div>
+  </section>
+
+  <!-- D. WHY YOU'RE STUCK -->
+  <section class="rm-sec rm-sec--rule" id="stuck" aria-labelledby="stuckH">
+    <div class="rm-wrap rm-cols">
+      <div class="rm-head">
+        <h2 class="k-h2" id="stuckH">Why the calendar isn’t full yet</h2>
+      </div>
+      <div>
+        <ol class="rm-list rm-list--num" role="list">
+          <li><span class="rm-n" aria-hidden="true">1</span><span><strong>Referrals are passive.</strong> They are your best source of clients, and you can’t schedule them. You wait.</span></li>
+          <li><span class="rm-n" aria-hidden="true">2</span><span><strong>The CRM is full of people nobody works.</strong> Past prospects went quiet and stayed quiet, because following up is nobody’s job.</span></li>
+          <li><span class="rm-n" aria-hidden="true">3</span><span><strong>What you tried was built to sell something else.</strong> Agencies report on campaigns and impressions. Bought leads often go to several advisors at once. Software still needs someone on your team to run it. <span class="rm-nb">Per-meeting</span> vendors are paid for every booking, fit or not.</span></li>
+        </ol>
+        <p class="rm-aside">None of that puts a qualified person in front of your advisor on a set day.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- E. THE MECHANISM -->
+  <section class="rm-sec rm-sec--rule" id="how" aria-labelledby="howH">
+    <div class="rm-wrap rm-cols">
+      <div class="rm-head">
+        <p class="k-eyebrow">How it works</p>
+        <h2 class="k-h2" id="howH">The Advisor Pipeline System</h2>
+        <p class="k-lead">Three sources of meetings. One number to judge them by.</p>
+      </div>
+      <div>
+        <ol class="rm-list rm-list--num" role="list">
+          <li><span class="rm-n" aria-hidden="true">1</span><span><strong>Reactivation first.</strong> We start with your own CRM: past prospects who went quiet. They already know your firm, so they answer fastest.</span></li>
+          <li><span class="rm-n" aria-hidden="true">2</span><span><strong>Then new outreach.</strong> Email and LinkedIn to business owners and executives who match your written criteria. Your compliance team approves every message before it goes out.</span></li>
+          <li><span class="rm-n" aria-hidden="true">3</span><span><strong>A real person on every reply.</strong> Someone reads each reply, checks the prospect against your criteria and books the meeting on your calendar. You take the meeting.</span></li>
+        </ol>
+        <div class="k-well rm-one">
+          <p class="rm-one__k">The one number</p>
+          <p class="rm-one__v">Cost per attended, qualified meeting</p>
+          <p class="rm-one__d">Reported every week. If it’s off, we change the list, the messages or the volume before we ask you to spend more.</p>
+        </div>
+        <!-- PROOF SLOT (not shown): a short comment from a client's compliance team on the approval process. -->
+      </div>
+    </div>
+  </section>
+
+  <!-- F. WHAT MAKES THIS DIFFERENT -->
+  <section class="rm-sec rm-sec--rule" id="different" aria-labelledby="diffH">
+    <div class="rm-wrap rm-cols">
+      <div class="rm-head">
+        <h2 class="k-h2" id="diffH">What makes this different</h2>
+      </div>
+      <div>
+        <ul class="rm-list rm-list--yes" role="list">
+          <li><span><strong>Your CRM first.</strong> We work the past prospects you already met before we contact anyone new.</span></li>
+          <li><span><strong>Your compliance team approves every message.</strong> Nothing is sent until they sign off.</span></li>
+          <li><span><strong>A flat fee.</strong> No <span class="rm-nb">per-meeting</span> fees, so we have no reason to book a meeting that doesn’t fit. No cut of your fees. You keep 100% of every client.</span></li>
+          <li><span><strong>Booked for your firm only.</strong> Nothing is shared with another advisor.</span></li>
+          <li><span><strong>You own everything.</strong> Domains, inboxes, lists and messages are in your firm’s name and stay with you.</span></li>
+          <li><span><strong>Done for you.</strong> No ad spend. No filming. No software to learn.</span></li>
+          <li><span><strong>We say no.</strong> If your advisors don’t have room for more first meetings, we’ll tell you on the first call.</span></li>
+        </ul>
+        <!-- K. CALL TO ACTION, 1 of 3 -->
+        <div class="rm-cta">
+          <a class="k-btn k-btn--accent k-btn--xl" href="#book"><span>Start the <span class="rm-nb">60-second</span> fit check</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <p class="k-fine">Six short steps. You get the Past Prospect Playbook either way.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- G. THE OFFER, LINE BY LINE -->
+  <section class="rm-sec rm-sec--rule" id="get" aria-labelledby="getH">
+    <div class="rm-wrap rm-cols">
+      <div class="rm-head">
+        <p class="k-eyebrow">What you get</p>
+        <h2 class="k-h2" id="getH">Everything in the Advisor Pipeline</h2>
+        <p class="k-lead">Built and run for you, start to finish.</p>
+      </div>
+      <div>
+        <div class="rm-group">
+          <h3 class="rm-group__h">We build it</h3>
+          <ol class="rm-list rm-list--num" role="list">
+            <li><span class="rm-n" aria-hidden="true">1</span><span><strong>Niche strategy and ideal client profile.</strong> We agree in writing who a qualified meeting is for your firm before anything is sent.</span></li>
+            <li><span class="rm-n" aria-hidden="true">2</span><span><strong>New prospect lists.</strong> Business owners and executives matched to your best clients.</span></li>
+            <li><span class="rm-n" aria-hidden="true">3</span><span><strong>CRM cleanup and enrichment.</strong> At least 1,000 of your contacts cleaned up, so your past prospects can be worked.</span></li>
+            <li><span class="rm-n" aria-hidden="true">4</span><span><strong>Reactivation and outreach sequences.</strong> Email and LinkedIn messages written for your firm. Your compliance team approves each one first.</span></li>
+            <li><span class="rm-n" aria-hidden="true">5</span><span><strong>Domains and inboxes in your firm’s name.</strong> Set up and warmed before the first email goes out, separate from your main domain.</span></li>
+            <li><span class="rm-n" aria-hidden="true">6</span><span><strong>LinkedIn profile <span class="rm-nb">tune-up.</span></strong> So a prospect who looks your advisor up sees a reason to take the meeting.</span></li>
+          </ol>
+        </div>
+        <div class="rm-group">
+          <h3 class="rm-group__h">We run it</h3>
+          <ol class="rm-list rm-list--num" role="list">
+            <li><span class="rm-n" aria-hidden="true">7</span><span><strong>Human reply handling.</strong> A real person reads every reply and checks it against your written criteria.</span></li>
+            <li><span class="rm-n" aria-hidden="true">8</span><span><strong>Booking, reminders and <span class="rm-nb">no-show</span> <span class="rm-nb">follow-up.</span></strong> Qualified prospects go onto your advisors’ calendars and get reminded to show up.</span></li>
+          </ol>
+        </div>
+        <div class="rm-group">
+          <h3 class="rm-group__h">We report on it</h3>
+          <ol class="rm-list rm-list--num" role="list">
+            <li><span class="rm-n" aria-hidden="true">9</span><span><strong>Weekly report and working session.</strong> One number, cost per attended, qualified meeting, and a short call to tune the list and the messages.</span></li>
+            <li><span class="rm-n" aria-hidden="true">10</span><span><strong>You own it all.</strong> Domains, copy, templates and data stay with your firm.</span></li>
+          </ol>
+        </div>
+        <!-- PROOF SLOT (not shown): a small table once the first firms have run: firms, meetings booked, show rate,
+             cost per attended, qualified meeting. Real numbers only. -->
+      </div>
+    </div>
+  </section>
+
+  <!-- H. BONUSES -->
+  <section class="rm-sec rm-sec--rule" id="extras" aria-labelledby="extrasH">
+    <div class="rm-wrap rm-cols">
+      <div class="rm-head">
+        <p class="k-eyebrow">Also included</p>
+        <h2 class="k-h2" id="extrasH">Four extras, at no extra cost</h2>
+      </div>
+      <ul class="rm-list rm-list--plus" role="list">
+        <li><span><strong>Compliance Team Pack.</strong> Draft templates your compliance team can adapt, so their review starts from a draft and not a blank page. Templates only, not legal or compliance advice.</span></li>
+        <li><span><strong>Advisor <span class="rm-nb">Follow-Up</span> Kit.</strong> A <span class="rm-nb">first-meeting</span> agenda, the email that goes out before the meeting and the <span class="rm-nb">follow-up</span> sequence after it, so booked meetings don’t go cold.</span></li>
+        <li><span><strong>Dormant List Map.</strong> One page that maps your CRM: the segments, the message angle for each and the order to work them in.</span></li>
+        <li><span><strong><span class="rm-nb">Day-60</span> Meeting Quality Review.</strong> One session with you at day 60 on who booked, who showed and what to change, with 30 days still on the clock.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- I. THE COMMITMENT. The pledge is the owner's wording, word for word. -->
   <section class="rm-sec rm-sec--rule" id="commitment" aria-labelledby="commitH">
     <div class="rm-wrap rm-cols">
-      <h2 class="k-h2" id="commitH">Our <span class="rm-nb">90-day</span> commitment</h2>
-      <div class="k-card k-card--feat">
-        <p class="rm-pledge">In your first 90 days from launch, we commit to at least 15 attended, qualified meetings that match your written criteria. If we’re short, we keep working at our cost (no operating fee) until you’ve taken 15 such meetings.</p>
+      <div class="rm-head">
+        <h2 class="k-h2" id="commitH">Our <span class="rm-nb">90-day</span> commitment</h2>
+        <p class="k-lead">Written into your services agreement.</p>
+      </div>
+      <div>
+        <div class="k-card k-card--feat">
+          <p class="rm-pledge">In your first 90 days from launch, we commit to at least 15 attended, qualified meetings that match your written criteria. If we’re short, we keep working at our cost (no operating fee) until you’ve taken 15 such meetings.</p>
+        </div>
+        <h3 class="rm-group__h rm-group__h--gap" id="commitYou">Your side, so it stays fair</h3>
+        <ul class="rm-list rm-list--yes" role="list" aria-labelledby="commitYou">
+          <li><span>Agree on your ideal client and the messages at kickoff</span></li>
+          <li><span>One advisor or owner on the weekly call</span></li>
+          <li><span>Follow the process we set for booked meetings</span></li>
+        </ul>
+        <p class="rm-aside">Qualified means your written criteria: AUM minimum, niche and geography, with a decision maker who shows up. The 90 days start at launch, so compliance review time never counts against them.</p>
+        <!-- PROOF SLOT (not shown): one client line in the form "We booked X meetings, Y showed, Z fit our criteria." -->
+      </div>
+    </div>
+  </section>
+
+  <!-- J. PRICING: standard pricing, the founding rate, then the math. -->
+  <section class="rm-sec rm-sec--rule" id="pricing" aria-labelledby="priceH">
+    <div class="rm-wrap rm-cols">
+      <div class="rm-head">
+        <h2 class="k-h2" id="priceH">Pricing</h2>
+        <p class="k-lead">A flat fee. Nothing tied to meetings, clients or assets.</p>
+      </div>
+      <div>
+        <p class="rm-anchor"><span class="rm-anchor__k">Standard pricing</span><span>$10,000 setup, then $7,500 every 4 weeks.</span></p>
+        <div class="k-card k-card--feat rm-price">
+          <p class="k-eyebrow">Founding rate</p>
+          <p class="rm-price__n"><span class="rm-price__big">$5,000</span><span class="rm-price__per">every 4 weeks</span></p>
+          <p class="rm-price__s">No setup fee. No <span class="rm-nb">per-meeting</span> fees.</p>
+          <ul class="rm-list rm-list--yes rm-list--tight" role="list">
+            <li><span>Initial term: 3 billing cycles, about 90 days. Then it renews every 4 weeks.</span></li>
+            <li><span>Your founding rate stays locked for as long as you stay.</span></li>
+            <li><span>For the first few firms only.</span></li>
+          </ul>
+        </div>
+        <div class="k-well rm-one rm-math">
+          <p class="rm-one__k">The math</p>
+          <p class="rm-one__d">Three cycles at $5,000 is $15,000. With the <span class="rm-nb">15-meeting</span> commitment, that is at most $1,000 per attended, qualified meeting. If we’re short at day 90, we keep working at our cost.</p>
+          <p class="rm-one__d">Whether that works for your firm depends on your own numbers. We run them with you on the call.</p>
+        </div>
+        <!-- K. CALL TO ACTION, 2 of 3 -->
+        <div class="rm-cta">
+          <a class="k-btn k-btn--accent k-btn--xl" href="#book"><span>See if your firm is a fit</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <p class="k-fine">Five questions and your contact details. Then you pick a time.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="rm-sec rm-sec--rule" id="fit" aria-labelledby="fitH">
     <div class="rm-wrap rm-cols">
-      <h2 class="k-h2" id="fitH">Who this is for, and who it’s not for</h2>
+      <div class="rm-head">
+        <h2 class="k-h2" id="fitH">Who this is for, and who it’s not for</h2>
+      </div>
       <div class="rm-fit">
         <div class="k-card">
           <h3 class="rm-fit__h" id="fitFor">For</h3>
@@ -125,46 +366,57 @@
     </div>
   </section>
 
-  <section class="rm-sec rm-sec--rule" id="get" aria-labelledby="getH">
-    <div class="rm-wrap rm-cols">
-      <h2 class="k-h2" id="getH">What you get</h2>
-      <ul class="rm-list rm-list--yes rm-list--big" role="list">
-        <li>Flat fee.</li>
-        <li>No per-meeting fees.</li>
-        <li>You keep 100% of every client.</li>
-        <li>No ad spend.</li>
-        <li>No filming.</li>
-        <li>No software to learn.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="rm-sec rm-sec--rule" id="founder" aria-labelledby="founderH">
-    <div class="rm-wrap rm-cols">
-      <h2 class="k-h2" id="founderH">Founder background</h2>
-      <ul class="rm-list rm-list--plain" role="list">
-        <li>Our founder has managed eight figures in ad spend for financial services companies and worked with 190+ commercial lenders and brokers.</li>
-        <li>Advisor Booking is new to RIAs.</li>
-        <li>We don’t have RIA case studies yet.</li>
-      </ul>
-    </div>
-  </section>
-
   <div class="k-night rm-night">
+    <!-- L. FAQ -->
     <section class="rm-sec" id="faq" aria-labelledby="faqH">
       <div class="rm-wrap rm-cols">
-        <h2 class="k-h2" id="faqH">FAQ</h2>
+        <div class="rm-head">
+          <h2 class="k-h2" id="faqH">FAQ</h2>
+        </div>
         <div>
           <div class="rm-qa"><h3>Do you sell leads?</h3><p>No. We book attended first meetings for your firm only. Nothing is shared with another advisor.</p></div>
-          <div class="rm-qa"><h3>What does it cost?</h3><p>A flat fee with no per-meeting fees. We go through it on the fit call.</p></div>
-          <div class="rm-qa"><h3>Who approves the messages?</h3><p>Your compliance team approves every message before we send it.</p></div>
+          <div class="rm-qa"><h3>We’ve tried agencies before. Why is this different?</h3><p>Most agencies sell a campaign and report on views. We sell one thing: attended, qualified meetings. You see one number every week, so if it isn’t working you know early, not six months in.</p></div>
+          <div class="rm-qa"><h3>How does compliance work?</h3><p>Your compliance team approves every message before it is sent. We send from separate domains in your firm’s name and keep a reply log your compliance team can access. The compliance decision stays with your firm.</p></div>
+          <div class="rm-qa"><h3>What stops you from booking meetings that don’t fit?</h3><p>Two things. The fee is flat, so we are not paid more for booking more. And you set the criteria in writing before we start. Only attended meetings that match them count toward the 15.</p></div>
+          <div class="rm-qa"><h3>What counts as a qualified meeting?</h3><p>A prospect who fits your written AUM minimum, niche and geography, is a decision maker or <span class="rm-nb">co-decision</span> maker, and attends live.</p></div>
+          <div class="rm-qa"><h3>What does it cost?</h3><p>The founding rate is $5,000 every 4 weeks. No setup fee and no <span class="rm-nb">per-meeting</span> fees. The initial term is 3 billing cycles, about 90 days.</p></div>
+          <div class="rm-qa"><h3>How do we know it’s worth the fee?</h3><p>We work it out on the call with your numbers: your close rate on first meetings and your average new client. If the math doesn’t work for your firm, we’ll say so.</p></div>
+          <div class="rm-qa"><h3>What do you need from us?</h3><p>A kickoff call, access to your CRM, <span class="rm-nb">sign-off</span> on your ideal client and the messages, and one advisor or owner on a short weekly call. Your advisors need room for the meetings.</p></div>
+          <div class="rm-qa"><h3>How fast does it start?</h3><p>We plan to launch within 30 days of kickoff, starting with your past prospects. The 90 days start at launch.</p></div>
           <div class="rm-qa"><h3>Do you promise new clients?</h3><p>No. We commit to attended, qualified meetings. Closing them is yours.</p></div>
+          <div class="rm-qa"><h3>Do you have RIA case studies?</h3><p>Not yet. Advisor Booking is new to RIAs. That is why the founding rate is below standard pricing, and why the commitment is written into your agreement.</p></div>
         </div>
       </div>
     </section>
-    <div class="rm-end k-glow">
+
+    <!-- THE FOUNDER -->
+    <section class="rm-sec rm-founder" id="founder" aria-labelledby="founderH">
+      <div class="rm-wrap rm-cols rm-cols--photo">
+        <figure class="rm-photo">
+          <picture>
+            <source type="image/webp" srcset="/assets/nick-panel-600.webp 600w, /assets/nick-panel.webp 900w" sizes="(min-width:1200px) 620px, (min-width:960px) 50vw, (min-width:700px) 640px, 92vw">
+            <img src="/assets/nick-panel.jpg" srcset="/assets/nick-panel-600.jpg 600w, /assets/nick-panel.jpg 900w" sizes="(min-width:1200px) 620px, (min-width:960px) 50vw, (min-width:700px) 640px, 92vw" width="900" height="600" alt="Nick De Jesus speaking into a microphone on a conference panel" loading="lazy" decoding="async">
+          </picture>
+          <figcaption>Nick De Jesus, founder of Advisor Booking, speaking on a conference panel.</figcaption>
+        </figure>
+        <div class="rm-head rm-head--flow">
+          <p class="k-eyebrow">Who runs this</p>
+          <h2 class="k-h2 k-h2--md" id="founderH">Founder background</h2>
+          <ul class="rm-list rm-list--plain" role="list">
+            <li><span>Our founder, Nick De Jesus, has managed eight figures in ad spend for financial services companies and worked with 190+ commercial lenders and brokers.</span></li>
+            <li><span>Advisor Booking is new to RIAs.</span></li>
+            <li><span>We don’t have RIA case studies yet.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- K. CALL TO ACTION, 3 of 3 -->
+    <div class="rm-end">
       <p class="k-eyebrow">Next step</p>
-      <a class="k-btn k-btn--accent k-btn--xl" href="#book"><span>Check if we’re a fit</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      <p class="rm-end__h">At least 15 attended, qualified meetings in your first 90 days, or we keep working at our cost.</p>
+      <div class="rm-end__go"><a class="k-btn k-btn--accent k-btn--xl" href="#book"><span>Check if we’re a fit</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
+      <p class="rm-end__f">Takes 60 seconds. You get the Past Prospect Playbook either way.</p>
     </div>
   </div>
 </main>
@@ -423,13 +675,16 @@
  "QUALIFIED_FLAG": "ab_qualified"
 };
 window.AB_APPLY.VARIANT = window.AB_V;
-/* The closing button brings the quiz into view without changing the address: a #book address would add a history entry
-   that the quiz reads as "back to question 1". Without JavaScript the link is a plain anchor. */
+/* Links inside the page (the buttons that go to the quiz, the link to the Playbook section) move the page without
+   changing the address: a #book address would add a history entry that the quiz reads as "back to question 1".
+   A target more than three screens away is jumped to at once (a glide through the whole page takes over a second);
+   a near one glides. Without JavaScript they are plain anchors. */
 document.addEventListener('click', function (e) {
-  var a = e.target && e.target.closest ? e.target.closest('a[href="#book"]') : null, s = document.getElementById('book'), q;
+  var a = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null, id = a ? a.getAttribute('href').slice(1) : '', s = id ? document.getElementById(id) : null, q;
   if (!a || !s || e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-  e.preventDefault(); s.scrollIntoView();
-  q = document.getElementById('apQ'); if (q) { try { q.focus({ preventScroll: true }); } catch (x) {} }
+  e.preventDefault();
+  try { s.scrollIntoView({ behavior: Math.abs(s.getBoundingClientRect().top) > 3 * window.innerHeight ? 'instant' : 'auto' }); } catch (x) { s.scrollIntoView(); }
+  q = id === 'book' ? document.getElementById('apQ') : s; if (q) { try { q.focus({ preventScroll: true }); } catch (x) {} }
 });</script>
 <script src="/assets/config.js"></script>
 <script src="/assets/funnel.js" defer></script>

@@ -57,7 +57,7 @@
 </script>
 <script src="/assets/gads.js" async></script>
 <title>Pick a time | Advisor Booking</title>
-<meta name="description" content="You look like a fit. Pick a time below.">
+<meta name="description" content="You look like a fit. Pick a time for your 20-minute fit call.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
@@ -77,19 +77,51 @@
 </head>
 <body class="af-body">
 <div class="af-stage k-glow">
-  <header class="af-col af-top">
+  <header class="af-col af-col--wide af-top">
     <p class="k-brand af-brand"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></p>
   </header>
   <main class="af-main" id="main">
-    <div class="af-col">
-      <h1 class="k-h2 k-h2--md af-h">You look like a fit. <span>Pick a time below.</span></h1>
+    <div class="af-col af-col--wide af-grid">
+      <div class="af-head">
+        <h1 class="k-h2 k-h2--md af-h">You look like a fit. <span>Pick a time for your call.</span></h1>
+        <p class="af-sub">20 minutes. You leave with your <span class="af-nb">break-even</span> cost per meeting and a yes or a no.</p>
+        <ul class="k-summary af-recap" id="afRecap" role="list" aria-label="What you told us" hidden>
+          <li id="afAum" hidden><span class="k-summary__k">Firm AUM</span><span></span></li>
+          <li id="afAdv" hidden><span class="k-summary__k">Calendars to fill</span><span></span></li>
+        </ul>
+        <script>
+        /* What the lead told the quiz (the firm's AUM and how many advisors' calendars to fill), as the quiz saved it in
+           this browser. Shown as plain text, before the page is painted. Nothing personal is shown: no name, email or phone. */
+        (function (d) {
+          try {
+            var st = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'), L = (st && st.labels) || {}, any = false;
+            [['afAum', L.aum], ['afAdv', L.advisors]].forEach(function (x) {
+              var v = typeof x[1] === 'string' ? x[1].trim() : '', li = d.getElementById(x[0]);
+              if (!li || !v || v.length > 60 || !/^[\w$ ,.+-]+$/.test(v)) return;
+              li.lastChild.textContent = v; li.hidden = false; any = true;
+            });
+            if (any) d.getElementById('afRecap').hidden = false;
+          } catch (e) {}
+        })(document);
+        </script>
+      </div>
       <section class="k-cal af-cal" id="calendar" aria-label="Pick a time for your call">
         <div class="k-cal__body">
           <div class="k-cal__skel"><p class="k-cal__note">Loading the calendar. If it does not appear, email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will send you times.</p></div>
           <div class="k-cal__mount"></div>
         </div>
       </section>
-      <p class="af-also">We’ll also email you the <span class="af-nb">Past Prospect Playbook.</span></p>
+      <section class="af-sell" aria-labelledby="afSellH">
+        <p class="k-eyebrow">Your <span class="af-nb">20-minute</span> fit call</p>
+        <h2 class="af-sell__h" id="afSellH">What happens on the call</h2>
+        <ol class="af-steps" role="list">
+          <li><span class="af-n" aria-hidden="true">1</span><span><strong>We look at where you are.</strong> Your CRM of past prospects, your current marketing and your goals.</span></li>
+          <li><span class="af-n" aria-hidden="true">2</span><span><strong>We run the <span class="af-nb">first-meeting</span> math.</strong> With your close rate and your average new client, we work out your <span class="af-nb">break-even</span> cost per attended, qualified meeting. Rough numbers are fine.</span></li>
+          <li><span class="af-n" aria-hidden="true">3</span><span><strong>We show you the first 90 days.</strong> How reactivation and outreach would be set up for your firm, and what the <span class="af-nb">15-meeting</span> commitment covers.</span></li>
+          <li><span class="af-n" aria-hidden="true">4</span><span><strong>You get a yes or a no.</strong> If we’re not a fit, you still leave with a clear plan for doing it yourself.</span></li>
+        </ol>
+        <p class="af-also">We’ll also email you the <span class="af-nb">Past Prospect Playbook.</span> It’s yours whether you book or not.</p>
+      </section>
     </div>
   </main>
 </div>

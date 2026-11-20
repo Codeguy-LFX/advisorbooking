@@ -1,7 +1,7 @@
 /* Advisor Booking: the two pages after the quiz, /qualified and /not-a-fit (rm-after.css)
-   Layout only. Every colour, radius, shadow, type size and easing comes from kit.css, which takes them from the
-   home page. Spacing sits on a 4px grid. One thing moves: the fallback link fades in (opacity, 200ms), and
-   kit.css switches that off under prefers-reduced-motion. */
+   Layout only. Every colour, radius, shadow and easing comes from kit.css, which takes them from the home page.
+   Spacing sits on a 4px grid. One thing moves: the fallback link fades in (opacity, 200ms), and kit.css switches
+   that off under prefers-reduced-motion. */
 
 /* 1. FONT: the page is painted once, with Geist in place (see the script in each page's head) */
 .af-wait body{visibility:hidden}
@@ -23,13 +23,33 @@
   .af-main{padding-top:48px}
 }
 
-/* 4. /qualified: the heading, the calendar card, one line */
+/* 4. /qualified: sells the call. On a phone: the heading, one line, what the lead told us, the calendar, then what
+      happens on the call. From 1100px the calendar stands on the right, level with the heading, and the words run
+      down the left, so the calendar is on the first screen at every width. */
+.af-grid{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "cal" "sell"}
+.af-head{grid-area:head;min-width:0}
 /* two sentences, two lines: the news in ink, the next step in the accent (the home hero's own two colours) */
 .af-h span{display:block;color:var(--k-accent)}
-.af-cal{margin-top:28px}
-/* the kit keeps 660px for the calendar, more on a tall screen. Here the tall-screen figure leaves room for what
-   stands around the card (241px above it, the one line and 98px under it), so all of it fits on one screen. */
-@supports (height:100svh){.af-cal{--k-cal-h:max(660px,calc(100svh - 339px))}}
+.af-sub{max-width:44ch;margin-top:12px;font-size:17px;line-height:26px;color:var(--k-muted);text-wrap:pretty}
+.af-recap{margin-top:16px}
+.af-cal{grid-area:cal;min-width:0;margin-top:24px;--k-cal-h:660px}
+.af-sell{grid-area:sell;min-width:0;margin-top:48px}
+.af-sell__h{margin-top:12px;font-weight:500;font-size:clamp(24px,2.4vw,28px);line-height:1.12;letter-spacing:-.03em;color:var(--k-ink);text-wrap:balance}
+.af-steps{margin-top:16px}
+.af-steps > li{display:grid;grid-template-columns:32px minmax(0,1fr);column-gap:16px;align-items:start;padding:16px 0;border-top:1px solid var(--k-line);font-size:16px;line-height:26px;color:var(--k-ink-2);text-wrap:pretty}
+.af-steps > li:last-child{border-bottom:1px solid var(--k-line)}
+.af-steps strong{font-weight:500;color:var(--k-ink)}
+.af-n{display:grid;place-items:center;width:32px;height:32px;margin-top:-3px;border-radius:9px;background:var(--k-accent-soft);color:var(--k-accent);font:500 12px/1 var(--f-mono)}
+.af-also{margin-top:20px;font-size:16px;line-height:26px;color:var(--k-ink-2);text-wrap:pretty}
+@media (min-width:1100px){
+  .af-col--wide{max-width:calc(1224px + 2*var(--gutter))}   /* 400 + 64 + the calendar's 760 */
+  .af-grid{grid-template-columns:minmax(0,400px) minmax(0,760px);justify-content:space-between;grid-template-areas:"head cal" "sell cal";grid-template-rows:auto 1fr;column-gap:40px}
+  .af-grid .af-h{font-size:40px}
+  .af-cal{margin-top:0}
+  .af-sell{margin-top:40px}
+}
+/* a tall desktop window: the calendar card grows to fill it (106px above the card, 48px under it) */
+@supports (height:100svh){@media (min-width:1100px){.af-cal{--k-cal-h:max(660px,calc(100svh - 154px))}}}
 /* loading state: the sentence first, then the still calendar drawing. Until a calendar frame is in place the
    mount lets taps through, so the email link in the sentence works. */
 .af-cal .k-cal__note{order:0;font-size:16px}
@@ -47,13 +67,21 @@
 .af-open a{display:inline-block;padding:16px 8px;color:var(--k-ink-2);text-underline-offset:3px} /* a 56px tap area */
 .af-open a:focus-visible{outline-offset:-6px}
 @keyframes af-in{from{opacity:0}to{opacity:1}}
-.af-also{margin-top:24px;font-size:17px;line-height:1.5;font-weight:500;letter-spacing:-.01em;color:var(--k-ink);text-wrap:balance}
 
-/* 5. /not-a-fit: a heading and two sentences, set a little above the middle of the screen */
-.af-main--msg{display:flex;flex-direction:column;justify-content:center;padding-top:40px;padding-bottom:calc(48px + 6vh)}
-/* the first sentence in the lead grey, what happens next in ink (the home hero sets its subhead the same way) */
-.af-msg p{max-width:none;margin-top:20px;text-wrap:balance}
-.af-msg p + p{margin-top:8px;font-weight:500;letter-spacing:-.01em;color:var(--k-ink)}
+/* 5. /not-a-fit: the news, then the Playbook they still get, then how to come back */
+.af-main--msg{padding-top:40px;padding-bottom:72px}
+.af-msg p{max-width:52ch;margin-top:16px;text-wrap:pretty}
+.af-pb{margin-top:40px;padding:28px;border-radius:var(--k-r-xl);box-shadow:var(--shadow-lift)}
+.af-pb .k-h3{margin-top:12px}
+.af-pb__p{margin-top:12px;font-size:17px;line-height:28px;color:var(--k-ink-2);text-wrap:pretty}
+.af-ticks{margin-top:16px}
+.af-ticks > li{display:grid;grid-template-columns:20px minmax(0,1fr);column-gap:12px;align-items:start;padding:12px 0;border-top:1px solid var(--k-line);font-size:16px;line-height:24px;color:var(--k-ink-2)}
+.af-ticks > li::before{content:"";width:20px;height:20px;margin-top:2px;border-radius:50%;background:var(--k-mark-bg) var(--k-check-img) center/12px no-repeat}
+.af-later{margin-top:40px;display:grid;gap:8px;font-size:17px;line-height:28px;color:var(--k-ink-2)}
+.af-later__h{font-weight:500;font-size:clamp(19px,1.7vw,21px);line-height:28px;letter-spacing:-.02em;color:var(--k-ink)}
+.af-later a{color:var(--k-ink);text-underline-offset:3px}
+.af-later p{text-wrap:pretty}
+@media (max-width:359px){.af-pb{padding:24px 20px}}
 
 /* both pages: the Playbook's name is never split across two lines */
 .af-nb{white-space:nowrap}

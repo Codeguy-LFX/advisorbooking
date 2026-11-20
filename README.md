@@ -11,9 +11,9 @@ Static marketing site for Advisor Booking (De Jesus Ventures LLC). No build step
 | `pilot.html` | `/pilot` | Hidden founding-offer landing page for email and LinkedIn outreach (gated form, then the iClosed calendar). `noindex`, not linked from the nav. |
 | `meetings.html` | `/meetings` | Hidden v1 landing page, kept for later use. `noindex`. |
 | `L1/index.html` | `/L1/` | The qualifying funnel: six screens, then `/L1/Q/` or `/L1/DQ/`. `noindex`. See below. |
-| `ria-meetings.html` | `/ria-meetings` | The landing page for all paid traffic (Google Search, LinkedIn). The headline follows `?v=` (appt, leads, mktg, alt, playbook; anything else is appt). The quiz sits on the first screen, AUM question first. `noindex`. |
-| `qualified.html` | `/qualified` | Where a QUALIFIED lead from `/ria-meetings` lands: the calendar. It is the page that sends the one Google Ads conversion event ("Submit lead form", see `assets/gads.js`), so it sends anyone who has not just passed the quiz as qualified back to `/ria-meetings`. `noindex`, linked from nowhere, not in the sitemap. |
-| `not-a-fit.html` | `/not-a-fit` | Where a not-qualified lead from `/ria-meetings` lands. No calendar. `noindex`. |
+| `ria-meetings.html` | `/ria-meetings` | The landing page for all paid traffic (Google Search, LinkedIn): a full sales page. The headline follows `?v=` (appt, leads, mktg, alt, playbook; anything else is appt). The quiz sits on the first screen, AUM question first. `noindex`. See "The paid landing page" below. |
+| `qualified.html` | `/qualified` | Where a QUALIFIED lead from `/ria-meetings` lands: the calendar on the first screen, the lead's own AUM and advisor answers, and what happens on the call. It is the page that sends the one Google Ads conversion event ("Submit lead form", see `assets/gads.js`), so it sends anyone who has not just passed the quiz as qualified back to `/ria-meetings`. No name, email, phone or photo is shown on it. `noindex`, linked from nowhere, not in the sitemap. |
+| `not-a-fit.html` | `/not-a-fit` | Where a not-qualified lead from `/ria-meetings` lands. No calendar. Says why (under $50M AUM, or not a financial advisor), what is in the Playbook they still get, and how to come back. `noindex`. |
 | `L1/Q/index.html`, `L1/DQ/index.html` | `/L1/Q/`, `/L1/DQ/` | The booking pages of the home-page quiz (`/L1/`): iClosed calendar, prefilled. Identical, except `Q/` carries the Meta pixel and fires one `Lead` event. `noindex`. |
 | `booked.html` | `/booked` | Booking confirmation with next steps. iClosed sends people here after they book; it records the booking (CRM post, GTM `ab_booked` for qualified leads). `noindex`. |
 | `fit/`, `fit5/` | `/fit/`, `/fit5/` | Old funnel links: forward to `/L1/` with the query string (campaign tags) intact. |
@@ -62,6 +62,29 @@ rules and settings: the `window.AB_APPLY` block at the top of `L1/index.html`.
   "Compliance Team", never CCO; no pricing anywhere; only what we do (nothing against ads or other channels); the
   generator's lint fails the build on any of these.
 - Settings in `assets/config.js`: `ghlWebhookUrl`, `metaPixelLeadId`, `gtmId`, `iclosedUrlFit5`.
+
+## The paid landing page
+
+`/ria-meetings` runs in this order: the first screen (who it is for, the headline for the visit, the commitment, the quiz),
+the call-out, the Past Prospect Playbook, a week once it is running, why the calendar is not full, the Advisor Pipeline
+System, what makes it different, everything included, the four extras, the 90-day commitment, pricing, who it is for,
+FAQ, the founder with his photo, the closing button. Three buttons and two text links lead to the quiz, nowhere else.
+
+- **The Playbook section describes the real guide** ("Advisor Booking: Past Prospect Playbook"): its 7-day schedule,
+  six emails, call scripts, tracker and compliance checklist. Change the section when the guide changes. The site does
+  not send the guide: the CRM must email it to every lead who finishes the quiz, qualified or not, because all three
+  pages promise it.
+- **Prices are written in the page**, in the Pricing section and one FAQ answer: the founding rate ($5,000 every 4
+  weeks, no setup fee, 3 billing cycles), standard pricing ($10,000 setup, then $7,500 every 4 weeks) and the math
+  ($15,000 over 15 meetings). Change all of them together when the offer changes.
+- **The commitment is word for word** the owner's sentence. The word "guarantee" is not used on these three pages.
+- **Proof**: there are no client results yet, so none are shown. Four places are marked in the HTML with a
+  `PROOF SLOT` comment (sample weekly report, a compliance team's comment, a results table, a client line). Fill them
+  with real material only.
+- **The founder's photo** is `assets/nick-panel.jpg` (with `.webp` and 600px copies): a crop of his panel photo with
+  his name badge and the second panelist left out, and no camera data in the file.
+- The buttons and links to the quiz move the page without changing the address (a `#book` address would add a history
+  entry the quiz reads as "back to question 1").
 
 ## Editing the site
 

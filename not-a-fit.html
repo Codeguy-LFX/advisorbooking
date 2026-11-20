@@ -31,9 +31,41 @@
     <div class="af-col">
       <div class="af-msg">
         <h1 class="k-h2 k-h2--md">We’re not the right fit right now.</h1>
-        <p class="k-lead">We only work with a narrow RIA profile, so we’d rather say so now.</p>
-        <p class="k-lead">We’ll email you the <span class="af-nb">Past Prospect Playbook</span> so you can run the sequence yourself.</p>
+        <p class="k-lead" id="nfWhy">We only work with a narrow RIA profile, so we’d rather say so now.</p>
       </div>
+      <section class="k-card af-pb" aria-labelledby="nfPb">
+        <p class="k-eyebrow">Yours anyway</p>
+        <h2 class="k-h3" id="nfPb">The <span class="af-nb">Past Prospect Playbook</span></h2>
+        <p class="af-pb__p">We’ll email it to you: a <span class="af-nb">7-day</span> sequence for restarting conversations with the past prospects already in your CRM. You can run it yourself, start to finish.</p>
+        <ul class="af-ticks" role="list">
+          <li><span>Who to pull from your CRM, and who to leave out</span></li>
+          <li><span>What to send each day, with templates you can copy</span></li>
+          <li><span>What to say when they reply</span></li>
+          <li><span>A tracker, and a checklist to send your compliance team</span></li>
+        </ul>
+      </section>
+      <div class="af-later">
+        <h2 class="af-later__h">When things change</h2>
+        <p id="nfLater">If your firm’s situation changes, come back and take the fit check again. We’d be glad to talk then.</p>
+        <p><a id="nfBack" href="/ria-meetings">Picked the wrong answer? Go back to the questions.</a></p>
+        <p>Questions? Email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a>.</p>
+      </div>
+      <script>
+      /* Two sentences follow the reason the quiz gave (saved in this browser as route_reason): under $50M in AUM, or not
+         a financial advisor. Without it the general wording above stays. The link back keeps the address's campaign tags. */
+      (function (d) {
+        try { d.getElementById('nfBack').href = '/ria-meetings' + location.search; } catch (e) {}
+        try {
+          var st = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'), r = st && st.route === 'dq' ? st.route_reason : '';
+          if (r === 'aum_under_50m') {
+            d.getElementById('nfWhy').textContent = 'Advisor Booking is built for firms with $50M or more in AUM, so we’d rather say so now than take your time on a call.';
+            d.getElementById('nfLater').textContent = 'When your firm passes $50M in AUM, come back and take the fit check again. We’d be glad to talk then.';
+          } else if (r === 'not_an_advisor') {
+            d.getElementById('nfWhy').textContent = 'Advisor Booking is built for financial advisory firms, so we’d rather say so now than take your time on a call.';
+          }
+        } catch (e) {}
+      })(document);
+      </script>
     </div>
   </main>
 </div>
