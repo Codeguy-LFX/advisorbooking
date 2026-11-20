@@ -96,3 +96,7 @@
 .af-h,.af-msg h1{font-size:clamp(30px,5.2vw,44px)}
 @media (min-width:960px){.af-h,.af-msg h1{font-size:clamp(44px,3.8vw,52px)}}
 @media (max-width:959px){.af-col{max-width:calc(640px + 2*var(--gutter))}}
+/* "You told us" over the two answers, one line under them */
+.af-told{margin-top:12px;font-family:var(--f-mono);font-size:12px;line-height:16px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--k-muted)}
+.af-told + .af-recap{margin-top:8px}
+.af-told--after{margin-top:8px;font-family:var(--f-sans);font-size:15px;line-height:22px;letter-spacing:0;text-transform:none;font-weight:400;color:var(--k-ink-2)}

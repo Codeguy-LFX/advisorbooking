@@ -84,7 +84,8 @@
     <div class="af-col af-col--wide af-grid">
       <div class="af-head">
         <h1 class="k-h2 k-h2--md af-h">You look like a fit. <span>Pick a time for your call.</span></h1>
-        <p class="af-sub">20 minutes. You leave with your <span class="af-nb">break-even</span> cost per meeting and a yes or a no.</p>
+        <p class="af-sub">20 minutes on Google Meet. You leave with your <span class="af-nb">break-even</span> cost per meeting and a yes or a no.</p>
+        <p class="af-told" id="afTold" hidden>You told us. We’ll plan the call around it.</p>
         <ul class="k-summary af-recap" id="afRecap" role="list" aria-label="What you told us" hidden>
           <li id="afAum" hidden><span class="k-summary__k">Firm AUM</span><span></span></li>
           <li id="afAdv" hidden><span class="k-summary__k">Calendars to fill</span><span></span></li>
@@ -100,7 +101,7 @@
               if (!li || !v || v.length > 60 || !/^[\w$ ,.+-]+$/.test(v)) return;
               li.lastChild.textContent = v; li.hidden = false; any = true;
             });
-            if (any) d.getElementById('afRecap').hidden = false;
+            if (any) { d.getElementById('afRecap').hidden = false; d.getElementById('afTold').hidden = false; }
           } catch (e) {}
         })(document);
         </script>
@@ -116,7 +117,7 @@
         <h2 class="af-sell__h" id="afSellH">What happens on the call</h2>
         <ol class="af-steps" role="list">
           <li><span class="af-n" aria-hidden="true">1</span><span><strong>We look at where you are.</strong> Your CRM of past prospects, your current marketing and your goals.</span></li>
-          <li><span class="af-n" aria-hidden="true">2</span><span><strong>We run the <span class="af-nb">first-meeting</span> math.</strong> With your close rate and your average new client, we work out your <span class="af-nb">break-even</span> cost per attended, qualified meeting. Rough numbers are fine.</span></li>
+          <li><span class="af-n" aria-hidden="true">2</span><span><strong>We run the <span class="af-nb">first-meeting</span> math.</strong> With your close rate and your average new client size, we work out your <span class="af-nb">break-even</span> cost per attended, qualified meeting. Rough numbers are fine.</span></li>
           <li><span class="af-n" aria-hidden="true">3</span><span><strong>We show you the first 90 days.</strong> How reactivation and outreach would be set up for your firm, and what the <span class="af-nb">15-meeting</span> commitment covers.</span></li>
           <li><span class="af-n" aria-hidden="true">4</span><span><strong>You get a yes or a no.</strong> If we’re not a fit, you still leave with a clear plan for doing it yourself.</span></li>
         </ol>
