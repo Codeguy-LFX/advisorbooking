@@ -1,11 +1,11 @@
-/* Advisor Booking: the paid landing page, /ria-meetings (rm.css)
+/* Advisor Booking: the first screen of /ria-meetings, the paid landing page with the quiz (rm.css)
    Layout only. Every colour, radius, shadow, type style and control comes from kit.css, which takes them from
-   the home page. Spacing sits on a 4px grid. Only opacity and transform ever animate. */
+   the home page. Spacing sits on a 4px grid. Only opacity and transform ever animate.
+   Everything under the first screen is in paid.css, shared with the other paid landing pages. */
 
 /* 0. FIRST PAINT: once, with the fonts in place and the right headline (see the two scripts in the page) */
 .rm-wait body{visibility:hidden}
 .rm-swap .rm-cols--hero{visibility:hidden}
-@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}} /* the closing button; the quiz itself always jumps */
 
 /* 1. FRAME: one 640px column up to 959px, the home page's 1200px frame from 960px */
 .rm-wrap{width:100%;max-width:calc(640px + 2*var(--gutter));margin-inline:auto;padding-left:max(var(--gutter),env(safe-area-inset-left,0px));padding-right:max(var(--gutter),env(safe-area-inset-right,0px))}
@@ -113,112 +113,9 @@
 /* a short laptop window: the card moves up and loses 16px of padding, so the seventh answer still shows */
 @media (min-width:960px) and (max-height:683px){.rm-hero{--rm-top:12px;--rm-pad:16px}}
 
-/* 3. SECTIONS: a large heading on the left, short lines on the right, on the first screen's two columns */
-.rm-sec{padding-block:clamp(56px,6vw,88px)}
-.rm-nb{white-space:nowrap}
-.rm-sec--rule{border-top:1px solid var(--k-line)}
-.rm-list > li{display:grid;grid-template-columns:20px minmax(0,1fr);column-gap:12px;align-items:start;padding:16px 0;border-top:1px solid var(--k-line);font-size:17px;line-height:28px;color:var(--k-ink-2)}
-.rm-list > li:last-child{border-bottom:1px solid var(--k-line)}
-.rm-list--plain > li{grid-template-columns:minmax(0,1fr)}
-.rm-list--num > li{grid-template-columns:32px minmax(0,1fr);column-gap:16px}
-.rm-n{display:grid;place-items:center;width:32px;height:32px;margin-top:-2px;border-radius:9px;background:var(--k-accent-soft);color:var(--k-accent);font:500 12px/1 var(--f-mono)}
-.rm-list--yes > li::before,.rm-list--no > li::before{content:"";width:20px;height:20px;margin-top:4px;border-radius:50%}
-.rm-list--yes > li::before{background:var(--k-mark-bg) var(--k-check-img) center/12px no-repeat}
-.rm-list--no > li::before{background:var(--k-well) linear-gradient(var(--k-muted),var(--k-muted)) center/8px 2px no-repeat}
-.rm-list--big > li{font-size:clamp(19px,1.7vw,21px);font-weight:500;letter-spacing:-.02em;color:var(--k-ink)}
-.rm-cap span{display:block}
-.rm-cap span::first-letter{text-transform:uppercase}
-.rm-pledge{font-size:clamp(19px,1.7vw,21px);line-height:1.5;letter-spacing:-.015em;color:var(--k-ink)}
-.rm-fit{display:grid;gap:16px}
-.rm-fit .k-card{padding:24px 24px 8px}
-.rm-fit__h{font-weight:500;font-size:clamp(19px,1.7vw,21px);line-height:28px;letter-spacing:-.02em;color:var(--k-ink)}
-.rm-fit .rm-list{margin-top:12px}
-.rm-fit .rm-list > li:last-child{border-bottom:0}
-@media (max-width:359px){.rm-fit .k-card{padding:20px 16px 4px}}
-
-/* 4. THE LONG PAGE: the sales page under the first screen. The same two columns all the way down: the heading on the
-      left (it stays in view while a long right column passes), the content on the right. */
-.rm-head{display:grid;gap:16px;align-content:start;min-width:0}
-.rm-head > .k-lead{max-width:44ch}
-@media (min-width:960px){.rm-head:not(.rm-head--flow){position:sticky;top:40px}}
-.rm-prose{display:grid;gap:16px;font-size:clamp(17px,1.4vw,19px);line-height:1.6;color:var(--k-ink-2);text-wrap:pretty}
-.rm-prose strong,.rm-list strong,.rm-note strong,.rm-aside strong{font-weight:500;color:var(--k-ink)}
-.rm-aside,.rm-note{font-size:17px;line-height:28px;color:var(--k-ink-2);text-wrap:pretty}
-.rm-aside{margin-top:20px}
-.rm-note a{color:var(--k-ink);text-underline-offset:3px}
-/* lists: a label over each line (the week), a plus (the extras), tighter rows (inside the price card) */
-.rm-list--when > li{grid-template-columns:minmax(0,1fr);row-gap:4px}
-.rm-when,.rm-group__h,.rm-one__k,.rm-anchor__k{font-family:var(--f-mono);font-size:12px;line-height:16px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
-.rm-when{color:var(--k-accent)}
-.rm-list--plus > li::before{content:"";width:20px;height:20px;margin-top:4px;border-radius:50%;background:linear-gradient(var(--k-accent),var(--k-accent)) center/10px 2px no-repeat,linear-gradient(var(--k-accent),var(--k-accent)) center/2px 10px no-repeat,var(--k-accent-soft)}
-.rm-list--tight > li{padding:12px 0;font-size:16px;line-height:24px}
-.rm-list--tight > li::before{margin-top:2px}
-/* a small label over a group of lines */
-.rm-group + .rm-group{margin-top:40px}
-.rm-group__h{margin:0 0 12px;color:var(--k-muted)}
-.rm-group__h--gap{margin-top:40px}
-/* a quiet box for one fact: the one number, the math */
-.rm-one{margin-top:24px;padding:20px 24px;border-radius:var(--k-r-lg)}
-.rm-one__k{color:var(--k-accent)}
-.rm-one__v{margin-top:8px;font-weight:500;font-size:clamp(21px,2vw,26px);line-height:1.2;letter-spacing:-.03em;color:var(--k-ink);text-wrap:balance}
-.rm-one__d{margin-top:8px;font-size:16px;line-height:26px;color:var(--k-ink-2);text-wrap:pretty}
-.rm-one__d + .rm-one__d{margin-top:12px}
-/* a button inside a section, with one line under it */
-.rm-cta{display:grid;justify-items:start;gap:12px;margin-top:32px}
-.rm-cta .k-fine{text-align:left}
-@media (max-width:479px){.rm-cta .k-btn{width:100%;justify-content:space-between}}
-
-/* 5. THE PLAYBOOK: a soft green band, what is inside on the left, a look at the schedule on the right */
-.rm-pb{--k-line:#d3e3dc;--k-muted:#56605b;background:var(--accent-soft)}
-.rm-pb:focus{outline:0}
-.rm-pb__in{margin-top:8px}
-.rm-peek{padding:24px;border-radius:var(--k-r-xl);box-shadow:var(--shadow-lift)}
-.rm-peek__cap{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.rm-peek__t{margin-top:12px;font-weight:500;font-size:clamp(24px,2.4vw,28px);line-height:1.12;letter-spacing:-.03em;color:var(--ink)}
-.rm-days{margin-top:16px}
-.rm-days > li{display:grid;grid-template-columns:52px minmax(0,1fr);column-gap:12px;align-items:baseline;padding:12px 0;border-top:1px solid var(--line);font-size:16px;line-height:24px;color:var(--ink-2)}
-.rm-day{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:500;color:var(--accent);white-space:nowrap}
-.rm-peek__f{padding-top:16px;border-top:1px solid var(--line);font-size:15px;line-height:24px;font-weight:500;color:var(--ink)}
-@media (max-width:359px){.rm-peek{padding:20px 16px}}
-
-/* 6. PRICING: standard pricing in grey, the founding rate in the feature card, the math in a quiet box */
-.rm-anchor{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;padding:0 4px 16px;font-size:16px;line-height:24px;color:var(--k-muted)}
-.rm-price{padding:28px 28px 12px}
-.rm-price__n{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin-top:16px}
-.rm-price__big{font-weight:500;font-size:clamp(48px,6vw,64px);line-height:1;letter-spacing:-.05em;color:var(--k-ink)}
-.rm-price__per{font-size:19px;line-height:28px;color:var(--k-muted)}
-.rm-price__s{margin-top:12px;font-size:clamp(19px,1.7vw,21px);line-height:28px;font-weight:500;letter-spacing:-.02em;color:var(--k-ink)}
-.rm-price .rm-list{margin-top:16px}
-.rm-price .rm-list > li:last-child{border-bottom:0}
-.rm-math{margin-top:16px}
-@media (max-width:359px){.rm-price{padding:24px 20px 8px}}
-
-/* 7. THE NIGHT BAND: FAQ, the founder, the closing button, the footer (as the home page ends) */
-.rm-night{border-radius:28px 28px 0 0}
-.rm-qa{padding:20px 0;border-top:1px solid var(--k-line)}
-.rm-qa:last-child{border-bottom:1px solid var(--k-line)}
-.rm-qa h3{font-weight:500;font-size:clamp(19px,1.7vw,21px);line-height:28px;letter-spacing:-.02em;color:var(--k-ink);text-wrap:balance}
-.rm-qa p{margin-top:4px;font-size:17px;line-height:28px;color:var(--k-muted);text-wrap:pretty}
-/* the founder: the photo on the left (above the words on a phone), three plain lines beside it */
-.rm-founder{padding-bottom:clamp(24px,3vw,40px)}
-.rm-cols--photo{align-items:center;row-gap:32px}
-.rm-photo img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:var(--k-r-xl);background:var(--k-well);box-shadow:0 0 0 1px var(--k-line),0 30px 60px -30px rgba(0,0,0,.8)}
-.rm-photo figcaption{margin-top:12px;font-size:14px;line-height:20px;color:var(--k-muted)}
-/* the closing button, on a glow centred on the button wherever the lines above it break */
-.rm-end{position:relative;isolation:isolate;overflow:hidden;display:grid;justify-items:center;gap:20px;padding:64px var(--gutter) 96px;text-align:center}
-.rm-end__h{max-width:24ch;font-weight:500;font-size:clamp(26px,3.2vw,40px);line-height:1.1;letter-spacing:-.035em;color:var(--k-ink);text-wrap:balance}
-.rm-end__go{position:relative;margin-top:12px}
-.rm-end__go::before{content:"";position:absolute;left:50%;top:50%;width:min(620px,90vw);height:260px;transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(15,122,98,.55),transparent);z-index:-1;pointer-events:none}
-.rm-end__f{font-size:15px;line-height:24px;color:var(--k-muted)}
-.rm-foot{padding-top:8px}
-.rm-foot .k-legal__links{gap:0 8px;margin-bottom:0}
-.rm-foot .k-legal__links a{padding:14px 12px;font-size:16px;line-height:24px}
-.rm-foot .k-legal__disc{margin-top:4px;font-size:14px}
-
-/* the founder now stands above the FAQ, on the light page */
-.rm-sec--rule.rm-founder{padding-bottom:clamp(56px,6vw,88px)}
-.rm-sec--rule .rm-photo img{box-shadow:0 0 0 1px var(--k-line),0 24px 48px -24px rgba(10,30,22,.35)}
-
 /* the gap between the first screen and the next section: one section's padding, no more */
 .rm-hero{padding-bottom:clamp(8px,2vw,24px)}
 .rm-book{padding-bottom:clamp(16px,3vw,32px)}
+.rm-nb{white-space:nowrap}
+/* the headline here sits in a narrow column: its phrases flow as plain text (the centered pages break between them) */
+.rm-h1 .p-ph{display:inline}

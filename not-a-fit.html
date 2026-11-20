@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script src="/assets/gads.js" async></script>
-<title>Not the right fit right now | Advisor Booking</title>
-<meta name="description" content="We only work with a narrow RIA profile, so we'd rather say so now.">
+<title>Pick a time | Advisor Booking</title>
+<meta name="description" content="You can still book a 20-minute call. Pick a time.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
@@ -21,57 +21,139 @@
   h.classList.add('af-wait'); t = setTimeout(go, 300);
   d.fonts.load('500 16px Geist').then(go, go); })(document);
 </script>
+<link rel="preconnect" href="https://app.iclosed.io">
 </head>
 <body class="af-body">
 <div class="af-stage k-glow">
-  <header class="af-col af-top">
+  <header class="af-col af-col--wide af-top">
     <p class="k-brand af-brand"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></p>
   </header>
-  <main class="af-main af-main--msg" id="main">
-    <div class="af-col">
-      <div class="af-msg">
-        <h1 class="k-h2 k-h2--md">We’re not a fit right now.</h1>
-        <p class="k-lead" id="nfWhy">We only work with a narrow RIA profile, so we’d rather say so now.</p>
+  <main class="af-main" id="main">
+    <div class="af-col af-col--wide af-grid">
+      <div class="af-head">
+        <h1 class="k-h2 k-h2--md af-h">You can still book a call. <span>Pick a time.</span></h1>
+        <p class="af-sub af-sub--long" id="nfWhy">We work with a narrow RIA profile, so we may not be the right fit yet. Pick a time anyway. On the call we’ll tell you whether we can help, and what to do in the meantime if we can’t.</p>
+        <script>
+        /* The sentence follows the reason the quiz gave (saved in this browser as route_reason): under $50M in AUM, or not a
+           financial advisor. Without it the general wording above stays. Set before the page is painted. */
+        (function (d) {
+          try {
+            var st = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'), r = st && st.route === 'dq' ? st.route_reason : '';
+            if (r === 'aum_under_50m') d.getElementById('nfWhy').textContent = 'Advisor Booking is built for firms with $50M or more in AUM, so we may not be the right fit yet. Pick a time anyway. On the call we’ll tell you whether we can help, and what to do in the meantime if we can’t.';
+            else if (r === 'not_an_advisor') d.getElementById('nfWhy').textContent = 'Advisor Booking is built for financial advisory firms, so we may not be the right fit. Pick a time anyway. On the call we’ll tell you whether we can help.';
+          } catch (e) {}
+        })(document);
+        </script>
       </div>
-      <section class="k-card af-pb" aria-labelledby="nfPb">
-        <p class="k-eyebrow">Yours anyway</p>
-        <h2 class="k-h3" id="nfPb">The <span class="af-nb">Past Prospect Playbook</span></h2>
+      <section class="k-cal af-cal" id="calendar" aria-label="Pick a time for your call">
+        <div class="k-cal__body">
+          <div class="k-cal__skel"><p class="k-cal__note">Loading the calendar. If it does not appear, email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will send you times.</p></div>
+          <div class="k-cal__mount"></div>
+        </div>
+      </section>
+      <section class="af-sell" aria-labelledby="nfPb">
+        <p class="k-eyebrow">Yours either way</p>
+        <h2 class="af-sell__h" id="nfPb">The <span class="af-nb">Past Prospect Playbook</span></h2>
         <p class="af-pb__p">We’ll email it to the address you gave us: a <span class="af-nb">7-day</span> sequence for restarting conversations with the past prospects already in your CRM. You can run it yourself, start to finish.</p>
         <ul class="af-ticks" role="list">
-          <li><span>Who to pull from your CRM, and who to leave out</span></li>
-          <li><span>What to send each day, with templates you can copy</span></li>
-          <li><span>What to say when they reply</span></li>
-          <li><span>A tracker, and a checklist to send your compliance team</span></li>
+          <li>Who to pull from your CRM, and who to leave out</li>
+          <li>What to send each day, with templates you can copy</li>
+          <li>What to say when they reply</li>
+          <li>A tracker, and a checklist to send your compliance team</li>
         </ul>
+        <p class="af-back"><a id="nfBack" href="/ria-meetings">Picked the wrong answer? Go back to the questions.</a></p>
       </section>
-      <div class="af-later">
-        <h2 class="af-later__h">When things change</h2>
-        <p id="nfLater">If your firm’s situation changes, come back and take the fit check again. We’d be glad to talk then.</p>
-        <p><a id="nfBack" href="/ria-meetings">Picked the wrong answer? Go back to the questions.</a></p>
-        <p>Questions? Email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a>.</p>
-      </div>
-      <script>
-      /* Two sentences follow the reason the quiz gave (saved in this browser as route_reason): under $50M in AUM, or not
-         a financial advisor. Without it the general wording above stays. The link back keeps the address's campaign tags. */
-      (function (d) {
-        try { d.getElementById('nfBack').href = '/ria-meetings' + location.search; } catch (e) {}
-        try {
-          var st = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'), r = st && st.route === 'dq' ? st.route_reason : '';
-          if (r === 'aum_under_50m') {
-            d.getElementById('nfWhy').textContent = 'Advisor Booking is built for firms with $50M or more in AUM. We’d rather tell you now than take your time on a call.';
-            d.getElementById('nfLater').textContent = 'When your firm passes $50M in AUM, come back and take the fit check again. We’d be glad to talk then.';
-          } else if (r === 'not_an_advisor') {
-            d.getElementById('nfWhy').textContent = 'Advisor Booking is built for financial advisory firms. We’d rather tell you now than take your time on a call.';
-          }
-        } catch (e) {}
-      })(document);
-      </script>
     </div>
   </main>
 </div>
 <footer class="k-legal af-foot">
-  <nav class="k-legal__links" aria-label="Footer"><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
+  <nav class="k-legal__links" aria-label="Footer"><a href="/privacy" target="_blank" rel="noopener">Privacy</a><a href="/terms" target="_blank" rel="noopener">Terms</a></nav>
   <p class="k-legal__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
 </footer>
+<script src="/assets/config.js"></script>
+<script>
+/* The link back to the questions. It goes to the quiz the lead came from (/ria-meetings or /fit-check, remembered for
+   the visit), keeps the address's campaign tags, and opens the quiz at the question that decided the result instead
+   of at the last step: AUM, or "is your firm an RIA". */
+(function (d) {
+  try {
+    var from = ''; try { from = sessionStorage.getItem('ab_quiz_from') || ''; } catch (e) {}
+    try { var r = new URL(d.referrer), p = r.pathname.replace(/\.html$/, '').replace(/\/$/, ''); if (r.origin === location.origin && /^\/(ria-meetings|fit-check)$/.test(p)) { from = p; try { sessionStorage.setItem('ab_quiz_from', p); } catch (e) {} } } catch (e) {}
+    var quiz = from === '/fit-check' ? '/fit-check' : '/ria-meetings', a = d.getElementById('nfBack');
+    a.href = quiz + location.search;
+    a.addEventListener('click', function () {
+      try {
+        var s = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null');
+        if (s && s.route === 'dq') {
+          var adv = s.route_reason === 'not_an_advisor';
+          s.step = quiz === '/fit-check' ? (adv ? 0 : 2) : (adv ? 1 : 0);
+          localStorage.setItem('ab_apply_v1', JSON.stringify(s));
+        }
+      } catch (e) {}
+    });
+  } catch (e) {}
+})(document);
+</script>
+<script>
+/* The calendar, as on /L1/DQ/: the quiz funnel's own iClosed event (iclosedUrlFit5 in config.js) in iClosed's inline
+   widget, with the lead's name, email, phone and campaign tags filled in. If the widget has put no calendar frame
+   in place after 8 seconds (or its script is blocked), the event page is loaded in a plain frame and a link to open
+   it appears. No Meta pixel, no Tag Manager and NO Google Ads conversion here: a not-qualified lead may book, but
+   is never counted as a conversion. */
+(function () {
+  'use strict';
+  var CFG = window.AB_CONFIG || {}, LABEL = 'dq';
+  var st = null; try { st = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); } catch (e) {}
+  var a = (st && st.answers) || {};
+  var utm = {}; try { utm = JSON.parse(sessionStorage.getItem('ab_utm') || '{}') || {}; } catch (e) {}
+  var base = String(CFG.iclosedUrlFit5 || CFG.iclosedUrl || '').trim(), url = '';
+  try {
+    var u = new URL(base);
+    Object.keys(utm).forEach(function (k) { if (k.indexOf('utm_') === 0) u.searchParams.set(k, utm[k]); });
+    var d = String(a.phone || '').replace(/\D/g, ''); if (d.length === 11 && d.charAt(0) === '1') d = d.slice(1);
+    var nm = [a.first, a.last].filter(Boolean).join(' ').trim();
+    if (nm) u.searchParams.set('iclosedName', nm);
+    if (a.first) u.searchParams.set('iclosedFirstName', String(a.first).trim());
+    if (a.last) u.searchParams.set('iclosedLastName', String(a.last).trim());
+    if (a.email) u.searchParams.set('iclosedEmail', a.email);
+    if (d.length === 10) u.searchParams.set('iclosedPhone', '+1' + d);
+    if (!u.searchParams.get('utm_term')) u.searchParams.set('utm_term', 'L1-' + LABEL);
+    url = u.toString();
+  } catch (e) {}
+  var cal = document.getElementById('calendar'), mount = cal.querySelector('.k-cal__mount');
+  if (!url) return;   // no event link in config.js: the loading sentence, with the email address, stays
+  var w = document.createElement('div'); w.className = 'iclosed-widget'; w.setAttribute('data-url', url); w.setAttribute('title', 'Pick a time for your call'); w.style.width = '100%';
+  mount.appendChild(w);
+  var settled = false, waited = 0, iv;
+  /* A calendar frame is in place: let it take taps, and hide the loading drawing once it has loaded. */
+  function live(f) {
+    cal.classList.add('is-live'); if (!f.getAttribute('title')) f.setAttribute('title', 'Pick a time for your call');
+    var done = function () { cal.classList.add('is-ready'); };
+    f.addEventListener('load', done); setTimeout(done, 3000);
+  }
+  function fallback() {
+    if (settled) return; settled = true; clearInterval(iv);
+    var have = mount.querySelector('iframe'); if (have) { live(have); return; }
+    mount.innerHTML = '';
+    var p = document.createElement('p'); p.className = 'af-open'; var l = document.createElement('a'); l.href = url; l.textContent = 'Calendar not showing? Open it here.'; p.appendChild(l); mount.appendChild(p);
+    var f = document.createElement('iframe'); f.title = 'Pick a time for your call'; f.src = url; mount.appendChild(f);
+    cal.classList.add('is-fallback'); live(f);
+  }
+  var s = document.createElement('script'); s.async = true; s.src = 'https://app.iclosed.io/assets/widget.js'; s.onerror = fallback; document.body.appendChild(s);
+  iv = setInterval(function () { var f = mount.querySelector('iframe'); if (f) { settled = true; clearInterval(iv); live(f); return; } if ((waited += 250) >= 8000) fallback(); }, 250);
+  /* The site's /booked page, when iClosed shows it inside the frame, reports the booking here: save it to the CRM, once. */
+  var bookedOnce = false;
+  window.addEventListener('message', function (e) {
+    var d = e.data || {};
+    if (e.origin !== location.origin || d.event !== 'iclosed.booked' || !d.payload || bookedOnce) return;
+    bookedOnce = true;
+    try { if (st && !st.booked) { st.booked = true; localStorage.setItem('ab_apply_v1', JSON.stringify(st)); } } catch (x) {}
+    var hook = String(CFG.ghlWebhookUrl || '').trim(); if (!hook) return;
+    var body = new URLSearchParams(), p = d.payload;
+    Object.keys(p).forEach(function (k) { if (k !== 'forwarded') body.append(k, p[k] === undefined || p[k] === null ? '' : String(p[k])); });
+    try { if (!(navigator.sendBeacon && navigator.sendBeacon(hook, body))) fetch(hook, { method: 'POST', mode: 'no-cors', keepalive: true, body: body }).catch(function () {}); } catch (x) {}
+  });
+})();
+</script>
 </body>
 </html>

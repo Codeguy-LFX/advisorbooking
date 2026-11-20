@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /tools/
 
 Sitemap: https://advisorbooking.com/sitemap.xml

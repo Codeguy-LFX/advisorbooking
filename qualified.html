@@ -96,9 +96,10 @@
         (function (d) {
           try {
             var st = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'), L = (st && st.labels) || {}, any = false;
-            [['afAum', L.aum], ['afAdv', L.advisors]].forEach(function (x) {
+            [['afAum', L.aum, /^(Under \$\d+ (Million|Billion)|\$\d+ (Million|Billion) (to \$\d+ (Million|Billion)|or more))$/],
+             ['afAdv', L.advisors, /^\d+ (to \d+|or more) advisors$/]].forEach(function (x) {
               var v = typeof x[1] === 'string' ? x[1].trim() : '', li = d.getElementById(x[0]);
-              if (!li || !v || v.length > 60 || !/^[\w$ ,.+-]+$/.test(v)) return;
+              if (!li || !v || !x[2].test(v)) return;   // only the quiz's own answer wording is ever shown
               li.lastChild.textContent = v; li.hidden = false; any = true;
             });
             if (any) { d.getElementById('afRecap').hidden = false; d.getElementById('afTold').hidden = false; }

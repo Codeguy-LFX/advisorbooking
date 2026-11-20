@@ -1,0 +1,9 @@
+/* Interim: a still card (the Playbook's 7-day schedule) in the place the animated product card will take. */
+.pd{border-radius:var(--k-r-xl);background:#fff;text-align:left}
+.pd-still{padding:clamp(20px,3.5vw,40px)}
+.pd-still__cap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.pd-still__t{margin-top:12px;font-weight:500;font-size:clamp(24px,3vw,32px);line-height:1.12;letter-spacing:-.03em;color:var(--ink)}
+.pd-still__days{margin-top:16px}
+.pd-still__days > li{display:grid;grid-template-columns:56px minmax(0,1fr);column-gap:12px;align-items:baseline;padding:12px 0;border-top:1px solid var(--line);font-size:16px;line-height:24px;color:var(--ink-2)}
+.pd-still__days > li > span:first-child{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:500;color:var(--accent);white-space:nowrap}
+@media (max-width:719px){.pd{border-radius:var(--k-r-lg)}}

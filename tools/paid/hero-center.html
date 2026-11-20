@@ -1,0 +1,29 @@
+<!-- THE FIRST SCREEN, centered: who it is for, the headline for the visit, one action, then the stage under it. -->
+<section class="p-hero p-hero--{{hero_mode}}" aria-labelledby="rmH">
+  <p class="k-brand p-brand">{{brand_svg}}<span>Advisor Booking</span></p>
+  <div class="p-wrap p-hero__copy">
+    <p class="k-chip p-who"><span class="k-chip__dot" aria-hidden="true"></span>For independent RIAs with $50M to $250M+ AUM</p>
+    <h1 class="k-display p-h1" id="rmH"><span class="p-ph">RIA appointment setting.</span> <span class="p-ph">Not leads.</span> <span class="p-ph">Attended meetings.</span></h1>
+    <p class="p-sub" id="rmS">{{sub}}</p>
+    {{> hero_action}}
+    <script>
+    /* The headline for this visit (see the first script). Runs before the words above are painted. */
+    (function (d) {
+      var v = window.AB_V, H = {
+        {{> headlines}}
+      };
+      try {
+        if (H.hasOwnProperty(v)) {
+          d.getElementById('rmH').innerHTML = H[v];
+          if (v === 'playbook') {
+            d.getElementById('rmS').textContent = '{{pb_sub}}';
+            d.getElementById('rmFine').innerHTML = '{{pb_fine}}';
+          }
+        }
+      } catch (e) {}
+      d.documentElement.classList.remove('rm-swap');
+    })(document);
+    </script>
+  </div>
+  {{> hero_stage}}
+</section>

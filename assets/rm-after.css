@@ -45,10 +45,10 @@
   .af-col--wide{max-width:calc(1224px + 2*var(--gutter))}   /* 400 + 64 + the calendar's 760 */
   .af-grid{grid-template-columns:minmax(0,400px) minmax(0,760px);justify-content:space-between;grid-template-areas:"head cal" "sell cal";grid-template-rows:auto 1fr;column-gap:40px}
   .af-grid .af-h{font-size:40px}
-  .af-cal{margin-top:0}
+  .af-cal{margin-top:0;align-self:start}   /* the card is as tall as the calendar, not as the words beside it */
   .af-sell{margin-top:40px}
 }
-/* a tall desktop window: the calendar card grows to fill it (106px above the card, 48px under it) */
+/* a tall desktop window: the calendar grows to fill it (106px above the card, 48px under it) */
 @supports (height:100svh){@media (min-width:1100px){.af-cal{--k-cal-h:max(660px,calc(100svh - 154px))}}}
 /* loading state: the sentence first, then the still calendar drawing. Until a calendar frame is in place the
    mount lets taps through, so the email link in the sentence works. */
@@ -68,20 +68,16 @@
 .af-open a:focus-visible{outline-offset:-6px}
 @keyframes af-in{from{opacity:0}to{opacity:1}}
 
-/* 5. /not-a-fit: the news, then the Playbook they still get, then how to come back */
-.af-main--msg{padding-top:40px;padding-bottom:72px}
-.af-msg p{max-width:52ch;margin-top:16px;text-wrap:pretty}
-.af-pb{margin-top:40px;padding:28px;border-radius:var(--k-r-xl);box-shadow:var(--shadow-lift)}
-.af-pb .k-h3{margin-top:12px}
-.af-pb__p{margin-top:12px;font-size:17px;line-height:28px;color:var(--k-ink-2);text-wrap:pretty}
+/* 5. /not-a-fit: the same frame as /qualified. A not-qualified lead may still book: an honest line about fit, the
+      calendar, then the Playbook they get either way and a way back to the questions. */
+.af-sub--long{max-width:46ch}
+.af-pb__p{margin-top:12px;font-size:16px;line-height:26px;color:var(--k-ink-2);text-wrap:pretty}
 .af-ticks{margin-top:16px}
-.af-ticks > li{display:grid;grid-template-columns:20px minmax(0,1fr);column-gap:12px;align-items:start;padding:12px 0;border-top:1px solid var(--k-line);font-size:16px;line-height:24px;color:var(--k-ink-2)}
-.af-ticks > li::before{content:"";width:20px;height:20px;margin-top:2px;border-radius:50%;background:var(--k-mark-bg) var(--k-check-img) center/12px no-repeat}
-.af-later{margin-top:40px;display:grid;gap:8px;font-size:17px;line-height:28px;color:var(--k-ink-2)}
-.af-later__h{font-weight:500;font-size:clamp(19px,1.7vw,21px);line-height:28px;letter-spacing:-.02em;color:var(--k-ink)}
-.af-later a{color:var(--k-ink);text-underline-offset:3px}
-.af-later p{text-wrap:pretty}
-@media (max-width:359px){.af-pb{padding:24px 20px}}
+.af-ticks > li{position:relative;padding:12px 0 12px 32px;border-top:1px solid var(--k-line);font-size:16px;line-height:24px;color:var(--k-ink-2)}
+.af-ticks > li:last-child{border-bottom:1px solid var(--k-line)}
+.af-ticks > li::before{content:"";position:absolute;left:0;top:14px;width:20px;height:20px;border-radius:50%;background:var(--k-mark-bg) var(--k-check-img) center/12px no-repeat}
+.af-back{margin-top:20px;font-size:16px;line-height:26px}
+.af-back a{color:var(--k-ink);text-underline-offset:3px}
 
 /* both pages: the Playbook's name is never split across two lines */
 .af-nb{white-space:nowrap}

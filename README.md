@@ -11,12 +11,13 @@ Static marketing site for Advisor Booking (De Jesus Ventures LLC). No build step
 | `pilot.html` | `/pilot` | Hidden founding-offer landing page for email and LinkedIn outreach (gated form, then the iClosed calendar). `noindex`, not linked from the nav. |
 | `meetings.html` | `/meetings` | Hidden v1 landing page, kept for later use. `noindex`. |
 | `L1/index.html` | `/L1/` | The qualifying funnel: six screens, then `/L1/Q/` or `/L1/DQ/`. `noindex`. See below. |
-| `ria-meetings.html` | `/ria-meetings` | The landing page for all paid traffic (Google Search, LinkedIn): a full sales page. The headline follows `?v=` (appt, leads, mktg, alt, playbook; anything else is appt). The quiz sits on the first screen, AUM question first. `noindex`. See "The paid landing page" below. |
-| `ria-meetings-direct.html` | `/ria-meetings-direct` | Hidden V2 of the paid landing page (same sales page, same `?v=` headlines). No quiz: every button goes straight to the iClosed event (`iclosedUrlDirect` in `assets/config.js`, else `iclosedUrlFit5`) with the campaign tags and click id added, and the screening questions are asked inside iClosed. Not linked, `noindex`. Google Ads conversions are NOT sent from it (the booking happens on iClosed). Styles: `assets/rm-direct.css`. |
-| `ria-meetings-embed.html` | `/ria-meetings-embed` | Hidden V3 of the paid landing page: the V2 page (no quiz) with the iClosed calendar embedded in a section under the hero. Every button scrolls to it. A booking made in the frame is saved to the CRM through `/booked`. `noindex`. Styles: `assets/rm-embed.css`. |
-| `ria-playbook.html` | `/ria-playbook` | Hidden V4: a centered lead-magnet page (the Past Prospect Playbook). The visitor gives an email, the page saves it for the quiz, posts one `email_capture` record to the CRM and sends them to the quiz at `AB_CONFIG.playbookNext` (default `/preview/a/`, which does NOT post to the CRM yet). `noindex`. Styles `assets/v4.css`, script `assets/v4.js`. |
-| `qualified.html` | `/qualified` | Where a QUALIFIED lead from `/ria-meetings` lands: the calendar on the first screen, the lead's own AUM and advisor answers, and what happens on the call. It is the page that sends the one Google Ads conversion event ("Submit lead form", see `assets/gads.js`), so it sends anyone who has not just passed the quiz as qualified back to `/ria-meetings`. No name, email, phone or photo is shown on it. `noindex`, linked from nowhere, not in the sitemap. |
-| `not-a-fit.html` | `/not-a-fit` | Where a not-qualified lead from `/ria-meetings` lands. No calendar. Says why (under $50M AUM, or not a financial advisor), what is in the Playbook they still get, and how to come back. `noindex`. |
+| `ria-meetings.html` | `/ria-meetings` | **V1.** The landing page for paid traffic (Google Search, LinkedIn) with the quiz on the first screen, AUM question first, then the full sales page. The headline follows `?v=` (appt, leads, mktg, alt, playbook; anything else is appt). `noindex`. Built: see "The paid landing pages" below. |
+| `ria-meetings-direct.html` | `/ria-meetings-direct` | **V2.** The same sales page with no quiz: a centered first screen, the animated product card, and every button goes straight to the iClosed event (`iclosedUrlDirect` in `assets/config.js`, else `iclosedUrlFit5`) with the campaign tags and click id added. The screening questions are asked inside iClosed. No Google Ads conversion is sent from it. `noindex`. Built. |
+| `ria-meetings-embed.html` | `/ria-meetings-embed` | **V3.** As V2, but the iClosed calendar is on the page, straight under the first screen; every button scrolls to it. A booking made in the frame is saved to the CRM through `/booked`. `noindex`. Built. |
+| `ria-playbook.html` | `/ria-playbook` | **V4.** The lead-magnet page, modeled on the home page: a centered first screen with an email box, the animated product card, a look inside the Past Prospect Playbook, how it works, the commitment, the founder. The email is saved for the quiz, sent to the CRM as one `email_capture` record, and the visitor goes to `/fit-check`. No prices on this page. `noindex`. Built. |
+| `fit-check.html` | `/fit-check` | The quiz of V4: the "route A" design from `/preview/a/`, live. The production quiz word for word (RIA question first), the email from the box already filled in. Sends the same CRM record as the other quizzes with `v` = `v4-` plus the headline variant. Qualified leads go to `/qualified`, the others to `/not-a-fit`. `noindex`. |
+| `qualified.html` | `/qualified` | Where a QUALIFIED lead from `/ria-meetings` or `/fit-check` lands: the calendar on the first screen, the lead's own AUM and advisor answers, and what happens on the call. It is the page that sends the one Google Ads conversion event ("Submit lead form", see `assets/gads.js`), so it sends anyone who has not just passed a quiz as qualified back to `/ria-meetings`. No name, email, phone or photo is shown on it. `noindex`, linked from nowhere, not in the sitemap. |
+| `not-a-fit.html` | `/not-a-fit` | Where a NOT-qualified lead from either paid quiz lands. They may still book (owner's decision, Nov 20, 2026: he cancels the calls he does not want): an honest line about fit (under $50M AUM, or not a financial advisor), the calendar, the Playbook they get either way, and a link back that opens the quiz at the question that decided it. Never sends a conversion. `noindex`. |
 | `L1/Q/index.html`, `L1/DQ/index.html` | `/L1/Q/`, `/L1/DQ/` | The booking pages of the home-page quiz (`/L1/`): iClosed calendar, prefilled. Identical, except `Q/` carries the Meta pixel and fires one `Lead` event. `noindex`. |
 | `booked.html` | `/booked` | Booking confirmation with next steps. iClosed sends people here after they book; it records the booking (CRM post, GTM `ab_booked` for qualified leads). `noindex`. |
 | `fit/`, `fit5/` | `/fit/`, `/fit5/` | Old funnel links: forward to `/L1/` with the query string (campaign tags) intact. |
@@ -52,12 +53,11 @@ rules and settings: the `window.AB_APPLY` block at the top of `L1/index.html`.
   qualified submission (do not also count `/qualified` by address in Google Ads, or each lead counts twice). A booking is not a conversion on
   purpose: not every qualified lead books. The tag never starts for a browser that sends Global Privacy Control, at an
   address that carries a person's details, or at any other address that merely contains "/qualified".
-- The paid funnel: `/ria-meetings` runs the same quiz engine and settings as `/L1/` with four extra settings
-  (`SCROLL_TO`, `VARIANT`, `CARRY_QUERY`, `QUALIFIED_FLAG` in `assets/funnel.js`). It sends the CRM the same record
-  plus `v` (the headline variant), carries the whole query string (click id, `utm_`, `v`) to `/qualified` or
-  `/not-a-fit`, and sets `sessionStorage ab_qualified = 1` for a qualified lead. `lander.js` and `funnel.js` also keep
-  the ad click id (`gclid`, `gbraid`, `wbraid`) for 90 days (`ab_click`). The pages are built on `assets/kit.css` (the
-  home page's design as reusable classes), `assets/rm.css` and `assets/rm-after.css`.
+- The paid funnel: `/ria-meetings` and `/fit-check` run the same quiz engine and settings as `/L1/` with extra settings
+  (`SCROLL_TO`, `VARIANT`, `CARRY_QUERY`, `QUALIFIED_FLAG` in `assets/funnel.js`). They send the CRM the same record
+  plus `v` (the headline variant; `v4-` in front for `/fit-check`), carry the whole query string (click id, `utm_`,
+  `v`) to `/qualified` or `/not-a-fit`, and set `sessionStorage ab_qualified = 1` for a qualified lead. `lander.js`,
+  `funnel.js` and `paid.js` also keep the ad click id (`gclid`, `gbraid`, `wbraid`) for 90 days (`ab_click`).
 - CRM: `ghlWebhookUrl` gets two form-encoded posts per lead: `stage=complete` (all answers, contact details,
   qualified, dq_reasons, consent text and time, campaign tags) and `stage=booked` (from `/booked`).
 - Landers (`/v2/`): the email-first button goes to `landerNext` (`L1/`) with the email prefilled. The v2 pages load
@@ -66,28 +66,49 @@ rules and settings: the `window.AB_APPLY` block at the top of `L1/index.html`.
   generator's lint fails the build on any of these.
 - Settings in `assets/config.js`: `ghlWebhookUrl`, `metaPixelLeadId`, `gtmId`, `iclosedUrlFit5`.
 
-## The paid landing page
+## The paid landing pages
 
-`/ria-meetings` runs in this order: the first screen (who it is for, the headline for the visit, the commitment, the quiz),
-the call-out, the Past Prospect Playbook, a week once it is running, why the calendar is not full, the Advisor Pipeline
-System, what makes it different, everything included, the four extras, the 90-day commitment, pricing, who it is for,
-FAQ, the founder with his photo, the closing button. Three buttons and two text links lead to the quiz, nowhere else.
+Four versions of one landing page, to test against each other from the same ads. All take the same five headlines
+from `?v=`, all are `noindex` and linked from nowhere.
 
-- **The Playbook section describes the real guide** ("Advisor Booking: Past Prospect Playbook"): its 7-day schedule,
-  six emails, call scripts, tracker and compliance checklist. Change the section when the guide changes. The site does
-  not send the guide: the CRM must email it to every lead who finishes the quiz, qualified or not, because all three
-  pages promise it.
-- **Prices are written in the page**, in the Pricing section and one FAQ answer: the founding rate ($5,000 every 4
-  weeks, no setup fee, 3 billing cycles), standard pricing ($10,000 setup, then $7,500 every 4 weeks) and the math
-  ($15,000 over 15 meetings). Change all of them together when the offer changes.
-- **The commitment is word for word** the owner's sentence. The word "guarantee" is not used on these three pages.
-- **Proof**: there are no client results yet, so none are shown. Four places are marked in the HTML with a
-  `PROOF SLOT` comment (sample weekly report, a compliance team's comment, a results table, a client line). Fill them
-  with real material only.
-- **The founder's photo** is `assets/nick-panel.jpg` (with `.webp` and 600px copies): a crop of his panel photo with
-  his name badge and the second panelist left out, and no camera data in the file.
-- The buttons and links to the quiz move the page without changing the address (a `#book` address would add a history
-  entry the quiz reads as "back to question 1").
+| | Address | What the visitor does |
+| --- | --- | --- |
+| V1 | `/ria-meetings` | answers the quiz on the first screen, then picks a time |
+| V2 | `/ria-meetings-direct` | presses a button and goes to iClosed |
+| V3 | `/ria-meetings-embed` | picks a time in the calendar on the page |
+| V4 | `/ria-playbook` | gives a work email for the Playbook, then takes the quiz at `/fit-check` |
+
+**They are built, not written by hand.** The sections live once in `tools/paid/*.html`; `tools/build_paid.py` stamps
+them into the four pages (which sections, in which order, and the few words that differ per page are in the `PAGES`
+table at the top of the script). To change copy: edit the part, run `python3 tools/build_paid.py`, commit the part and
+the pages. `python3 tools/build_paid.py --check` fails when a page no longer matches its parts. Never edit the four
+built pages directly. `fit-check.html`, `qualified.html` and `not-a-fit.html` are ordinary files.
+
+Files: `assets/paid.css` (the shared design: centered first screen, sections, cards, the look inside the Playbook,
+pricing, the founder, questions, the closing band), `assets/paid.js` (in-page links, the email box, the iClosed
+links, the calendar on the page, the Playbook titles, the entrance of sections), `assets/rm.css` and `assets/rm.js`
+(the first screen of V1 only), `assets/pd.css` and `assets/pd.js` (the animated product card), `assets/route-a.css`
+and `assets/route-a.js` (`/fit-check`), `assets/rm-after.css` (the two pages after a quiz, and the calendar card).
+
+- **The look inside the Playbook shows the real guide** ("Advisor Booking: Past Prospect Playbook"): six pages taken
+  from it word for word. Change the part `sec-look` when the guide changes. The site does not send the guide: the CRM
+  must email it to every lead who gives an email or finishes a quiz, because every page promises it.
+- **Prices are written in the part `sec-pricing` and one answer in `sec-faq-long`** (V1 to V3 only): the founding rate
+  ($5,000 every 4 weeks, no setup fee, 3 billing cycles), standard pricing ($10,000 setup, then $7,500 every 4 weeks)
+  and the math ($15,000 over 15 meetings). Change them together when the offer changes. V4 shows no price.
+- **The commitment is word for word** the owner's sentence (part `sec-commitment`). The word "guarantee" is not used
+  on any paid page.
+- **Proof.** No client results exist yet, so none are shown. What is shown: the founder's photo
+  (`assets/nick-panel.jpg`, a crop of his panel photo with his name badge and the second panelist left out, no camera
+  data) and one of his own Ads Manager screenshots (`assets/proof-ads*.{png,webp}`, a plain crop, nothing redrawn),
+  labelled as past work in another channel and not a result to expect. `PROOF SLOT` comments in the parts mark where
+  real client proof goes later.
+- **The animated product card** tells one example (fictional prospect, labelled "Example") in four scenes. Its text is
+  in the part `pd`. It plays only when on screen, stops for visitors who ask for less motion, and has a pause button.
+- **Links inside the page** move the page without changing the address (on V1 a `#book` address would add a history
+  entry the quiz reads as "back to question 1"). On V1 the quiz answers to the letter keys only while it is on screen.
+- **Tracking.** The one Google Ads conversion is still the qualified lead on `/qualified` (V1 and V4). V2 and V3 send
+  none: the booking happens on iClosed. `email_capture` (V4) and `booked` (V3, through `/booked`) reach the CRM.
 
 ## Editing the site
 

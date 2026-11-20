@@ -1,0 +1,290 @@
+/* Advisor Booking: the paid landing pages (paid.css)
+   Shared by /ria-meetings (quiz on the first screen), /ria-meetings-direct, /ria-meetings-embed and /ria-playbook.
+   Layout and components only: every colour, radius, shadow, type style and control comes from kit.css, which takes
+   them from the home page. One centered system: a 1120px frame, a 760px reading column, one scale of section
+   spacing, a 4px grid. Only opacity and transform ever animate.
+   The pages are built from tools/paid/ by tools/build_paid.py. */
+
+/* 0. FIRST PAINT: once, with the fonts in place and the right headline (see the two scripts in each page) */
+.rm-wait body{visibility:hidden}
+.rm-swap .p-hero__copy,.rm-swap .rm-cols--hero{visibility:hidden}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+.p-nb{white-space:nowrap}
+/* a headline is set in phrases: a line breaks between them, and inside one only when it has to */
+.p-ph{display:inline-block}
+
+/* 1. FRAME */
+.p-wrap{width:100%;max-width:calc(1120px + 2*var(--gutter));margin-inline:auto;padding-left:max(var(--gutter),env(safe-area-inset-left,0px));padding-right:max(var(--gutter),env(safe-area-inset-right,0px))}
+.p-narrow{max-width:calc(760px + 2*var(--gutter))}
+.p-narrow--wide{max-width:calc(880px + 2*var(--gutter))}
+
+/* 2. THE CENTERED FIRST SCREEN: brand, who it is for, headline, one line, one action, then the stage.
+      The green ground is drawn from the stage upward and ends partway down the stage, so the card under the
+      headline stands half on the colour and half on the white page. */
+.p-hero{position:relative;isolation:isolate;overflow:hidden;overflow:clip;padding-top:calc(20px + env(safe-area-inset-top,0px));text-align:center}
+.p-brand{display:flex;width:max-content;margin-inline:auto}
+.p-hero__copy{display:flex;flex-direction:column;align-items:center;padding-top:clamp(28px,5vw,60px)}
+.p-who{max-width:100%}
+.p-h1{max-width:16em;margin-top:20px;font-size:clamp(34px,5.6vw,68px);line-height:1.03}
+.p-sub{max-width:36em;margin-top:20px;font-size:clamp(17px,1.7vw,20px);line-height:1.55;color:var(--k-ink-2);text-wrap:pretty}
+/* the email box (the kit's box, a little wider) and the single button */
+.p-ec{width:100%;max-width:560px;margin-top:28px;scroll-margin-top:34vh}
+.p-ec .k-ec{max-width:none}
+/* on the green ground the box is a glass tray: a white field and the button side by side inside it */
+.p-hero .p-ec .k-ec{gap:6px;padding:6px;border-radius:20px;background:rgba(255,255,255,.5);box-shadow:inset 0 0 0 1px rgba(255,255,255,.8),0 12px 32px -16px rgba(10,60,45,.28)}
+.p-hero .p-ec .k-ec input[type=email]{min-height:52px;padding:0 18px;border-radius:14px;background:#fff;box-shadow:0 0 0 1px rgba(10,30,22,.07)}
+.p-hero .p-ec .k-ec .k-btn{border-radius:14px}
+.p-hero .p-ec .k-ec:focus-within{box-shadow:inset 0 0 0 1px rgba(255,255,255,.8),0 0 0 3px var(--accent)}
+.p-hero .p-ec .k-ec.is-bad{box-shadow:inset 0 0 0 1px rgba(255,255,255,.8),0 0 0 2px var(--bad)}
+.p-ec .k-ec__err,.p-ec .k-ec__fine{text-align:center;text-wrap:balance}
+.p-ec .k-ec__fine a,.p-go .k-fine a{color:var(--k-ink-2);text-underline-offset:3px}
+.p-go{display:grid;justify-items:center;gap:12px;margin-top:28px}
+.p-go .k-fine{text-wrap:balance}
+/* the stage */
+.p-stage{position:relative;max-width:calc(960px + 2*var(--gutter));margin-top:clamp(40px,5vw,64px);padding-bottom:clamp(32px,4vw,56px);--p-cut:30%}
+.p-stage::before,.p-stage::after{content:"";position:absolute;left:-100vw;right:-100vw;bottom:var(--p-cut);pointer-events:none}
+/* the ground: a pale green from the top of the page, lighter in the middle, fading to white where it ends */
+.p-stage::before{z-index:-2;top:-1600px;background:linear-gradient(0deg,#fff 0,#eef7f2 110px,#e0f1e9 300px,#ecf6f1 660px,#ddefe7 1150px)}
+/* the band: fine upright bars that gather into one bright line, then let go into the white */
+.p-stage::after{z-index:-1;height:440px;background:linear-gradient(180deg,rgba(47,191,143,0) 0,rgba(47,191,143,.20) 36%,rgba(47,191,143,.58) 70%,#2fbf8f 83%,rgba(47,191,143,.45) 91%,rgba(47,191,143,0) 100%);
+  -webkit-mask-image:repeating-linear-gradient(90deg,#000 0,#000 5px,transparent 5px,transparent 11px);mask-image:repeating-linear-gradient(90deg,#000 0,#000 5px,transparent 5px,transparent 11px)}
+/* the card stands in a glass frame */
+.p-stage .pd,.p-stage--cal .k-cal{box-shadow:0 0 0 10px rgba(255,255,255,.5),0 0 0 11px rgba(255,255,255,.55),0 48px 90px -48px rgba(10,60,45,.45)}
+@media (max-width:719px){
+  .p-stage::after{height:520px;-webkit-mask-image:repeating-linear-gradient(90deg,#000 0,#000 4px,transparent 4px,transparent 9px);mask-image:repeating-linear-gradient(90deg,#000 0,#000 4px,transparent 4px,transparent 9px)}
+  .p-stage .pd,.p-stage--cal .k-cal{box-shadow:0 0 0 6px rgba(255,255,255,.5),0 0 0 7px rgba(255,255,255,.55),0 32px 60px -36px rgba(10,60,45,.45)}
+}
+.p-stage__note,.pd-note{margin-top:16px;text-align:center;font-size:14px;line-height:20px;color:var(--k-muted)}
+/* V3: the stage holds the calendar */
+.p-stage--cal{max-width:calc(820px + 2*var(--gutter));--p-cut:58%;scroll-margin-top:12px}
+.p-stage--cal:focus{outline:0}
+.p-cal{margin-top:0;text-align:left;--k-cal-h:660px}
+@media (max-width:599px){
+  .p-hero__copy{padding-top:24px}
+  .p-h1{margin-top:16px}
+  .p-sub{margin-top:16px}
+  .p-ec,.p-go{margin-top:24px}
+}
+@media (max-width:359px){.p-who{gap:7px;padding:6px 10px 6px 8px;font-size:11.5px}}
+@media (max-width:479px){.p-go .k-btn,.p-cta .k-btn,.p-close__go .k-btn--xl{width:100%;justify-content:space-between}}
+
+/* 3. SECTIONS: one spacing scale, a centered heading, then the content */
+.p-sec{padding-block:clamp(56px,7vw,96px)}
+.p-sec--tint{background:var(--k-well)}
+.p-sec--soft{--k-line:#d3e3dc;--k-muted:#56605b;background:var(--accent-soft)}
+.p-sec--rule{border-top:1px solid var(--k-line)}
+.p-sec:focus{outline:0}
+.p-head{display:grid;gap:16px;justify-items:center;max-width:46rem;margin-inline:auto;text-align:center}
+.p-head > .k-lead{max-width:38em;text-wrap:pretty}
+.p-head + *{margin-top:clamp(28px,4vw,48px)}
+.p-k{font-family:var(--f-mono);font-size:12px;line-height:16px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--k-accent)}
+.p-n{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:var(--k-accent-soft);color:var(--k-accent);font:500 12px/1 var(--f-mono)}
+.p-aside{max-width:44rem;margin:clamp(24px,3vw,36px) auto 0;text-align:center;font-size:clamp(18px,1.6vw,20px);line-height:1.5;font-weight:500;letter-spacing:-.015em;color:var(--k-ink);text-wrap:balance}
+.p-cta{display:grid;justify-items:center;gap:12px;margin-top:clamp(32px,4vw,48px);text-align:center}
+.p-cta .k-fine{text-wrap:balance}
+
+/* cards */
+.p-grid{display:grid;gap:16px}
+@media (min-width:640px){.p-grid--2,.p-grid--4,.p-grid--32{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:960px){.p-grid--3,.p-grid--32{grid-template-columns:repeat(3,minmax(0,1fr))}.p-grid--4{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.p-card{min-width:0;padding:24px;border-radius:var(--k-r-lg);background:var(--k-surface);box-shadow:var(--k-card-shadow)}
+.p-card > h3:not(.p-k){font-weight:500;font-size:20px;line-height:1.2;letter-spacing:-.02em;color:var(--k-ink);text-wrap:balance}
+.p-card > .p-k + h3{margin-top:12px}
+.p-card > .p-n + h3{margin-top:16px}
+.p-card > h3 + p{margin-top:8px;font-size:16px;line-height:26px;color:var(--k-ink-2);text-wrap:pretty}
+.p-card--tick,.p-card--plus{position:relative;padding-left:60px}
+.p-card--tick::before,.p-card--plus::before{content:"";position:absolute;left:24px;top:26px;width:20px;height:20px;border-radius:50%}
+.p-card--tick::before{background:var(--k-mark-bg) var(--k-check-img) center/12px no-repeat}
+.p-card--plus::before{background:linear-gradient(var(--k-accent),var(--k-accent)) center/10px 2px no-repeat,linear-gradient(var(--k-accent),var(--k-accent)) center/2px 10px no-repeat,var(--k-accent-soft)}
+@media (max-width:359px){.p-card{padding:20px}.p-card--tick,.p-card--plus{padding-left:52px}.p-card--tick::before,.p-card--plus::before{left:20px;top:22px}}
+/* a ticked list (inside cards and under the commitment) */
+.p-ticks{margin-top:12px}
+.p-ticks > li{position:relative;padding:12px 0 12px 32px;border-top:1px solid var(--k-line);font-size:16px;line-height:24px;color:var(--k-ink-2);text-wrap:pretty}
+.p-ticks > li::before{content:"";position:absolute;left:0;top:14px;width:20px;height:20px;border-radius:50%;background:var(--k-mark-bg) var(--k-check-img) center/12px no-repeat}
+.p-ticks--no > li::before{background:var(--k-well) linear-gradient(var(--k-muted),var(--k-muted)) center/8px 2px no-repeat}
+.p-card .p-ticks > li:last-child{padding-bottom:0}
+
+/* 4. THE CALL-OUT: one large sentence and four short ones */
+.p-callout{text-align:center}
+.p-statement{max-width:13em;margin-inline:auto}
+.p-prose{display:grid;gap:16px;max-width:36rem;margin:clamp(24px,3vw,40px) auto 0;font-size:clamp(17px,1.5vw,20px);line-height:1.6;color:var(--k-ink-2);text-wrap:pretty}
+.p-prose strong{font-weight:500;color:var(--k-ink)}
+
+/* 5. THREE FACTS */
+.p-sec--facts{padding-block:clamp(8px,2vw,24px) clamp(48px,6vw,72px)}
+.p-facts{display:grid;gap:28px;text-align:center}
+.p-fact__n{font-weight:500;font-size:clamp(40px,5vw,56px);line-height:1;letter-spacing:-.045em;color:var(--k-ink)}
+.p-fact__n span{font-size:.45em;letter-spacing:-.02em;color:var(--k-muted)}
+.p-fact__l{max-width:24em;margin:8px auto 0;font-size:15px;line-height:22px;color:var(--k-muted);text-wrap:balance}
+@media (min-width:760px){
+  .p-facts{grid-template-columns:repeat(3,minmax(0,1fr));gap:0}
+  .p-facts > li{padding-inline:24px}
+  .p-facts > li + li{border-left:1px solid var(--k-line)}
+}
+
+/* 6. A LOOK INSIDE THE PLAYBOOK: six titles; the open one shows a line about it and a page from the guide.
+      Phones: an accordion, the page under its title. From 960px: the page on the left, the titles on the right.
+      Without JavaScript every title is open on a phone, and the first page shows on a desktop. */
+.p-look{--look-h:548px}
+.p-look__list{display:grid;gap:8px}
+.p-look__item{min-width:0;border-radius:var(--k-r-lg);background:rgba(255,255,255,.55);box-shadow:0 0 0 1px var(--k-line)}
+.p-look__item.is-on,.p-look:not(.is-js) .p-look__item{background:#fff;box-shadow:var(--shadow-soft)}
+.p-look__tab{display:grid;grid-template-columns:32px minmax(0,1fr) 20px;align-items:center;column-gap:12px;width:100%;min-height:64px;margin:0;padding:12px 16px;border:0;border-radius:var(--k-r-lg);background:transparent;font:500 18px/1.25 var(--f-sans);letter-spacing:-.02em;text-align:left;color:var(--ink);cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.p-look__tab::after{content:"";justify-self:center;width:9px;height:9px;margin-top:-4px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);transition:transform var(--k-dur) var(--k-ease)}
+.p-look__item.is-on .p-look__tab::after{transform:translateY(4px) rotate(225deg)}
+.p-look:not(.is-js) .p-look__tab::after{display:none}
+.p-look__tab:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.p-look__n{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:var(--accent-soft);color:var(--accent);font:500 12px/1 var(--f-mono);letter-spacing:0}
+.p-look__item.is-on .p-look__n{background:var(--accent);color:#fff}
+.p-look__panel{padding:0 16px 16px}
+.p-look.is-js .p-look__item:not(.is-on) .p-look__panel{display:none}
+.p-look__p{font-size:16px;line-height:26px;color:var(--ink-2);text-wrap:pretty}
+.p-get{max-width:40rem;margin:clamp(24px,3vw,36px) auto 0;text-align:center;font-size:17px;line-height:28px;color:var(--ink-2);text-wrap:balance}
+.p-get strong{font-weight:500;color:var(--ink)}
+.p-get a{color:var(--ink);text-underline-offset:3px}
+/* a page from the guide */
+.p-page{display:flex;flex-direction:column;margin:16px 0 0;padding:20px;border-radius:var(--k-r-md);background:#fff;box-shadow:0 0 0 1px var(--line);font-size:14px;line-height:22px;text-align:left;color:var(--ink-2)}
+.p-page__k{display:flex;justify-content:space-between;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line);font-family:var(--f-mono);font-size:10.5px;line-height:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.p-page__t{margin-top:16px;font-weight:500;font-size:20px;line-height:1.2;letter-spacing:-.02em;color:var(--ink)}
+.p-page__s{margin-top:12px;font-weight:500;color:var(--ink)}
+.p-page__ul{display:grid;gap:6px;margin-top:6px}
+.p-page__s + .p-page__ul{margin-top:6px}
+.p-page__t + .p-page__ul{margin-top:12px}
+.p-page__ul > li{position:relative;padding-left:24px}
+.p-page__ul > li::before{content:"";position:absolute;left:1px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--accent) var(--k-check-img) center/9px no-repeat}
+.p-page__ul--no > li::before{background:var(--well) linear-gradient(var(--muted),var(--muted)) center/7px 1.5px no-repeat}
+.p-page__ul--box > li::before{border-radius:4px}
+.p-page__f{margin-top:auto;padding-top:14px;font-size:13px;line-height:20px;color:var(--muted)}
+.p-page__f b{font-weight:500;color:var(--ink)}
+.p-tbl{width:100%;margin-top:12px;border-collapse:collapse;font-size:13.5px;line-height:20px}
+.p-tbl th,.p-tbl td{padding:8px 8px 8px 0;border-top:1px solid var(--line);font-weight:400;text-align:left;vertical-align:top}
+.p-tbl thead th{padding-top:0;border-top:0;font-family:var(--f-mono);font-size:10.5px;line-height:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.p-tbl tbody th{font-weight:500;color:var(--ink)}
+.p-tbl td:last-child,.p-tbl th:last-child{padding-right:0}
+.p-tbl b{font-weight:500;color:var(--ink)}
+.p-tbl--say tbody th{width:36%}
+.p-tbl--days tbody th{width:36px;font-family:var(--f-mono);font-size:12px;color:var(--accent)}
+.p-tbl--days td:last-child,.p-tbl--days th:last-child{width:64px;white-space:nowrap;color:var(--muted)}
+.p-mail{display:grid;gap:10px;margin-top:12px;padding:16px;border-radius:var(--k-r-sm);background:var(--well)}
+.p-mail__s{padding-bottom:10px;border-bottom:1px solid var(--line);color:var(--ink)}
+.p-mail__s b{font-weight:500}
+.p-mail i,.p-tbl i{padding:1px 4px;border-radius:4px;background:var(--accent-soft);font-family:var(--f-mono);font-size:.86em;font-style:normal;white-space:nowrap;color:var(--accent)}
+@media (min-width:960px){
+  .p-look{position:relative;min-height:var(--look-h)}
+  .p-look__list{gap:0;margin-left:calc(50% + 28px)}
+  .p-look__item,.p-look__item.is-on,.p-look:not(.is-js) .p-look__item{border-top:1px solid var(--k-line);border-radius:0;background:none;box-shadow:none}
+  .p-look__item:last-child{border-bottom:1px solid var(--k-line)}
+  .p-look__tab{grid-template-columns:32px minmax(0,1fr);min-height:0;padding:18px 4px;border-radius:8px;font-size:22px;color:var(--k-muted)}
+  .p-look__tab::after{display:none}
+  .p-look__n{background:#fff}
+  .p-look__item.is-on .p-look__tab,.p-look:not(.is-js) .p-look__tab{color:var(--ink)}
+  .p-look__panel{padding:0 4px 20px 48px}
+  .p-look__p{font-size:17px;line-height:28px}
+  .p-look .p-page{position:absolute;left:0;top:0;width:calc(50% - 28px);height:var(--look-h);margin:0;padding:28px;border-radius:var(--k-r-xl);box-shadow:var(--shadow-lift);overflow:hidden}
+  .p-look:not(.is-js) .p-look__item:not(:first-child) .p-page{display:none}
+  .p-page__t{font-size:22px}
+}
+@media (hover:hover) and (pointer:fine) and (min-width:960px){.p-look__tab:hover{color:var(--ink)}}
+
+/* 7. ONE FACT IN A QUIET BOX: the one number, the math */
+.p-one{max-width:760px;margin:16px auto 0;padding:24px 28px;border-radius:var(--k-r-lg);background:var(--k-well);text-align:center}
+.p-sec--tint .p-one{background:var(--k-surface);box-shadow:var(--k-card-shadow)}
+.p-one__v{margin-top:8px;font-weight:500;font-size:clamp(22px,2.4vw,30px);line-height:1.15;letter-spacing:-.03em;color:var(--k-ink);text-wrap:balance}
+.p-one__d{max-width:40em;margin:8px auto 0;font-size:16px;line-height:26px;color:var(--k-ink-2);text-wrap:pretty}
+.p-one--math{max-width:880px;text-align:left}
+.p-one--math .p-one__d{max-width:none}
+.p-one--math .p-one__d + .p-one__d{margin-top:12px}
+/* the animated card when it stands inside a section */
+.p-demo{max-width:960px;margin-inline:auto}
+.p-demo + .p-grid{margin-top:clamp(32px,4vw,48px)}
+
+/* 8. EVERYTHING INCLUDED: the build list on the left, running and reporting on the right */
+.p-stack{display:grid;gap:16px}
+.p-rows{margin-top:8px}
+.p-rows > li{display:grid;grid-template-columns:32px minmax(0,1fr);column-gap:16px;align-items:start;padding:14px 0;border-top:1px solid var(--k-line)}
+.p-rows > li:first-child{border-top:0}
+.p-rows > li:last-child{padding-bottom:0}
+.p-rows p{font-size:16px;line-height:26px;color:var(--k-ink-2);text-wrap:pretty}
+.p-rows strong{font-weight:500;color:var(--k-ink)}
+.p-rows .p-n{margin-top:-3px}
+@media (min-width:960px){
+  .p-stack{grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);grid-template-areas:"a b" "a c";align-items:start}
+  .p-stack__a{grid-area:a}.p-stack__b{grid-area:b}.p-stack__c{grid-area:c}
+}
+
+/* 9. THE COMMITMENT */
+.p-pledge{padding:clamp(24px,4vw,44px);text-align:center}
+.p-pledge__t{font-size:clamp(19px,2.2vw,24px);line-height:1.5;letter-spacing:-.015em;color:var(--k-ink);text-wrap:pretty}
+.p-pledge__f{display:flex;justify-content:center;margin-top:20px}
+.p-conds{margin-top:32px}
+.p-conds > .p-k{color:var(--k-muted)}
+.p-conds .p-ticks > li:last-child{border-bottom:1px solid var(--k-line)}
+.p-def{margin-top:20px;font-size:15px;line-height:24px;color:var(--k-muted);text-wrap:pretty}
+
+/* 10. PRICING: standard pricing quiet on the left, the founding rate in the feature card, the math under both */
+.p-price{display:grid;gap:16px;max-width:880px;margin-inline:auto}
+.p-price__std{display:flex;flex-direction:column;gap:8px;background:transparent;box-shadow:inset 0 0 0 1px var(--dot)}
+.p-price__std .p-k{margin-bottom:8px;color:var(--k-muted)}
+.p-price__n{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.p-price__mid{font-weight:500;font-size:clamp(28px,3.4vw,36px);line-height:1.1;letter-spacing:-.04em;color:var(--k-ink-2)}
+.p-price__big{font-weight:500;font-size:clamp(48px,6vw,64px);line-height:1;letter-spacing:-.05em;color:var(--k-ink)}
+.p-price__per{font-size:17px;line-height:24px;color:var(--k-muted)}
+.p-price__note{margin-top:auto;padding-top:16px;font-size:15px;line-height:24px;color:var(--k-muted);text-wrap:pretty}
+.p-price__now{padding:28px}
+.p-price__now .p-price__n{margin-top:16px}
+.p-price__s{margin-top:12px;font-size:clamp(19px,1.7vw,21px);line-height:28px;font-weight:500;letter-spacing:-.02em;color:var(--k-ink)}
+.p-price__now .p-ticks{margin-top:16px}
+.p-price__now .p-ticks > li:last-child{padding-bottom:0}
+@media (min-width:760px){.p-price{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:stretch}}
+@media (max-width:359px){.p-price__now{padding:24px 20px}}
+
+/* 11. THE FOUNDER: his photo whole (never cropped by the layout), who he is, and the receipt under both */
+.p-sec--founder{background:var(--k-well)}
+.p-founder{display:grid;gap:24px;padding:clamp(16px,3vw,32px);border-radius:var(--k-r-xl);background:linear-gradient(140deg,#fff 0%,#f6fbf8 50%,var(--accent-soft) 100%);box-shadow:var(--shadow-soft)}
+.p-founder__photo{margin:0}
+.p-founder__photo img{display:block;width:100%;height:auto;aspect-ratio:3/2;border-radius:var(--k-r-lg);background:var(--well)}
+.p-founder__body{display:grid;gap:16px;align-content:center;justify-items:start;min-width:0;padding:4px 4px 0}
+.p-founder__body > p:not(.k-eyebrow){font-size:17px;line-height:28px;color:var(--ink-2);text-wrap:pretty}
+.p-receipt{margin:0;min-width:0}
+.p-receipt__img{overflow:hidden;border-radius:var(--k-r-md);background:#fff;box-shadow:0 0 0 1px var(--line),0 10px 30px -12px rgba(10,30,22,.12)}
+.p-receipt img{display:block;width:100%;height:auto;aspect-ratio:854/557}
+.p-receipt figcaption{margin-top:12px;font-size:14px;line-height:22px;color:var(--muted);text-wrap:pretty}
+.p-receipt figcaption b{font-weight:500;color:var(--ink)}
+@media (min-width:700px){.p-receipt img{aspect-ratio:1946/753}}
+@media (min-width:960px){
+  .p-founder{grid-template-columns:minmax(0,500px) minmax(0,1fr);column-gap:clamp(32px,4vw,56px);row-gap:32px}
+  .p-receipt{grid-column:1/-1}
+  .p-founder__body{padding:0}
+}
+
+/* 12. QUESTIONS: one open at a time where the browser supports named groups */
+.p-faq{border-bottom:1px solid var(--k-line)}
+.p-faq details{border-top:1px solid var(--k-line)}
+.p-faq summary{position:relative;padding:20px 44px 20px 0;font-weight:500;font-size:clamp(18px,1.7vw,20px);line-height:28px;letter-spacing:-.02em;color:var(--k-ink);list-style:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.p-faq summary::-webkit-details-marker{display:none}
+.p-faq summary::after{content:"";position:absolute;right:6px;top:28px;width:9px;height:9px;border-right:2px solid var(--k-muted);border-bottom:2px solid var(--k-muted);transform:rotate(45deg);transition:transform var(--k-dur) var(--k-ease)}
+.p-faq details[open] > summary::after{transform:translateY(4px) rotate(225deg)}
+.p-faq summary:focus-visible{outline:2px solid var(--k-focus);outline-offset:2px;border-radius:8px}
+.p-faq details > div{padding:0 44px 20px 0}
+.p-faq p{font-size:17px;line-height:28px;color:var(--k-muted);text-wrap:pretty}
+
+/* 13. THE CLOSING BAND (as the home page ends): the promise, the action on a glow, one line */
+.p-close{position:relative;isolation:isolate;overflow:hidden;padding-block:clamp(64px,8vw,104px) clamp(72px,9vw,112px);border-radius:28px 28px 0 0;text-align:center}
+.p-close::after{content:"";position:absolute;z-index:-2;left:0;right:0;bottom:0;height:140px;background:linear-gradient(180deg,rgba(47,191,143,0),rgba(47,191,143,.28));pointer-events:none;
+  -webkit-mask-image:repeating-linear-gradient(90deg,#000 0,#000 5px,transparent 5px,transparent 11px);mask-image:repeating-linear-gradient(90deg,#000 0,#000 5px,transparent 5px,transparent 11px)}
+.p-close__in{display:grid;justify-items:center;gap:20px}
+.p-close__h{max-width:22em;font-weight:500;font-size:clamp(26px,3.4vw,44px);line-height:1.1;letter-spacing:-.035em;color:var(--k-ink);text-wrap:balance}
+.p-close__go{position:relative;margin-top:12px}
+.p-close__go::before{content:"";position:absolute;z-index:-1;left:50%;top:50%;width:min(620px,90vw);height:260px;transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(15,122,98,.55),transparent);pointer-events:none}
+.p-close .p-ec{margin-top:12px}
+.p-close .k-ec__err{text-align:center}
+.p-close__f{max-width:34em;font-size:15px;line-height:24px;color:var(--k-muted);text-wrap:balance}
+.p-foot{padding-top:8px}
+.p-foot .k-legal__links{gap:0 8px;margin-bottom:0}
+.p-foot .k-legal__links a{padding:14px 12px;font-size:16px;line-height:24px}
+.p-foot .k-legal__disc{margin-top:4px;font-size:14px}
+
+/* 14. A QUIET ENTRANCE for what is below the first screen (paid.js adds .p-rv to <html>; without it nothing is hidden) */
+.p-rv [data-rv]{opacity:0;transform:translateY(14px)}
+.p-rv [data-rv].is-in{opacity:1;transform:none;transition:opacity 560ms var(--ease),transform 560ms var(--ease)}
+@media print{.p-rv [data-rv]{opacity:1!important;transform:none!important}}

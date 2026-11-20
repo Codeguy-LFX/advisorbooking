@@ -1,0 +1,106 @@
+/* Advisor Booking preview, route A "Continuation" (route-a.css)
+   Layout only. Every colour, radius, shadow, type size and easing comes from kit.css, which takes them from
+   the home page. Loaded by /preview/a/ (the quiz) and /preview/a/book/ (the booking page).
+   Spacing sits on a 4px grid. Nothing here animates except one transform (the progress fill). */
+
+/* 0. FONTS: the page is painted once, with its fonts in place (see the script in each page's head) */
+.ra-wait body{visibility:hidden}
+
+/* 1. THE FIRST SCREEN: full height, with the home hero's glow pulled up to the top edge. The footer starts
+      below it, so a taller or shorter question never moves anything the visitor can see. */
+.ra-stage{display:flex;flex-direction:column;min-height:100vh;min-height:100svh;--k-glow-top:-760px}
+.ra-main{flex:1 0 auto;padding:12px 0 calc(48px + env(safe-area-inset-bottom,0px))}
+
+/* 2. HEADER: the home bar. Phones get a 52px bar with the logo only; from 700px the step text sits at the right. */
+.ra-count{display:none;margin:0 12px 0 0;white-space:nowrap}
+@media (max-width:699px){
+  .ra-nav{--nav-h:52px}
+  .ra-nav .k-nav__pill{padding-left:16px}
+  .ra-nav .k-brand{font-size:16px}
+  .ra-nav .k-brand svg{width:24px;height:24px}
+}
+@media (min-width:700px){
+  .ra-count{display:block}
+  .ra-main{padding-top:24px}
+}
+
+/* 3. PROGRESS AND EYEBROW: the frame that stays still while the questions change */
+/* the steps still to come are a 2px rail in the field-edge grey (3 to 1 on the page), the steps done a 4px green bar */
+.ra-progress .k-progress__track{position:relative;background:linear-gradient(var(--k-field-line),var(--k-field-line)) 0 50%/100% 2px no-repeat}
+/* optional (route-a.js): a copy of the fill that glides with a transform instead of jumping */
+.ra-fill{position:absolute;inset:0;background:var(--k-accent);transform-origin:0 50%;transition:transform var(--k-dur-slow) var(--k-ease)}
+.ra-glide .k-progress__fill{visibility:hidden}
+.ra-eyebrow{display:flex;margin:24px 0 0;line-height:16px}
+.ra-quiz{margin-top:12px}
+/* answers: a long answer breaks where it reads best ("broker-dealer" stays whole from 360px up).
+   Browsers that only know "balance" use that; older ones wrap as usual. */
+.ra-quiz .ap-opt > span:last-child{text-wrap:balance;text-wrap:pretty}
+/* phones: 16px tighter in all, so the seven AUM answers fit a 390x664 screen without scrolling */
+@media (max-width:699px){
+  .ra-quiz .ap-sub{margin-top:8px}
+  .ra-quiz .ap-opts{margin-top:20px}
+}
+@media (min-width:700px){
+  .ra-eyebrow{margin-top:clamp(28px,4.5vh,40px)}
+  .ra-quiz{margin-top:16px}
+}
+
+/* 4. CONTACT SCREEN: the form is one soft card (the home email box, grown to four fields) */
+.ra-quiz form{padding:20px 16px 16px;border-radius:var(--k-r-lg);background:var(--k-surface);box-shadow:var(--k-card-shadow)}
+.ra-quiz .lp-field{margin-bottom:16px}
+.ra-quiz .lp-consent{margin-top:16px;padding-top:16px;border-top:1px solid var(--k-line)}
+.ra-quiz .ap-next{margin-top:16px}
+.ra-quiz .lp-priv{margin-top:12px}
+.ra-quiz form + .qf-prev{margin-top:12px}
+.ra-quiz .qf-prev{font-size:16px} /* the kit sets 15px; every line a visitor reads here is 16px or more, fine print aside */
+@media (max-width:419px){.ra-quiz .qf-pair{grid-template-columns:minmax(0,1fr)}}
+@media (min-width:600px){.ra-quiz form{padding:24px}}
+
+/* 5. BOOKING PAGE: one 760px column */
+.ra-book{width:100%;max-width:calc(760px + 2*var(--gutter));margin-inline:auto;padding-left:max(var(--gutter),env(safe-area-inset-left,0px));padding-right:max(var(--gutter),env(safe-area-inset-right,0px))}
+.ra-main--book{padding-top:16px} /* 12 + the 4px progress track: the eyebrow sits where it sat on the quiz */
+@media (min-width:700px){.ra-main--book{padding-top:28px}}
+.ra-book__h,.ra-book__sub{margin-top:12px}
+.ra-cal{margin-top:28px}
+/* the host strip is the calendar card's own header */
+.ra-host{padding:16px 20px}
+.ra-host .k-person{flex:1 1 auto}
+@media (min-width:600px){
+  .ra-host{padding:16px 24px}
+  .ra-host .k-person__body{flex:1 1 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+}
+/* loading state: the notice first, then the still calendar drawing. Until a calendar frame is in place the
+   mount lets taps through, so the email link in the notice works. */
+.ra-cal .k-cal__note{order:0;font-size:16px}
+/* the kit's title bar becomes four time slots under the month grid, so the drawing fills the card */
+.ra-cal .k-cal__skel::before{order:3;width:min(100%,392px);height:44px;margin-bottom:168px;border-radius:var(--k-r-sm);background:var(--k-well);box-shadow:0 56px 0 var(--k-well),0 112px 0 var(--k-well),0 168px 0 var(--k-well)}
+.ra-cal:not(.is-live) .k-cal__mount{pointer-events:none}
+.ra-cal .k-cal__foot{padding:0 20px}
+.ra-cal .k-cal__foot a{display:inline-block;padding:16px 8px} /* a 52px tap area */
+.ra-cal .k-cal__foot a:not([href]){visibility:hidden}
+.ra-cal .k-cal__foot a:focus-visible{outline-offset:-6px}
+/* what the call covers */
+.ra-cover{margin-top:40px}
+.ra-cover__h{color:var(--k-muted)}
+.ra-cover__list{display:grid;margin-top:16px}
+.ra-cover__list li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:baseline;padding:16px 0;border-top:1px solid var(--k-line);font-size:16px;line-height:1.5;color:var(--k-ink-2)}
+@media (min-width:760px){
+  .ra-cover__list{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+  .ra-cover__list li{grid-template-columns:minmax(0,1fr);align-content:start;padding:16px 0 0}
+}
+
+/* 6. FOOTER: the home fine print on white, with 52px tap areas on its two links */
+.ra-foot{padding-top:4px}
+.ra-foot .k-legal__links{gap:0 12px;margin-bottom:-4px}
+.ra-foot .k-legal__links a{padding:16px 8px}
+
+/* ---- After QA ---- */
+.ra-quiz .lp-field.invalid.ra-ok input{box-shadow:inset 0 0 0 1px var(--k-field-line),0 1px 2px rgba(10,30,22,.04)}
+.ra-quiz .lp-field.invalid.ra-ok input:focus{box-shadow:inset 0 0 0 1px var(--k-focus),0 0 0 3px var(--k-focus)}
+.ra-quiz .lp-field.invalid.ra-ok > .lp-err{visibility:hidden}
+@media (min-width:700px){.ra-nav{max-width:560px}.ra-nav--book{max-width:760px}}
+.ra-quiz .lp-lbl,.ra-quiz .lp-err,.ra-cal .k-cal__foot{font-size:16px}
+@media (min-width:700px) and (max-height:480px){.ra-nav{--nav-h:52px}.ra-main{padding-top:12px}.ra-eyebrow{margin-top:16px}.ra-quiz{margin-top:8px}.ra-quiz .ap-q{font-size:28px}.ra-quiz .ap-opts{margin-top:16px}}
+.ra-quiz .ap-next[disabled]{--c:#5f6763}
+/* The host strip without a photo or a name: the two chips only. */
+.ra-host__meta{display:flex;flex-wrap:wrap;gap:8px;margin:0}
