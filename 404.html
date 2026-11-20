@@ -10,13 +10,14 @@
 (function () { var p = location.pathname, m = /^\/l1(?:\/(q|dq))?\/?(?:index\.html)?$/i.exec(p);
   if (m) { var want = '/L1/' + (m[1] ? m[1].toUpperCase() + '/' : ''); if (p !== want) location.replace(want + location.search + location.hash); return; }
   var low = p.toLowerCase().replace(/\/+$/, ''), to = '';
-  var page = /^\/(book|booked|pilot|meetings|founding-sprint|contact|about|privacy|terms|welcome)(?:\.html)?$/.exec(low);
+  var page = /^\/(book|booked|qualified|ria-meetings|not-a-fit|pilot|meetings|contact|about|privacy|terms|welcome)(?:\.html)?$/.exec(low);
   if (page) to = '/' + page[1];
   else if (/^\/(blog|v1|v2)$/.test(low)) to = low + '/';
   else if (/^\/blog\/[a-z0-9-]+$/.test(low)) to = low;
   if (!to || to === p) return;
   if (String(document.referrer || '').split(/[?#]/)[0] === location.origin + p) return;   /* the server sent our own forward back here: stop */
   location.replace(to + location.search + location.hash); })();</script>
+<script src="/assets/gads.js" async></script>
 <title>Page not found | Advisor Booking</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#ffffff">

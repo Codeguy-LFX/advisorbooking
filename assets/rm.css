@@ -1,0 +1,128 @@
+/* Advisor Booking: the paid landing page, /ria-meetings (rm.css)
+   Layout only. Every colour, radius, shadow, type style and control comes from kit.css, which takes them from
+   the home page. Spacing sits on a 4px grid. Only opacity and transform ever animate. */
+
+/* 0. FIRST PAINT: once, with the fonts in place and the right headline (see the two scripts in the page) */
+.rm-wait body{visibility:hidden}
+.rm-swap .rm-cols--hero{visibility:hidden}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}} /* the closing button; the quiz itself always jumps */
+
+/* 1. FRAME: one 640px column up to 959px, the home page's 1200px frame from 960px */
+.rm-wrap{width:100%;max-width:calc(640px + 2*var(--gutter));margin-inline:auto;padding-left:max(var(--gutter),env(safe-area-inset-left,0px));padding-right:max(var(--gutter),env(safe-area-inset-right,0px))}
+.rm-cols{display:grid;gap:24px}
+@media (min-width:960px){
+  .rm-wrap{max-width:1200px}
+  .rm-cols{grid-template-columns:minmax(0,1fr) minmax(0,440px);column-gap:clamp(40px,5vw,72px);align-items:start}
+}
+@media (min-width:1200px){.rm-cols{grid-template-columns:minmax(0,1fr) minmax(0,480px)}}
+
+/* 2. FIRST SCREEN
+   --rm-q1 is the height of the first question (heading, helper line, seven 52px answers). The quiz keeps it
+   from the first paint, so nothing moves when the engine draws the question or when a shorter one follows. */
+.rm-hero{--k-glow-top:-640px;--rm-q1:486px;--rm-top:clamp(24px,calc(50vh - 298px),120px);--rm-pad:24px;min-height:100vh;min-height:100svh}
+.rm-cols--hero{row-gap:0}
+.rm-copy{padding-top:calc(16px + env(safe-area-inset-top,0px))}
+.rm-brand{display:flex;width:max-content}
+.rm-h1{max-width:none;margin-top:28px;font-size:clamp(30px,8.2vw,44px);line-height:1.04}
+.rm-sub{max-width:60ch;margin-top:12px;font-size:16px;line-height:24px;color:var(--k-muted);text-wrap:pretty}
+.rm-book{margin-top:28px;padding-bottom:40px;scroll-margin-top:12px}
+.rm-card{display:flex;flex-direction:column}
+/* progress: six segments and the step count on one 16px row. In the markup it follows the line (so the
+   headline script sits right after the last words it changes); on screen it comes first. */
+.rm-progress{display:flex;align-items:center;gap:12px;height:16px}
+.rm-progress .k-progress__track{flex:1 1 auto;position:relative;background:linear-gradient(var(--k-field-line),var(--k-field-line)) 0 50%/100% 2px no-repeat}
+.rm-count{flex:0 0 auto;min-width:88px;line-height:16px;text-align:right;white-space:nowrap}
+.rm-fill{position:absolute;inset:0;background:var(--k-accent);transform-origin:0 50%;transition:transform var(--k-dur-slow) var(--k-ease)}
+.rm-glide .k-progress__fill{visibility:hidden}
+.rm-line{margin-top:16px;font-size:16px;line-height:24px;font-weight:500;letter-spacing:-.01em;color:var(--k-accent);text-wrap:balance}
+.rm-quiz{margin-top:4px}
+#apBody{min-height:var(--rm-q1)}
+/* phones and tablets: after an answer the engine brings the quiz to 12px below the top of the screen. The quiz
+   keeps a screen of height from the start, so the sections below are never in view while it changes. */
+@media (max-width:959px){
+  .rm-book{min-height:calc(100vh - 12px);min-height:min(calc(100svh - 12px),760px)}
+}
+
+/* the quiz in the kit's compact rows: 52px answers 8px apart, a 26px question */
+.rm-quiz .ap-q{font-size:26px;line-height:30px;letter-spacing:-.035em}
+.rm-quiz .ap-sub{margin-top:4px;line-height:24px}
+.rm-quiz .ap-opts{gap:8px;margin-top:16px}
+.rm-quiz .ap-opt{min-height:52px;padding-block:8px}
+.rm-quiz .ap-opt > span:last-child{text-wrap:balance;text-wrap:pretty}
+.rm-quiz .qf-prev{margin-top:4px;font-size:16px}
+/* contact screen */
+.rm-quiz form{margin-top:20px}
+.rm-quiz .lp-field{margin-bottom:16px}
+.rm-quiz .lp-lbl,.rm-quiz .lp-err{font-size:16px}
+.rm-quiz .lp-consent{margin-top:16px;padding-top:16px;border-top:1px solid var(--k-line)}
+.rm-quiz .ap-next{margin-top:16px}
+.rm-quiz .ap-next[disabled]{--c:#5f6763}
+.rm-quiz .lp-priv{margin-top:12px}
+/* a corrected field drops its red ring at once (rm.js); Continue checks everything again */
+.rm-quiz .lp-field.invalid.rm-ok input{box-shadow:inset 0 0 0 1px var(--k-field-line),0 1px 2px rgba(10,30,22,.04)}
+.rm-quiz .lp-field.invalid.rm-ok input:focus{box-shadow:inset 0 0 0 1px var(--k-focus),0 0 0 3px var(--k-focus)}
+.rm-quiz .lp-field.invalid.rm-ok > .lp-err{visibility:hidden}
+@media (max-width:419px){.rm-quiz .qf-pair{grid-template-columns:minmax(0,1fr)}}
+/* the narrowest phones: a 24px question and tighter rows, so every answer stays on one line */
+@media (max-width:359px){
+  .rm-hero{--rm-q1:484px}
+  .rm-quiz .ap-q{font-size:24px;line-height:28px}
+  .rm-quiz .ap-opt{gap:8px;padding-inline:8px}
+}
+@media (min-width:600px){
+  .rm-hero{--rm-q1:488px}
+  .rm-quiz .ap-q{font-size:28px;line-height:32px}
+}
+
+/* desktop: copy on the left, the quiz on the right in a soft card, both on the first screen.
+   The card hangs from a fixed top edge (--rm-top) and the copy is centred against the first question's
+   height, not the card's, so a taller screen later grows downward and nothing beside it moves. */
+@media (min-width:960px){
+  .rm-hero{--k-glow-top:-520px}
+  .rm-hero::before{left:calc(50% + 320px)}
+  .rm-copy{display:flex;flex-direction:column;min-height:calc(var(--rm-top) + 548px + 2*var(--rm-pad));padding-top:28px}
+  .rm-copy__in{margin-block:auto;padding-block:32px 8px}
+  .rm-h1{margin-top:0;font-size:clamp(40px,4.1vw,60px)}
+  .rm-sub{max-width:52ch;margin-top:20px;font-size:clamp(17px,1.4vw,19px);line-height:1.55}
+  .rm-book{margin-top:var(--rm-top);padding-bottom:48px;scroll-margin-top:var(--rm-top)}
+  .rm-card{padding:var(--rm-pad) 24px;border-radius:var(--k-r-xl);background:var(--k-surface);box-shadow:var(--k-card-shadow-lift)}
+}
+/* a short laptop window: the card moves up and loses 16px of padding, so the seventh answer still shows */
+@media (min-width:960px) and (max-height:659px){.rm-hero{--rm-top:12px;--rm-pad:16px}}
+
+/* 3. SECTIONS: a large heading on the left, short lines on the right, on the first screen's two columns */
+.rm-sec{padding-block:clamp(56px,6vw,88px)}
+.rm-nb{white-space:nowrap}
+.rm-sec--rule{border-top:1px solid var(--k-line)}
+.rm-list > li{display:grid;grid-template-columns:20px minmax(0,1fr);column-gap:12px;align-items:start;padding:16px 0;border-top:1px solid var(--k-line);font-size:17px;line-height:28px;color:var(--k-ink-2)}
+.rm-list > li:last-child{border-bottom:1px solid var(--k-line)}
+.rm-list--plain > li{grid-template-columns:minmax(0,1fr)}
+.rm-list--num > li{grid-template-columns:32px minmax(0,1fr);column-gap:16px}
+.rm-n{display:grid;place-items:center;width:32px;height:32px;margin-top:-2px;border-radius:9px;background:var(--k-accent-soft);color:var(--k-accent);font:500 12px/1 var(--f-mono)}
+.rm-list--yes > li::before,.rm-list--no > li::before{content:"";width:20px;height:20px;margin-top:4px;border-radius:50%}
+.rm-list--yes > li::before{background:var(--k-mark-bg) var(--k-check-img) center/12px no-repeat}
+.rm-list--no > li::before{background:var(--k-well) linear-gradient(var(--k-muted),var(--k-muted)) center/8px 2px no-repeat}
+.rm-list--big > li{font-size:clamp(19px,1.7vw,21px);font-weight:500;letter-spacing:-.02em;color:var(--k-ink)}
+.rm-cap span{display:block}
+.rm-cap span::first-letter{text-transform:uppercase}
+.rm-pledge{font-size:clamp(19px,1.7vw,21px);line-height:1.5;letter-spacing:-.015em;color:var(--k-ink)}
+.rm-fit{display:grid;gap:16px}
+.rm-fit .k-card{padding:24px 24px 8px}
+.rm-fit__h{font-weight:500;font-size:clamp(19px,1.7vw,21px);line-height:28px;letter-spacing:-.02em;color:var(--k-ink)}
+.rm-fit .rm-list{margin-top:12px}
+.rm-fit .rm-list > li:last-child{border-bottom:0}
+@media (max-width:359px){.rm-fit .k-card{padding:20px 16px 4px}}
+
+/* 4. THE NIGHT BAND: FAQ, the closing button, the footer (as the home page ends) */
+.rm-night{border-radius:28px 28px 0 0}
+.rm-qa{padding:20px 0;border-top:1px solid var(--k-line)}
+.rm-qa:last-child{border-bottom:1px solid var(--k-line)}
+.rm-qa h3{font-weight:500;font-size:clamp(19px,1.7vw,21px);line-height:28px;letter-spacing:-.02em;color:var(--k-ink)}
+.rm-qa p{margin-top:4px;font-size:17px;line-height:28px;color:var(--k-muted)}
+.rm-night .rm-sec{padding-bottom:clamp(24px,3vw,40px)}
+/* the glow is 260px tall and centred on the button (56 + 16 + 20 + 32 = 124px down), so the block is 252px */
+.rm-end{--k-glow-top:124px;display:grid;justify-items:center;gap:20px;padding:56px var(--gutter) 96px}
+.rm-foot{padding-top:8px}
+.rm-foot .k-legal__links{gap:0 8px;margin-bottom:0}
+.rm-foot .k-legal__links a{padding:14px 12px;font-size:16px;line-height:24px}
+.rm-foot .k-legal__disc{margin-top:4px;font-size:14px}

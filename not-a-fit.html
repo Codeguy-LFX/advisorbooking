@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="/assets/gads.js" async></script>
+<title>Not the right fit right now | Advisor Booking</title>
+<meta name="description" content="We only work with a narrow RIA profile, so we'd rather say so now.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/fonts/geist.css">
+<link rel="stylesheet" href="/assets/kit.css">
+<link rel="stylesheet" href="/assets/rm-after.css">
+<script>
+/* No font flicker: the first paint waits until Geist (embedded in geist.css) is ready, so no line of text is ever
+   set twice. A few milliseconds as a rule, 300 at most. Without JavaScript nothing is held back. */
+(function (d) { var h = d.documentElement, t; if (!d.fonts || !d.fonts.load || !window.Promise) return;
+  function go() { clearTimeout(t); h.classList.remove('af-wait'); }
+  h.classList.add('af-wait'); t = setTimeout(go, 300);
+  d.fonts.load('500 16px Geist').then(go, go); })(document);
+</script>
+</head>
+<body class="af-body">
+<div class="af-stage k-glow">
+  <header class="af-col af-top">
+    <p class="k-brand af-brand"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></p>
+  </header>
+  <main class="af-main af-main--msg" id="main">
+    <div class="af-col">
+      <div class="af-msg">
+        <h1 class="k-h2 k-h2--md">We’re not the right fit right now.</h1>
+        <p class="k-lead">We only work with a narrow RIA profile, so we’d rather say so now.</p>
+        <p class="k-lead">We’ll email you the <span class="af-nb">Past Prospect Playbook</span> so you can run the sequence yourself.</p>
+      </div>
+    </div>
+  </main>
+</div>
+<footer class="k-legal af-foot">
+  <nav class="k-legal__links" aria-label="Footer"><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
+  <p class="k-legal__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
+</footer>
+</body>
+</html>

@@ -29,7 +29,14 @@ window.AB_CONFIG = {
   funnelEntry: "Quiz Funnel",
   ghlWebhookUrl: "https://services.leadconnectorhq.com/hooks/OlHSy0ie2GEU9CN03QfE/webhook-trigger/wxtAuWUMbK3oQ9rq2Ubz",
   // Tracking. Empty = the tag is not loaded. On /L1 both start only for qualified leads, after the contact screen.
-  // Google Tag Manager container, e.g. "GTM-ABC1234" (events: see assets/gtm.js).
+  // Google Ads. googleTagId: the global Google tag, the Google Ads account ID. assets/gads.js loads it on every page
+  // (not /contact, /about, /privacy, /terms, /booked).
+  // googleAdsConversion: the send_to value of the "Submit lead form" event snippet. It is sent in ONE place: on
+  // /qualified, for a qualified lead who submitted the quiz on /ria-meetings, once for each submission. Not-qualified
+  // leads go to /not-a-fit and never send it. Either value empty = that part is off.
+  googleTagId: "AW-18586476573",
+  googleAdsConversion: "AW-18586476573/Xc55CKqVoLwdEJ3A3J5F",
+  // Google Tag Manager container, e.g. "GTM-ABC1234" (events: see assets/gtm.js). Not needed for Google Ads above.
   gtmId: "",
   // Meta Pixel. ONE event on the whole site: "Lead", fired on /L1/Q/ (the booking page a qualified /L1 lead lands on).
   // No PageView, nothing on /L1/DQ/ or any other page. metaPixelLeadId is read only by L1/Q/index.html.

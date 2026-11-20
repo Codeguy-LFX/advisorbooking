@@ -7,12 +7,15 @@
 (function () {
   var A = window.AB_APPLY || null;
   var id = String((window.AB_CONFIG || {}).gtmId || '').trim();
+  /* The Google Ads tag (assets/gads.js) loads googleTagId itself, with its own privacy checks. The same ID here would
+     load that tag twice on one page, and on /booked, whose address carries the booker's details. */
+  if (id && id === String((window.AB_CONFIG || {}).googleTagId || '').trim()) id = '';
   var loaded = false;
   window.dataLayer = window.dataLayer || [];
   function state() { try { return JSON.parse(localStorage.getItem((A && A.STORE_KEY) || 'ab_apply_v1') || 'null'); } catch (e) { return null; } }
   function blocked() { var s = state(); return !!(s && s.track === 'off'); }
   function load() {
-    if (loaded || !/^GTM-[A-Z0-9]+$/.test(id) || navigator.globalPrivacyControl || blocked()) return;
+    if (loaded || window.AB_ADS_OFF || !/^GTM-[A-Z0-9]+$/.test(id) || navigator.globalPrivacyControl || blocked()) return;
     loaded = true;
     window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
     var s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtm.js?id=' + encodeURIComponent(id);

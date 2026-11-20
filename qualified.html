@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>
+/* /qualified is the page that sends the Google Ads conversion (the "Submit lead form" event, from assets/gads.js), so
+   only a qualified lead who submitted the quiz may see it. The quiz sets sessionStorage ab_qualified = "1" before it sends a qualified lead
+   here; the saved quiz state says the same for a lead who comes back in a new tab. Anyone else is sent to the
+   landing page before the Google tag starts, with the address's query string kept. If the browser will not let the
+   page read its storage at all, the page is shown.
+   Then the campaign tags and the ad click id from the landing page are put back in this page's address (they are kept
+   for the visit in sessionStorage ab_utm, the click id for 90 days in localStorage ab_click), so they are on
+   /qualified when the tag reads it. */
+(function () {
+  'use strict';
+  var flag = null, st = null, readable = true;
+  try { flag = sessionStorage.getItem('ab_qualified'); } catch (e) { readable = false; }
+  try { st = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); } catch (e) { st = null; }
+  var show = !readable || flag === '1' || flag === 'sent' || !!(st && st.sid && st.route === 'qualified' && st.track !== 'off');
+  if (!show) {   // storage that can be read but not written cannot carry the quiz's flag: trust an arrival straight from the landing page
+    var canWrite = true; try { sessionStorage.setItem('ab_probe', '1'); sessionStorage.removeItem('ab_probe'); } catch (e) { canWrite = false; }
+    if (!canWrite) { try { var rf = new URL(document.referrer); show = rf.origin === location.origin && /^\/ria-meetings(?:\.html)?\/?$/.test(rf.pathname); } catch (e) {} }
+  }
+  if (!show) {
+    window.AB_ADS_OFF = true;
+    document.documentElement.style.visibility = 'hidden';   // nothing of this page is shown on the way out
+    location.replace('/ria-meetings' + location.search + location.hash);
+    return;
+  }
+  window.AB_QUALIFIED_OK = true;   // the only page allowed to load the Google tag at an address containing /qualified
+  /* The conversion (sent by assets/gads.js) belongs to a qualified submission, not to a page view. The quiz sets the
+     flag to "1" when a qualified lead leaves it. Here it is turned to "sent" BEFORE anything is sent, so a reload, Back
+     and Forward or a later visit can never send it again; a lead already counted (Back, then Continue again: the same
+     lead id) is not counted twice. If the flag cannot be read or changed, nothing is sent. */
+  if (flag === '1') {
+    var consumed = false, dup = false, key = st && st.sid ? 'ab_conv_' + st.sid : '';
+    try { sessionStorage.setItem('ab_qualified', 'sent'); consumed = true; } catch (e) {}
+    try { if (key) { dup = !!localStorage.getItem(key); if (!dup) localStorage.setItem(key, '1'); } } catch (e) {}
+    window.AB_CONVERT = consumed && !dup;
+  }
+  try {
+    var u = new URL(location.href), tags = {}, click = null, changed = false, k, v;
+    try { tags = JSON.parse(sessionStorage.getItem('ab_utm') || '{}') || {}; } catch (e) { tags = {}; }
+    if (!tags.gclid && !tags.gbraid && !tags.wbraid) {
+      try { click = JSON.parse(localStorage.getItem('ab_click') || 'null'); } catch (e) { click = null; }
+      if (click && Date.now() - (click.t || 0) < 90 * 864e5) { tags.gclid = click.gclid; tags.gbraid = click.gbraid; tags.wbraid = click.wbraid; }
+    }
+    for (k in tags) {
+      if (!Object.prototype.hasOwnProperty.call(tags, k) || u.searchParams.has(k)) continue;
+      v = tags[k]; if (typeof v !== 'string' || !v) continue;
+      if (/^(gclid|gbraid|wbraid)$/.test(k) ? /^[A-Za-z0-9_.-]{8,600}$/.test(v) : /^utm_[a-z_]{2,20}$/.test(k) && v.length <= 200) { u.searchParams.set(k, v); changed = true; }
+    }
+    if (changed) history.replaceState(history.state, '', u.pathname + u.search + u.hash);
+  } catch (e) {}
+})();
+</script>
+<script src="/assets/gads.js" async></script>
+<title>Pick a time | Advisor Booking</title>
+<meta name="description" content="You look like a fit. Pick a time below.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/fonts/geist.css">
+<link rel="stylesheet" href="/assets/kit.css">
+<link rel="stylesheet" href="/assets/rm-after.css">
+<script>
+/* No font flicker: the first paint waits until Geist (embedded in geist.css) is ready, so no line of text is ever
+   set twice. A few milliseconds as a rule, 300 at most. Without JavaScript nothing is held back. */
+(function (d) { var h = d.documentElement, t; if (!d.fonts || !d.fonts.load || !window.Promise) return;
+  function go() { clearTimeout(t); h.classList.remove('af-wait'); }
+  h.classList.add('af-wait'); t = setTimeout(go, 300);
+  d.fonts.load('500 16px Geist').then(go, go); })(document);
+</script>
+<link rel="preconnect" href="https://app.iclosed.io">
+</head>
+<body class="af-body">
+<div class="af-stage k-glow">
+  <header class="af-col af-top">
+    <p class="k-brand af-brand"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></p>
+  </header>
+  <main class="af-main" id="main">
+    <div class="af-col">
+      <h1 class="k-h2 k-h2--md af-h">You look like a fit. <span>Pick a time below.</span></h1>
+      <section class="k-cal af-cal" id="calendar" aria-label="Pick a time for your call">
+        <div class="k-cal__body">
+          <div class="k-cal__skel"><p class="k-cal__note">Loading the calendar. If it does not appear, email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will send you times.</p></div>
+          <div class="k-cal__mount"></div>
+        </div>
+      </section>
+      <p class="af-also">We’ll also email you the <span class="af-nb">Past Prospect Playbook.</span></p>
+    </div>
+  </main>
+</div>
+<footer class="k-legal af-foot">
+  <nav class="k-legal__links" aria-label="Footer"><a href="/privacy" target="_blank" rel="noopener">Privacy</a><a href="/terms" target="_blank" rel="noopener">Terms</a></nav>
+  <p class="k-legal__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
+</footer>
+<script src="/assets/config.js"></script>
+<script>
+/* The calendar, as on /L1/Q/: the quiz funnel's own iClosed event (iclosedUrlFit5 in config.js) in iClosed's inline
+   widget, with the lead's name, email, phone and campaign tags filled in. If the widget has put no calendar frame
+   in place after 8 seconds (or its script is blocked), the event page is loaded in a plain frame and a link to open
+   it appears. No Meta pixel, no Tag Manager here. The one Google Ads conversion event is sent by
+   assets/gads.js (in the head), once for each qualified submission; do not also count this page by its address in
+   Google Ads, or each lead counts twice. */
+(function () {
+  'use strict';
+  if (window.AB_ADS_OFF) return;   // the guard in the head is sending this visitor to the landing page: load no calendar
+  var CFG = window.AB_CONFIG || {}, LABEL = 'q';
+  var st = null; try { st = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); } catch (e) {}
+  var a = (st && st.answers) || {};
+  var utm = {}; try { utm = JSON.parse(sessionStorage.getItem('ab_utm') || '{}') || {}; } catch (e) {}
+  var base = String(CFG.iclosedUrlFit5 || CFG.iclosedUrl || '').trim(), url = '';
+  try {
+    var u = new URL(base);
+    Object.keys(utm).forEach(function (k) { if (k.indexOf('utm_') === 0) u.searchParams.set(k, utm[k]); });
+    var d = String(a.phone || '').replace(/\D/g, ''); if (d.length === 11 && d.charAt(0) === '1') d = d.slice(1);
+    var nm = [a.first, a.last].filter(Boolean).join(' ').trim();
+    if (nm) u.searchParams.set('iclosedName', nm);
+    if (a.first) u.searchParams.set('iclosedFirstName', String(a.first).trim());
+    if (a.last) u.searchParams.set('iclosedLastName', String(a.last).trim());
+    if (a.email) u.searchParams.set('iclosedEmail', a.email);
+    if (d.length === 10) u.searchParams.set('iclosedPhone', '+1' + d);
+    if (!u.searchParams.get('utm_term')) u.searchParams.set('utm_term', 'L1-' + LABEL);
+    url = u.toString();
+  } catch (e) {}
+  var cal = document.getElementById('calendar'), mount = cal.querySelector('.k-cal__mount');
+  if (!url) return;   // no event link in config.js: the loading sentence, with the email address, stays
+  var w = document.createElement('div'); w.className = 'iclosed-widget'; w.setAttribute('data-url', url); w.setAttribute('title', 'Pick a time for your call'); w.style.width = '100%';
+  mount.appendChild(w);
+  var settled = false, waited = 0, iv;
+  /* A calendar frame is in place: let it take taps, and hide the loading drawing once it has loaded. */
+  function live(f) {
+    cal.classList.add('is-live'); if (!f.getAttribute('title')) f.setAttribute('title', 'Pick a time for your call');
+    var done = function () { cal.classList.add('is-ready'); };
+    f.addEventListener('load', done); setTimeout(done, 3000);
+  }
+  function fallback() {
+    if (settled) return; settled = true; clearInterval(iv);
+    var have = mount.querySelector('iframe'); if (have) { live(have); return; }
+    mount.innerHTML = '';
+    var p = document.createElement('p'); p.className = 'af-open'; var l = document.createElement('a'); l.href = url; l.textContent = 'Calendar not showing? Open it here.'; p.appendChild(l); mount.appendChild(p);
+    var f = document.createElement('iframe'); f.title = 'Pick a time for your call'; f.src = url; mount.appendChild(f);
+    cal.classList.add('is-fallback'); live(f);
+  }
+  var s = document.createElement('script'); s.async = true; s.src = 'https://app.iclosed.io/assets/widget.js'; s.onerror = fallback; document.body.appendChild(s);
+  iv = setInterval(function () { var f = mount.querySelector('iframe'); if (f) { settled = true; clearInterval(iv); live(f); return; } if ((waited += 250) >= 8000) fallback(); }, 250);
+  /* The site's /booked page, when iClosed shows it inside the frame, reports the booking here: save it to the CRM, once. */
+  var bookedOnce = false;
+  window.addEventListener('message', function (e) {
+    var d = e.data || {};
+    if (e.origin !== location.origin || d.event !== 'iclosed.booked' || !d.payload || bookedOnce) return;
+    bookedOnce = true;
+    try { if (st && !st.booked) { st.booked = true; localStorage.setItem('ab_apply_v1', JSON.stringify(st)); } } catch (x) {}
+    var hook = String(CFG.ghlWebhookUrl || '').trim(); if (!hook) return;
+    var body = new URLSearchParams(), p = d.payload;
+    Object.keys(p).forEach(function (k) { if (k !== 'forwarded') body.append(k, p[k] === undefined || p[k] === null ? '' : String(p[k])); });
+    try { if (!(navigator.sendBeacon && navigator.sendBeacon(hook, body))) fetch(hook, { method: 'POST', mode: 'no-cors', keepalive: true, body: body }).catch(function () {}); } catch (x) {}
+  });
+})();
+</script>
+</body>
+</html>

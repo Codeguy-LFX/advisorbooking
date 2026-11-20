@@ -1,0 +1,70 @@
+/* Advisor Booking: the two pages after the quiz, /qualified and /not-a-fit (rm-after.css)
+   Layout only. Every colour, radius, shadow, type size and easing comes from kit.css, which takes them from the
+   home page. Spacing sits on a 4px grid. One thing moves: the fallback link fades in (opacity, 200ms), and
+   kit.css switches that off under prefers-reduced-motion. */
+
+/* 1. FONT: the page is painted once, with Geist in place (see the script in each page's head) */
+.af-wait body{visibility:hidden}
+
+/* 2. PAGE: the logo and the content stand on a stage with the home hero's glow pulled up to the top edge, in one
+      760px column. The stage takes all the height the footer leaves, so a short page still closes at the bottom
+      of the screen. */
+.af-body{display:flex;flex-direction:column;min-height:100vh;min-height:100svh}
+.af-stage{flex:1 0 auto;display:flex;flex-direction:column;--k-glow-top:-640px}
+.af-col{width:100%;max-width:calc(760px + 2*var(--gutter));margin-inline:auto;padding-left:max(var(--gutter),env(safe-area-inset-left,0px));padding-right:max(var(--gutter),env(safe-area-inset-right,0px))}
+.af-main{flex:1 0 auto;padding:28px 0 48px}
+
+/* 3. HEADER: the logo and the name where the landing page has them (16px from the top on a phone, 28px from
+      960px, the heading 28px under them on a phone). Not a link, and nothing beside it. */
+.af-top{padding-top:calc(16px + env(safe-area-inset-top,0px))}
+.af-brand{display:flex;width:max-content}
+@media (min-width:960px){
+  .af-top{padding-top:28px}
+  .af-main{padding-top:48px}
+}
+
+/* 4. /qualified: the heading, the calendar card, one line */
+/* two sentences, two lines: the news in ink, the next step in the accent (the home hero's own two colours) */
+.af-h span{display:block;color:var(--k-accent)}
+.af-cal{margin-top:28px}
+/* the kit keeps 660px for the calendar, more on a tall screen. Here the tall-screen figure leaves room for what
+   stands around the card (241px above it, the one line and 98px under it), so all of it fits on one screen. */
+@supports (height:100svh){.af-cal{--k-cal-h:max(660px,calc(100svh - 339px))}}
+/* loading state: the sentence first, then the still calendar drawing. Until a calendar frame is in place the
+   mount lets taps through, so the email link in the sentence works. */
+.af-cal .k-cal__note{order:0;font-size:16px}
+/* the kit's title bar becomes four time slots under the month grid, so the drawing fills the card */
+.af-cal .k-cal__skel::before{order:3;width:min(100%,392px);height:44px;margin-bottom:168px;border-radius:var(--k-r-sm);background:var(--k-well);box-shadow:0 56px 0 var(--k-well),0 112px 0 var(--k-well),0 168px 0 var(--k-well)}
+.af-cal:not(.is-live) .k-cal__mount{pointer-events:none}
+.af-cal.is-live .k-cal__mount iframe{background:var(--k-surface)}
+/* fallback (the widget did not arrive): a 57px strip with the link takes the place of the loading sentence at the
+   top of the card, where the visitor is looking, and the plain frame under it is 57px shorter. The card keeps its
+   height, so nothing on the page moves. */
+.af-cal.is-fallback .k-cal__note{visibility:hidden}
+.af-cal.is-fallback .k-cal__mount{display:flex;flex-direction:column}
+.af-cal.is-fallback .k-cal__mount iframe{flex:1 0 auto;min-height:calc(var(--k-cal-h) - 57px)}
+.af-open{flex:0 0 auto;border-bottom:1px solid var(--k-line);text-align:center;font-size:16px;line-height:24px;animation:af-in 200ms var(--k-ease) both}
+.af-open a{display:inline-block;padding:16px 8px;color:var(--k-ink-2);text-underline-offset:3px} /* a 56px tap area */
+.af-open a:focus-visible{outline-offset:-6px}
+@keyframes af-in{from{opacity:0}to{opacity:1}}
+.af-also{margin-top:24px;font-size:17px;line-height:1.5;font-weight:500;letter-spacing:-.01em;color:var(--k-ink);text-wrap:balance}
+
+/* 5. /not-a-fit: a heading and two sentences, set a little above the middle of the screen */
+.af-main--msg{display:flex;flex-direction:column;justify-content:center;padding-top:40px;padding-bottom:calc(48px + 6vh)}
+/* the first sentence in the lead grey, what happens next in ink (the home hero sets its subhead the same way) */
+.af-msg p{max-width:none;margin-top:20px;text-wrap:balance}
+.af-msg p + p{margin-top:8px;font-weight:500;letter-spacing:-.01em;color:var(--k-ink)}
+
+/* both pages: the Playbook's name is never split across two lines */
+.af-nb{white-space:nowrap}
+
+/* 6. FOOTER: the landing page's closing band (the home page's night footer, 16px links with 52px tap areas, a 14px disclaimer) */
+.af-foot{padding-top:8px}
+.af-foot .k-legal__links{gap:0 8px;margin-bottom:0}
+.af-foot .k-legal__links a{padding:14px 12px;font-size:16px;line-height:24px}
+.af-foot .k-legal__links a:focus-visible{outline-offset:-6px} /* the ring stays inside the tap area */
+.af-foot .k-legal__disc{margin-top:4px;font-size:14px}
+/* Same logo edge, column and headline size as the landing page at every width. */
+.af-h,.af-msg h1{font-size:clamp(30px,5.2vw,44px)}
+@media (min-width:960px){.af-h,.af-msg h1{font-size:clamp(44px,3.8vw,52px)}}
+@media (max-width:959px){.af-col{max-width:calc(640px + 2*var(--gutter))}}

@@ -16,8 +16,12 @@
   /* ---------- campaign tags for the visit (same store as site.js and the form) ---------- */
   var utm = {};
   try { utm = JSON.parse(sessionStorage.getItem('ab_utm') || '{}') || {}; } catch (e) {}
-  try { new URLSearchParams(location.search).forEach(function (v, k) { if (/^utm_|^(gclid|fbclid|src|ref)$/.test(k)) utm[k] = v; }); } catch (e) {}
+  try { new URLSearchParams(location.search).forEach(function (v, k) { if (/^utm_|^(gclid|gbraid|wbraid|fbclid|src|ref)$/.test(k)) utm[k] = v; }); } catch (e) {}
   try { sessionStorage.setItem('ab_utm', JSON.stringify(utm)); } catch (e) {}
+  /* Google's ad click ids, also kept for 90 days in this browser (ab_click): the qualified-lead page hands them back to
+     Google's tag (assets/gtm.js), also when the visitor finishes on a later day or in another tab. Newest click wins. */
+  try { var ck = {}, qs = new URLSearchParams(location.search); ['gclid', 'gbraid', 'wbraid'].forEach(function (k) { var v = qs.get(k); if (v) ck[k] = v; });
+        if (ck.gclid || ck.gbraid || ck.wbraid) { ck.t = Date.now(); localStorage.setItem('ab_click', JSON.stringify(ck)); } } catch (e) {}
 
   /* Nothing is pushed for someone the qualifying form's tracking gate turned off (Funnel 4: under $50M AUM). */
   function trackOff() { try { var s = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); return !!(s && s.track === 'off'); } catch (e) { return false; } }

@@ -64,6 +64,17 @@
     // The saved state is kept across visits only while this matches. Bump it when question ids or values change;
     // copy-only edits can bump FORM_VERSION without resetting someone mid-form. Empty = FORM_VERSION.
     STATE_VERSION: '',
+    // For a form that sits inside a landing page (the paid lander, /ria-meetings). All empty or false by default.
+    // SCROLL_TO: the id of the section around the form; each new screen brings that section to the top of the screen
+    //   (when it is not already in view) instead of scrolling the whole page to the top.
+    // VARIANT: the lander's headline variant; sent to the CRM as the field "v".
+    // CARRY_QUERY: add the page's own query string (campaign tags, click id, v) to the address the form leaves for.
+    // QUALIFIED_FLAG: a sessionStorage key set to "1" when a qualified lead leaves the form (not for a submission the
+    //   form marked as a bot), removed for anyone else. /qualified reads it to send the ad conversion once.
+    SCROLL_TO: '',
+    VARIANT: '',
+    CARRY_QUERY: false,
+    QUALIFIED_FLAG: '',
     TEST_MODE: false
   };
   var over = window.AB_APPLY || {};
@@ -95,7 +106,15 @@
   function phoneOk(v) { return digits(v).length === 10; }
   function phoneFmt(v) { var d = digits(v).slice(0, 10); if (d.length < 4) return d; if (d.length < 7) return '(' + d.slice(0, 3) + ') ' + d.slice(3); return '(' + d.slice(0, 3) + ') ' + d.slice(3, 6) + '-' + d.slice(6); }
   function announce(msg) { var l = $('apLive'); if (!l) return; l.textContent = ''; setTimeout(function () { l.textContent = msg; }, 40); }
-  function toTop() { try { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); } catch (e) { window.scrollTo(0, 0); } }
+  function toTop() {
+    var sec = F.SCROLL_TO ? doc.getElementById(F.SCROLL_TO) : null, y = 0;
+    if (sec) {   // inside a landing page: keep the form where it is when its top is on screen, otherwise bring it up
+      var r = sec.getBoundingClientRect(), vh = window.innerHeight || 0;
+      if (r.top >= 0 && r.top <= vh * 0.35) return;
+      y = Math.max(0, Math.round(r.top + (window.pageYOffset || 0) - 12));
+    }
+    try { window.scrollTo({ top: y, left: 0, behavior: 'instant' }); } catch (e) { window.scrollTo(0, y); }
+  }
   function focusEl(h) { if (!h) return; try { h.focus({ preventScroll: true }); } catch (e) { h.focus(); } }
   var ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
   var TICK = '<span class="lp-tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2L4.6 9 10 3" stroke="#0F7A62" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
@@ -143,8 +162,12 @@
 
   var utm = {};
   try { utm = JSON.parse(sessionStorage.getItem('ab_utm') || '{}') || {}; } catch (e) {}
-  try { new URLSearchParams(location.search).forEach(function (v, k) { if (/^utm_|^(gclid|fbclid|src|ref)$/.test(k)) utm[k] = v; }); } catch (e) {}
+  try { new URLSearchParams(location.search).forEach(function (v, k) { if (/^utm_|^(gclid|gbraid|wbraid|fbclid|src|ref)$/.test(k)) utm[k] = v; }); } catch (e) {}
   try { sessionStorage.setItem('ab_utm', JSON.stringify(utm)); } catch (e) {}
+  /* Google's ad click ids, also kept for 90 days in this browser (ab_click): the qualified-lead page hands them back to
+     Google's tag (assets/gtm.js), also when the visitor finishes on a later day or in another tab. Newest click wins. */
+  try { var ck = {}, qs = new URLSearchParams(location.search); ['gclid', 'gbraid', 'wbraid'].forEach(function (k) { var v = qs.get(k); if (v) ck[k] = v; });
+        if (ck.gclid || ck.gbraid || ck.wbraid) { ck.t = Date.now(); localStorage.setItem('ab_click', JSON.stringify(ck)); } } catch (e) {}
 
   /* ---------- save each answer as it is given ---------- */
   function botFlag() {
@@ -176,6 +199,7 @@
     p.funnel_entry = String(AB.funnelEntry || '');
     p.fbp = (function () { var m = document.cookie.match(/(?:^|;\s*)_fbp=([^;]+)/); return m ? decodeURIComponent(m[1]) : ''; })();
     p.answers_json = JSON.stringify(a);
+    if (F.VARIANT) p.v = String(F.VARIANT);   // the paid lander's headline variant
     if (extra) Object.keys(extra).forEach(function (k) { var v = extra[k]; p[k] = v && typeof v === 'object' ? JSON.stringify(v) : v; });
     postForm(url, p);
   }
@@ -551,6 +575,8 @@
     if (dest && typeof dest === 'object' && dest.inline) { showInline(dest.inline); return; }
     S.done = true; save();
     if (bar) bar.style.width = '100%';
+    if (F.QUALIFIED_FLAG) { try { if (S.tier === 'qualified' && !botFlag()) sessionStorage.setItem(F.QUALIFIED_FLAG, '1'); else sessionStorage.removeItem(F.QUALIFIED_FLAG); } catch (e) {} }
+    if (F.CARRY_QUERY && typeof dest === 'string') dest = carryQuery(dest);
     if (F.REDIRECT_QUIET) {
       var nb = body.querySelector('.ap-next'); if (nb) { nb.disabled = true; nb.classList.add('is-busy'); }
       location.href = dest || '#'; return;
@@ -558,6 +584,18 @@
     body.innerHTML = '';
     body.appendChild(el('div', { class: 'ap-sending' }, [el('h2', { class: 'ap-q', text: 'Thanks. One moment.' }), el('p', { text: 'Taking you to the next step.' })]));
     setTimeout(function () { location.href = dest || '#'; }, F.REDIRECT_DELAY_MS);
+  }
+
+  /* The address the form leaves for, with this page's query string (campaign tags, the ad click id, v) and any tag kept
+     for the visit that the address does not already have. */
+  function carryQuery(dest) {
+    try {
+      var u = new URL(dest, location.href), here = new URLSearchParams(location.search);
+      here.forEach(function (v, k) { if (!u.searchParams.has(k)) u.searchParams.set(k, v); });
+      Object.keys(utm).forEach(function (k) { var v = utm[k]; if (/^(utm_[a-z_]+|gclid|gbraid|wbraid)$/.test(k) && typeof v === 'string' && v && !u.searchParams.has(k)) u.searchParams.set(k, v); });
+      if (F.VARIANT && !u.searchParams.has('v')) u.searchParams.set('v', String(F.VARIANT));
+      return u.pathname + u.search + u.hash;
+    } catch (e) { return dest; }
   }
 
   function showInline(x) {

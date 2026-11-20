@@ -10,9 +10,11 @@ Static marketing site for Advisor Booking (De Jesus Ventures LLC). No build step
 | `book.html` | `/book` | Booking page for every home-page button: the logo and the iClosed scheduler full width, nothing else (the pilot lander is the other path to test) |
 | `pilot.html` | `/pilot` | Hidden founding-offer landing page for email and LinkedIn outreach (gated form, then the iClosed calendar). `noindex`, not linked from the nav. |
 | `meetings.html` | `/meetings` | Hidden v1 landing page, kept for later use. `noindex`. |
-| `founding-sprint.html` | `/founding-sprint` | Founding Sprint sales page (hidden lander for outreach). `noindex`, not linked from the nav, not in the sitemap. |
 | `L1/index.html` | `/L1/` | The qualifying funnel: six screens, then `/L1/Q/` or `/L1/DQ/`. `noindex`. See below. |
-| `L1/Q/index.html`, `L1/DQ/index.html` | `/L1/Q/`, `/L1/DQ/` | The booking page (iClosed calendar, prefilled). Identical, except `Q/` carries the Meta pixel and fires one `Lead` event. `noindex`. |
+| `ria-meetings.html` | `/ria-meetings` | The landing page for all paid traffic (Google Search, LinkedIn). The headline follows `?v=` (appt, leads, mktg, alt, playbook; anything else is appt). The quiz sits on the first screen, AUM question first. `noindex`. |
+| `qualified.html` | `/qualified` | Where a QUALIFIED lead from `/ria-meetings` lands: the calendar. It is the page that sends the one Google Ads conversion event ("Submit lead form", see `assets/gads.js`), so it sends anyone who has not just passed the quiz as qualified back to `/ria-meetings`. `noindex`, linked from nowhere, not in the sitemap. |
+| `not-a-fit.html` | `/not-a-fit` | Where a not-qualified lead from `/ria-meetings` lands. No calendar. `noindex`. |
+| `L1/Q/index.html`, `L1/DQ/index.html` | `/L1/Q/`, `/L1/DQ/` | The booking pages of the home-page quiz (`/L1/`): iClosed calendar, prefilled. Identical, except `Q/` carries the Meta pixel and fires one `Lead` event. `noindex`. |
 | `booked.html` | `/booked` | Booking confirmation with next steps. iClosed sends people here after they book; it records the booking (CRM post, GTM `ab_booked` for qualified leads). `noindex`. |
 | `fit/`, `fit5/` | `/fit/`, `/fit5/` | Old funnel links: forward to `/L1/` with the query string (campaign tags) intact. |
 | `v2/index.html` | `/v2/` | The home lander (hero with the rotating word, email-first "Book intro call" box). `noindex`: a variant of `/`. Generated. |
@@ -38,7 +40,21 @@ rules and settings: the `window.AB_APPLY` block at the top of `L1/index.html`.
   no automatic events, nothing on `/L1/DQ/` or any other page (`metaPixelId` stays empty). The pixel code exists only
   in `L1/Q/index.html`.
 - GTM (when `gtmId` is set): same rule. `gtm.js` is included only on `/L1/Q/` (one event, `ab_lead`, once per
-  submission) and `/booked` (`ab_booked`, qualified leads only). The form page and `/L1/DQ/` do not include it.
+  submission) and `/booked` (`ab_booked`, qualified leads only). The form page and `/L1/DQ/` do not include it. Not
+  needed for Google Ads.
+- Google Ads: `assets/gads.js` loads the Google tag (`googleTagId`, the snippet from Google Ads > Data manager >
+  Google tag) on every page except `/contact`, `/about`, `/privacy`, `/terms` and `/booked` (its address carries the
+  booker's name and email). The ONE conversion is the "Submit lead form" event snippet (`googleAdsConversion`), sent
+  only on `/qualified` after that page's check has passed and the quiz's `ab_qualified` flag was set, once for each
+  qualified submission (do not also count `/qualified` by address in Google Ads, or each lead counts twice). A booking is not a conversion on
+  purpose: not every qualified lead books. The tag never starts for a browser that sends Global Privacy Control, at an
+  address that carries a person's details, or at any other address that merely contains "/qualified".
+- The paid funnel: `/ria-meetings` runs the same quiz engine and settings as `/L1/` with four extra settings
+  (`SCROLL_TO`, `VARIANT`, `CARRY_QUERY`, `QUALIFIED_FLAG` in `assets/funnel.js`). It sends the CRM the same record
+  plus `v` (the headline variant), carries the whole query string (click id, `utm_`, `v`) to `/qualified` or
+  `/not-a-fit`, and sets `sessionStorage ab_qualified = 1` for a qualified lead. `lander.js` and `funnel.js` also keep
+  the ad click id (`gclid`, `gbraid`, `wbraid`) for 90 days (`ab_click`). The pages are built on `assets/kit.css` (the
+  home page's design as reusable classes), `assets/rm.css` and `assets/rm-after.css`.
 - CRM: `ghlWebhookUrl` gets two form-encoded posts per lead: `stage=complete` (all answers, contact details,
   qualified, dq_reasons, consent text and time, campaign tags) and `stage=booked` (from `/booked`).
 - Landers (`/v2/`): the email-first button goes to `landerNext` (`L1/`) with the email prefilled. The v2 pages load
