@@ -112,7 +112,8 @@
 .af-how{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;margin-top:20px;font-size:15.5px;line-height:24px;font-weight:500;color:var(--k-ink)}
 .af-how > li{display:flex;align-items:center;gap:9px}
 .af-how .af-n{flex:none;width:26px;height:26px;margin-top:0;border-radius:8px;background:var(--k-accent);color:#fff}
-.af-book .af-cal{margin-top:24px;--k-cal-h:780px;box-shadow:0 0 0 1.5px var(--k-accent),var(--shadow-lift)}
+/* iClosed's own layout stops at 800px wide: the box is exactly that, so the calendar fills it edge to edge */
+.af-book .af-cal{max-width:800px;margin-inline:auto;margin-top:24px;--k-cal-h:780px;box-shadow:0 0 0 1.5px var(--k-accent),var(--shadow-lift)}
 /* wide enough for iClosed's side-by-side layout (calendar beside the times): it needs less height there */
 @media (min-width:900px){.af-book .af-cal{--k-cal-h:680px}}
 /* the frame fills the box exactly, whatever size the widget's own script gives it */
