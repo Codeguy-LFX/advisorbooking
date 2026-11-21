@@ -296,7 +296,7 @@ textarea.k-input,.k-quiz .lp-field textarea{min-height:132px;padding:16px;line-h
 /* engine labels are screen-reader only in its "qf" layout (the placeholder carries the label).
    .k-quiz--labels shows them above the box and clears the duplicate placeholder. */
 .k-quiz--labels .lp-lbl.sr-only{position:static;width:auto;height:auto;margin:0;overflow:visible;clip:auto;white-space:normal}
-.k-quiz--labels .lp-field input::placeholder{color:transparent}
+.k-quiz--labels .lp-field input::placeholder{color:transparent;opacity:0}
 
 /* 14. CONSENT: a checkbox beside a sentence several lines long (kit) -------------------------------- */
 /* <div class="k-consent [is-bad]"><div class="k-check"><input type="checkbox" id="c"><label for="c">…</label></div>

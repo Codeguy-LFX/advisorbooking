@@ -250,9 +250,10 @@
 };
 window.AB_APPLY.VARIANT = window.AB_V;
 try { sessionStorage.setItem('ab_quiz_from', '/ria-meetings'); } catch (e) {}
-/* If the quiz's script does not arrive, say so where the question would be (the noscript line covers JavaScript off). */
+/* If the quiz's script or the settings file does not arrive, say so where the question would be (the noscript line
+   covers JavaScript off). Without the settings the quiz would run to the end and save the lead nowhere, so it is not drawn. */
 window.abQuizFail = function () { var b = document.getElementById('apBody'); if (b && !b.querySelector('.ap-screen')) b.innerHTML = '<p class="ap-screen">The questions did not load. Reload the page, or email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will set up your call.</p>'; };</script>
-<script src="/assets/config.js"></script>
+<script src="/assets/config.js" onerror="window.AB_APPLY=null;abQuizFail()"></script>
 <script src="/assets/funnel.js" defer onerror="abQuizFail()"></script>
 <script src="/assets/rm.js" defer></script>
 <script src="/assets/paid.js" defer></script>

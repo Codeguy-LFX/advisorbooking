@@ -245,9 +245,11 @@
   .pd *,.pd *::before{animation:none!important}
   .pd-pp{visibility:hidden}
 }
+/* a window under 320px (a 390px phone zoomed): the top bar closes up; under 300px the longest status takes two lines
+   instead of leaving the card */
+@media (max-width:319px){.pd-top{gap:6px}}
+@media (max-width:299px){.pd-st{height:auto;min-height:26px;padding-block:4px;white-space:normal;line-height:15px;text-wrap:balance}}
 /* FORCED COLOURS (Windows contrast themes): shadows and fills are dropped there, so edges and states are drawn with outlines */
-/* a window under 320px (a 390px phone zoomed to 150%): the longest status wraps instead of leaving the card */
-@media (max-width:319px){.pd-st{height:auto;min-height:26px;padding-block:4px;white-space:normal;line-height:15px}}
 @media (forced-colors:active){
   .pd,.pd-list,.pd-mail,.pd-cal,.pd-meet,.pd-chip,.pd-tag,.pd-st,.pd-eg,.pd-meet__tag,.pd-msg > span,.pd-busy,.pd-box,.pd-av{outline:1px solid CanvasText;outline-offset:-1px}
   .pd-tab[aria-current]{outline:2px solid Highlight;outline-offset:-2px}

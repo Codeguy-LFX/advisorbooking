@@ -26,6 +26,7 @@
      the quiz reads as "back to question 1". A target more than three screens away is jumped to at once (a glide through
      the whole page takes over a second); a near one glides. #book puts the cursor on the question, #get in the email
      box. A click with Ctrl, Shift or Alt (and Cmd on a Mac) is left to the browser. */
+  var settle = 0;
   d.addEventListener('click', function (e) {
     var a = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null; if (!a) return;
     var id = a.getAttribute('href').slice(1), s = id ? $(id) : null, f;
@@ -35,6 +36,8 @@
     if (s.hasAttribute('data-bar-from') || s.hasAttribute('data-bar-hide')) d.documentElement.classList.remove('p-bar-on');
     /* a jump to a section below the first screen's action: the bar will be up when the page lands, so land clear of it */
     else if (bar && from && 'IntersectionObserver' in w && (from.compareDocumentPosition(s) & 4) && !from.contains(s) && !s.closest('[data-bar-hide]')) d.documentElement.classList.add('p-bar-on');
+    /* a jump the visitor cuts short can leave that class out of step with the bar: once the glide is over it follows the bar again */
+    if (bar) { clearTimeout(settle); settle = setTimeout(function () { d.documentElement.classList.toggle('p-bar-on', bar.classList.contains('is-on')); }, 1600); }
     try { s.scrollIntoView({ behavior: Math.abs(s.getBoundingClientRect().top) > 3 * w.innerHeight ? 'instant' : 'auto', block: 'start' }); } catch (x) { s.scrollIntoView(); }
     f = id === 'book' ? $('apQ') : id === 'get' ? $('getEmail') : s;
     if (f) { try { f.focus({ preventScroll: true }); } catch (x) {} }
@@ -49,7 +52,7 @@
       var b = $('book'), a = d.activeElement, r;
       if (!b || !e.key || e.key.length !== 1) return;
       r = b.getBoundingClientRect();
-      if (!a || !b.contains(a) || r.bottom < 0 || r.top > w.innerHeight) e.stopImmediatePropagation();
+      if (!a || !b.contains(a) || a.tagName === 'A' || r.bottom < 0 || r.top > w.innerHeight) e.stopImmediatePropagation();   /* a link in the card (the first Tab stop) is not the quiz */
     }, true);
     /* The quiz engine turns the browser's own scroll restoring off. Put a reload back where the reader was. */
     try {

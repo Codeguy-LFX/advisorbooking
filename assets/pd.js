@@ -19,7 +19,7 @@
         body = root.querySelector('.pd-mail__body'),
         mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null,
         still = !!(mq && mq.matches),
-        scene = 0, user = false, inView = false, started = false, again = false, full = false, t0 = 0, wd = 0;
+        scene = 0, user = false, inView = false, started = false, again = false, full = false, wd = 0;
     if (!tabs.length || scenes.length !== tabs.length) return;
 
     /* the draft email is written word by word: one span a word */
@@ -58,7 +58,7 @@
       root.style.setProperty('--o', (from || 0) + 's');
       void root.offsetWidth;
       root.classList.add('pd--run');
-      started = true; t0 = Date.now();
+      started = true;
       arm(len() - (from || 0));
     }
     function rest(i) { clearTimeout(wd); root.classList.remove('pd--run'); show(i); started = false; again = false; }
@@ -77,11 +77,11 @@
     /* a scene that cannot play right now is shown complete; it starts from the top once it can */
     function go(i) {
       i = Math.max(0, Math.min(scenes.length - 1, parseInt(i, 10) || 0));
-      again = false;
+      again = false; full = true;   /* a step the visitor chose is not thrown away when the card first comes into full view */
       if (still || user || !inView || document.hidden) rest(i); else restart(i, 0);
     }
     function setUser(v) {
-      user = v;
+      user = v; full = true;   /* nor is a card the visitor has paused or started */
       if (pp) { pp.classList.toggle('is-paused', v); pp.setAttribute('aria-label', v ? 'Play animation' : 'Pause animation'); }
       /* a card the visitor has paused always shows its scene complete: never half drawn, fading or blank */
       if (v && !still) rest(scene);
@@ -129,10 +129,11 @@
         inView = r >= (inView ? 0.15 : 0.3);
         sync();
         /* the first time most of the card is in view the story starts again from the top, so whoever scrolls down
-           to it sees it from the beginning (unless it has only just begun, or is resting) */
+           to it sees it from the beginning (unless it is still in its first scene, is resting, or the visitor has
+           already chosen a step or pressed pause) */
         if (!full && r >= 0.75) {
           full = true;
-          if (!still && !user && !document.hidden && started && !again && !(scene === 0 && Date.now() - t0 < 1500)) restart(0, 0);
+          if (!still && !user && !document.hidden && started && !again && scene !== 0) restart(0, 0);
         }
       }, { threshold: [0, 0.15, 0.3, 0.75] }).observe(root);
     } else { inView = true; sync(); }

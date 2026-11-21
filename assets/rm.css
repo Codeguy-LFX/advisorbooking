@@ -118,6 +118,10 @@
   .rm-quiz .ap-opts:has(> .ap-opt:nth-child(6):last-child){gap:6px;margin-top:12px}
   .rm-quiz .ap-opts:has(> .ap-opt:nth-child(6):last-child) > .ap-opt{min-height:46px;padding-block:6px}
 }
+@media (min-width:960px) and (max-height:640px){
+  .rm-quiz .ap-opts:has(> .ap-opt:nth-child(6):last-child){gap:4px;margin-top:8px}
+  .rm-quiz .ap-opts:has(> .ap-opt:nth-child(6):last-child) > .ap-opt{min-height:42px;padding-block:4px}
+}
 
 /* the gap between the first screen and the next section: one section's padding, no more */
 .rm-hero{padding-bottom:clamp(8px,2vw,24px)}

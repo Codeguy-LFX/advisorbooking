@@ -56,12 +56,14 @@
 /* shown only when the page's script did not load (the html element gets p-fail from the script tag's own error) */
 .p-alt{display:none}
 .p-fail .p-alt{display:block}
+/* V3's loading sentence carries a link and an address: balanced, so it never ends on one word */
+.p-cal .k-cal__note{text-wrap:balance}
 /* the line under a green button lies on the button's glow (and, on V4's first screen, on the tray's shadow): the kit's
    muted grey measures 4.0 to 4.4:1 there, so these lines take the darker ink */
 .p-go .k-fine,.p-cta .k-fine,.p-hero .p-ec .k-ec__fine{color:var(--k-ink-2)}
 /* the stage */
 .p-stage{position:relative;max-width:calc(960px + 2*var(--gutter));margin-top:clamp(40px,5vw,64px);padding-bottom:clamp(32px,4vw,56px);--p-cut:30%;--p-top:16px}
-.p-stage::before,.p-stage::after{content:"";position:absolute;left:calc(50% - 50vw);right:calc(50% - 50vw);bottom:var(--p-cut);pointer-events:none}
+.p-stage::before,.p-stage::after{content:"";position:absolute;left:-100vw;right:-100vw;bottom:var(--p-cut);pointer-events:none}
 /* the ground: a pale green from the top of the page, lighter in the middle, fading to white where it ends */
 .p-stage::before{z-index:-2;top:-1600px;background:linear-gradient(0deg,#fff 0,#eef7f2 110px,#e0f1e9 300px,#ecf6f1 660px,#ddefe7 1150px)}
 /* the band: needles on an 8px pitch that gather into one bright line, then let go into the white */
@@ -148,8 +150,10 @@
 .p-card .p-ticks > li:last-child{padding-bottom:0}
 
 /* 4. THE CALL-OUT: one large sentence and four short ones. It is the first section under the first screen of V1, V2
-   and V3, so its top padding is capped: the first screen ends no further from it than V4's does from its facts. */
-.p-callout{padding-top:clamp(56px,7vw,80px);text-align:center}
+   and V3, and takes the top padding of V4's facts section, so all four first screens end the same distance from what
+   follows (ink to ink: about 47px on a phone, 86px on a laptop). V1 ends on answer buttons and takes a little more. */
+.p-callout{padding-top:clamp(8px,2vw,24px);text-align:center}
+.p--quiz .p-callout{padding-top:24px}
 .p-statement{max-width:none;margin-inline:auto}
 .p-prose{display:grid;gap:16px;max-width:36rem;margin:clamp(24px,3vw,40px) auto 0;font-size:clamp(17px,1.5vw,20px);line-height:1.6;color:var(--k-ink-2);text-wrap:pretty}
 .p-prose strong{font-weight:500;color:var(--k-ink)}
@@ -228,7 +232,7 @@
   .p-look__p{min-height:56px;font-size:17px;line-height:28px}
   .p-look .p-page{position:absolute;left:0;top:0;width:calc(50% - 28px);height:var(--look-h);margin:0;padding:28px;border-radius:var(--k-r-xl);box-shadow:var(--shadow-lift);overflow:hidden}
   /* without JavaScript the titles open nothing: every page is shown under its own title, as on a phone */
-  .p-look:not(.is-js){min-height:0}
+  .p-look:not(.is-js){min-height:0;max-width:640px;margin-inline:auto}
   .p-look:not(.is-js) .p-look__list{gap:8px;margin-left:0}
   .p-look:not(.is-js) .p-look__panel{padding:0 4px 20px}
   .p-look:not(.is-js) .p-page{position:static;width:auto;height:auto;margin:16px 0 0;overflow:visible}

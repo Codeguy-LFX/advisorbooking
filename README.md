@@ -134,7 +134,11 @@ and `assets/route-a.js` (`/fit-check`), `assets/rm-after.css` (the two pages aft
   because V4 promises it for the email alone.
 - **When a script does not arrive** the page says what to do instead of standing still: V4's box offers the fit check
   (or, without JavaScript, the email address), V3's loading sentence links to the scheduler, and the quiz on V1 and
-  `/fit-check` asks for a reload. The animated card moves on by itself if the end of a scene is ever not reported.
+  `/fit-check` asks for a reload (also when `assets/config.js` is the file that is missing: without it the quiz could
+  not save the lead, so it is not drawn). The animated card moves on by itself if the end of a scene is ever not
+  reported. The plain scheduler address is written into V2's buttons and V3's loading sentence for the case where no
+  script runs: if the event in `assets/config.js` ever changes, change it in `tools/build_paid.py` (`cta_href`) and
+  `tools/paid/stage-calendar.html` too, then rebuild.
 - **Settings.** `assets/config.js` has `iclosedUrlDirect` (the event V2's buttons and V3's calendar use; empty = the
   quiz funnel's event) and `playbookNext` (where the email box goes; empty = `/fit-check`). The same event address is
   the plain link in the markup (`cta_href` in `tools/build_paid.py`), used when the script does not run: change both.
