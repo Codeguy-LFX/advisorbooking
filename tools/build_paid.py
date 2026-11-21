@@ -35,6 +35,12 @@ COMMON = {
     'ec_attrs': '', 'ec_label': 'Get the free Playbook', 'ec_ns': 'send you the Playbook',
     'ec_fine': 'Free: the Past Prospect Playbook, a <span class="p-nb">7-day</span> sequence you can run yourself on the past prospects in your CRM. Then a <span class="p-nb">60-second</span> fit check.',
     'close_h': 'Get the Playbook. Then see if we’re a fit.',
+    # the step titles of the look inside the Playbook
+    'lt1': 'Who to pull from your CRM',
+    'lt2': 'The <span class="p-nb">7-day</span> schedule',
+    'lt3': 'Messages you can copy',
+    'lt4': 'What to say when they reply',
+    'lt6': 'A tracker and a compliance checklist',
     'close_f': 'At least 15 attended, qualified meetings in your first 90 days from launch, or we keep working at our cost.',
     'description': 'For independent RIAs with $50M to $250M+ AUM. At least 15 attended, qualified meetings in your first 90 days from launch, or we keep working at our cost. We start with the past prospects already in your CRM.',
 }
@@ -172,6 +178,9 @@ PAGES = {
             'def_end': ' You set the criteria before we begin.',
             'cta_href': '#get', 'cta_attrs': '', 'bar_label': 'Get the free Playbook',
             'pb_eyebrow': 'What’s inside',
+            'lt1': 'Who to reach out to, and who to skip', 'lt2': 'A <span class="p-nb">7-day</span> plan: what to send and when',
+            'lt3': 'Messages you can copy and change', 'lt4': 'What to say when they write back so you actually book meetings',
+            'lt6': 'A simple tracking sheet plus a checklist for your compliance team',
             'pb_get': '<a href="#get">Enter your work email</a> and we’ll send it.',
             'cta1_label': 'Get the free Playbook', 'cta1_fine': '',
             'ec_fine': 'Free. We email it right away. Next, an optional <span class="p-nb">60-second</span> check to see if we can run it for you and guarantee 15 attended, qualified meetings.',
