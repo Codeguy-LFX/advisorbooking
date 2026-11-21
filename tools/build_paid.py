@@ -36,6 +36,7 @@ COMMON = {
     'ec_fine': 'Free: the Past Prospect Playbook, a <span class="p-nb">7-day</span> sequence you can run yourself on the past prospects in your CRM. Then a <span class="p-nb">60-second</span> fit check.',
     'close_h': 'Get the Playbook. Then see if we’re a fit.',
     'pb_h': 'The Past Prospect Playbook', 'pb_lead': 'A step-by-step guide to finding the meetings that already exist in your CRM. One <span class="p-nb">7-day</span> sequence you can run yourself, without buying a single new lead.',
+    'faq_top': '', 'faq_open': ' open',   # the Google sitelink pages put one question of their own first
     'who_home': 'For independent RIAs with $50M to $250M+ AUM',   # the tag over the home-style headline
     'commit_label': 'Our <span class="p-nb">90-day</span> commitment',   # the label over the commitment
     # the step titles of the look inside the Playbook
@@ -193,6 +194,25 @@ PAGES = {
         },
     },
 }
+
+
+# GOOGLE SITELINK PAGES. Google wants each sitelink of an ad to open a page of its own, so each of these is /vg with
+# one question of its own first in "Questions" (open) and its own title. Nothing else differs, so they convert as /vg does.
+def _faq(q, a):
+    return '<details name="faq" open><summary>%s</summary><div><p>%s</p></div></details>\n      ' % (q, a)
+
+
+for _name, _title, _q, _a in [
+    ('vg-how.html', 'How we book qualified meetings for independent RIAs | Advisor Booking', 'How does it work?',
+     'Three steps. We build your list of ideal clients, clean up your CRM and write the messages, and you approve every one. We contact the people already in your CRM first, then new prospects, by email and LinkedIn. A real person answers every reply and books the meetings onto your calendar.'),
+    ('vg-guarantee.html', 'Our guarantee to independent RIAs | Advisor Booking', 'What is the guarantee?',
+     'In your first <span class="p-nb">90 days</span> from launch, we commit to at least 15 attended, qualified meetings that match your written criteria. If we’re short, we keep working at our cost until you’ve taken 15 such meetings.'),
+    ('vg-who.html', 'Built for independent RIAs with $50M+ AUM | Advisor Booking', 'Who is this for?',
+     'Independent RIAs with $50M+ in assets under management, a CRM of past prospects, and a compliance team open to outreach by email and LinkedIn. It is not for firms that want to buy leads.'),
+    ('vg-qualify.html', 'See if your independent RIA qualifies | Advisor Booking', 'How do I find out if my firm qualifies?',
+     'Enter your work email, then answer five questions. It takes about 60 seconds. Then you can pick a time for a <span class="p-nb">20-minute</span> call.'),
+]:
+    PAGES[_name] = dict(PAGES['vg.html'], title=_title, vars=dict(PAGES['vg.html']['vars'], faq_top=_faq(_q, _a), faq_open=''))
 
 
 def part(name):

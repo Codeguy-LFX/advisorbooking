@@ -10,7 +10,7 @@
 (function () { var p = location.pathname, m = /^\/l1(?:\/(q|dq))?\/?(?:index\.html)?$/i.exec(p);
   if (m) { var want = '/L1/' + (m[1] ? m[1].toUpperCase() + '/' : ''); if (p !== want) location.replace(want + location.search + location.hash); return; }
   var low = p.toLowerCase().replace(/\/+$/, ''), to = '';
-  var page = /^\/(book|booked|qualified|ria-meetings-direct|ria-meetings-embed|ria-meetings|ria-playbook|ria-v5|vg|vl|fit-check|not-a-fit|pilot|meetings|contact|about|privacy|terms|welcome)(?:\.html)?$/.exec(low);
+  var page = /^\/(book|booked|qualified|ria-meetings-direct|ria-meetings-embed|ria-meetings|ria-playbook|ria-v5|vg-how|vg-guarantee|vg-who|vg-qualify|vg|vl|fit-check|not-a-fit|pilot|meetings|contact|about|privacy|terms|welcome)(?:\.html)?$/.exec(low);
   var old = /^\/(ria-v6|ria-linkedin)(?:\.html)?$/.exec(low);   /* the two pages' earlier addresses */
   if (old) to = old[1] === 'ria-v6' ? '/vg' : '/vl';
   else if (page) to = '/' + page[1];
