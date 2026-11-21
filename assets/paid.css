@@ -113,6 +113,8 @@
 .p--v6 #commitment .p-head::before{content:"";width:56px;height:2px;margin-bottom:clamp(20px,2.4vw,28px);border-radius:2px;background:var(--accent)}
 .p--v6 #commitment .k-eyebrow{gap:11px;font-size:clamp(15px,1.5vw,18px);letter-spacing:.1em;font-weight:600}
 .p--v6 #commitment .k-eyebrow + .k-h2{margin-top:clamp(14px,1.6vw,20px)}
+/* a button with no line under it leaves no empty line behind */
+.p-cta .k-fine:empty{display:none}
 /* the stage */
 .p-stage{position:relative;max-width:calc(960px + 2*var(--gutter));margin-top:clamp(40px,5vw,64px);padding-bottom:clamp(32px,4vw,56px);--p-cut:30%;--p-top:16px}
 .p-stage::before,.p-stage::after{content:"";position:absolute;left:-100vw;right:-100vw;bottom:var(--p-cut);pointer-events:none}
