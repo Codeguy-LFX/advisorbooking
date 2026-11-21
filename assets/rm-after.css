@@ -97,3 +97,27 @@
 /* "You told us" over the two answers, one line under them */
 .af-told{text-wrap:balance;margin-top:12px;font-family:var(--f-mono);font-size:12px;line-height:16px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--k-muted)}
 .af-told + .af-recap{margin-top:8px}
+
+/* 7. /qualified, rebuilt around the calendar (body.af-book): one centered column. A label, "Book your call.", one line
+      that says what to do, the three steps, then the calendar as wide as iClosed needs for its full layout (1040px) and
+      nearly as tall as the window, ringed in the accent so it is plainly the thing to use. What happens on the call
+      comes after it. */
+.af-book .af-col--wide{max-width:calc(1040px + 2*var(--gutter))}
+.af-book .af-grid{display:block}
+.af-book .af-main{padding-top:20px}
+.af-book .af-head{display:grid;justify-items:center;text-align:center}
+.af-book .af-head .k-eyebrow{font-size:13px}
+.af-book .af-h{margin-top:14px;font-size:clamp(34px,5vw,56px)}
+.af-book .af-sub{max-width:46ch;margin-top:14px;font-size:clamp(17px,1.5vw,19px);line-height:1.55;color:var(--k-ink-2);text-wrap:balance}
+.af-how{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;margin-top:20px;font-size:15.5px;line-height:24px;font-weight:500;color:var(--k-ink)}
+.af-how > li{display:flex;align-items:center;gap:9px}
+.af-how .af-n{flex:none;width:26px;height:26px;margin-top:0;border-radius:8px;background:var(--k-accent);color:#fff}
+.af-book .af-cal{margin-top:24px;--k-cal-h:780px;box-shadow:0 0 0 1.5px var(--k-accent),var(--shadow-lift)}
+/* wide enough for iClosed's side-by-side layout (calendar beside the times): it needs less height there */
+@media (min-width:900px){.af-book .af-cal{--k-cal-h:680px}}
+/* the frame fills the box exactly, whatever size the widget's own script gives it */
+.af-book .k-cal__mount .iclosed-widget{height:var(--k-cal-h)}
+.af-book .k-cal__mount iframe{width:100%!important;height:100%!important;min-height:var(--k-cal-h)}
+.af-book .af-sell{max-width:760px;margin:56px auto 0}
+@media (min-width:960px){.af-book .af-main{padding-top:28px}}
+
