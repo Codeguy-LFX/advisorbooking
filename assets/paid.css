@@ -484,4 +484,17 @@
   .lm-art{width:min(100%,430px);margin-right:0}
 }
 .p--li .p-hero--home + .p-sec{padding-top:clamp(56px,7vw,96px)}
+/* the LinkedIn page's look inside the guide: the white page, no green band. The guide's page sits on a quiet grey
+   panel, the step numbers are neutral, and the open step's number is ink. */
+.p--li #playbook{background:transparent;padding-top:clamp(24px,4vw,56px)}
+.p--li #playbook .p-look__n{background:#f1f3f2;color:var(--ink-2)}
+.p--li #playbook .p-look__item.is-on .p-look__n{background:var(--ink);color:#fff}
+.p--li #playbook .p-look__item{background:#fff}
+@media (min-width:960px){
+  .p--li #playbook .p-look{padding:28px;border-radius:28px;background:#f4f6f5;box-shadow:inset 0 0 0 1px var(--k-line);min-height:calc(var(--look-h) + 56px)}
+  .p--li #playbook .p-look__item,.p--li #playbook .p-look__item.is-on{background:none}
+  .p--li #playbook .p-look .p-page{left:28px;top:28px;width:calc(50% - 56px);box-shadow:var(--shadow-soft)}
+  .p--li #playbook .p-look__n{background:#fff;box-shadow:inset 0 0 0 1px var(--k-line)}
+  .p--li #playbook .p-look__item.is-on .p-look__n{box-shadow:none}
+}
 
