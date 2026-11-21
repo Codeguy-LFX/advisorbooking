@@ -449,6 +449,10 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
 #guarantee .v2-head{display:grid;justify-items:center}
 #guarantee .v2-head::before{content:"";width:56px;height:2px;margin-bottom:clamp(20px,2.4vw,28px);border-radius:2px;background:var(--accent)}
 #guarantee .v2-head .eyebrow{gap:11px;font-size:clamp(15px,1.5vw,18px);letter-spacing:.1em;font-weight:600}
+/* the line over the headline is a framed tag, as on /vg */
+.hero-who{gap:10px;padding:9px 16px 9px 13px;border-radius:999px;background:rgba(255,255,255,.72);box-shadow:inset 0 0 0 1px var(--line),0 1px 2px rgba(10,30,22,.04);font-size:clamp(13px,1.05vw,14.5px);letter-spacing:.09em;color:var(--ink);max-width:100%;text-align:center;text-wrap:balance}
+@media (max-width:479px){.hero-who{gap:8px;padding:8px 13px 8px 11px;font-size:11px;letter-spacing:.02em;white-space:nowrap}}
+@media (max-width:379px){.hero-who{padding:0;background:none;box-shadow:none;font-size:12px;letter-spacing:.07em;white-space:normal;color:var(--accent)}.hero-who::before{display:none}}
 #stats-h .soft{display:block}
 .stats__cta{display:flex;justify-content:center;margin-top:clamp(32px,4vw,48px)}
 .hd-note{margin-top:16px;text-align:center;font-size:14px;line-height:20px;color:var(--muted);text-wrap:balance}
@@ -472,7 +476,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
 <main id="top">
   <section class="hero v2-hero" aria-labelledby="hero-h">
     <div class="wrap hero__in">
-    <p class="eyebrow">For independent RIAs with $50M to $250M+ AUM</p>
+    <p class="eyebrow hero-who">For independent RIAs with $50M to $250M+ AUM</p>
     <h1 class="v2-h1" id="hero-h">We fill financial advisors&rsquo; calendars with
       <span class="rot" data-words='["HNW individuals.","executives.","your past prospects."]'><span class="rot__w">business owners.</span></span>
     </h1>
