@@ -422,7 +422,7 @@
 /* V5 and V6: the home page's line keeps its own size where the other pages tighten theirs (these rules must come last) */
 @media (min-width:960px) and (max-height:780px){.p-sub--home{font-size:clamp(17px,1.5vw,19.5px)}}
 
-/* 15. THE LINKEDIN PAGE (/ria-linkedin, body.p--li): the free guide is the offer, so the first screen is the guide.
+/* 15. THE LINKEDIN PAGE (/vl, body.p--li): the free guide is the offer, so the first screen is the guide.
        V6's ground and type. From 960px the words stand on the left and the guide's cover on the right; on a phone the
        cover follows the email box. */
 .lm-hero{padding-bottom:clamp(40px,6vw,80px)}

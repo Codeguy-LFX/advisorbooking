@@ -144,7 +144,7 @@ PAGES = {
         },
     },
     # V6: V5 with no lead magnet, for Google Ads. The email box reads "See If You Qualify" and leads to the quiz
-    'ria-v6.html': {
+    'vg.html': {
         'title': 'We fill financial advisors’ calendars | Advisor Booking',
         'css': ['kit', 'paid', 'pd', 'home-sec'], 'body_class': 'p p--email p--home p--v6',
         # the first screen and its three figures, the commitment right under it, the founder, then the home page's own
@@ -165,7 +165,7 @@ PAGES = {
         },
     },
     # LinkedIn: V6's look and order with the lead magnet first. The free Playbook is the first screen and the action.
-    'ria-linkedin.html': {
+    'vl.html': {
         'title': 'The Past Prospect Playbook: a free 7-day guide for independent RIAs | Advisor Booking',
         'css': ['kit', 'paid', 'pd', 'home-sec'], 'body_class': 'p p--email p--home p--v6 p--li',
         'parts': ['hero-magnet', 'sec-look', 'sec-cta', 'sec-founder', 'sec-faq-li', 'sec-close-email'],
