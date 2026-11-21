@@ -89,6 +89,8 @@
 .p-hero--home .p-ec .k-ec:focus-within{box-shadow:var(--shadow-lift),0 0 0 3px var(--accent)}
 .p-hero--home .p-ec .k-ec.is-bad{box-shadow:var(--shadow-lift),0 0 0 2px var(--bad)}
 .p-hero--home .p-ec .k-ec__fine{color:var(--k-muted)}
+/* V5: the commitment follows the first screen directly, at the distance the other pages keep there */
+.p-hero--home + .p-sec{padding-top:clamp(16px,2.4vw,32px)}
 /* the stage */
 .p-stage{position:relative;max-width:calc(960px + 2*var(--gutter));margin-top:clamp(40px,5vw,64px);padding-bottom:clamp(32px,4vw,56px);--p-cut:30%;--p-top:16px}
 .p-stage::before,.p-stage::after{content:"";position:absolute;left:-100vw;right:-100vw;bottom:var(--p-cut);pointer-events:none}
