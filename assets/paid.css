@@ -70,9 +70,9 @@
 @media (max-width:479px){.p-who--home{font-size:11px;letter-spacing:.05em}}
 /* the home page's headline is large: the copy starts a little higher and the card follows closer, so the card still
    shows (and plays) on the first screen of a laptop */
-.p-hero--home .p-hero__copy{padding-top:clamp(24px,4vw,44px)}
-.p-hero--home .p-stage{margin-top:clamp(32px,4vw,48px)}
-.p-h1--home{max-width:14.5em;margin:22px auto 0;font-weight:500;font-size:min(max(30px,10vw),max(38px,6vw),min(80px,10.5vh));line-height:1.02;letter-spacing:-.048em;color:var(--ink);text-wrap:balance}
+.p-hero--home .p-hero__copy{padding-top:clamp(12px,3vh,44px)}
+.p-hero--home .p-stage{margin-top:clamp(20px,3.4vh,48px)}
+.p-h1--home{max-width:14.5em;margin:clamp(10px,2vh,22px) auto 0;font-weight:500;font-size:min(max(30px,10vw),max(38px,6vw),min(80px,8.2vh));line-height:1.02;letter-spacing:-.048em;color:var(--ink);text-wrap:balance}
 @media (max-height:520px){.p-h1--home{font-size:min(max(30px,10vw),max(38px,6vw),80px)}}
 .p-rot{display:block;position:relative;height:1.08em;overflow:hidden;color:var(--accent)}
 .p-rot__w{position:absolute;inset:0;display:block;white-space:nowrap;opacity:0;transform:translateY(40%);transition:opacity .5s var(--ease),transform .6s var(--ease)}
@@ -80,9 +80,9 @@
 .p-rot__w.is-out{opacity:0;transform:translateY(-40%)}
 .p-rot:not(.is-js) .p-rot__w:first-child,.p-rot--static .p-rot__w:first-child{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.p-rot__w{transition:none}}
-.p-sub--home{max-width:640px;margin-top:26px;font-size:clamp(17px,1.5vw,19.5px);line-height:1.6;color:var(--muted);text-wrap:pretty}
+.p-sub--home{max-width:640px;margin-top:clamp(14px,2.6vh,26px);font-size:clamp(17px,1.5vw,19.5px);line-height:1.6;color:var(--muted);text-wrap:pretty}
 .p-sub--home b{color:var(--ink);font-weight:600}
-.p-hero--home .p-ec{margin-top:30px}
+.p-hero--home .p-ec{margin-top:clamp(16px,3vh,30px)}
 /* on the white page the box is the home page's own: a white tray with a lifted shadow */
 .p-hero--home .p-ec .k-ec{background:#fff;box-shadow:var(--shadow-lift)}
 .p-hero--home .p-ec .k-ec input[type=email]{box-shadow:none}
@@ -91,6 +91,13 @@
 .p-hero--home .p-ec .k-ec__fine{color:var(--k-muted)}
 /* V5: the commitment follows the first screen directly, at the distance the other pages keep there */
 .p-hero--home + .p-sec{padding-top:clamp(16px,2.4vw,32px)}
+/* the changing endings are one headline to the eye: a copy of the headline takes only the one that is read out */
+.p-rot__w[aria-hidden]{-webkit-user-select:none;user-select:none}
+/* the founder card stands on the white page here, so the grey of the home page's "Three steps" rises out of white as it does at home */
+.p--home .p-sec--founder{background:transparent}
+/* a call to action standing between two sections: it closes the section above it */
+.p-sec.p-sec--cta{padding-block:0}
+.p-sec--cta .p-cta{margin-top:clamp(-56px,-4vw,-24px)}
 /* the stage */
 .p-stage{position:relative;max-width:calc(960px + 2*var(--gutter));margin-top:clamp(40px,5vw,64px);padding-bottom:clamp(32px,4vw,56px);--p-cut:30%;--p-top:16px}
 .p-stage::before,.p-stage::after{content:"";position:absolute;left:-100vw;right:-100vw;bottom:var(--p-cut);pointer-events:none}
@@ -395,3 +402,5 @@
 .p-rv [data-rv]{opacity:0;transform:translateY(14px)}
 .p-rv [data-rv].is-in{opacity:1;transform:none;transition:opacity 420ms var(--ease),transform 420ms var(--ease)}
 @media print{.p-rv [data-rv]{opacity:1!important;transform:none!important}}
+/* V5 and V6: the home page's line keeps its own size where the other pages tighten theirs (these rules must come last) */
+@media (min-width:960px) and (max-height:780px){.p-sub--home{font-size:clamp(17px,1.5vw,19.5px)}}

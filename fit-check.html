@@ -277,7 +277,7 @@
  "CARRY_QUERY": true,
  "QUALIFIED_FLAG": "ab_qualified"
 };
-window.AB_APPLY.VARIANT = (function () { try { var f = (JSON.parse(sessionStorage.getItem('ab_prefill') || '{}') || {}).from || ''; return /ria-v6/.test(f) ? 'v6-' : /ria-v5/.test(f) ? 'v5-' : 'v4-'; } catch (e) { return 'v4-'; } })() + window.AB_V;   /* v5- or v6- when the email box was V5's or V6's */
+window.AB_APPLY.VARIANT = (function () { try { var f = (JSON.parse(sessionStorage.getItem('ab_prefill') || '{}') || {}).from || document.referrer || ''; return /ria-v6/.test(f) ? 'v6-' : /ria-v5/.test(f) ? 'v5-' : 'v4-'; } catch (e) { return 'v4-'; } })() + window.AB_V;   /* v5- or v6- when the email box was V5's or V6's */
 try { sessionStorage.setItem('ab_quiz_from', '/fit-check'); } catch (e) {}</script>
 </head>
 <body>

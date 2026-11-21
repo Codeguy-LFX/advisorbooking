@@ -142,7 +142,7 @@ PAGES = {
         'css': ['kit', 'paid', 'pd', 'home-sec'], 'body_class': 'p p--email p--home',
         # the first screen and its three figures, the commitment right under it, the founder, then the home page's own
         # "Three steps" and "Everything you get", then the Playbook, what is different, the questions, the email box
-        'parts': ['hero-home', 'sec-commitment', 'sec-founder', 'sec-how-home', 'sec-gets-home', 'sec-faq-v6', 'sec-close-email'],
+        'parts': ['hero-home', 'sec-commitment', 'sec-founder', 'sec-cta', 'sec-how-home', 'sec-gets-home', 'sec-faq-v6', 'sec-close-email'],
         'tail': 'tail-home',
         'map': {'hero_action': 'action-email', 'hero_stage': 'stage-demo'},
         'vars': {
