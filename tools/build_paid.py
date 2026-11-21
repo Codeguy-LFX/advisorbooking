@@ -187,7 +187,7 @@ PAGES = {
             'lt6': 'A simple tracking sheet plus a checklist for your compliance team',
             'pb_get': '',
             'cta1_label': 'Send me the free guide', 'cta1_fine': 'Free. We email it to you. No call needed.',
-            'ec_fine': 'Free. We email it to you right away. No call needed.', 'ec_label': 'Send me the free guide',
+            'ec_fine': 'Free. We email it right away. Then take a <span class="p-nb">60-second</span> quiz to see if you qualify for us to run it for you, with 15 attended, qualified meetings guaranteed in your first <span class="p-nb">90 days</span>.', 'ec_label': 'Send me the free guide',
             'close_h': 'Get the free guide.', 'close_f': 'Free. Sent to your work email. No call needed.',
             'description': 'A free guide for financial advisors who own their firm (independent RIAs, $50M+ in client assets): who to pull from your CRM, 6 emails to send over 7 days, and what to say when prospects who never signed reply.',
         },
