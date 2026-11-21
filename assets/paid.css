@@ -98,6 +98,9 @@
 /* a call to action standing between two sections: it closes the section above it */
 .p-sec.p-sec--cta{padding-block:0}
 .p-sec--cta .p-cta{margin-top:clamp(-56px,-4vw,-24px)}
+/* V6: the first screen has no card under it, so it closes with its own space; the card is a section after the commitment */
+.p-hero--home:not(:has(.p-stage)){padding-bottom:clamp(32px,4vw,56px)}
+.p-sec.p-sec--demo{padding-block:0 clamp(24px,3vw,40px)}
 /* the stage */
 .p-stage{position:relative;max-width:calc(960px + 2*var(--gutter));margin-top:clamp(40px,5vw,64px);padding-bottom:clamp(32px,4vw,56px);--p-cut:30%;--p-top:16px}
 .p-stage::before,.p-stage::after{content:"";position:absolute;left:-100vw;right:-100vw;bottom:var(--p-cut);pointer-events:none}
