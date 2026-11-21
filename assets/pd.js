@@ -1,7 +1,7 @@
 /* Advisor Booking: the animated product card (see pd.css).
    The motion itself is CSS. This script only decides which scene is on and whether its timeline runs:
-   it plays while the card is on screen and the page is in front, pauses where it stands otherwise, and moves
-   on when the bar of the current step has filled. No timers. With reduced motion nothing plays: the last
+   it plays while the card is on screen and the page is in front, holds where it stands otherwise, and moves
+   on when the bar of the current step has filled. Pausing rests the scene complete. No timers. With reduced motion nothing plays: the last
    scene is shown complete and the steps switch scenes at once. */
 (function () {
   'use strict';
@@ -18,7 +18,7 @@
         body = root.querySelector('.pd-mail__body'),
         mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null,
         still = !!(mq && mq.matches),
-        scene = 0, user = false, inView = false, started = false, again = false;
+        scene = 0, user = false, inView = false, started = false, again = false, full = false, t0 = 0;
     if (!tabs.length || scenes.length !== tabs.length) return;
 
     /* the draft email is written word by word: one span a word */
@@ -51,7 +51,7 @@
       root.style.setProperty('--o', (from || 0) + 's');
       void root.offsetWidth;
       root.classList.add('pd--run');
-      started = true;
+      started = true; t0 = Date.now();
     }
     function rest(i) { root.classList.remove('pd--run'); show(i); started = false; again = false; }
     function sync() {
@@ -113,11 +113,18 @@
     if (still) rest(scenes.length - 1);
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) {
-        var e = es[es.length - 1];
-        /* starts once half of the card is in the window, holds when less than 35% is left */
-        inView = e.isIntersecting && e.intersectionRatio >= (inView ? 0.35 : 0.5);
+        var e = es[es.length - 1], r = e.isIntersecting ? e.intersectionRatio : 0;
+        /* starts once 30% of the card is in the window (about what the first screen of most laptops and phones
+           shows of it), and holds when less than 15% is left */
+        inView = r >= (inView ? 0.15 : 0.3);
         sync();
-      }, { threshold: [0, 0.35, 0.5] }).observe(root);
+        /* the first time most of the card is in view the story starts again from the top, so whoever scrolls down
+           to it sees it from the beginning (unless it has only just begun, or is resting) */
+        if (!full && r >= 0.75) {
+          full = true;
+          if (!still && !user && !document.hidden && started && !again && !(scene === 0 && Date.now() - t0 < 1500)) restart(0, 0);
+        }
+      }, { threshold: [0, 0.15, 0.3, 0.75] }).observe(root);
     } else { inView = true; sync(); }
   }
 

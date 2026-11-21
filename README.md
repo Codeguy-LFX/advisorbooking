@@ -108,9 +108,10 @@ and `assets/route-a.js` (`/fit-check`), `assets/rm-after.css` (the two pages aft
 - **The animated product card** ("Advisor Pipeline") tells one example (a fictional past prospect, labelled
   "Example") in four scenes: your CRM, the approved message, the real reply, the booked meeting. Its words are in the
   part `pd` and reuse the home page's own example sentences. It is HTML and CSS, not a video: `assets/pd.css` holds
-  the motion (opacity and transform only), `assets/pd.js` only decides which scene is on. It plays while on screen,
-  pauses when the page is in the background, rests on a finished frame for visitors who ask for less motion or have
-  no JavaScript, and has a pause button. Its box has a fixed height (464px on a phone, 600px from 768px), so the page
+  the motion (opacity and transform only), `assets/pd.js` only decides which scene is on. It starts once about a third of it
+  is on screen (so it is already moving on most first screens), starts the story again the first time the whole card
+  is in view, holds when it is off screen or the page is in the background, rests on a finished frame for visitors
+  who ask for less motion or have no JavaScript, and has a pause button (pausing shows the scene complete). Its box has a fixed height (464px on a phone, 600px from 768px), so the page
   never moves. It sits in the first screen of V2 and V4 and in "The Advisor Pipeline System" on V1 and V3.
 - **The first screen's ground** (the pale green, the band of needles and the frosted frame around the card or the
   calendar) is all CSS in part 2 of `assets/paid.css`; the band is one small inline SVG tile.
