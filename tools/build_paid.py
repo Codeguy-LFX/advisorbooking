@@ -29,6 +29,8 @@ COMMON = {
     'facts_note': '    <p class="p-facts__note">The first two are our team’s past work, not RIA work. The third is our commitment to you.</p>',
     'founder_new': '        <p>Advisor Booking is new to RIAs. We have no RIA clients or case studies yet. That is why the commitment is written into your agreement.</p>',
     'founder_receipt': '      <figure class="p-receipt">\n        <div class="p-receipt__img">\n          <picture>\n            <source media="(min-width:700px)" type="image/webp" srcset="/assets/proof-ads-4.webp" width="1142" height="556">\n            <source media="(min-width:700px)" srcset="/assets/proof-ads-4.png" width="1142" height="556">\n            <source type="image/webp" srcset="/assets/proof-ads-3.webp" width="874" height="556">\n            <img src="/assets/proof-ads-3.png" width="874" height="556" alt="A table from Meta Ads Manager. Amount spent on five lines: $791,359.37, $191,145.19, $922,529.15, $1,873.59 and $316.39, with the impressions and reach of each." loading="lazy" decoding="async">\n          </picture>\n        </div>\n        <figcaption><b>Past work in another channel, shown for scale.</b> One of the ad accounts Nick has managed: Meta Ads Manager, Dec 12, 2024 to Dec 12, 2025. Its three largest lines add up to $1.9M. That is one account in one year. The 8 figures is his total across accounts. We run no ads for RIAs, so this is not RIA work and not a result to expect.</figcaption>\n      </figure>',
+    'cond1': 'Agree on your ideal client and the messages at kickoff', 'cond2': 'One advisor or owner on the weekly call',
+    'def_end': ' You set the criteria in advance. The 90 days start at launch, so compliance review time does not count against them.',
     'description': 'For independent RIAs with $50M to $250M+ AUM. At least 15 attended, qualified meetings in your first 90 days from launch, or we keep working at our cost. We start with the past prospects already in your CRM.',
 }
 
@@ -121,6 +123,9 @@ PAGES = {
         'map': {'hero_action': 'action-email', 'hero_stage': 'stage-demo'},
         'vars': {
             'hero_mode': 'demo', 'facts_note': '', 'founder_new': '', 'founder_receipt': '',
+            'cond1': 'Agree on your ideal client and the messages before we start',
+            'cond2': 'One meeting every week to track results and improve them',
+            'def_end': ' You set the criteria before we begin.',
             'cta_href': '#get', 'cta_attrs': '', 'bar_label': 'Get the free Playbook',
             'pb_eyebrow': 'The free Playbook',
             'pb_get': '<strong>How to get it:</strong> <a href="#get">enter your work email</a> and we’ll send it, whether we’re a fit or not.',
