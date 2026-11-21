@@ -139,7 +139,7 @@ PAGES = {
     # V6: V5 with no lead magnet, for Google Ads. The email box reads "See If You Qualify" and leads to the quiz
     'ria-v6.html': {
         'title': 'We fill financial advisors’ calendars | Advisor Booking',
-        'css': ['kit', 'paid', 'pd', 'home-sec'], 'body_class': 'p p--email p--home',
+        'css': ['kit', 'paid', 'pd', 'home-sec'], 'body_class': 'p p--email p--home p--v6',
         # the first screen and its three figures, the commitment right under it, the founder, then the home page's own
         # "Three steps" and "Everything you get", then the Playbook, what is different, the questions, the email box
         'parts': ['hero-home', 'sec-commitment', 'sec-founder', 'sec-cta', 'sec-how-home', 'sec-gets-home', 'sec-faq-v6', 'sec-close-email'],

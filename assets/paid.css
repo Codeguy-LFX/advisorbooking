@@ -101,6 +101,18 @@
 /* the first screen's glow is tall and reaches under what follows: everything after the first screen is drawn over it,
    never under it (it washed out the commitment's text) */
 .p-hero--home ~ *{position:relative}
+/* V6: the two labels are headers in their own right. The line over the headline is a ruled tag in ink; the commitment
+   opens under a short green rule with a larger label, so the section reads as a new chapter. */
+.p--v6 .p-who--home{gap:10px;margin-top:8px;padding:9px 16px 9px 13px;border-radius:999px;background:rgba(255,255,255,.72);box-shadow:inset 0 0 0 1px var(--line),0 1px 2px rgba(10,30,22,.04);font-size:clamp(13px,1.05vw,14.5px);letter-spacing:.09em;color:var(--ink)}
+.p--v6 .p-h1--home{margin-top:clamp(14px,2.4vh,26px)}
+@media (max-width:479px){.p--v6 .p-who--home{gap:8px;padding:8px 13px 8px 11px;font-size:11px;letter-spacing:.02em;white-space:nowrap}}
+/* the narrowest phones: the line does not fit a tag, so it is two even lines of label, larger, without the frame */
+@media (max-width:379px){.p--v6 .p-who--home{padding:0;background:none;box-shadow:none;font-size:12px;letter-spacing:.07em;white-space:normal;color:var(--accent)}.p--v6 .p-who--home::before{display:none}}
+.p--v6 .p-hero--home + .p-sec{padding-top:clamp(40px,5vw,72px)}
+.p--v6 #commitment .p-head{display:grid;justify-items:center}
+.p--v6 #commitment .p-head::before{content:"";width:56px;height:2px;margin-bottom:clamp(20px,2.4vw,28px);border-radius:2px;background:var(--accent)}
+.p--v6 #commitment .k-eyebrow{font-size:clamp(13px,1.2vw,15px);letter-spacing:.11em}
+.p--v6 #commitment .k-eyebrow + .k-h2{margin-top:clamp(14px,1.6vw,20px)}
 /* the stage */
 .p-stage{position:relative;max-width:calc(960px + 2*var(--gutter));margin-top:clamp(40px,5vw,64px);padding-bottom:clamp(32px,4vw,56px);--p-cut:30%;--p-top:16px}
 .p-stage::before,.p-stage::after{content:"";position:absolute;left:-100vw;right:-100vw;bottom:var(--p-cut);pointer-events:none}
