@@ -183,7 +183,7 @@ PAGES = {
             'lt6': 'A simple tracking sheet plus a checklist for your compliance team',
             'pb_get': '',
             'cta1_label': 'Get the free Playbook', 'cta1_fine': '',
-            'ec_fine': 'Free. We email it right away. Next, an optional <span class="p-nb">60-second</span> check to see if we can run it for you and guarantee 15 attended, qualified meetings.',
+            'ec_fine': 'Free. We email it right away. Then take a <span class="p-nb">60-second</span> quiz to see if you qualify for us to run it for you, with 15 attended, qualified meetings guaranteed in your first <span class="p-nb">90 days</span>.',
             'close_h': 'Get the free Playbook.', 'close_f': 'Free. Sent to your work email.',
             'description': 'A free 7-day guide for independent RIAs: who to pull from your CRM, six emails to copy, and what to say when past prospects reply.',
         },
