@@ -264,3 +264,18 @@
   .pd-tab:focus-visible{outline:3px solid CanvasText;outline-offset:1px}
   .pd-pp:focus-visible{outline:3px solid CanvasText;outline-offset:-3px}
 }
+
+/* THE HOME PAGE'S CARD (.pd--home): five scenes. List creation and enrichment, a LinkedIn note, the approved email,
+   the human reply, the booked meeting. The scenes are the same parts in a different order, so only the step row,
+   the lengths of the scenes and the "connected" mark are its own. */
+.pd--home .pd-tabs{grid-template-columns:repeat(5,minmax(0,1fr))}
+.pd.pd--home[data-s="0"]{--T:5s}
+.pd.pd--home[data-s="1"]{--T:4.2s}
+.pd.pd--home[data-s="2"]{--T:5.6s}
+.pd.pd--home[data-s="3"],.pd.pd--home[data-s="4"]{--T:4.8s}
+.pd-conn{display:inline-flex;align-items:center;gap:7px;justify-self:end;padding:5px 12px 5px 6px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px rgba(15,122,98,.22);font-size:12.5px;line-height:18px;font-weight:500;color:var(--accent)}
+.pd-conn svg{width:18px;height:18px;padding:3px;border-radius:50%;background:var(--accent);fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pd-li .pd-msg{max-width:92%}
+@media (max-width:479px){.pd--home .pd-tabs{gap:2px;padding:6px}.pd--home .pd-tab{gap:3px;padding:0 1px;font-size:11px}.pd--home .pd-tab__bar{left:5px;right:5px}}
+@media (min-width:768px){.pd-conn{padding:7px 16px 7px 8px;font-size:14px;line-height:20px}.pd-conn svg{width:20px;height:20px}.pd--home .pd-tab{padding:0 10px;gap:6px}}
+

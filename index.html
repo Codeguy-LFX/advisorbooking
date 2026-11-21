@@ -439,6 +439,15 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
 @media print{.js [data-rv].pre{opacity:1;transform:none;transition:none}.js .how.is-live .step{opacity:1;transition:none}}
 </style>
 <link rel="stylesheet" href="assets/v3.css">
+<link rel="stylesheet" href="assets/pd.css">
+<style>
+/* The animated card in the first screen (assets/pd.css, assets/pd.js), in the frame it has on /vg. */
+.hd{width:min(980px,100%);margin-top:clamp(20px,4vw,48px);--k-r-lg:22px;--k-r-xl:28px;--k-check-img:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.6 6.3 5 8.6 9.4 3.7' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.hd-glass{position:relative;padding:10px;border-radius:38px;background:rgba(255,255,255,.6);box-shadow:inset 0 0 0 1px var(--line),0 48px 90px -48px rgba(10,60,45,.35)}
+.hd-glass > .pd{box-shadow:0 1px 2px rgba(10,30,22,.06)}
+.hd-note{margin-top:16px;text-align:center;font-size:14px;line-height:20px;color:var(--muted);text-wrap:balance}
+@media (max-width:767px){.hd{max-width:492px}.hd-glass{margin-inline:-6px;padding:6px;border-radius:28px}}
+</style>
 </head>
 <body data-root="" data-lander="home">
 <header class="nav" id="nav">
@@ -472,61 +481,104 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
         <p class="ec__err" role="alert" hidden>Enter a valid work email.</p>
         <p class="ec__fine">See the exact outbound and reactivation system we&rsquo;ll run for your firm.</p>
       </div>
-      <div class="journey" aria-label="Example: one prospect, from first message to a booked meeting">
-        <ol class="journey__row">
-          <li class="jstep" style="--i:0">
-            <p class="jstep__h"><span class="jic" aria-hidden="true">1</span>List creation and enrichment</p>
-            <div class="jcard">
-              <p class="jcap">We build you a new list and clean up the one you have.</p>
-              <p class="jby">New list</p>
-              <div class="jwho"><span class="jav" aria-hidden="true">DA</span><span><b>Dana A.</b><small>Founder, Apex Logistics</small></span><span class="jtag">Ideal client</span></div>
-              <ul class="jchk"><li>Business owners and HNWIs who match your ideal client, from our database</li></ul>
-              <p class="jby">Your CRM</p>
-              <ul class="jchk"><li>De-duped, cleaned, and organized</li><li>Better emails and phone numbers added where available</li></ul>
-            </div>
-          </li>
-          <li class="jstep" style="--i:1">
-            <p class="jstep__h"><span class="jic" aria-hidden="true">2</span>We message them on LinkedIn</p>
-            <div class="jcard">
-              <p class="jcap">A short, personal note. No sales pitch.</p>
-              <p class="jby">Your firm</p>
-              <p class="jmsg jmsg--out">Hi Dana, congrats on selling your company. Open to a quick 20-minute call?</p>
-              <span class="jtag">Dana connected</span>
-            </div>
-          </li>
-          <li class="jstep" style="--i:2">
-            <p class="jstep__h"><span class="jic" aria-hidden="true">3</span>We email new prospects and past contacts</p>
-            <div class="jcard">
-              <p class="jcap">Personal emails to new people on your list and to contacts already in your CRM.</p>
-              <p class="jby">Your firm</p>
-              <p class="jmsg jmsg--out">Hi Dana, following up on my LinkedIn note. Many owners have planning questions in the year after a sale. Worth a short call?</p>
-              <p class="jby">Dana</p>
-              <p class="jmsg jmsg--in">Maybe. What would we talk about?</p>
-            </div>
-          </li>
-          <li class="jstep" style="--i:3">
-            <p class="jstep__h"><span class="jic" aria-hidden="true">4</span>A real person handles every reply</p>
-            <div class="jcard">
-              <p class="jcap">Not a bot. A real person answers their questions and books the time.</p>
-              <p class="jby">Your firm</p>
-              <p class="jmsg jmsg--out">The tax and planning questions most owners have after a sale. Does Thursday at 2 work?</p>
-              <p class="jby">Dana</p>
-              <p class="jmsg jmsg--in">Thursday at 2 works.</p>
-            </div>
-          </li>
-          <li class="jstep" style="--i:4">
-            <p class="jstep__h"><span class="jic" aria-hidden="true">5</span>The meeting goes on your calendar</p>
-            <div class="jcard">
-              <p class="jcap">Only when they fit your rules.</p>
-              <div class="jcal">
-                <span class="jdate" aria-hidden="true"><small>THU</small><b>2:00</b><small>PM</small></span>
-                <span><b>Dana A. meets your advisor</b><small>Google Meet invite sent</small></span>
-              </div>
-              <span class="jtag">Fits your rules</span>
-            </div>
-          </li>
-        </ol>
-        <p class="journey__note">Example: one prospect, from first message to booked meeting</p>
+      <div class="hd" data-rv>
+        <div class="hd-glass">
+<div class="pd pd--home" data-pd dir="ltr">
+  <div class="pd-top">
+    <p class="pd-brand"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Pipeline</span></p>
+    <p class="pd-eg">Example</p>
+    <button class="pd-pp" type="button" aria-label="Pause animation" disabled><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path class="pd-pp__a" d="M5.6 3.6v8.8M10.4 3.6v8.8"/><path class="pd-pp__b" d="M5.4 3.4v9.2L12.6 8z"/></svg></button>
+  </div>
+  <div class="pd-tabs" role="group" aria-label="Steps of the example">
+    <button class="pd-tab" type="button" aria-current="step" disabled><span class="pd-tab__n">1</span><span class="pd-tab__l">Build the list</span><span class="pd-tab__s" aria-hidden="true">List</span><span class="pd-tab__bar"><i></i></span></button>
+    <button class="pd-tab" type="button" disabled><span class="pd-tab__n">2</span><span class="pd-tab__l">LinkedIn message</span><span class="pd-tab__s" aria-hidden="true">LinkedIn</span><span class="pd-tab__bar"><i></i></span></button>
+    <button class="pd-tab" type="button" disabled><span class="pd-tab__n">3</span><span class="pd-tab__l">Approved email</span><span class="pd-tab__s" aria-hidden="true">Email</span><span class="pd-tab__bar"><i></i></span></button>
+    <button class="pd-tab" type="button" disabled><span class="pd-tab__n">4</span><span class="pd-tab__l">Human reply</span><span class="pd-tab__s" aria-hidden="true">Reply</span><span class="pd-tab__bar"><i></i></span></button>
+    <button class="pd-tab" type="button" disabled><span class="pd-tab__n">5</span><span class="pd-tab__l">Booked meeting</span><span class="pd-tab__s" aria-hidden="true">Meeting</span><span class="pd-tab__bar"><i></i></span></button>
+  </div>
+  <div class="pd-stage" aria-hidden="true">
+    <!-- 1. List creation and enrichment: a new list of ideal clients, and the firm's own CRM cleaned up -->
+    <div class="pd-scene pd-s1 is-on">
+      <div class="pd-s1__bar">
+        <p class="pd-chips"><span class="pd-chip" data-a style="--d:.5s">Ideal clients</span><span class="pd-chip" data-a style="--d:.72s">De-duped</span><span class="pd-chip" data-a style="--d:.94s">Emails added</span></p>
+        <p class="pd-count" data-a style="--d:2.35s"><b>4</b> ready to contact</p>
+      </div>
+      <div class="pd-list" data-a style="--d:0s">
+        <p class="pd-row pd-row--in" data-a style="--d:0s;--s:1.35s"><span class="pd-box"><b></b></span><span class="pd-av">DA</span><span class="pd-name">Dana A.</span><span class="pd-memo">Founder, Apex Logistics</span><span class="pd-met">New list</span></p>
+        <p class="pd-row pd-row--in" data-a style="--d:.06s;--s:1.5s"><span class="pd-box"><b></b></span><span class="pd-av">RP</span><span class="pd-name">Raj P.</span><span class="pd-memo">Owner, dental group</span><span class="pd-met">New list</span></p>
+        <p class="pd-row pd-row--in" data-a style="--d:.12s;--s:1.65s"><span class="pd-box"><b></b></span><span class="pd-av">KL</span><span class="pd-name">Karen L.</span><span class="pd-memo">Software executive</span><span class="pd-met">New list</span></p>
+        <p class="pd-row pd-row--in" data-a style="--d:.18s;--s:1.8s"><span class="pd-box"><b></b></span><span class="pd-av">MT</span><span class="pd-name">Marcus T.</span><span class="pd-memo">Past contact, email added</span><span class="pd-met">Your CRM</span></p>
+        <p class="pd-row pd-row--out" data-a style="--d:.24s;--s:2s"><span class="pd-box"></span><span class="pd-av">MT</span><span class="pd-name">Marcus T.</span><span class="pd-memo">Same contact, entered twice</span><span class="pd-tag">Duplicate removed</span></p>
+      </div>
+    </div>
+    <!-- 2. LinkedIn: a short, personal note, and the prospect connects -->
+    <div class="pd-scene pd-s3 pd-li">
+      <div class="pd-thread">
+        <p class="pd-msg pd-msg--us" data-a style="--d:.2s"><i>Your firm, on LinkedIn</i><span>Hi Dana, congrats on selling your company. Open to a quick 20-minute call?</span></p>
+        <p class="pd-conn" data-a="pop" style="--d:1.9s"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.6 6.3 5 8.6 9.4 3.7"/></svg>Dana connected</p>
+      </div>
+    </div>
+    <!-- 3. Email: the draft writes itself in, then waits, is approved, is sent -->
+    <div class="pd-scene pd-s2">
+      <div class="pd-mail" data-a style="--d:0s">
+        <p class="pd-mail__meta" data-a="fade" style="--d:.05s"><span><i>From</i>Your firm</span><span><i>To</i>Dana A.</span></p>
+        <p class="pd-mail__subj" data-a="fade" style="--d:.12s"><i>Subject</i>Following up on my LinkedIn note</p>
+        <p class="pd-mail__body">Hi Dana, following up on my LinkedIn note. Many owners have planning questions in the year after a sale. Worth a short call?</p>
+        <p class="pd-status">
+          <span class="pd-st pd-st--wait"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/><path d="M8 4.9V8l2 1.3"/></svg>Waiting for approval</span>
+          <span class="pd-st pd-st--ok" data-a="pop" style="--d:2.65s"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/><path d="M5.6 8.2 7.3 9.9l3.2-3.6"/></svg>Approved by your compliance team</span>
+          <span class="pd-st pd-st--sent" data-a="pop" style="--d:3.75s"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M13.6 2.4 7 9M13.6 2.4 9.4 13.4 7 9 2.6 6.6z"/></svg>Sent</span>
+        </p>
+      </div>
+    </div>
+    <!-- 4. Human reply: a short thread, answered by a person -->
+    <div class="pd-scene pd-s3">
+      <div class="pd-thread">
+        <p class="pd-msg" data-a style="--d:0s"><i>Dana</i><span>Maybe. What would we talk about?</span></p>
+        <div class="pd-turn">
+          <p class="pd-typing"><i></i><i></i><i></i></p>
+          <p class="pd-msg pd-msg--us" data-a style="--d:1.4s"><i>Your firm</i><span>The tax and planning questions most owners have after a sale. Does Thursday at 2 work?</span><b class="pd-human" data-a="fade" style="--d:1.85s"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="5.3" r="2.6"/><path d="M3 13.3c.6-2.4 2.6-3.8 5-3.8s4.4 1.4 5 3.8"/></svg>Answered by a person, not a bot</b></p>
+        </div>
+        <p class="pd-msg" data-a style="--d:2.7s"><i>Dana</i><span>Thursday at 2 works.</span></p>
+      </div>
+    </div>
+    <!-- 5. Booked meeting: the event settles into Thursday at 2 -->
+    <div class="pd-scene pd-s4">
+      <div class="pd-cal" data-a style="--d:0s">
+        <p class="pd-cal__head"><span></span><span>Mon</span><span>Tue</span><span>Wed</span><span class="pd-cal__day">Thu</span><span>Fri</span></p>
+        <div class="pd-cal__grid">
+          <i class="pd-col" style="--c:2"></i><i class="pd-col" style="--c:3"></i><i class="pd-col" style="--c:4"></i><i class="pd-col" style="--c:5"></i><i class="pd-col" style="--c:6"></i>
+          <span class="pd-hr" style="--r:1">12 PM</span><span class="pd-hr" style="--r:2">1 PM</span><span class="pd-hr" style="--r:3">2 PM</span><span class="pd-hr" style="--r:4">3 PM</span>
+          <i class="pd-busy" data-a="fade" style="--c:2;--r:2;--d:.3s"></i><i class="pd-busy" data-a="fade" style="--c:4;--r:1;--d:.38s"></i><i class="pd-busy" data-a="fade" style="--c:6;--r:4;--d:.46s"></i>
+          <b class="pd-ev" data-a="drop" style="--c:5;--r:3;--d:1.55s"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.6 6.3 5 8.6 9.4 3.7"/></svg><span>Dana A.</span></b>
+        </div>
+      </div>
+      <div class="pd-meet" data-a style="--d:.6s">
+        <p class="pd-meet__t">Dana A. meets your advisor</p>
+        <p class="pd-meet__l"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="1.8" y="4.2" width="8.4" height="7.6" rx="1.8"/><path d="m10.2 7.1 4-2.1v6l-4-2.1"/></svg>Thu 2:00 PM on Google Meet</p>
+        <p class="pd-meet__tag" data-a="pop" style="--d:1.1s"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.6 6.3 5 8.6 9.4 3.7"/></svg>Fits your rules</p>
+      </div>
+      <p class="pd-only" data-a="fade" style="--d:2.5s">Only when they fit your rules.</p>
+    </div>
+  </div>
+  <div class="pd-caps" aria-hidden="true">
+    <p class="pd-cap is-on">We build you a new list and clean up the one you have.</p>
+    <p class="pd-cap">We message them on LinkedIn. A short, personal note.</p>
+    <p class="pd-cap">Your Compliance Team approves every message.</p>
+    <p class="pd-cap">A real person handles every reply.</p>
+    <p class="pd-cap">The meeting goes on your calendar.</p>
+  </div>
+  <p class="pd-sr pd-say" aria-live="polite"></p>
+  <ol class="pd-sr">
+    <li>List creation and enrichment: we build you a new list and clean up the one you have.</li>
+    <li>We message them on LinkedIn: a short, personal note, no sales pitch.</li>
+    <li>We email new prospects and past contacts. Your Compliance Team approves every message before it is sent.</li>
+    <li>A real person handles every reply.</li>
+    <li>The meeting goes on your calendar, only when they fit your rules.</li>
+  </ol>
+</div>
+        </div>
+        <p class="hd-note">Example: one prospect, from first message to booked meeting</p>
       </div>
     </div>
   </section>
@@ -915,5 +967,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
 })();
 </script>
 <script src="assets/lander.js"></script>
+<script src="assets/pd.js" defer></script>
 </body>
 </html>
