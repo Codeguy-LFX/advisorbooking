@@ -43,6 +43,7 @@
 .rm-gift a{font-weight:500;color:var(--k-ink);text-underline-offset:3px;white-space:nowrap}
 .rm-quiz{margin-top:4px}
 #apBody{min-height:var(--rm-q1)}
+@media (max-width:959px){#apBody:has(.qf-prev){min-height:0}}
 /* While the quiz script is still on its way: seven quiet rows where the seven answers will stand. Nothing moves. */
 #apBody:not(:has(.ap-screen,noscript p))::before{content:"";display:block;height:52px;transform:translateY(calc(var(--rm-q1) - 412px));border-radius:var(--k-r-md);background:var(--k-well);box-shadow:0 60px 0 var(--k-well),0 120px 0 var(--k-well),0 180px 0 var(--k-well),0 240px 0 var(--k-well),0 300px 0 var(--k-well),0 360px 0 var(--k-well)}
 /* phones and tablets: after an answer the engine brings the quiz to 12px below the top of the screen. The quiz
@@ -85,6 +86,7 @@
   .rm-who{gap:7px;padding:6px 10px 6px 8px;font-size:11.5px}
   .rm-gift{font-size:14px}
 }
+@media (max-width:339px){.rm-who{font-size:11px;letter-spacing:-.01em}.rm-gift{font-size:13px}}
 @media (min-width:600px){
   .rm-hero{--rm-q1:488px}
   .rm-quiz .ap-q{font-size:28px;line-height:32px}
@@ -99,7 +101,7 @@
   .rm-copy{display:flex;flex-direction:column;min-height:calc(var(--rm-top) + 572px + 2*var(--rm-pad));padding-top:28px}
   .rm-copy__in{margin-block:auto;padding-block:32px 8px}
   .rm-who{margin-top:0}
-  .rm-h1{margin-top:20px;font-size:clamp(40px,4.1vw,60px)}
+  .rm-h1{margin-top:20px;font-size:clamp(34px,3.35vw,48px)}
   .rm-sub{max-width:52ch;margin-top:20px;font-size:clamp(17px,1.4vw,19px);line-height:1.55}
   .rm-book{margin-top:var(--rm-top);padding-bottom:48px;scroll-margin-top:var(--rm-top)}
   .rm-card{padding:var(--rm-pad) 24px;border-radius:var(--k-r-xl);background:var(--k-surface);box-shadow:var(--k-card-shadow-lift)}
@@ -118,4 +120,4 @@
 .rm-book{padding-bottom:clamp(16px,3vw,32px)}
 .rm-nb{white-space:nowrap}
 /* the headline here sits in a narrow column: its phrases flow as plain text (the centered pages break between them) */
-.rm-h1 .p-ph{display:inline}
+@media (max-width:599px){.rm-h1 .p-ph{display:inline}}

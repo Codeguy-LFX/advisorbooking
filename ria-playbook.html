@@ -41,8 +41,8 @@
   <div class="p-wrap p-hero__copy">
     <p class="k-chip p-who"><span class="k-chip__dot" aria-hidden="true"></span>For independent RIAs with $50M to $250M+ AUM</p>
     <h1 class="k-display p-h1" id="rmH"><span class="p-ph">RIA appointment setting.</span> <span class="p-ph">Not leads.</span> <span class="p-ph">Attended meetings.</span></h1>
-    <p class="p-sub" id="rmS">We work your dormant CRM first, then reach new people by email and LinkedIn. At least 15 attended, qualified meetings in your first 90 days from launch, or we keep working at our cost.</p>
-    <form class="p-ec" id="get" novalidate data-ec="hero">
+    <p class="p-sub" id="rmS">We work your dormant CRM first, then reach new people by email and LinkedIn. At least 15 attended, qualified meetings in your first <span class="p-nb">90 days</span> from launch, or we keep working at our cost.</p>
+    <form class="p-ec" id="get" method="dialog" novalidate data-ec="hero" data-bar-from>
       <div class="k-ec">
         <label class="k-sr-only" for="getEmail">Work email</label>
         <input type="email" id="getEmail" name="email" placeholder="Your work email" autocomplete="email" inputmode="email" aria-describedby="getErr rmFine">
@@ -50,7 +50,7 @@
         <button class="k-btn k-btn--accent" type="submit"><span>Get the free Playbook</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
       </div>
       <p class="k-ec__err" id="getErr" role="alert" hidden>Enter a valid work email.</p>
-      <p class="k-ec__fine" id="rmFine">Free: the Past Prospect Playbook, our <span class="p-nb">7-day</span> sequence for the past prospects in your CRM. Then a <span class="p-nb">60-second</span> fit check.</p>
+      <p class="k-ec__fine" id="rmFine">Free: the Past Prospect Playbook, a <span class="p-nb">7-day</span> sequence you can run yourself on the past prospects in your CRM. Then a <span class="p-nb">60-second</span> fit check.</p>
     </form>
     <script>
     /* The headline for this visit (see the first script). Runs before the words above are painted. */
@@ -59,14 +59,14 @@
         leads: '<span class="p-ph">Not leads.</span> <span class="p-ph">Attended first meetings,</span> <span class="p-ph">booked for your firm only.</span>',
         mktg: '<span class="p-ph">Marketing for independent RIAs</span> <span class="p-ph">that ends in meetings,</span> <span class="p-ph">not more content.</span>',
         alt: '<span class="p-ph">First meetings, booked for you.</span> <span class="p-ph">No shared referrals,</span> <span class="p-ph">no software to run,</span> <span class="p-ph">no cut of your fees.</span>',
-        playbook: '<span class="p-ph">The Past Prospect Playbook</span> <span class="p-ph">for Independent RIAs:</span> <span class="p-ph">a <span class="p-nb">7-day</span> sequence you can copy.</span>'
+        playbook: '<span class="p-ph">Past Prospect Playbook</span> <span class="p-ph">for independent RIAs:</span> <span class="p-ph">a <span class="p-nb">7-day</span> sequence</span> <span class="p-ph">you can copy.</span>'
       };
       try {
         if (H.hasOwnProperty(v)) {
           d.getElementById('rmH').innerHTML = H[v];
           if (v === 'playbook') {
-            d.getElementById('rmS').textContent = 'A step-by-step campaign to restart conversations with the past prospects in your CRM. Free. Tell us where to send it.';
-            d.getElementById('rmFine').innerHTML = 'Next is a <span class="p-nb">60-second</span> fit check. Yours, fit or not. <a href="#playbook">See what’s inside.</a>';
+            d.getElementById('rmS').textContent = 'A step-by-step guide to restarting conversations with the past prospects in your CRM. Free. Tell us where to send it.';
+            d.getElementById('rmFine').innerHTML = 'Yours, fit or not. <a href="#playbook">See what’s inside.</a> Next is a <span class="p-nb">60-second</span> fit check.';
           }
         }
       } catch (e) {}
@@ -75,22 +75,93 @@
     </script>
   </div>
   <div class="p-wrap p-stage">
-    <div class="pd pd--still" data-pd>
-      <div class="pd-still">
-        <p class="pd-still__cap"><span class="k-eyebrow k-eyebrow--muted k-eyebrow--plain">Inside the Playbook</span><span class="k-badge">Preview</span></p>
-        <p class="pd-still__t">The <span class="p-nb">7-day</span> schedule</p>
-        <ol class="pd-still__days" role="list">
-          <li><span>Day 1</span><span>A short heads-up that a note is coming</span></li>
-          <li><span>Day 2</span><span>Email 1, the reconnect, and a call that afternoon</span></li>
-          <li><span>Day 3</span><span>Email 2, the recap</span></li>
-          <li><span>Day 4</span><span>A short reminder that asks for a reply</span></li>
-          <li><span>Day 5</span><span>Email 3, the update, and a second call</span></li>
-          <li><span>Day 6</span><span>Email 4, one more reason to meet</span></li>
-          <li><span>Day 7</span><span>Email 5, the final notice, and a third call. Email 6 closes the loop.</span></li>
+    <div class="p-glass">
+      <div class="pd" data-pd dir="ltr">
+        <div class="pd-top">
+          <p class="pd-brand"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Pipeline</span></p>
+          <p class="pd-eg">Example</p>
+          <button class="pd-pp" type="button" aria-label="Pause animation" disabled><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path class="pd-pp__a" d="M5.6 3.6v8.8M10.4 3.6v8.8"/><path class="pd-pp__b" d="M5.4 3.4v9.2L12.6 8z"/></svg></button>
+        </div>
+        <div class="pd-tabs" role="group" aria-label="Steps of the example">
+          <button class="pd-tab" type="button" aria-current="step" disabled><span class="pd-tab__n">1</span><span class="pd-tab__l">Your CRM</span><span class="pd-tab__s" aria-hidden="true">CRM</span><span class="pd-tab__bar"><i></i></span></button>
+          <button class="pd-tab" type="button" disabled><span class="pd-tab__n">2</span><span class="pd-tab__l">Approved message</span><span class="pd-tab__s" aria-hidden="true">Approval</span><span class="pd-tab__bar"><i></i></span></button>
+          <button class="pd-tab" type="button" disabled><span class="pd-tab__n">3</span><span class="pd-tab__l">Human reply</span><span class="pd-tab__s" aria-hidden="true">Reply</span><span class="pd-tab__bar"><i></i></span></button>
+          <button class="pd-tab" type="button" disabled><span class="pd-tab__n">4</span><span class="pd-tab__l">Booked meeting</span><span class="pd-tab__s" aria-hidden="true">Meeting</span><span class="pd-tab__bar"><i></i></span></button>
+        </div>
+        <div class="pd-stage" aria-hidden="true">
+          <!-- 1. Your CRM: the filters arrive, three past prospects are picked, two are left out -->
+          <div class="pd-scene pd-s1 is-on">
+            <div class="pd-s1__bar">
+              <p class="pd-chips"><span class="pd-chip" data-a style="--d:.5s">Took a meeting</span><span class="pd-chip" data-a style="--d:.72s">Not a client</span><span class="pd-chip" data-a style="--d:.94s">Quiet 6+ months</span></p>
+              <p class="pd-count" data-a style="--d:2.35s"><b>3</b> past prospects selected</p>
+            </div>
+            <div class="pd-list" data-a style="--d:0s">
+              <p class="pd-row pd-row--in" data-a style="--d:0s;--s:1.35s"><span class="pd-box"><b></b></span><span class="pd-av">DR</span><span class="pd-name">Dan R.</span><span class="pd-memo">Selling the HVAC business</span><span class="pd-met">Met 8 months ago</span></p>
+              <p class="pd-row pd-row--in" data-a style="--d:.06s;--s:1.5s"><span class="pd-box"><b></b></span><span class="pd-av">PS</span><span class="pd-name">Priya S.</span><span class="pd-memo">Retiring at 62</span><span class="pd-met">Met 14 months ago</span></p>
+              <p class="pd-row pd-row--in" data-a style="--d:.12s;--s:1.65s"><span class="pd-box"><b></b></span><span class="pd-av">MT</span><span class="pd-name">Marcus T.</span><span class="pd-memo">401(k) rollover</span><span class="pd-met">Met 7 months ago</span></p>
+              <p class="pd-row pd-row--out" data-a style="--d:.18s;--s:1.85s"><span class="pd-box"></span><span class="pd-av">EV</span><span class="pd-name">Elena V.</span><span class="pd-memo">Current client</span><span class="pd-tag">Client</span></p>
+              <p class="pd-row pd-row--out" data-a style="--d:.24s;--s:2s"><span class="pd-box"></span><span class="pd-av">TB</span><span class="pd-name">Tom B.</span><span class="pd-memo">Asked not to be contacted</span><span class="pd-tag">Do not contact</span></p>
+            </div>
+          </div>
+          <!-- 2. Approved message: the draft writes itself in, then waits, is approved, is sent -->
+          <div class="pd-scene pd-s2">
+            <div class="pd-mail" data-a style="--d:0s">
+              <p class="pd-mail__meta" data-a="fade" style="--d:.2s"><span><i>From</i>Your firm</span><span><i>To</i>Dan R.</span></p>
+              <p class="pd-mail__subj" data-a="fade" style="--d:.32s"><i>Subject</i>Still the plan for your HVAC business sale?</p>
+              <p class="pd-mail__body">Hi Dan, we met a while back about your plan to sell the HVAC business. I was going through my notes this week and thought of you. Would a 20-minute check-in be useful?</p>
+              <p class="pd-status">
+                <span class="pd-st pd-st--wait"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/><path d="M8 4.9V8l2 1.3"/></svg>Waiting for approval</span>
+                <span class="pd-st pd-st--ok" data-a="pop" style="--d:2.65s"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/><path d="M5.6 8.2 7.3 9.9l3.2-3.6"/></svg>Approved by your compliance team</span>
+                <span class="pd-st pd-st--sent" data-a="pop" style="--d:3.75s"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M13.6 2.4 7 9M13.6 2.4 9.4 13.4 7 9 2.6 6.6z"/></svg>Sent</span>
+              </p>
+            </div>
+          </div>
+          <!-- 3. Human reply: a short thread, answered by a person -->
+          <div class="pd-scene pd-s3">
+            <div class="pd-thread">
+              <p class="pd-msg" data-a style="--d:0s"><i>Dan</i><span>What would we cover?</span></p>
+              <div class="pd-turn">
+                <p class="pd-typing"><i></i><i></i><i></i></p>
+                <p class="pd-msg pd-msg--us" data-a style="--d:1.4s"><i>Your firm</i><span>Where things stand with the sale, what’s changed, and whether your plan should change. Does Thursday at 2 work?</span><b class="pd-human" data-a="fade" style="--d:1.85s"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="5.3" r="2.6"/><path d="M3 13.3c.6-2.4 2.6-3.8 5-3.8s4.4 1.4 5 3.8"/></svg>Answered by a person, not a bot</b></p>
+              </div>
+              <p class="pd-msg" data-a style="--d:2.7s"><i>Dan</i><span>Thursday at 2 works.</span></p>
+            </div>
+          </div>
+          <!-- 4. Booked meeting: the event settles into Thursday at 2 -->
+          <div class="pd-scene pd-s4">
+            <div class="pd-cal" data-a style="--d:0s">
+              <p class="pd-cal__head"><span></span><span>Mon</span><span>Tue</span><span>Wed</span><span class="pd-cal__day">Thu</span><span>Fri</span></p>
+              <div class="pd-cal__grid">
+                <i class="pd-col" style="--c:2"></i><i class="pd-col" style="--c:3"></i><i class="pd-col" style="--c:4"></i><i class="pd-col" style="--c:5"></i><i class="pd-col" style="--c:6"></i>
+                <span class="pd-hr" style="--r:1">12 PM</span><span class="pd-hr" style="--r:2">1 PM</span><span class="pd-hr" style="--r:3">2 PM</span><span class="pd-hr" style="--r:4">3 PM</span>
+                <i class="pd-busy" data-a="fade" style="--c:2;--r:2;--d:.3s"></i><i class="pd-busy" data-a="fade" style="--c:4;--r:1;--d:.38s"></i><i class="pd-busy" data-a="fade" style="--c:6;--r:4;--d:.46s"></i>
+                <b class="pd-ev" data-a="drop" style="--c:5;--r:3;--d:1.55s"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.6 6.3 5 8.6 9.4 3.7"/></svg><span>Dan R.</span></b>
+              </div>
+            </div>
+            <div class="pd-meet" data-a style="--d:.6s">
+              <p class="pd-meet__t">Dan R. meets your advisor</p>
+              <p class="pd-meet__l"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="1.8" y="4.2" width="8.4" height="7.6" rx="1.8"/><path d="m10.2 7.1 4-2.1v6l-4-2.1"/></svg>Google Meet invite sent</p>
+              <p class="pd-meet__tag" data-a="pop" style="--d:1.1s"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.6 6.3 5 8.6 9.4 3.7"/></svg>Fits your rules</p>
+            </div>
+            <p class="pd-only" data-a="fade" style="--d:2.5s">Only when they fit your rules.</p>
+          </div>
+        </div>
+        <div class="pd-caps" aria-hidden="true">
+          <p class="pd-cap is-on">We start with the past prospects already in your CRM.</p>
+          <p class="pd-cap">Your compliance team approves every outreach message.</p>
+          <p class="pd-cap">A real person handles every reply.</p>
+          <p class="pd-cap">The meeting goes on your calendar.</p>
+        </div>
+        <p class="pd-sr pd-say" aria-live="polite"></p>
+        <ol class="pd-sr">
+          <li>We start with the past prospects already in your CRM.</li>
+          <li>Your compliance team approves every outreach message before it is sent.</li>
+          <li>A real person handles every reply.</li>
+          <li>The meeting goes on your advisor’s calendar, only when the prospect fits your rules.</li>
         </ol>
       </div>
     </div>
-    <p class="pd-note">From the Past Prospect Playbook</p>
+    <p class="pd-note">Example: one past prospect, from your CRM to a <span class="p-nb">booked meeting</span></p>
   </div>
 </section>
 
@@ -99,9 +170,10 @@
   <div class="p-wrap">
     <ul class="p-facts" role="list">
       <li><p class="p-fact__n">8<span> figures</span></p><p class="p-fact__l">In ad spend our founder has managed for financial services companies</p></li>
-      <li><p class="p-fact__n">198<span>+</span></p><p class="p-fact__l">Financial service providers our team has worked with</p></li>
-      <li><p class="p-fact__n">15<span> meetings</span></p><p class="p-fact__l">Attended and qualified, committed to in your first 90 days from launch</p></li>
+      <li><p class="p-fact__n">198<span>+</span></p><p class="p-fact__l">Financial services providers our team has worked with</p></li>
+      <li><p class="p-fact__n">15<span> meetings</span></p><p class="p-fact__l">The least we commit to in your first <span class="p-nb">90 days</span> from launch, attended and qualified</p></li>
     </ul>
+    <p class="p-facts__note">The first two are our team’s past work, not RIA work. The third is our commitment to you.</p>
   </div>
 </section>
 
@@ -112,7 +184,7 @@
     <div class="p-head" data-rv>
       <p class="k-eyebrow">The free Playbook</p>
       <h2 class="k-h2 k-h2--md" id="pbH">The Past Prospect Playbook</h2>
-      <p class="k-lead">A step-by-step guide to finding the meetings that already exist in your CRM. One <span class="p-nb">7-business-day</span> sequence you can run yourself, without buying a single new lead.</p>
+      <p class="k-lead">A step-by-step guide to finding the meetings that already exist in your CRM. One <span class="p-nb">7-day</span> sequence you can run yourself, without buying a single new lead.</p>
     </div>
     <div class="p-look" data-look data-rv>
       <ol class="p-look__list" role="list">
@@ -140,9 +212,9 @@
           </div>
         </li>
         <li class="p-look__item">
-          <h3 class="p-look__h"><button class="p-look__tab" type="button" aria-expanded="false" aria-controls="look2"><span class="p-look__n">2</span><span>The <span class="p-nb">7-day</span> schedule</span></button></h3>
+          <h3 class="p-look__h"><button class="p-look__tab" type="button" aria-expanded="true" aria-controls="look2"><span class="p-look__n">2</span><span>The <span class="p-nb">7-day</span> schedule</span></button></h3>
           <div class="p-look__panel" id="look2">
-            <p class="p-look__p">What goes out each day, and why the timing works.</p>
+            <p class="p-look__p">What goes out each day, and why.</p>
             <figure class="p-page" aria-label="From the Playbook, step 5">
               <figcaption class="p-page__k"><span>Past Prospect Playbook</span><span>Step 5</span></figcaption>
               <p class="p-page__t">The <span class="p-nb">7-day</span> schedule</p>
@@ -162,7 +234,7 @@
           </div>
         </li>
         <li class="p-look__item">
-          <h3 class="p-look__h"><button class="p-look__tab" type="button" aria-expanded="false" aria-controls="look3"><span class="p-look__n">3</span><span>Messages you can copy</span></button></h3>
+          <h3 class="p-look__h"><button class="p-look__tab" type="button" aria-expanded="true" aria-controls="look3"><span class="p-look__n">3</span><span>Messages you can copy</span></button></h3>
           <div class="p-look__panel" id="look3">
             <p class="p-look__p">Six emails, the short notes that go with them, and call and voicemail scripts.</p>
             <figure class="p-page" aria-label="From the Playbook, step 6">
@@ -180,9 +252,9 @@
           </div>
         </li>
         <li class="p-look__item">
-          <h3 class="p-look__h"><button class="p-look__tab" type="button" aria-expanded="false" aria-controls="look4"><span class="p-look__n">4</span><span>What to say when they reply</span></button></h3>
+          <h3 class="p-look__h"><button class="p-look__tab" type="button" aria-expanded="true" aria-controls="look4"><span class="p-look__n">4</span><span>What to say when they reply</span></button></h3>
           <div class="p-look__panel" id="look4">
-            <p class="p-look__p">A reply for every answer you will get, including “later” and “stop”.</p>
+            <p class="p-look__p">A reply for each common answer, including “later” and “stop”.</p>
             <figure class="p-page" aria-label="From the Playbook, step 8">
               <figcaption class="p-page__k"><span>Past Prospect Playbook</span><span>Step 8</span></figcaption>
               <p class="p-page__t">Replies</p>
@@ -200,7 +272,7 @@
           </div>
         </li>
         <li class="p-look__item">
-          <h3 class="p-look__h"><button class="p-look__tab" type="button" aria-expanded="false" aria-controls="look5"><span class="p-look__n">5</span><span>The <span class="p-nb">20-minute</span> review</span></button></h3>
+          <h3 class="p-look__h"><button class="p-look__tab" type="button" aria-expanded="true" aria-controls="look5"><span class="p-look__n">5</span><span>The <span class="p-nb">20-minute</span> review</span></button></h3>
           <div class="p-look__panel" id="look5">
             <p class="p-look__p">How to confirm the meeting, remind them, and run it.</p>
             <figure class="p-page" aria-label="From the Playbook, step 8">
@@ -220,7 +292,7 @@
           </div>
         </li>
         <li class="p-look__item">
-          <h3 class="p-look__h"><button class="p-look__tab" type="button" aria-expanded="false" aria-controls="look6"><span class="p-look__n">6</span><span>A tracker and a compliance checklist</span></button></h3>
+          <h3 class="p-look__h"><button class="p-look__tab" type="button" aria-expanded="true" aria-controls="look6"><span class="p-look__n">6</span><span>A tracker and a compliance checklist</span></button></h3>
           <div class="p-look__panel" id="look6">
             <p class="p-look__p">A tracker for the window, plus a checklist and a note to send your compliance team.</p>
             <figure class="p-page" aria-label="From the Playbook, the compliance checklist">
@@ -265,8 +337,8 @@
       <h2 class="k-h2 k-h2--md" id="diffH">What makes this different</h2>
     </div>
     <ul class="p-grid p-grid--3" role="list" data-rv>
-      <li class="p-card p-card--tick"><h3>Your CRM first.</h3><p>We work the past prospects you already met before we contact anyone new.</p></li>
-      <li class="p-card p-card--tick"><h3>Your compliance team approves every message.</h3><p>No outreach message goes out until they sign off.</p></li>
+      <li class="p-card p-card--tick"><h3>Your CRM first.</h3><p>We start with the past prospects you already met, then reach new people.</p></li>
+      <li class="p-card p-card--tick"><h3>Your compliance team approves every outreach message.</h3><p>No outreach goes out until they sign off.</p></li>
       <li class="p-card p-card--tick"><h3>A flat fee.</h3><p>No <span class="p-nb">per-meeting</span> fees, so we are not paid more for booking more. No share of your fees, and nothing based on assets.</p></li>
       <li class="p-card p-card--tick"><h3>Booked for your firm only.</h3><p>Nothing is shared with another advisor.</p></li>
       <li class="p-card p-card--tick"><h3>You own everything.</h3><p>Domains, inboxes, copy, templates and data stay with your firm.</p></li>
@@ -284,14 +356,14 @@
   <div class="p-wrap p-narrow">
     <div class="p-head" data-rv>
       <p class="k-eyebrow">Our <span class="p-nb">90-day</span> commitment</p>
-      <h2 class="k-h2 k-h2--md" id="commitH">At least 15 attended, qualified meetings in your first 90 days from launch.</h2>
+      <h2 class="k-h2 k-h2--md" id="commitH">At least 15 attended, qualified meetings in your first <span class="p-nb">90 days</span> from launch.</h2>
     </div>
     <div class="k-card k-card--feat p-pledge" data-rv>
-      <p class="p-pledge__t">In your first 90 days from launch, we commit to at least 15 attended, qualified meetings that match your written criteria. If we’re short, we keep working at our cost (no operating fee) until you’ve taken 15 such meetings.</p>
+      <p class="p-pledge__t">In your first <span class="p-nb">90 days</span> from launch, we commit to at least <span class="p-nb">15 attended,</span> qualified meetings that match your written criteria. If we’re short, we keep working at our cost (no operating fee) until you’ve taken <span class="p-nb">15 such</span> meetings.</p>
       <p class="p-pledge__f"><span class="k-pill">Written into your services agreement</span></p>
     </div>
     <div class="p-conds" data-rv>
-      <h3 class="p-k" id="commitYou">The commitment depends on three things from you</h3>
+      <h3 class="p-k" id="commitYou">Conditions, so it stays fair on both sides</h3>
       <ul class="p-ticks" role="list" aria-labelledby="commitYou">
         <li>Agree on your ideal client and the messages at kickoff</li>
         <li>One advisor or owner on the weekly call</li>
@@ -304,7 +376,7 @@
 </section>
 
 <!-- THE FOUNDER: the proof a page like this usually gives with a customer quote. The photo is shown whole. The screenshot is
-     a plain crop of the owner's own Ads Manager export, nothing redrawn. -->
+     a plain crop of the owner's own Ads Manager export (whole columns, nothing redrawn): four columns from 700px, three on a phone. -->
 <section class="p-sec p-sec--founder" id="founder" aria-labelledby="founderH">
   <div class="p-wrap">
     <div class="p-founder" data-rv>
@@ -315,21 +387,24 @@
         </picture>
       </figure>
       <div class="p-founder__body">
-        <p class="k-eyebrow">Who runs this</p>
-        <h2 class="k-h2 k-h2--md" id="founderH"><span class="p-nb">Nick De Jesus,</span> founder</h2>
-        <p>Nick has managed eight figures in ad spend for financial services companies, and our team has worked with 198+ financial service providers.</p>
-        <p>Advisor Booking is new to RIAs, and we don’t have RIA case studies yet. That is why the commitment is written into your agreement.</p>
+        <p class="k-eyebrow">Founder</p>
+        <h2 class="k-h2 k-h2--md" id="founderH">Nick De Jesus</h2>
+        <ul class="p-founder__nums" role="list">
+          <li><b>8 figures</b><span>in total ad spend Nick has managed for financial services companies</span></li>
+          <li><b>198+</b><span>financial services providers our team has worked with</span></li>
+        </ul>
+        <p>Advisor Booking is new to RIAs. We have no RIA clients or case studies yet. That is why the commitment is written into your agreement.</p>
       </div>
       <figure class="p-receipt">
         <div class="p-receipt__img">
           <picture>
-            <source media="(min-width:700px)" type="image/webp" srcset="/assets/proof-ads-wide.webp" width="1946" height="753">
-            <source media="(min-width:700px)" srcset="/assets/proof-ads-wide.png" width="1946" height="753">
-            <source type="image/webp" srcset="/assets/proof-ads.webp" width="854" height="557">
-            <img src="/assets/proof-ads.png" width="854" height="557" alt="A Meta Ads Manager table. Amount spent by line: $791,359.37, $191,145.19, $922,529.15, $1,873.59 and $316.39, with the cost per lead and daily budget of each." loading="lazy" decoding="async">
+            <source media="(min-width:700px)" type="image/webp" srcset="/assets/proof-ads-4.webp" width="1142" height="556">
+            <source media="(min-width:700px)" srcset="/assets/proof-ads-4.png" width="1142" height="556">
+            <source type="image/webp" srcset="/assets/proof-ads-3.webp" width="874" height="556">
+            <img src="/assets/proof-ads-3.png" width="874" height="556" alt="A table from Meta Ads Manager. Amount spent on five lines: $791,359.37, $191,145.19, $922,529.15, $1,873.59 and $316.39, with the impressions and reach of each." loading="lazy" decoding="async">
           </picture>
         </div>
-        <figcaption><b>One of the ad accounts Nick has managed.</b> Meta Ads Manager, lead generation, Dec 12, 2024 to Dec 12, 2025. The three largest lines alone: $1.9M spent in twelve months. This is past work in another channel, shown for scale. It is not RIA work and not a result to expect.</figcaption>
+        <figcaption><b>Past work in another channel, shown for scale.</b> One of the ad accounts Nick has managed: Meta Ads Manager, Dec 12, 2024 to Dec 12, 2025. Its three largest lines add up to $1.9M. That is one account in one year. The 8 figures is his total across accounts. We run no ads for RIAs, so this is not RIA work and not a result to expect.</figcaption>
       </figure>
     </div>
   </div>
@@ -343,23 +418,24 @@
     </div>
     <div class="p-faq" data-rv>
       <details name="faq" open><summary>Is the Playbook really free?</summary><div><p>Yes. Enter your work email and we send it. You don’t have to book a call.</p></div></details>
-      <details name="faq"><summary>What happens after I enter my email?</summary><div><p>A <span class="p-nb">60-second</span> fit check: five questions and your contact details. Then you pick a time for a <span class="p-nb">20-minute</span> call on Google Meet. It ends with a yes or a no. Either way, you get the Playbook.</p></div></details>
+      <details name="faq"><summary>What happens after I enter my email?</summary><div><p>A <span class="p-nb">60-second</span> fit check: five questions and your contact details. Then you can pick a time for a <span class="p-nb">20-minute</span> call on Google Meet. It ends with a yes or a no. Either way, you get the Playbook.</p></div></details>
       <details name="faq"><summary>Do you sell leads?</summary><div><p>No. We book attended first meetings for your firm only. Nothing is shared with another advisor.</p></div></details>
-      <details name="faq"><summary>How does compliance work?</summary><div><p>Your compliance team approves every outreach message before it is sent. Outreach is by email and LinkedIn only, from domains and inboxes in your firm’s name that your firm owns. The compliance decision stays with your firm.</p></div></details>
+      <details name="faq"><summary>How does compliance work?</summary><div><p>Your compliance team approves every outreach message before it is sent. Outreach is by email and LinkedIn only, from domains and inboxes in your firm’s name that your firm owns. We keep a reply log your compliance team can access. Questions about investments, performance, or fees go to your advisor. The compliance decision stays with your firm.</p></div></details>
       <details name="faq"><summary>What counts as a qualified meeting?</summary><div><p>A prospect who fits your written asset minimum, niche and geography, is a decision maker or <span class="p-nb">co-decision</span> maker, and attends live.</p></div></details>
       <details name="faq"><summary>What does it cost?</summary><div><p>A flat fee with no <span class="p-nb">per-meeting</span> fees. We go through it on the fit call.</p></div></details>
+      <details name="faq"><summary>How fast does it start?</summary><div><p>We plan to launch within 30 days of kickoff, starting with your past prospects. The 90 days start at launch.</p></div></details>
       <details name="faq"><summary>Do you promise new clients?</summary><div><p>No. We commit to attended, qualified meetings. Closing them is yours.</p></div></details>
-      <details name="faq"><summary>Do you have RIA case studies?</summary><div><p>Not yet. Advisor Booking is new to RIAs. That is why the commitment is written into your agreement.</p></div></details>
+      <details name="faq"><summary>Do you have RIA case studies?</summary><div><p>Not yet. Advisor Booking is new to RIAs, and we have no RIA clients yet. That is why the commitment is written into your agreement.</p></div></details>
     </div>
   </div>
 </section>
 
 <!-- THE CLOSING CALL TO ACTION: the email box again -->
-<section class="k-night p-close" aria-labelledby="closeH">
+<section class="k-night p-close" aria-labelledby="closeH" data-bar-hide>
   <div class="p-wrap p-narrow p-close__in">
     <p class="k-eyebrow">Next step</p>
     <h2 class="p-close__h" id="closeH">Get the Playbook. Then see if we’re a fit.</h2>
-    <form class="p-ec p-close__go" novalidate data-ec="close">
+    <form class="p-ec p-close__go" method="dialog" novalidate data-ec="close">
       <div class="k-ec">
         <label class="k-sr-only" for="getEmail2">Work email</label>
         <input type="email" id="getEmail2" name="email" placeholder="Your work email" autocomplete="email" inputmode="email" aria-describedby="getErr2">
@@ -372,6 +448,14 @@
   </div>
 </section>
 </main>
+<!-- THE BAR: the home page's floating pill with the brand and this page's one action. paid.js shows it once the first
+     screen's action has scrolled out of sight, and hides it wherever the page shows that action itself. -->
+<div class="k-nav k-nav--compact is-scrolled p-bar" data-bar>
+  <div class="k-nav__pill">
+    <p class="k-brand"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></p>
+    <a class="k-btn k-btn--sm" href="#get"><span>Get the free Playbook</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+  </div>
+</div>
 <footer class="k-legal p-foot">
   <p class="k-legal__links"><a href="/privacy" target="_blank" rel="noopener">Privacy</a><a href="/terms" target="_blank" rel="noopener">Terms</a></p>
   <p class="k-legal__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>

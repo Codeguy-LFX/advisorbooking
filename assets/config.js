@@ -11,6 +11,11 @@ window.AB_CONFIG = {
   // iclosedUrlShortFit5 is for its edge-case leads; empty = iclosedUrlFit5. Both empty = the events above.
   iclosedUrlFit5: "https://app.iclosed.io/e/advisorbooking/advisor-booking-meeting",
   iclosedUrlShortFit5: "",
+  // The paid landing pages. iclosedUrlDirect: the iClosed event the buttons of /ria-meetings-direct go to and the
+  // calendar of /ria-meetings-embed shows. Empty = iclosedUrlFit5 above. playbookNext: where the email box of
+  // /ria-playbook sends people. Empty = "/fit-check".
+  iclosedUrlDirect: "",
+  playbookNext: "",
   // iClosed: set the event's confirmation page to this URL with forwarding on, so bookings are detected and reported.
   bookedUrl: "https://advisorbooking.com/booked",
   // Where the landers' email-first "Book intro call" sends people (relative to the site root): "L1/" is the
@@ -32,7 +37,7 @@ window.AB_CONFIG = {
   // Google Ads. googleTagId: the global Google tag, the Google Ads account ID. assets/gads.js loads it on every page
   // (not /contact, /about, /privacy, /terms, /booked).
   // googleAdsConversion: the send_to value of the "Submit lead form" event snippet. It is sent in ONE place: on
-  // /qualified, for a qualified lead who submitted the quiz on /ria-meetings, once for each submission. Not-qualified
+  // /qualified, for a qualified lead who submitted the quiz on /ria-meetings or /fit-check, once for each submission. Not-qualified
   // leads go to /not-a-fit and never send it. Either value empty = that part is off.
   googleTagId: "AW-18586476573",
   googleAdsConversion: "AW-18586476573/Xc55CKqVoLwdEJ3A3J5F",

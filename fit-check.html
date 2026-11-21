@@ -277,7 +277,8 @@
  "CARRY_QUERY": true,
  "QUALIFIED_FLAG": "ab_qualified"
 };
-window.AB_APPLY.VARIANT = 'v4-' + window.AB_V;</script>
+window.AB_APPLY.VARIANT = 'v4-' + window.AB_V;
+try { sessionStorage.setItem('ab_quiz_from', '/fit-check'); } catch (e) {}</script>
 </head>
 <body>
 <div class="ra-stage k-glow">
@@ -292,7 +293,11 @@ window.AB_APPLY.VARIANT = 'v4-' + window.AB_V;</script>
       <div class="k-progress k-progress--seg ra-progress" style="--k-steps:6">
         <div class="k-progress__track" role="progressbar" aria-label="Progress"><div class="k-progress__fill" id="apBar"></div></div>
       </div>
-      <h1 class="k-eyebrow ra-eyebrow">See if your firm is a fit</h1>
+      <h1 class="k-eyebrow ra-eyebrow" id="raH">See if your firm is a fit</h1>
+      <script>
+      /* A visitor who has just left an email in the Playbook box (kept for this tab in ab_prefill) is told what happens to it. */
+      (function (d) { try { var p = JSON.parse(sessionStorage.getItem('ab_prefill') || '{}') || {}; if (p.email) d.getElementById('raH').textContent = 'We’ll email your Playbook. Now see if we’re a fit.'; } catch (e) {} })(document);
+      </script>
       <div class="k-quiz k-quiz--labels k-quiz--enter ra-quiz">
         <div id="apBody"><noscript><p>This form needs JavaScript. Email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will set up your call.</p></noscript></div>
         <div class="k-hp" aria-hidden="true"><label for="apHp">Website</label><input type="text" id="apHp" name="website" tabindex="-1" autocomplete="off" data-1p-ignore="true" data-lpignore="true"></div>
@@ -302,7 +307,7 @@ window.AB_APPLY.VARIANT = 'v4-' + window.AB_V;</script>
   </main>
 </div>
 <footer class="k-legal k-legal--light ra-foot">
-  <nav class="k-legal__links" aria-label="Footer"><a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a><a href="/terms" target="_blank" rel="noopener">Terms of Service</a></nav>
+  <nav class="k-legal__links" aria-label="Footer"><a href="/privacy" target="_blank" rel="noopener">Privacy</a><a href="/terms" target="_blank" rel="noopener">Terms</a></nav>
   <p class="k-legal__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
 </footer>
 <script src="/assets/config.js"></script>

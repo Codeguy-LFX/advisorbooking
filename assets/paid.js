@@ -1,7 +1,7 @@
 /* Advisor Booking: the paid landing pages (paid.js). Loaded with defer by /ria-meetings, /ria-meetings-direct,
    /ria-meetings-embed and /ria-playbook. Each part looks for its own markup and does nothing when it is not there.
-   The pages read and work without this file: links are plain anchors, the Playbook pages are all open, the email
-   box posts nowhere. */
+   The pages read and work without this file: links are plain anchors, the Playbook pages are all open, and the
+   email box does nothing (its form has method="dialog", so the browser never puts the email in the address). */
 (function () {
   'use strict';
   var d = document, w = window, C = w.AB_CONFIG || {};
@@ -31,6 +31,8 @@
     var id = a.getAttribute('href').slice(1), s = id ? $(id) : null, f;
     if (!s || e.defaultPrevented || e.button || e.ctrlKey || e.shiftKey || e.altKey || (e.metaKey && MAC)) return;
     e.preventDefault();
+    /* a jump to the action itself lands where it always does: the bar is about to step aside (part 9) */
+    if (s.hasAttribute('data-bar-from') || s.hasAttribute('data-bar-hide')) d.documentElement.classList.remove('p-bar-on');
     try { s.scrollIntoView({ behavior: Math.abs(s.getBoundingClientRect().top) > 3 * w.innerHeight ? 'instant' : 'auto', block: 'start' }); } catch (x) { s.scrollIntoView(); }
     f = id === 'book' ? $('apQ') : id === 'get' ? $('getEmail') : s;
     if (f) { try { f.focus({ preventScroll: true }); } catch (x) {} }
@@ -51,7 +53,7 @@
       w.addEventListener('pagehide', function () { try { sessionStorage.setItem('ab_y', String(Math.round(w.pageYOffset || 0))); } catch (x) {} });
       var nav = performance.getEntriesByType('navigation')[0], y0 = +sessionStorage.getItem('ab_y') || 0;
       if (nav && nav.type === 'reload' && y0 > 0) {
-        var back = function () { try { w.scrollTo({ top: y0, left: 0, behavior: 'instant' }); } catch (x) { w.scrollTo(0, y0); } };
+        var back = function () { if ((w.pageYOffset || 0) > 4) return; try { w.scrollTo({ top: y0, left: 0, behavior: 'instant' }); } catch (x) { w.scrollTo(0, y0); } };
         if (d.readyState === 'complete') back(); else w.addEventListener('load', back);
       }
     } catch (e) {}
@@ -83,8 +85,9 @@
       var hp = form.querySelector('input[name=website]'), bot = hp && hp.value ? 'honeypot' : (Date.now() - T0 < 2000 ? 'too_fast' : '');
       var pre = {}; try { pre = JSON.parse(sessionStorage.getItem('ab_prefill') || '{}') || {}; } catch (x) {}
       if (pre.email !== v) pre.at = Date.now(); pre.email = v;
+      var told = pre.sent === v; pre.sent = v;   // this email is already with the CRM (Back from the quiz, then the button again)
       try { sessionStorage.setItem('ab_prefill', JSON.stringify(pre)); } catch (x) {}
-      post({ stage: 'email_capture', email: v, page_url: location.href, cta: 'playbook-' + (form.getAttribute('data-ec') || ''),
+      if (!told) post({ stage: 'email_capture', email: v, page_url: location.href, cta: 'playbook-' + (form.getAttribute('data-ec') || ''),
         utm_source: utm.utm_source || '', utm_medium: utm.utm_medium || '', utm_campaign: utm.utm_campaign || '', utm_term: utm.utm_term || '',
         utm_content: utm.utm_content || '', gclid: utm.gclid || '', fbclid: utm.fbclid || '', referrer: d.referrer,
         bot_flag: bot ? 'true' : 'false', bot_reason: bot, submitted_at: new Date().toISOString(), funnel_entry: String(C.funnelEntry || ''),
@@ -93,19 +96,23 @@
       var next = String(C.playbookNext || '/fit-check'), q = location.search;
       setTimeout(function () { location.href = next + (q && next.indexOf('?') < 0 ? q : ''); }, 250);
     });
-    /* Back from the quiz (also from the browser's page cache): the box is ready again, with the email still in it. */
-    w.addEventListener('pageshow', function () { sent = false; btn.disabled = false; btn.classList.remove('is-busy'); if (label) label.textContent = words; });
+    /* Back from the quiz out of the browser's page cache: the box is ready again, with the email still in it. (A page
+       loaded afresh starts ready; the first pageshow of a load must not re-arm a box that is on its way to the quiz.) */
+    w.addEventListener('pageshow', function (e) { if (!e.persisted) return; sent = false; btn.disabled = false; btn.classList.remove('is-busy'); if (label) label.textContent = words; });
   });
 
   /* ---------- 5. Buttons that go straight to the scheduler (V2) ----------
-     The link in the markup is the plain event address, so it works without this. Here the campaign tags, the ad
-     click id and the headline variant are added, so iClosed and the CRM see where the booking came from. */
+     The link in the markup is the plain event address, so it works without this. Here the campaign tags and the ad
+     click id are added, and utm_content always ends with the page and the headline ("direct-v2-appt"; after the
+     ad's own value and a dot when it has one: "ad_17.direct-v2-appt"), so iClosed and the CRM can tell the versions
+     apart whatever the ad link carries. */
   function iclosed(fallbackSource) {
     var base = String(C.iclosedUrlDirect || C.iclosedUrlFit5 || C.iclosedUrl || '').trim();
     try {
       var u = new URL(base);
       Object.keys(utm).forEach(function (k) { var v = utm[k]; if (/^(utm_[a-z_]+|gclid|gbraid|wbraid)$/.test(k) && typeof v === 'string' && v) u.searchParams.set(k, v); });
-      if (!u.searchParams.get('utm_content') && w.AB_V) u.searchParams.set('utm_content', String(w.AB_V));
+      var mark = fallbackSource + '-' + String(w.AB_V || 'appt'), uc = u.searchParams.get('utm_content');
+      u.searchParams.set('utm_content', uc ? uc + '.' + mark : mark);
       if (!u.searchParams.get('utm_source')) u.searchParams.set('utm_source', fallbackSource);
       return /^https:\/\/app\.iclosed\.io\//.test(u.href) ? u.toString() : '';
     } catch (e) { return ''; }
@@ -114,7 +121,8 @@
   if (direct.length) { var du = iclosed('direct-v2'); if (du) Array.prototype.forEach.call(direct, function (a) { a.href = du; }); }
 
   /* ---------- 6. The calendar on the page (V3) ----------
-     iClosed's inline widget, set up once the page has loaded. If no calendar frame is in place after 8 seconds (or
+     iClosed's inline widget, set up as soon as this script runs (it is deferred, so the page is parsed; waiting for
+     the load event would let one slow outside file hold the calendar back). If no calendar frame is in place after 8 seconds (or
      the widget script is blocked) a plain frame of the same event and a link to open it take its place. A booking
      made in the frame is reported by /booked and saved to the CRM, once. */
   var cal = d.querySelector('#calendar[data-embed]');
@@ -143,7 +151,7 @@
         post(p);
       });
     }
-    if (d.readyState === 'complete') start(); else w.addEventListener('load', start);
+    start();
   })();
 
   /* ---------- 7. A look inside the Playbook ----------
@@ -170,6 +178,9 @@
       });
     });
     look.classList.add('is-js'); open(0);
+    /* a phone can close every title; when the window becomes wide (a tablet turned on its side) one page must show */
+    if (w.matchMedia) { var wide = w.matchMedia('(min-width:960px)'), fill = function () { if (wide.matches && !look.querySelector('.p-look__item.is-on')) open(0); };
+      if (wide.addEventListener) wide.addEventListener('change', fill); else if (wide.addListener) wide.addListener(fill); }
   });
 
   /* ---------- 8. A quiet entrance for what is below the first screen ----------
@@ -193,4 +204,25 @@
       w.addEventListener('beforeprint', function () { late.forEach(function (el) { el.classList.add('is-in'); }); });
     }
   }
+  /* ---------- 9. The bar ----------
+     Shown once the first screen's action ([data-bar-from]) is wholly above the window; hidden again while a part of
+     the page that carries the action itself ([data-bar-hide]: the calendar, the closing section) is on screen.
+     Hidden means visibility:hidden, so it is out of the tab order too. While it is up the page keeps keyboard focus
+     and in-page jumps clear of it (p-bar-on on the html element). */
+  var bar = d.querySelector('[data-bar]'), from = d.querySelector('[data-bar-from]');
+  if (bar && from && 'IntersectionObserver' in w) (function () {
+    var past = false, near = 0;
+    function set() { var on = past && !near; bar.classList.toggle('is-on', on); d.documentElement.classList.toggle('p-bar-on', on); }
+    new IntersectionObserver(function (es) {
+      var e = es[es.length - 1]; past = !e.isIntersecting && e.boundingClientRect.bottom <= 0; set();
+    }).observe(from);
+    var zones = d.querySelectorAll('[data-bar-hide]');
+    if (zones.length) {
+      var seen = [], zo = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { var i = seen.indexOf(e.target); if (e.isIntersecting && i < 0) seen.push(e.target); else if (!e.isIntersecting && i >= 0) seen.splice(i, 1); });
+        near = seen.length; set();
+      });
+      Array.prototype.forEach.call(zones, function (z) { zo.observe(z); });
+    }
+  })();
 })();

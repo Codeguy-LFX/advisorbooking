@@ -9,19 +9,19 @@
         <p class="rm-sub" id="rmS">{{sub}}</p>
         <ul class="rm-facts" id="rmF" role="list">
           <li><span>Flat fee. No <span class="p-nb">per-meeting</span> fees.</span></li>
-          <li><span>Your compliance team approves every message.</span></li>
+          <li><span>Your compliance team approves every outreach message.</span></li>
           <li><span>Booked for your firm only.</span></li>
         </ul>
       </div>
     </div>
-    <section class="rm-book" id="book" aria-labelledby="rmL">
+    <section class="rm-book" id="book" aria-labelledby="rmL" data-bar-from>
       <div class="rm-card">
         <div class="k-progress k-progress--seg rm-progress" style="--k-steps:6">
           <div class="k-progress__track" role="progressbar" aria-label="Progress"><div class="k-progress__fill" id="apBar" style="width:17%"></div></div>
           <p class="k-progress__count rm-count" id="apCount" aria-live="polite">Step <b>1</b> of 6</p>
         </div>
         <p class="rm-line" id="rmL">See if we’re a fit. Takes 60 seconds.</p>
-        <p class="rm-gift" id="rmG">You get the <a href="#playbook">Past Prospect Playbook</a> either way.</p>
+        <p class="rm-gift" id="rmG">Free <a href="#playbook">Past Prospect Playbook</a>, fit or not.</p>
         <script>
         /* The headline for this visit (see the first script). Runs before the words above are painted. */
         (function (d) {
@@ -31,8 +31,9 @@
           try {
             if (H.hasOwnProperty(v)) {
               d.getElementById('rmH').innerHTML = H[v];
+              if (v === 'leads') d.querySelector('#rmF > li:last-child > span').textContent = 'A real person answers every reply.';
               if (v === 'playbook') {
-                d.getElementById('rmS').textContent = 'A step-by-step campaign to restart conversations with the past prospects in your CRM. Free when you take our 60-second fit check.';
+                d.getElementById('rmS').textContent = 'A step-by-step guide to restarting conversations with the past prospects in your CRM. Free when you take our 60-second fit check.';
                 d.getElementById('rmL').textContent = 'Answer five questions and tell us where to send it.';
                 d.getElementById('rmG').innerHTML = 'Yours, fit or not. <a href="#playbook">See what’s inside.</a>';
                 var F = ['Who to pull from your CRM, and who to leave out.', 'Six email templates and the call scripts.', 'A tracker, and a checklist for your compliance team.'], f = d.querySelectorAll('#rmF > li > span');

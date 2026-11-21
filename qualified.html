@@ -18,9 +18,9 @@
   try { flag = sessionStorage.getItem('ab_qualified'); } catch (e) { readable = false; }
   try { st = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'); } catch (e) { st = null; }
   var show = !readable || flag === '1' || flag === 'sent' || !!(st && st.sid && st.route === 'qualified' && st.track !== 'off');
-  if (!show) {   // storage that can be read but not written cannot carry the quiz's flag: trust an arrival straight from the landing page
+  if (!show) {   // storage that can be read but not written cannot carry the quiz's flag: trust an arrival straight from either quiz page
     var canWrite = true; try { sessionStorage.setItem('ab_probe', '1'); sessionStorage.removeItem('ab_probe'); } catch (e) { canWrite = false; }
-    if (!canWrite) { try { var rf = new URL(document.referrer); show = rf.origin === location.origin && /^\/ria-meetings(?:\.html)?\/?$/.test(rf.pathname); } catch (e) {} }
+    if (!canWrite) { try { var rf = new URL(document.referrer); show = rf.origin === location.origin && /^\/(ria-meetings|fit-check)(?:\.html)?\/?$/.test(rf.pathname); } catch (e) {} }
   }
   if (!show) {
     window.AB_ADS_OFF = true;
@@ -85,7 +85,7 @@
       <div class="af-head">
         <h1 class="k-h2 k-h2--md af-h">You look like a fit. <span>Pick a time for your call.</span></h1>
         <p class="af-sub">20 minutes on Google Meet. You leave with your <span class="af-nb">break-even</span> cost per meeting and a yes or a no.</p>
-        <p class="af-told" id="afTold" hidden>You told us. We’ll plan the call around it.</p>
+        <p class="af-told" id="afTold" hidden>What you told us. We’ll plan the call around it.</p>
         <ul class="k-summary af-recap" id="afRecap" role="list" aria-label="What you told us" hidden>
           <li id="afAum" hidden><span class="k-summary__k">Firm AUM</span><span></span></li>
           <li id="afAdv" hidden><span class="k-summary__k">Calendars to fill</span><span></span></li>

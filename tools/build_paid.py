@@ -24,7 +24,7 @@ ARROW = '<span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true" f
 
 COMMON = {
     'brand_svg': BRAND, 'arrow': ARROW,
-    'sub': 'We work your dormant CRM first, then reach new people by email and LinkedIn. At least 15 attended, qualified meetings in your first 90 days from launch, or we keep working at our cost.',
+    'sub': 'We work your dormant CRM first, then reach new people by email and LinkedIn. At least 15 attended, qualified meetings in your first <span class="p-nb">90 days</span> from launch, or we keep working at our cost.',
     'description': 'For independent RIAs with $50M to $250M+ AUM. At least 15 attended, qualified meetings in your first 90 days from launch, or we keep working at our cost. We start with the past prospects already in your CRM.',
 }
 
@@ -39,12 +39,12 @@ PAGES = {
         'parts': ['hero-quiz'] + LONG, 'tail': 'tail-quiz',
         'map': {'mech_demo': 'stage-demo-inline'},
         'vars': {
-            'cta_href': '#book', 'cta_attrs': '',
+            'cta_href': '#book', 'cta_attrs': '', 'bar_label': 'Start the fit check',
             'pb_eyebrow': 'Free with the fit check',
             'pb_get': '<strong>How to get it:</strong> finish the <a href="#book"><span class="p-nb">60-second</span> fit check</a> and we’ll email it to you, whether we’re a fit or not.',
-            'cta1_label': 'Start the <span class="p-nb">60-second</span> fit check', 'cta1_fine': 'Five questions and your contact details. You get the Past Prospect Playbook either way.',
-            'cta2_label': 'See if your firm is a fit', 'cta2_fine': 'Five questions and your contact details. Then you pick a time for a <span class="p-nb">20-minute</span> call.',
-            'cta3_label': 'Check if we’re a fit', 'cta3_fine': 'Takes 60 seconds. You get the Past Prospect Playbook either way.',
+            'cta1_label': 'Start the <span class="p-nb">60-second</span> fit check', 'cta1_fine': 'Five questions and your contact details. You get the free Past Prospect Playbook, fit or not.',
+            'cta2_label': 'Start the fit check', 'cta2_fine': 'Five questions and your contact details. Then you pick a time for a <span class="p-nb">20-minute</span> call.',
+            'cta3_label': 'Start the fit check', 'cta3_fine': 'Takes 60 seconds. You get the free Past Prospect Playbook, fit or not.',
             'faq_next_q': 'What happens after the fit check?',
             'faq_next_a': 'You pick a time for a <span class="p-nb">20-minute</span> call on Google Meet. It ends with a yes or a no. Either way, we email you the Past Prospect Playbook.',
         },
@@ -57,14 +57,14 @@ PAGES = {
         'map': {'hero_action': 'action-button', 'hero_stage': 'stage-demo', 'mech_demo': 'none'},
         'vars': {
             'hero_mode': 'demo',
-            'cta_href': 'https://app.iclosed.io/e/advisorbooking/advisor-booking-meeting', 'cta_attrs': ' data-iclosed',
-            'pb_sub': 'A step-by-step campaign to restart conversations with the past prospects in your CRM. Free when you book a 20-minute fit call.',
+            'cta_href': 'https://app.iclosed.io/e/advisorbooking/advisor-booking-meeting', 'cta_attrs': ' data-iclosed', 'bar_label': 'Book your fit call',
+            'pb_sub': 'A step-by-step guide to restarting conversations with the past prospects in your CRM. Free when you book a 20-minute fit call.',
             'pb_fine': 'Book your call and we’ll email you the Playbook. <a href="#playbook">See what’s inside.</a>',
             'pb_eyebrow': 'Free with your fit call',
             'pb_get': '<strong>How to get it:</strong> <a href="https://app.iclosed.io/e/advisorbooking/advisor-booking-meeting" data-iclosed>book your fit call</a> and we’ll email it to you, whether we’re a fit or not.',
-            'cta1_label': 'Book your fit call', 'cta1_fine': 'A few questions, then you pick a time. You get the Past Prospect Playbook either way.',
+            'cta1_label': 'Book your fit call', 'cta1_fine': 'A few questions, then you pick a time. You get the free Past Prospect Playbook, fit or not.',
             'cta2_label': 'Book your fit call', 'cta2_fine': 'A few questions, then you pick a time.',
-            'cta3_label': 'Book your fit call', 'cta3_fine': 'Takes about a minute. You get the Past Prospect Playbook either way.',
+            'cta3_label': 'Book your fit call', 'cta3_fine': 'A few questions, then you pick a time. You get the free Past Prospect Playbook, fit or not.',
             'faq_next_q': 'What happens on the call?',
             'faq_next_a': '20 minutes on Google Meet. We look at your CRM, your current marketing and your goals, and how we’d set this up for your firm. It ends with a yes or a no.',
         },
@@ -77,14 +77,14 @@ PAGES = {
         'map': {'hero_action': 'action-button', 'hero_stage': 'stage-calendar', 'mech_demo': 'stage-demo-inline'},
         'vars': {
             'hero_mode': 'cal',
-            'cta_href': '#schedule', 'cta_attrs': '',
-            'pb_sub': 'A step-by-step campaign to restart conversations with the past prospects in your CRM. Free when you book a 20-minute fit call.',
+            'cta_href': '#schedule', 'cta_attrs': '', 'bar_label': 'Book your fit call',
+            'pb_sub': 'A step-by-step guide to restarting conversations with the past prospects in your CRM. Free when you book a 20-minute fit call.',
             'pb_fine': 'Book your call and we’ll email you the Playbook. <a href="#playbook">See what’s inside.</a>',
             'pb_eyebrow': 'Free with your fit call',
             'pb_get': '<strong>How to get it:</strong> <a href="#schedule">book your fit call</a> and we’ll email it to you, whether we’re a fit or not.',
-            'cta1_label': 'Book your fit call', 'cta1_fine': 'A few questions, then you pick a time. You get the Past Prospect Playbook either way.',
+            'cta1_label': 'Book your fit call', 'cta1_fine': 'A few questions, then you pick a time. You get the free Past Prospect Playbook, fit or not.',
             'cta2_label': 'Book your fit call', 'cta2_fine': 'A few questions, then you pick a time.',
-            'cta3_label': 'Book your fit call', 'cta3_fine': 'Takes about a minute. You get the Past Prospect Playbook either way.',
+            'cta3_label': 'Book your fit call', 'cta3_fine': 'A few questions, then you pick a time. You get the free Past Prospect Playbook, fit or not.',
             'faq_next_q': 'What happens on the call?',
             'faq_next_a': '20 minutes on Google Meet. We look at your CRM, your current marketing and your goals, and how we’d set this up for your firm. It ends with a yes or a no.',
         },
@@ -98,9 +98,9 @@ PAGES = {
         'map': {'hero_action': 'action-email', 'hero_stage': 'stage-demo'},
         'vars': {
             'hero_mode': 'demo',
-            'cta_href': '#get', 'cta_attrs': '',
-            'pb_sub': 'A step-by-step campaign to restart conversations with the past prospects in your CRM. Free. Tell us where to send it.',
-            'pb_fine': 'Next is a <span class="p-nb">60-second</span> fit check. Yours, fit or not. <a href="#playbook">See what’s inside.</a>',
+            'cta_href': '#get', 'cta_attrs': '', 'bar_label': 'Get the free Playbook',
+            'pb_sub': 'A step-by-step guide to restarting conversations with the past prospects in your CRM. Free. Tell us where to send it.',
+            'pb_fine': 'Yours, fit or not. <a href="#playbook">See what’s inside.</a> Next is a <span class="p-nb">60-second</span> fit check.',
             'pb_eyebrow': 'The free Playbook',
             'pb_get': '<strong>How to get it:</strong> <a href="#get">enter your work email</a> and we’ll send it, whether we’re a fit or not.',
             'cta1_label': 'Get the free Playbook', 'cta1_fine': 'Your work email, then a <span class="p-nb">60-second</span> fit check.',
@@ -143,6 +143,7 @@ def build(name, page):
     page['vars']['title'] = page['title']
     page['vars']['body_class'] = page['body_class']
     page['vars']['css'] = '\n'.join('<link rel="stylesheet" href="/assets/%s.css">' % c for c in page['css'])
+    page['vars']['gads'] = '<script src="/assets/gads.js" async></script>'   # not in the part: /tools/paid/page.html must never start the tag
     page['vars']['preconnect'] = '\n<link rel="preconnect" href="https://app.iclosed.io">' if page.get('preconnect') else ''
     sections = '\n\n'.join(render('{{> %s}}' % p, page) for p in page['parts'])
     page['vars']['sections'] = sections

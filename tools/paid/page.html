@@ -29,12 +29,13 @@
   Promise.all([d.fonts.load('500 16px Geist'), d.fonts.load('500 12px "Geist Mono"')]).then(go, go);
 })(window, document);
 </script>
-<script src="/assets/gads.js" async></script>{{preconnect}}
+{{gads}}{{preconnect}}
 </head>
 <body class="{{body_class}}">
 <main id="main">
 {{sections}}
 </main>
+{{> bar}}
 {{> foot}}
 {{tail}}
 </body>

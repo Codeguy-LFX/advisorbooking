@@ -1,1 +1,126 @@
-/* Interim: the still card needs no script. The animated product card will replace this file. */
+/* Advisor Booking: the animated product card (see pd.css).
+   The motion itself is CSS. This script only decides which scene is on and whether its timeline runs:
+   it plays while the card is on screen and the page is in front, pauses where it stands otherwise, and moves
+   on when the bar of the current step has filled. No timers. With reduced motion nothing plays: the last
+   scene is shown complete and the steps switch scenes at once. */
+(function () {
+  'use strict';
+  var OUT = 0.28; /* the first play is only the end of scene 1 (its fade), then scene 1 runs from the top: a new visitor sees the story start */
+
+  function init(root) {
+    if (root.pd) return;
+    var tabs = [].slice.call(root.querySelectorAll('.pd-tab')),
+        scenes = [].slice.call(root.querySelectorAll('.pd-scene')),
+        caps = [].slice.call(root.querySelectorAll('.pd-cap')),
+        pp = root.querySelector('.pd-pp'),
+        say = root.querySelector('.pd-say'),
+        story = root.querySelectorAll('.pd-sr li'),
+        body = root.querySelector('.pd-mail__body'),
+        mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null,
+        still = !!(mq && mq.matches),
+        scene = 0, user = false, inView = false, started = false, again = false;
+    if (!tabs.length || scenes.length !== tabs.length) return;
+
+    /* the draft email is written word by word: one span a word */
+    if (body && !body.firstElementChild) {
+      var words = body.textContent.replace(/^\s+|\s+$/g, '').split(/\s+/);
+      body.textContent = '';
+      words.forEach(function (w, i) {
+        var s = document.createElement('span');
+        s.style.setProperty('--w', i);
+        s.textContent = w;
+        if (i) body.appendChild(document.createTextNode(' '));
+        body.appendChild(s);
+      });
+    }
+
+    function show(i) {
+      scene = i;
+      root.setAttribute('data-s', i);
+      tabs.forEach(function (t, k) {
+        if (k === i) t.setAttribute('aria-current', 'step'); else t.removeAttribute('aria-current');
+        t.classList.toggle('is-done', k < i);
+      });
+      scenes.forEach(function (s, k) { s.classList.toggle('is-on', k === i); });
+      caps.forEach(function (c, k) { c.classList.toggle('is-on', k === i); });
+    }
+    /* take the timeline off, switch, and put it back on: every animation of the scene starts again */
+    function restart(i, from) {
+      root.classList.remove('pd--run');
+      show(i);
+      root.style.setProperty('--o', (from || 0) + 's');
+      void root.offsetWidth;
+      root.classList.add('pd--run');
+      started = true;
+    }
+    function rest(i) { root.classList.remove('pd--run'); show(i); started = false; again = false; }
+    function sync() {
+      if (still) return;
+      var hold = user || !inView || document.hidden;
+      root.classList.toggle('pd--hold', hold);
+      if (!hold && !started) {
+        again = scene === 0 && !root.hasAttribute('data-s');
+        restart(scene, again ? (parseFloat(getComputedStyle(root).getPropertyValue('--T')) || 5) - OUT : 0);
+      }
+    }
+    /* a scene that cannot play right now is shown complete; it starts from the top once it can */
+    function go(i) {
+      i = Math.max(0, Math.min(scenes.length - 1, parseInt(i, 10) || 0));
+      again = false;
+      if (still || user || !inView || document.hidden) rest(i); else restart(i, 0);
+    }
+    function setUser(v) {
+      user = v;
+      if (pp) { pp.classList.toggle('is-paused', v); pp.setAttribute('aria-label', v ? 'Play animation' : 'Pause animation'); }
+      /* a card the visitor has paused always shows its scene complete: never half drawn, fading or blank */
+      if (v && !still) rest(scene);
+      sync();
+    }
+    function mode() {
+      still = !!(mq && mq.matches);
+      if (pp) pp.disabled = still;
+      if (still) { root.classList.remove('pd--hold'); rest(scenes.length - 1); }
+      else { started = false; sync(); }
+    }
+
+    tabs.forEach(function (t, i) {
+      t.disabled = false;
+      t.addEventListener('click', function () {
+        go(i);
+        /* the pictures are hidden from screen readers, so a step that is chosen is read out instead */
+        if (say && story[i]) say.textContent = story[i].textContent;
+      });
+    });
+    if (pp) pp.addEventListener('click', function () { setUser(!user); });
+    root.addEventListener('animationend', function (e) {
+      /* !started: the card was put to rest in this very frame (paused, or a step chosen while held); the bar that was
+         running can still report its end once before the browser drops it, and that must not start a scene */
+      if (e.animationName !== 'pd-bar' || still || !started) return;
+      var next = again ? scene : (scene + 1) % scenes.length;
+      again = false; restart(next, 0);
+    });
+    document.addEventListener('visibilitychange', sync);
+    if (mq) { if (mq.addEventListener) mq.addEventListener('change', mode); else if (mq.addListener) mq.addListener(mode); }
+
+    root.pd = {
+      go: go,
+      play: function () { setUser(false); },
+      pause: function () { setUser(true); },
+      get scene() { return scene; }
+    };
+
+    if (pp) pp.disabled = still;
+    if (still) rest(scenes.length - 1);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        var e = es[es.length - 1];
+        /* starts once half of the card is in the window, holds when less than 35% is left */
+        inView = e.isIntersecting && e.intersectionRatio >= (inView ? 0.35 : 0.5);
+        sync();
+      }, { threshold: [0, 0.35, 0.5] }).observe(root);
+    } else { inView = true; sync(); }
+  }
+
+  function boot() { [].forEach.call(document.querySelectorAll('[data-pd]'), init); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();

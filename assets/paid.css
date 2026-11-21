@@ -18,15 +18,23 @@
 .p-narrow{max-width:calc(760px + 2*var(--gutter))}
 .p-narrow--wide{max-width:calc(880px + 2*var(--gutter))}
 
+/* 1b. THE BAR: appears below the first screen (see part 9 of paid.js). While it is up, keyboard focus and in-page
+   jumps keep clear of it. */
+.p-bar-on{scroll-padding-top:76px}
+.p-bar{visibility:hidden;opacity:0;transform:translateY(-10px);pointer-events:none;transition:opacity .2s ease,transform .3s var(--ease),visibility 0s linear .3s}
+.p-bar.is-on{visibility:visible;opacity:1;transform:none;pointer-events:auto;transition-delay:0s}
+@media (prefers-reduced-motion:reduce){.p-bar{transform:none;transition:none}}
+@media print{.p-bar{display:none}}
+
 /* 2. THE CENTERED FIRST SCREEN: brand, who it is for, headline, one line, one action, then the stage.
       The green ground is drawn from the stage upward and ends partway down the stage, so the card under the
       headline stands half on the colour and half on the white page. */
-.p-hero{position:relative;isolation:isolate;overflow:hidden;overflow:clip;padding-top:calc(20px + env(safe-area-inset-top,0px));text-align:center}
+.p-hero{position:relative;isolation:isolate;overflow:hidden;overflow:clip;overflow:clip visible;padding-top:calc(20px + env(safe-area-inset-top,0px));text-align:center}
 .p-brand{display:flex;width:max-content;margin-inline:auto}
 .p-hero__copy{display:flex;flex-direction:column;align-items:center;padding-top:clamp(28px,5vw,60px)}
 .p-who{max-width:100%}
-.p-h1{max-width:16em;margin-top:20px;font-size:clamp(34px,5.6vw,68px);line-height:1.03}
-.p-sub{max-width:36em;margin-top:20px;font-size:clamp(17px,1.7vw,20px);line-height:1.55;color:var(--k-ink-2);text-wrap:pretty}
+.p-h1{max-width:16em;margin-top:20px;font-size:clamp(34px,min(5.6vw,8.6vh),68px);line-height:1.03}
+.p-sub{max-width:36em;margin-top:20px;font-size:clamp(17px,1.7vw,20px);line-height:1.55;color:var(--k-ink-2);text-wrap:balance}
 /* the email box (the kit's box, a little wider) and the single button */
 .p-ec{width:100%;max-width:560px;margin-top:28px;scroll-margin-top:34vh}
 .p-ec .k-ec{max-width:none}
@@ -41,20 +49,30 @@
 .p-go{display:grid;justify-items:center;gap:12px;margin-top:28px}
 .p-go .k-fine{text-wrap:balance}
 /* the stage */
-.p-stage{position:relative;max-width:calc(960px + 2*var(--gutter));margin-top:clamp(40px,5vw,64px);padding-bottom:clamp(32px,4vw,56px);--p-cut:30%}
+.p-stage{position:relative;max-width:calc(960px + 2*var(--gutter));margin-top:clamp(40px,5vw,64px);padding-bottom:clamp(32px,4vw,56px);--p-cut:30%;--p-top:16px}
 .p-stage::before,.p-stage::after{content:"";position:absolute;left:-100vw;right:-100vw;bottom:var(--p-cut);pointer-events:none}
 /* the ground: a pale green from the top of the page, lighter in the middle, fading to white where it ends */
 .p-stage::before{z-index:-2;top:-1600px;background:linear-gradient(0deg,#fff 0,#eef7f2 110px,#e0f1e9 300px,#ecf6f1 660px,#ddefe7 1150px)}
-/* the band: fine upright bars that gather into one bright line, then let go into the white */
-.p-stage::after{z-index:-1;height:440px;background:linear-gradient(180deg,rgba(47,191,143,0) 0,rgba(47,191,143,.20) 36%,rgba(47,191,143,.58) 70%,#2fbf8f 83%,rgba(47,191,143,.45) 91%,rgba(47,191,143,0) 100%);
-  -webkit-mask-image:repeating-linear-gradient(90deg,#000 0,#000 5px,transparent 5px,transparent 11px);mask-image:repeating-linear-gradient(90deg,#000 0,#000 5px,transparent 5px,transparent 11px)}
-/* the card stands in a glass frame */
-.p-stage .pd,.p-stage--cal .k-cal{box-shadow:0 0 0 10px rgba(255,255,255,.5),0 0 0 11px rgba(255,255,255,.55),0 48px 90px -48px rgba(10,60,45,.45)}
-@media (max-width:719px){
-  .p-stage::after{height:520px;-webkit-mask-image:repeating-linear-gradient(90deg,#000 0,#000 4px,transparent 4px,transparent 9px);mask-image:repeating-linear-gradient(90deg,#000 0,#000 4px,transparent 4px,transparent 9px)}
-  .p-stage .pd,.p-stage--cal .k-cal{box-shadow:0 0 0 6px rgba(255,255,255,.5),0 0 0 7px rgba(255,255,255,.55),0 32px 60px -36px rgba(10,60,45,.45)}
+/* the band: needles on an 8px pitch that gather into one bright line, then let go into the white */
+.p-stage::after{z-index:-1;top:var(--p-top);background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='460' viewBox='0 0 8 460' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='a' gradientUnits='userSpaceOnUse' x1='0' y1='360' x2='0' y2='40'%3E%3Cstop stop-color='%237fd8b7'/%3E%3Cstop offset='1' stop-color='%237fd8b7' stop-opacity='0'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='0' y1='360' x2='0' y2='460'%3E%3Cstop stop-color='%237fd8b7'/%3E%3Cstop offset='1' stop-color='%237fd8b7' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M4 0L8 360H0Z' fill='url(%23a)'/%3E%3Cpath d='M4 196L7.6 360H.4Z' fill='%232fbf8f'/%3E%3Cpath d='M4 460L8 360H0Z' fill='url(%23b)'/%3E%3Cpath d='M4 412L7.6 360H.4Z' fill='%232fbf8f'/%3E%3C/svg%3E") 50% 100%/8px 100% repeat-x}
+/* the card stands in a frosted frame: the band shows through its rim, blurred */
+.p-glass{position:relative;margin-inline:-10px;padding:10px;border-radius:38px;background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,.5));box-shadow:inset 0 0 0 1px rgba(255,255,255,.7),0 48px 90px -48px rgba(10,60,45,.45)}
+/* no live blur: a backdrop blur under a card that never stops moving is redrawn for every frame, and halves the frame
+   rate where a page is drawn without a graphics card. The rim is tinted where the band passes behind it instead. */
+@media (min-width:720px){
+  .p-glass{background:linear-gradient(180deg,rgba(255,255,255,.62),rgba(214,240,229,.62) 62%,rgba(255,255,255,.5))}
 }
-.p-stage__note,.pd-note{margin-top:16px;text-align:center;font-size:14px;line-height:20px;color:var(--k-muted)}
+/* between a phone and 768px the card keeps its phone layout, so it keeps a phone's width too */
+@media (min-width:560px) and (max-width:767px){
+  .p-stage:not(.p-stage--cal) > .p-glass,.p-demo{max-width:492px;margin-inline:auto}
+  .p-demo{max-width:480px}
+}
+.p-glass > .pd,.p-glass > .k-cal{box-shadow:0 1px 2px rgba(10,30,22,.06)}
+@media (max-width:719px){
+  .p-stage{--p-top:-32px}
+  .p-glass{margin-inline:-6px;padding:6px;border-radius:28px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.7),0 32px 60px -36px rgba(10,60,45,.45)}
+}
+.p-stage__note,.pd-note{margin-top:16px;text-align:center;font-size:14px;line-height:20px;color:var(--k-muted);text-wrap:balance}
 /* V3: the stage holds the calendar */
 .p-stage--cal{max-width:calc(820px + 2*var(--gutter));--p-cut:58%;scroll-margin-top:12px}
 .p-stage--cal:focus{outline:0}
@@ -65,8 +83,23 @@
   .p-sub{margin-top:16px}
   .p-ec,.p-go{margin-top:24px}
 }
+/* phones: the headline is sized to the width, so each of its phrases keeps to one line */
+@media (max-width:429px){.p-h1{font-size:clamp(26px,8vw,34px)}}
 @media (max-width:359px){.p-who{gap:7px;padding:6px 10px 6px 8px;font-size:11.5px}}
-@media (max-width:479px){.p-go .k-btn,.p-cta .k-btn,.p-close__go .k-btn--xl{width:100%;justify-content:space-between}}
+@media (max-width:339px){.p-who{font-size:11px;letter-spacing:-.01em}}
+@media (max-width:479px){.p-go .k-btn,.p-cta .k-btn,.p-close__go .k-btn--xl{width:100%;justify-content:space-between}.p-close__go{width:100%}}
+/* short desktop windows: a tighter first screen, so the action and the line under it stay on it */
+@media (min-width:960px) and (max-height:780px){
+  .p-hero__copy{padding-top:24px}
+  .p-h1{margin-top:16px}
+  .p-sub{margin-top:14px;font-size:18px}
+  .p-ec,.p-go{margin-top:20px}
+  .p-stage{margin-top:32px}
+}
+/* the error takes the place of the line under the box, so nothing below it moves */
+.p-hero .p-ec{position:relative}
+.p-hero .p-ec .k-ec__err{position:absolute;left:0;right:0}
+.p-hero .p-ec .k-ec__err:not([hidden]) + .k-ec__fine{visibility:hidden}
 
 /* 3. SECTIONS: one spacing scale, a centered heading, then the content */
 .p-sec{padding-block:clamp(56px,7vw,96px)}
@@ -77,7 +110,7 @@
 .p-head{display:grid;gap:16px;justify-items:center;max-width:46rem;margin-inline:auto;text-align:center}
 .p-head > .k-lead{max-width:38em;text-wrap:pretty}
 .p-head + *{margin-top:clamp(28px,4vw,48px)}
-.p-k{font-family:var(--f-mono);font-size:12px;line-height:16px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--k-accent)}
+.p-k{font-family:var(--f-mono);font-size:12px;line-height:16px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--k-accent);text-wrap:balance}
 .p-n{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:var(--k-accent-soft);color:var(--k-accent);font:500 12px/1 var(--f-mono)}
 .p-aside{max-width:44rem;margin:clamp(24px,3vw,36px) auto 0;text-align:center;font-size:clamp(18px,1.6vw,20px);line-height:1.5;font-weight:500;letter-spacing:-.015em;color:var(--k-ink);text-wrap:balance}
 .p-cta{display:grid;justify-items:center;gap:12px;margin-top:clamp(32px,4vw,48px);text-align:center}
@@ -106,7 +139,7 @@
 
 /* 4. THE CALL-OUT: one large sentence and four short ones */
 .p-callout{text-align:center}
-.p-statement{max-width:13em;margin-inline:auto}
+.p-statement{max-width:none;margin-inline:auto}
 .p-prose{display:grid;gap:16px;max-width:36rem;margin:clamp(24px,3vw,40px) auto 0;font-size:clamp(17px,1.5vw,20px);line-height:1.6;color:var(--k-ink-2);text-wrap:pretty}
 .p-prose strong{font-weight:500;color:var(--k-ink)}
 
@@ -116,6 +149,7 @@
 .p-fact__n{font-weight:500;font-size:clamp(40px,5vw,56px);line-height:1;letter-spacing:-.045em;color:var(--k-ink)}
 .p-fact__n span{font-size:.45em;letter-spacing:-.02em;color:var(--k-muted)}
 .p-fact__l{max-width:24em;margin:8px auto 0;font-size:15px;line-height:22px;color:var(--k-muted);text-wrap:balance}
+.p-facts__note{max-width:40em;margin:clamp(20px,2.4vw,28px) auto 0;text-align:center;font-size:14px;line-height:21px;color:var(--k-muted);text-wrap:balance}
 @media (min-width:760px){
   .p-facts{grid-template-columns:repeat(3,minmax(0,1fr));gap:0}
   .p-facts > li{padding-inline:24px}
@@ -125,7 +159,7 @@
 /* 6. A LOOK INSIDE THE PLAYBOOK: six titles; the open one shows a line about it and a page from the guide.
       Phones: an accordion, the page under its title. From 960px: the page on the left, the titles on the right.
       Without JavaScript every title is open on a phone, and the first page shows on a desktop. */
-.p-look{--look-h:548px}
+.p-look{--look-h:492px}
 .p-look__list{display:grid;gap:8px}
 .p-look__item{min-width:0;border-radius:var(--k-r-lg);background:rgba(255,255,255,.55);box-shadow:0 0 0 1px var(--k-line)}
 .p-look__item.is-on,.p-look:not(.is-js) .p-look__item{background:#fff;box-shadow:var(--shadow-soft)}
@@ -175,11 +209,12 @@
   .p-look__item,.p-look__item.is-on,.p-look:not(.is-js) .p-look__item{border-top:1px solid var(--k-line);border-radius:0;background:none;box-shadow:none}
   .p-look__item:last-child{border-bottom:1px solid var(--k-line)}
   .p-look__tab{grid-template-columns:32px minmax(0,1fr);min-height:0;padding:18px 4px;border-radius:8px;font-size:22px;color:var(--k-muted)}
+  .p-look__tab > span:last-child{text-wrap:balance}
   .p-look__tab::after{display:none}
   .p-look__n{background:#fff}
   .p-look__item.is-on .p-look__tab,.p-look:not(.is-js) .p-look__tab{color:var(--ink)}
   .p-look__panel{padding:0 4px 20px 48px}
-  .p-look__p{font-size:17px;line-height:28px}
+  .p-look__p{min-height:56px;font-size:17px;line-height:28px}
   .p-look .p-page{position:absolute;left:0;top:0;width:calc(50% - 28px);height:var(--look-h);margin:0;padding:28px;border-radius:var(--k-r-xl);box-shadow:var(--shadow-lift);overflow:hidden}
   .p-look:not(.is-js) .p-look__item:not(:first-child) .p-page{display:none}
   .p-page__t{font-size:22px}
@@ -191,11 +226,13 @@
 .p-sec--tint .p-one{background:var(--k-surface);box-shadow:var(--k-card-shadow)}
 .p-one__v{margin-top:8px;font-weight:500;font-size:clamp(22px,2.4vw,30px);line-height:1.15;letter-spacing:-.03em;color:var(--k-ink);text-wrap:balance}
 .p-one__d{max-width:40em;margin:8px auto 0;font-size:16px;line-height:26px;color:var(--k-ink-2);text-wrap:pretty}
+.p-grid + .p-one{max-width:none}
 .p-one--math{max-width:880px;text-align:left}
-.p-one--math .p-one__d{max-width:none}
+.p-one--math .p-one__d{max-width:40em;margin-inline:0}
 .p-one--math .p-one__d + .p-one__d{margin-top:12px}
 /* the animated card when it stands inside a section */
 .p-demo{max-width:960px;margin-inline:auto}
+.p-demo .pd{box-shadow:var(--shadow-lift)}
 .p-demo + .p-grid{margin-top:clamp(32px,4vw,48px)}
 
 /* 8. EVERYTHING INCLUDED: the build list on the left, running and reporting on the right */
@@ -208,7 +245,7 @@
 .p-rows strong{font-weight:500;color:var(--k-ink)}
 .p-rows .p-n{margin-top:-3px}
 @media (min-width:960px){
-  .p-stack{grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);grid-template-areas:"a b" "a c";align-items:start}
+  .p-stack{grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);grid-template-rows:auto 1fr;grid-template-areas:"a b" "a c";align-items:stretch}
   .p-stack__a{grid-area:a}.p-stack__b{grid-area:b}.p-stack__c{grid-area:c}
 }
 
@@ -219,11 +256,12 @@
 .p-conds{margin-top:32px}
 .p-conds > .p-k{color:var(--k-muted)}
 .p-conds .p-ticks > li:last-child{border-bottom:1px solid var(--k-line)}
-.p-def{margin-top:20px;font-size:15px;line-height:24px;color:var(--k-muted);text-wrap:pretty}
+.p-def{max-width:36em;margin-top:20px;font-size:15px;line-height:24px;color:var(--k-muted);text-wrap:pretty}
 
 /* 10. PRICING: standard pricing quiet on the left, the founding rate in the feature card, the math under both */
 .p-price{display:grid;gap:16px;max-width:880px;margin-inline:auto}
 .p-price__std{display:flex;flex-direction:column;gap:8px;background:transparent;box-shadow:inset 0 0 0 1px var(--dot)}
+@media (min-width:760px){.p-price__std{align-self:center}}
 .p-price__std .p-k{margin-bottom:8px;color:var(--k-muted)}
 .p-price__n{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
 .p-price__mid{font-weight:500;font-size:clamp(28px,3.4vw,36px);line-height:1.1;letter-spacing:-.04em;color:var(--k-ink-2)}
@@ -232,7 +270,7 @@
 .p-price__note{margin-top:auto;padding-top:16px;font-size:15px;line-height:24px;color:var(--k-muted);text-wrap:pretty}
 .p-price__now{padding:28px}
 .p-price__now .p-price__n{margin-top:16px}
-.p-price__s{margin-top:12px;font-size:clamp(19px,1.7vw,21px);line-height:28px;font-weight:500;letter-spacing:-.02em;color:var(--k-ink)}
+.p-price__s{margin-top:12px;font-size:clamp(19px,1.7vw,21px);line-height:28px;font-weight:500;letter-spacing:-.02em;color:var(--k-ink);text-wrap:balance}
 .p-price__now .p-ticks{margin-top:16px}
 .p-price__now .p-ticks > li:last-child{padding-bottom:0}
 @media (min-width:760px){.p-price{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:stretch}}
@@ -245,15 +283,24 @@
 .p-founder__photo img{display:block;width:100%;height:auto;aspect-ratio:3/2;border-radius:var(--k-r-lg);background:var(--well)}
 .p-founder__body{display:grid;gap:16px;align-content:center;justify-items:start;min-width:0;padding:4px 4px 0}
 .p-founder__body > p:not(.k-eyebrow){font-size:17px;line-height:28px;color:var(--ink-2);text-wrap:pretty}
-.p-receipt{margin:0;min-width:0}
+/* his two numbers, set like the figures beside a customer quote */
+.p-founder__nums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px;width:100%;margin-block:4px}
+.p-founder__nums > li{padding-left:16px;border-left:1px solid var(--faint)}
+.p-founder__nums b{display:block;font-weight:500;font-size:clamp(26px,3.2vw,36px);line-height:1.1;letter-spacing:-.035em;color:var(--ink);white-space:nowrap}
+.p-founder__nums span{display:block;margin-top:6px;font-size:14px;line-height:21px;color:var(--muted);text-wrap:pretty}
+.p-receipt{display:grid;gap:12px;margin:0;min-width:0}
 .p-receipt__img{overflow:hidden;border-radius:var(--k-r-md);background:#fff;box-shadow:0 0 0 1px var(--line),0 10px 30px -12px rgba(10,30,22,.12)}
-.p-receipt img{display:block;width:100%;height:auto;aspect-ratio:854/557}
-.p-receipt figcaption{margin-top:12px;font-size:14px;line-height:22px;color:var(--muted);text-wrap:pretty}
+.p-receipt img{display:block;width:100%;height:auto;aspect-ratio:874/556}
+.p-receipt figcaption{max-width:36em;padding-inline:4px;font-size:14px;line-height:22px;color:var(--muted);text-wrap:pretty}
 .p-receipt figcaption b{font-weight:500;color:var(--ink)}
-@media (min-width:700px){.p-receipt img{aspect-ratio:1946/753}}
+/* tablets: the photo is 900px wide at most, so it is not stretched across the whole card */
+@media (min-width:700px){.p-receipt img{aspect-ratio:1142/556}.p-receipt__img,.p-founder__photo{max-width:560px}}
 @media (min-width:960px){
-  .p-founder{grid-template-columns:minmax(0,500px) minmax(0,1fr);column-gap:clamp(32px,4vw,56px);row-gap:32px}
-  .p-receipt{grid-column:1/-1}
+  .p-founder,.p-receipt{grid-template-columns:minmax(0,500px) minmax(0,1fr);column-gap:clamp(32px,4vw,56px)}
+  .p-founder{row-gap:32px}
+  .p-receipt{grid-column:1/-1;align-items:center}
+  .p-receipt__img,.p-founder__photo{max-width:none}
+  .p-receipt figcaption{padding-inline:0;font-size:15px;line-height:24px}
   .p-founder__body{padding:0}
 }
 
@@ -270,8 +317,8 @@
 
 /* 13. THE CLOSING BAND (as the home page ends): the promise, the action on a glow, one line */
 .p-close{position:relative;isolation:isolate;overflow:hidden;padding-block:clamp(64px,8vw,104px) clamp(72px,9vw,112px);border-radius:28px 28px 0 0;text-align:center}
-.p-close::after{content:"";position:absolute;z-index:-2;left:0;right:0;bottom:0;height:140px;background:linear-gradient(180deg,rgba(47,191,143,0),rgba(47,191,143,.28));pointer-events:none;
-  -webkit-mask-image:repeating-linear-gradient(90deg,#000 0,#000 5px,transparent 5px,transparent 11px);mask-image:repeating-linear-gradient(90deg,#000 0,#000 5px,transparent 5px,transparent 11px)}
+.p-close::after{content:"";position:absolute;z-index:-2;left:0;right:0;bottom:0;height:calc(clamp(72px,9vw,112px) - 16px);background:linear-gradient(180deg,rgba(47,191,143,0),rgba(47,191,143,.28));pointer-events:none;
+  -webkit-mask-image:repeating-linear-gradient(90deg,#000 0,#000 4px,transparent 4px,transparent 8px);mask-image:repeating-linear-gradient(90deg,#000 0,#000 4px,transparent 4px,transparent 8px)}
 .p-close__in{display:grid;justify-items:center;gap:20px}
 .p-close__h{max-width:22em;font-weight:500;font-size:clamp(26px,3.4vw,44px);line-height:1.1;letter-spacing:-.035em;color:var(--k-ink);text-wrap:balance}
 .p-close__go{position:relative;margin-top:12px}

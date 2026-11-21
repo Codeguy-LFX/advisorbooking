@@ -32,15 +32,15 @@
     <div class="af-col af-col--wide af-grid">
       <div class="af-head">
         <h1 class="k-h2 k-h2--md af-h">You can still book a call. <span>Pick a time.</span></h1>
-        <p class="af-sub af-sub--long" id="nfWhy">We work with a narrow RIA profile, so we may not be the right fit yet. Pick a time anyway. On the call we’ll tell you whether we can help, and what to do in the meantime if we can’t.</p>
+        <p class="af-sub af-sub--long" id="nfWhy">Advisor Booking is built for independent RIAs with $50M or more in AUM, so we may not be the right fit. You can still pick a time. We look at each booking first. If we can’t help, we’ll cancel the call and let you know.</p>
         <script>
         /* The sentence follows the reason the quiz gave (saved in this browser as route_reason): under $50M in AUM, or not a
            financial advisor. Without it the general wording above stays. Set before the page is painted. */
         (function (d) {
           try {
             var st = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'), r = st && st.route === 'dq' ? st.route_reason : '';
-            if (r === 'aum_under_50m') d.getElementById('nfWhy').textContent = 'Advisor Booking is built for firms with $50M or more in AUM, so we may not be the right fit yet. Pick a time anyway. On the call we’ll tell you whether we can help, and what to do in the meantime if we can’t.';
-            else if (r === 'not_an_advisor') d.getElementById('nfWhy').textContent = 'Advisor Booking is built for financial advisory firms, so we may not be the right fit. Pick a time anyway. On the call we’ll tell you whether we can help.';
+            if (r === 'aum_under_50m') d.getElementById('nfWhy').textContent = 'Advisor Booking is built for firms with $50M or more in AUM, so we may not be the right fit yet. You can still pick a time. We look at each booking first. If we can’t help yet, we’ll cancel the call and let you know.';
+            else if (r === 'not_an_advisor') d.getElementById('nfWhy').textContent = 'Advisor Booking is built for financial advisory firms, so we may not be the right fit. You can still pick a time. We look at each booking first. If we can’t help, we’ll cancel the call and let you know.';
           } catch (e) {}
         })(document);
         </script>
@@ -81,7 +81,7 @@
     try { var r = new URL(d.referrer), p = r.pathname.replace(/\.html$/, '').replace(/\/$/, ''); if (r.origin === location.origin && /^\/(ria-meetings|fit-check)$/.test(p)) { from = p; try { sessionStorage.setItem('ab_quiz_from', p); } catch (e) {} } } catch (e) {}
     var quiz = from === '/fit-check' ? '/fit-check' : '/ria-meetings', a = d.getElementById('nfBack');
     a.href = quiz + location.search;
-    a.addEventListener('click', function () {
+    var aim = function () {
       try {
         var s = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null');
         if (s && s.route === 'dq') {
@@ -90,7 +90,8 @@
           localStorage.setItem('ab_apply_v1', JSON.stringify(s));
         }
       } catch (e) {}
-    });
+    };
+    ['click', 'auxclick', 'contextmenu'].forEach(function (ev) { a.addEventListener(ev, aim); });
   } catch (e) {}
 })(document);
 </script>

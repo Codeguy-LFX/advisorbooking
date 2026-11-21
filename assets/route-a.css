@@ -100,6 +100,8 @@
 .ra-quiz .lp-field.invalid.ra-ok > .lp-err{visibility:hidden}
 @media (min-width:700px){.ra-nav{max-width:560px}.ra-nav--book{max-width:760px}}
 .ra-quiz .lp-lbl,.ra-quiz .lp-err,.ra-cal .k-cal__foot{font-size:16px}
+/* laptop windows under 800px high: every answer of the longest question stays on screen */
+@media (min-width:700px) and (max-height:800px){.ra-nav{--nav-h:52px}.ra-main{padding-top:12px}.ra-eyebrow{margin-top:20px}.ra-quiz{margin-top:8px}.ra-quiz .ap-q{font-size:30px}.ra-quiz .ap-sub{margin-top:8px}.ra-quiz .ap-opts{gap:8px;margin-top:16px}.ra-quiz .ap-opt{min-height:52px;padding-block:8px}}
 @media (min-width:700px) and (max-height:480px){.ra-nav{--nav-h:52px}.ra-main{padding-top:12px}.ra-eyebrow{margin-top:16px}.ra-quiz{margin-top:8px}.ra-quiz .ap-q{font-size:28px}.ra-quiz .ap-opts{margin-top:16px}}
 .ra-quiz .ap-next[disabled]{--c:#5f6763}
 /* The host strip without a photo or a name: the two chips only. */

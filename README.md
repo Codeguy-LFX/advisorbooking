@@ -84,9 +84,9 @@ table at the top of the script). To change copy: edit the part, run `python3 too
 the pages. `python3 tools/build_paid.py --check` fails when a page no longer matches its parts. Never edit the four
 built pages directly. `fit-check.html`, `qualified.html` and `not-a-fit.html` are ordinary files.
 
-Files: `assets/paid.css` (the shared design: centered first screen, sections, cards, the look inside the Playbook,
-pricing, the founder, questions, the closing band), `assets/paid.js` (in-page links, the email box, the iClosed
-links, the calendar on the page, the Playbook titles, the entrance of sections), `assets/rm.css` and `assets/rm.js`
+Files: `assets/paid.css` (the shared design: centered first screen, the bar, sections, cards, the look inside the
+Playbook, pricing, the founder, questions, the closing band), `assets/paid.js` (in-page links, the email box, the
+iClosed links, the calendar on the page, the Playbook titles, the entrance of sections, the bar), `assets/rm.css` and `assets/rm.js`
 (the first screen of V1 only), `assets/pd.css` and `assets/pd.js` (the animated product card), `assets/route-a.css`
 and `assets/route-a.js` (`/fit-check`), `assets/rm-after.css` (the two pages after a quiz, and the calendar card).
 
@@ -99,16 +99,39 @@ and `assets/route-a.js` (`/fit-check`), `assets/rm-after.css` (the two pages aft
 - **The commitment is word for word** the owner's sentence (part `sec-commitment`). The word "guarantee" is not used
   on any paid page.
 - **Proof.** No client results exist yet, so none are shown. What is shown: the founder's photo
-  (`assets/nick-panel.jpg`, a crop of his panel photo with his name badge and the second panelist left out, no camera
-  data) and one of his own Ads Manager screenshots (`assets/proof-ads*.{png,webp}`, a plain crop, nothing redrawn),
-  labelled as past work in another channel and not a result to expect. `PROOF SLOT` comments in the parts mark where
-  real client proof goes later.
-- **The animated product card** tells one example (fictional prospect, labelled "Example") in four scenes. Its text is
-  in the part `pd`. It plays only when on screen, stops for visitors who ask for less motion, and has a pause button.
+  (`assets/nick-panel.jpg`, a crop of his panel photo with his name badge and the second panelist left out, the print
+  on his lanyard smoothed so no sponsor or event name can be read, no camera data), his two figures (8 figures in
+  total ad spend managed, 198+ financial services providers) and one of his own Ads
+  Manager screenshots (`assets/proof-ads-4.*` from 700px, `proof-ads-3.*` on a phone: plain crops of whole columns,
+  nothing redrawn), labelled as past work in another channel and not a result to expect. `PROOF SLOT` comments in the
+  parts mark where real client proof goes later.
+- **The animated product card** ("Advisor Pipeline") tells one example (a fictional past prospect, labelled
+  "Example") in four scenes: your CRM, the approved message, the real reply, the booked meeting. Its words are in the
+  part `pd` and reuse the home page's own example sentences. It is HTML and CSS, not a video: `assets/pd.css` holds
+  the motion (opacity and transform only), `assets/pd.js` only decides which scene is on. It plays while on screen,
+  pauses when the page is in the background, rests on a finished frame for visitors who ask for less motion or have
+  no JavaScript, and has a pause button. Its box has a fixed height (464px on a phone, 600px from 768px), so the page
+  never moves. It sits in the first screen of V2 and V4 and in "The Advisor Pipeline System" on V1 and V3.
+- **The first screen's ground** (the pale green, the band of needles and the frosted frame around the card or the
+  calendar) is all CSS in part 2 of `assets/paid.css`; the band is one small inline SVG tile.
+- **The bar.** Once the first screen's action has scrolled out of sight, the home page's floating pill appears with
+  the brand and the page's one button (part `bar`, part 9 of `assets/paid.js`). It hides again wherever the page
+  shows that action itself (the calendar on V3, the closing section).
 - **Links inside the page** move the page without changing the address (on V1 a `#book` address would add a history
   entry the quiz reads as "back to question 1"). On V1 the quiz answers to the letter keys only while it is on screen.
 - **Tracking.** The one Google Ads conversion is still the qualified lead on `/qualified` (V1 and V4). V2 and V3 send
-  none: the booking happens on iClosed. `email_capture` (V4) and `booked` (V3, through `/booked`) reach the CRM.
+  none: the booking happens on iClosed. `email_capture` (V4, once for each email) and `booked` (V3, through `/booked`)
+  reach the CRM. So that V2 and V3 bookings can be told apart whatever the ad link carries, the address given to
+  iClosed always ends its `utm_content` with the page and the headline: `direct-v2-appt`, `embed-v3-leads`, or after
+  the ad's own value and a dot (`ad_17.direct-v2-alt`).
+- **The email box cannot leak an email.** Its forms have `method="dialog"`, so with the script blocked or JavaScript
+  off the browser does nothing instead of putting the email in the address. After the box, `/fit-check` opens with
+  "We’ll email your Playbook": the CRM must send the guide on the `email_capture` record, because V4 promises it for
+  the email alone.
+- **Settings.** `assets/config.js` has `iclosedUrlDirect` (the event V2's buttons and V3's calendar use; empty = the
+  quiz funnel's event) and `playbookNext` (where the email box goes; empty = `/fit-check`). The same event address is
+  the plain link in the markup (`cta_href` in `tools/build_paid.py`), used when the script does not run: change both.
+- **`404.html`** forwards the paid addresses typed with a trailing slash or capitals to the real page, tags kept.
 
 ## Editing the site
 

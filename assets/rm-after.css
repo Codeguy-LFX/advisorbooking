@@ -73,10 +73,10 @@
 .af-sub--long{max-width:46ch}
 .af-pb__p{margin-top:12px;font-size:16px;line-height:26px;color:var(--k-ink-2);text-wrap:pretty}
 .af-ticks{margin-top:16px}
-.af-ticks > li{position:relative;padding:12px 0 12px 32px;border-top:1px solid var(--k-line);font-size:16px;line-height:24px;color:var(--k-ink-2)}
+.af-ticks > li{position:relative;padding:12px 0 12px 32px;border-top:1px solid var(--k-line);font-size:16px;line-height:24px;color:var(--k-ink-2);text-wrap:balance}
 .af-ticks > li:last-child{border-bottom:1px solid var(--k-line)}
 .af-ticks > li::before{content:"";position:absolute;left:0;top:14px;width:20px;height:20px;border-radius:50%;background:var(--k-mark-bg) var(--k-check-img) center/12px no-repeat}
-.af-back{margin-top:20px;font-size:16px;line-height:26px}
+.af-back{margin-top:20px;font-size:16px;line-height:26px;text-wrap:balance}
 .af-back a{color:var(--k-ink);text-underline-offset:3px}
 
 /* both pages: the Playbook's name is never split across two lines */
@@ -93,6 +93,6 @@
 @media (min-width:960px){.af-h,.af-msg h1{font-size:clamp(44px,3.8vw,52px)}}
 @media (max-width:959px){.af-col{max-width:calc(640px + 2*var(--gutter))}}
 /* "You told us" over the two answers, one line under them */
-.af-told{margin-top:12px;font-family:var(--f-mono);font-size:12px;line-height:16px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--k-muted)}
+.af-told{text-wrap:balance;margin-top:12px;font-family:var(--f-mono);font-size:12px;line-height:16px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--k-muted)}
 .af-told + .af-recap{margin-top:8px}
 .af-told--after{margin-top:8px;font-family:var(--f-sans);font-size:15px;line-height:22px;letter-spacing:0;text-transform:none;font-weight:400;color:var(--k-ink-2)}
