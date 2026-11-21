@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script src="/assets/gads.js" async></script>
-<title>Pick a time | Advisor Booking</title>
-<meta name="description" content="You can still book a 20-minute call. Pick a time.">
+<title>Book your call | Advisor Booking</title>
+<meta name="description" content="Book your 20-minute fit call: fill in the short form, then pick a day and a time.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
@@ -23,7 +23,7 @@
 </script>
 <link rel="preconnect" href="https://app.iclosed.io">
 </head>
-<body class="af-body">
+<body class="af-body af-book">
 <div class="af-stage k-glow">
   <header class="af-col af-col--wide af-top">
     <p class="k-brand af-brand"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="24" rx="6" fill="#0d0f0e"/><rect x="6" y="12" width="20" height="14" rx="3" fill="#fff"/><rect x="9.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="19.5" y="2" width="3" height="7" rx="1.5" fill="#fff"/><rect x="15" y="15" width="8" height="8" rx="2" fill="#0F7A62"/><path d="M16.9 19.1l1.5 1.5 2.8-3" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Advisor Booking</span></p>
@@ -31,19 +31,14 @@
   <main class="af-main" id="main">
     <div class="af-col af-col--wide af-grid">
       <div class="af-head">
-        <h1 class="k-h2 k-h2--md af-h">You can still book a call. <span>Pick a time.</span></h1>
-        <p class="af-sub af-sub--long" id="nfWhy">Advisor Booking is built for independent RIAs with $50M or more in AUM, so we may not be the right fit. You can still pick a time. We look at each booking first. If we can’t help, we’ll cancel the call and let you know.</p>
-        <script>
-        /* The sentence follows the reason the quiz gave (saved in this browser as route_reason): under $50M in AUM, or not a
-           financial advisor. Without it the general wording above stays. Set before the page is painted. */
-        (function (d) {
-          try {
-            var st = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null'), r = st && st.route === 'dq' ? st.route_reason : '';
-            if (r === 'aum_under_50m') d.getElementById('nfWhy').textContent = 'Advisor Booking is built for firms with $50M or more in AUM, so we may not be the right fit yet. You can still pick a time. We look at each booking first. If we can’t help yet, we’ll cancel the call and let you know.';
-            else if (r === 'not_an_advisor') d.getElementById('nfWhy').textContent = 'Advisor Booking is built for financial advisory firms, so we may not be the right fit. You can still pick a time. We look at each booking first. If we can’t help, we’ll cancel the call and let you know.';
-          } catch (e) {}
-        })(document);
-        </script>
+        <p class="k-eyebrow">Last step</p>
+        <h1 class="k-h2 k-h2--md af-h">Book your call.</h1>
+        <p class="af-sub">Fill in the short form below, then pick a day and a time. 20 minutes on Google Meet.</p>
+        <ol class="af-how" role="list" aria-label="How to book">
+          <li><span class="af-n" aria-hidden="true">1</span>Fill in the form</li>
+          <li><span class="af-n" aria-hidden="true">2</span>Pick a day</li>
+          <li><span class="af-n" aria-hidden="true">3</span>Pick a time</li>
+        </ol>
       </div>
       <section class="k-cal af-cal" id="calendar" aria-label="Pick a time for your call">
         <div class="k-cal__body">
@@ -51,17 +46,15 @@
           <div class="k-cal__mount"></div>
         </div>
       </section>
-      <section class="af-sell" aria-labelledby="nfPb">
-        <p class="k-eyebrow">Yours either way</p>
-        <h2 class="af-sell__h" id="nfPb">The <span class="af-nb">Past Prospect Playbook</span></h2>
-        <p class="af-pb__p">We’ll email it to the address you gave us: a <span class="af-nb">7-day</span> sequence for restarting conversations with the past prospects already in your CRM. You can run it yourself, start to finish.</p>
-        <ul class="af-ticks" role="list">
-          <li>Who to pull from your CRM, and who to leave out</li>
-          <li>What to send each day, with templates you can copy</li>
-          <li>What to say when they reply</li>
-          <li>A tracker, and a checklist to send your compliance team</li>
-        </ul>
-        <p class="af-back"><a id="nfBack" href="/ria-meetings">Picked the wrong answer? Go back to the questions.</a></p>
+      <section class="af-sell" aria-labelledby="afSellH">
+        <p class="k-eyebrow">Your <span class="af-nb">20-minute</span> fit call</p>
+        <h2 class="af-sell__h" id="afSellH">What happens on the call</h2>
+        <ol class="af-steps" role="list">
+          <li><span class="af-n" aria-hidden="true">1</span><span><strong>We look at where you are.</strong> Your CRM of past prospects, your current marketing and your goals.</span></li>
+          <li><span class="af-n" aria-hidden="true">2</span><span><strong>We run the <span class="af-nb">first-meeting</span> math.</strong> With your close rate and your average new client size, we work out your <span class="af-nb">break-even</span> cost per attended, qualified meeting. Rough numbers are fine.</span></li>
+          <li><span class="af-n" aria-hidden="true">3</span><span><strong>We show you the first 90 days.</strong> How reactivation and outreach would be set up for your firm, and what the <span class="af-nb">15-meeting</span> commitment covers.</span></li>
+          <li><span class="af-n" aria-hidden="true">4</span><span><strong>You get a yes or a no.</strong> If we’re not a fit, you still leave with a clear plan for doing it yourself.</span></li>
+        </ol>
       </section>
     </div>
   </main>
@@ -71,30 +64,6 @@
   <p class="k-legal__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
 </footer>
 <script src="/assets/config.js"></script>
-<script>
-/* The link back to the questions. It goes to the quiz the lead came from (/ria-meetings or /fit-check, remembered for
-   the visit), keeps the address's campaign tags, and opens the quiz at the question that decided the result instead
-   of at the last step: AUM, or "is your firm an RIA". */
-(function (d) {
-  try {
-    var from = ''; try { from = sessionStorage.getItem('ab_quiz_from') || ''; } catch (e) {}
-    try { var r = new URL(d.referrer), p = r.pathname.replace(/\.html$/, '').replace(/\/$/, ''); if (r.origin === location.origin && /^\/(ria-meetings|fit-check)$/.test(p)) { from = p; try { sessionStorage.setItem('ab_quiz_from', p); } catch (e) {} } } catch (e) {}
-    var quiz = from === '/fit-check' ? '/fit-check' : '/ria-meetings', a = d.getElementById('nfBack');
-    a.href = quiz + location.search;
-    var aim = function () {
-      try {
-        var s = JSON.parse(localStorage.getItem('ab_apply_v1') || 'null');
-        if (s && s.route === 'dq') {
-          var adv = s.route_reason === 'not_an_advisor';
-          s.step = quiz === '/fit-check' ? (adv ? 0 : 2) : (adv ? 1 : 0);
-          localStorage.setItem('ab_apply_v1', JSON.stringify(s));
-        }
-      } catch (e) {}
-    };
-    ['click', 'auxclick', 'contextmenu'].forEach(function (ev) { a.addEventListener(ev, aim); });
-  } catch (e) {}
-})(document);
-</script>
 <script>
 /* The calendar, as on /L1/DQ/: the quiz funnel's own iClosed event (iclosedUrlFit5 in config.js) in iClosed's inline
    widget, with the lead's name, email, phone and campaign tags filled in. If the widget has put no calendar frame
@@ -125,6 +94,7 @@
   var cal = document.getElementById('calendar'), mount = cal.querySelector('.k-cal__mount');
   if (!url) return;   // no event link in config.js: the loading sentence, with the email address, stays
   var w = document.createElement('div'); w.className = 'iclosed-widget'; w.setAttribute('data-url', url); w.setAttribute('title', 'Pick a time for your call'); w.style.width = '100%';
+  var calH = Math.round(parseFloat(getComputedStyle(mount).minHeight)) || 640; w.style.height = calH + 'px';   /* the widget needs a height of its own */
   mount.appendChild(w);
   var settled = false, waited = 0, iv;
   /* A calendar frame is in place: let it take taps, and hide the loading drawing once it has loaded. */
