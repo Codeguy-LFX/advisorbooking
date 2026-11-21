@@ -119,6 +119,15 @@
 /* the frame fills the box exactly, whatever size the widget's own script gives it */
 .af-book .k-cal__mount .iclosed-widget{height:var(--k-cal-h)}
 .af-book .k-cal__mount iframe{width:100%!important;height:100%!important;min-height:var(--k-cal-h)}
+/* On a desktop iClosed only shows its two-part layout (the form beside the calendar) when its frame is wide, and it
+   then draws that layout about 800px wide in the middle of the frame. So the frame is 1100px wide and the box shows
+   its middle 820px: the full desktop layout, with no empty strips at the sides. */
+@media (min-width:1000px){
+  .af-book .af-cal{max-width:820px}
+  .af-book .k-cal__mount{overflow:hidden}
+  .af-book .k-cal__mount .iclosed-widget{width:1100px!important;margin-left:calc((100% - 1100px)/2)}
+  .af-book .k-cal__mount > iframe{width:1100px!important;max-width:none;margin-left:calc((100% - 1100px)/2)}
+}
 .af-book .af-sell{max-width:760px;margin:56px auto 0}
 @media (min-width:960px){.af-book .af-main{padding-top:28px}}
 
