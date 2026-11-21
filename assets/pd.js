@@ -21,6 +21,8 @@
         still = !!(mq && mq.matches),
         scene = 0, user = false, inView = false, started = false, again = false, full = false, wd = 0;
     if (!tabs.length || scenes.length !== tabs.length) return;
+    /* how much of the card must be in the window for it to play: 30%, or the page's own figure (data-pd-on) where less of it shows in the first screen */
+    var ON = Math.min(0.6, Math.max(0.05, parseFloat(root.getAttribute('data-pd-on')) || 0.3));
 
     /* the draft email is written word by word: one span a word */
     if (body && !body.firstElementChild) {
@@ -126,7 +128,7 @@
         var e = es[es.length - 1], r = e.isIntersecting ? e.intersectionRatio : 0;
         /* starts once 30% of the card is in the window (about what the first screen of most laptops and phones
            shows of it), and holds when less than 15% is left */
-        inView = r >= (inView ? 0.15 : 0.3);
+        inView = r >= (inView ? ON / 2 : ON);
         sync();
         /* the first time most of the card is in view the story starts again from the top, so whoever scrolls down
            to it sees it from the beginning (unless it is still in its first scene, is resting, or the visitor has
@@ -135,7 +137,7 @@
           full = true;
           if (!still && !user && !document.hidden && started && !again && scene !== 0) restart(0, 0);
         }
-      }, { threshold: [0, 0.15, 0.3, 0.75] }).observe(root);
+      }, { threshold: [0, ON / 2, ON, 0.75] }).observe(root);
     } else { inView = true; sync(); }
   }
 

@@ -278,4 +278,13 @@
 .pd-li .pd-msg{max-width:92%}
 @media (max-width:479px){.pd--home .pd-tabs{gap:2px;padding:6px}.pd--home .pd-tab{gap:3px;padding:0 1px;font-size:11px}.pd--home .pd-tab__bar{left:5px;right:5px}}
 @media (min-width:768px){.pd-conn{padding:7px 16px 7px 8px;font-size:14px;line-height:20px}.pd-conn svg{width:20px;height:20px}.pd--home .pd-tab{padding:0 10px;gap:6px}}
+/* five full labels need about 880px: the short ones stay until then; the event shows its check mark only */
+@media (min-width:768px) and (max-width:879px){
+  .pd--home .pd-tab{justify-content:center}
+  .pd--home .pd-tab__l{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+  .pd--home .pd-tab__s{display:inline}
+  .pd--home .pd-ev span{display:none}
+}
+.pd--home .pd-row--out .pd-name{white-space:nowrap}
+@media (max-width:339px){.pd--home .pd-tag{padding:3px 6px;font-size:10.5px}.pd--home .pd-row{column-gap:7px}}
 
