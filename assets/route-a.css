@@ -106,3 +106,5 @@
 .ra-quiz .ap-next[disabled]{--c:#5f6763}
 /* The host strip without a photo or a name: the two chips only. */
 .ra-host__meta{display:flex;flex-wrap:wrap;gap:8px;margin:0}
+/* Windows contrast themes: the gliding fill keeps a system colour (see the kit) */
+@media (forced-colors:active){.ra-fill{forced-color-adjust:none;background:Highlight}}

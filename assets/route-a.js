@@ -5,9 +5,15 @@
   'use strict';
   var body = document.getElementById('apBody');
   if (body) {   // a corrected field drops its red ring and message at once; the next Continue checks everything again
-    body.addEventListener('input', function (e) { var t = e.target, f = t && t.closest ? t.closest('.lp-field.invalid') : null; if (f) { f.classList.add('ra-ok'); t.setAttribute('aria-invalid', 'false'); } });
+    body.addEventListener('input', function (e) { var t = e.target, f = t && t.closest ? t.closest('.lp-field.invalid') : null; if (f) { f.classList.add('ra-ok'); t.setAttribute('aria-invalid', 'false'); t.removeAttribute('aria-describedby'); } });
     body.addEventListener('submit', function () { var l = body.querySelectorAll('.ra-ok'), i; for (i = 0; i < l.length; i++) l[i].classList.remove('ra-ok'); }, true);
   }
+  /* The quiz answers to the letter keys. That must only happen while the focus is inside the quiz (it is after the
+     first answer): a key pressed with nothing focused, or a word spoken to voice control, answers nothing. */
+  document.addEventListener('keydown', function (e) {
+    var q = document.querySelector('.ra-quiz');
+    if (e.key && e.key.length === 1 && q && !q.contains(document.activeElement)) e.stopImmediatePropagation();
+  }, true);
   var bar = document.getElementById('apBar');
   if (!bar || !window.MutationObserver) return;
   var track = bar.parentNode, fill = document.createElement('div');

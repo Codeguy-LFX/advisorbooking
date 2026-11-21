@@ -394,3 +394,17 @@ textarea.k-input,.k-quiz .lp-field textarea{min-height:132px;padding:16px;line-h
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 }
+
+/* 22. WINDOWS CONTRAST THEMES ----------------------------------------------------------------------- */
+/* In a contrast theme the browser drops every shadow and background, which is all the buttons, answers, cards, the
+   email box and the consent box are drawn with. They get a real border there, the consent box becomes the system's
+   own, and the progress bar keeps two system colours. Nothing here applies outside a contrast theme. */
+@media (forced-colors:active){
+  .k-btn,.k-quiz .ap-next,.k-answer,.k-quiz .ap-opt,.k-ec,.k-nav__pill,.k-card,.k-cal{border:1px solid ButtonBorder}
+  .k-answer[aria-pressed=true],.k-quiz .ap-opt[aria-pressed=true]{border:2px solid Highlight}
+  .k-check input[type=checkbox],.k-quiz .lp-consent__row input[type=checkbox]{-webkit-appearance:auto;appearance:auto}
+  .k-check input[type=checkbox]::after,.k-quiz .lp-consent__row input[type=checkbox]::after{display:none}
+  .k-ec:focus-within{outline:2px solid Highlight;outline-offset:2px}
+  .k-progress__fill{forced-color-adjust:none;background:Highlight}
+  .k-progress__track{forced-color-adjust:none;background:GrayText}
+}

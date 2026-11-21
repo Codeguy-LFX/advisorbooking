@@ -5,7 +5,7 @@
    scene is shown complete and the steps switch scenes at once. */
 (function () {
   'use strict';
-  var OUT = 0.28; /* the first play is only the end of scene 1 (its fade), then scene 1 runs from the top: a new visitor sees the story start */
+  var OUT = 0.28; /* a card at rest starts with the end of its scene (the fade) and then runs that scene from the top: no cut from a complete picture to an empty one */
 
   function init(root) {
     if (root.pd) return;
@@ -24,6 +24,8 @@
     /* the draft email is written word by word: one span a word */
     if (body && !body.firstElementChild) {
       var words = body.textContent.replace(/^\s+|\s+$/g, '').split(/\s+/);
+      /* the last two words stay together, so the email never ends on a line of one word */
+      if (words.length > 3) words.push(words.splice(-2).join(' '));
       body.textContent = '';
       words.forEach(function (w, i) {
         var s = document.createElement('span');
@@ -59,8 +61,9 @@
       var hold = user || !inView || document.hidden;
       root.classList.toggle('pd--hold', hold);
       if (!hold && !started) {
-        again = scene === 0 && !root.hasAttribute('data-s');
-        restart(scene, again ? (parseFloat(getComputedStyle(root).getPropertyValue('--T')) || 5) - OUT : 0);
+        /* a card at rest shows its scene complete: play only the end of that scene (its fade), then the scene from the top */
+        again = true;
+        restart(scene, (parseFloat(getComputedStyle(root).getPropertyValue('--T')) || 5) - OUT);
       }
     }
     /* a scene that cannot play right now is shown complete; it starts from the top once it can */

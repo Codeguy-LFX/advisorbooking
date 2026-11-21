@@ -57,6 +57,8 @@
 .af-cal .k-cal__skel::before{order:3;width:min(100%,392px);height:44px;margin-bottom:168px;border-radius:var(--k-r-sm);background:var(--k-well);box-shadow:0 56px 0 var(--k-well),0 112px 0 var(--k-well),0 168px 0 var(--k-well)}
 .af-cal:not(.is-live) .k-cal__mount{pointer-events:none}
 .af-cal.is-live .k-cal__mount iframe{background:var(--k-surface)}
+/* the frame now covers the loading sentence: its email link leaves the tab order with it (the kit waits for is-ready) */
+.af-cal.is-live .k-cal__skel{visibility:hidden}
 /* fallback (the widget did not arrive): a 57px strip with the link takes the place of the loading sentence at the
    top of the card, where the visitor is looking, and the plain frame under it is 57px shorter. The card keeps its
    height, so nothing on the page moves. */

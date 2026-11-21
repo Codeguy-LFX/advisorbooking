@@ -9,7 +9,7 @@
   /* A corrected field drops its red ring and message at once; the next Continue checks everything again. */
   body.addEventListener('input', function (e) {
     var t = e.target, f = t && t.closest ? t.closest('.lp-field.invalid') : null;
-    if (f) { f.classList.add('rm-ok'); t.setAttribute('aria-invalid', 'false'); }
+    if (f) { f.classList.add('rm-ok'); t.setAttribute('aria-invalid', 'false'); t.removeAttribute('aria-describedby'); }
   });
   body.addEventListener('submit', function () {
     var l = body.querySelectorAll('.rm-ok'), i; for (i = 0; i < l.length; i++) l[i].classList.remove('rm-ok');
@@ -34,7 +34,12 @@
   var track = bar.parentNode, fill = d.createElement('div'), cnt = d.getElementById('apCount');
   fill.className = 'rm-fill';
   /* Follow the step the count shows ("Step 2 of 6"), so the bar steps back with Previous; the engine's own bar never does. */
-  function sync() { var m = cnt && /(\d+)\D+(\d+)/.exec(cnt.textContent || ''), w = m && +m[2] ? 100 * m[1] / m[2] : (parseFloat(bar.style.width) || 0); fill.style.transform = 'scaleX(' + Math.min(100, w) / 100 + ')'; }
+  function sync() {
+    var m = cnt && /(\d+)\D+(\d+)/.exec(cnt.textContent || ''), w = Math.min(100, m && +m[2] ? 100 * m[1] / m[2] : (parseFloat(bar.style.width) || 0));
+    fill.style.transform = 'scaleX(' + w / 100 + ')';
+    /* what is announced follows what is shown: the engine's own value never steps back */
+    if (track.getAttribute('role') === 'progressbar' && track.getAttribute('aria-valuenow') !== String(Math.round(w))) track.setAttribute('aria-valuenow', String(Math.round(w)));
+  }
   sync();
   track.appendChild(fill);
   track.classList.add('rm-glide');

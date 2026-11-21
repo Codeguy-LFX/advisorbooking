@@ -23,6 +23,9 @@
 .p-bar-on{scroll-padding-top:76px}
 .p-bar{visibility:hidden;opacity:0;transform:translateY(-10px);pointer-events:none;transition:opacity .2s ease,transform .3s var(--ease),visibility 0s linear .3s}
 .p-bar.is-on{visibility:visible;opacity:1;transform:none;pointer-events:auto;transition-delay:0s}
+/* the button is 40px tall inside the 52px pill: a tap anywhere in the pill's height counts */
+.p-bar .k-btn{position:relative}
+.p-bar .k-btn::after{content:"";position:absolute;inset:-6px 0}
 @media (prefers-reduced-motion:reduce){.p-bar{transform:none;transition:none}}
 @media print{.p-bar{display:none}}
 
@@ -48,6 +51,9 @@
 .p-ec .k-ec__fine a,.p-go .k-fine a{color:var(--k-ink-2);text-underline-offset:3px}
 .p-go{display:grid;justify-items:center;gap:12px;margin-top:28px}
 .p-go .k-fine{text-wrap:balance}
+/* the line under a green button lies on the button's glow (and, on V4's first screen, on the tray's shadow): the kit's
+   muted grey measures 4.0 to 4.4:1 there, so these lines take the darker ink */
+.p-go .k-fine,.p-cta .k-fine,.p-hero .p-ec .k-ec__fine{color:var(--k-ink-2)}
 /* the stage */
 .p-stage{position:relative;max-width:calc(960px + 2*var(--gutter));margin-top:clamp(40px,5vw,64px);padding-bottom:clamp(32px,4vw,56px);--p-cut:30%;--p-top:16px}
 .p-stage::before,.p-stage::after{content:"";position:absolute;left:-100vw;right:-100vw;bottom:var(--p-cut);pointer-events:none}
@@ -64,8 +70,7 @@
 }
 /* between a phone and 768px the card keeps its phone layout, so it keeps a phone's width too */
 @media (min-width:560px) and (max-width:767px){
-  .p-stage:not(.p-stage--cal) > .p-glass,.p-demo{max-width:492px;margin-inline:auto}
-  .p-demo{max-width:480px}
+  .p-stage:not(.p-stage--cal) > .p-glass{max-width:492px;margin-inline:auto}
 }
 .p-glass > .pd,.p-glass > .k-cal{box-shadow:0 1px 2px rgba(10,30,22,.06)}
 @media (max-width:719px){
@@ -217,7 +222,11 @@
   .p-look__panel{padding:0 4px 20px 48px}
   .p-look__p{min-height:56px;font-size:17px;line-height:28px}
   .p-look .p-page{position:absolute;left:0;top:0;width:calc(50% - 28px);height:var(--look-h);margin:0;padding:28px;border-radius:var(--k-r-xl);box-shadow:var(--shadow-lift);overflow:hidden}
-  .p-look:not(.is-js) .p-look__item:not(:first-child) .p-page{display:none}
+  /* without JavaScript the titles open nothing: every page is shown under its own title, as on a phone */
+  .p-look:not(.is-js){min-height:0}
+  .p-look:not(.is-js) .p-look__list{gap:8px;margin-left:0}
+  .p-look:not(.is-js) .p-look__panel{padding:0 4px 20px}
+  .p-look:not(.is-js) .p-page{position:static;width:auto;height:auto;margin:16px 0 0;overflow:visible}
   .p-page__t{font-size:22px}
 }
 @media (hover:hover) and (pointer:fine) and (min-width:960px){.p-look__tab:hover{color:var(--ink)}}
@@ -231,8 +240,10 @@
 .p-one--math{max-width:880px;text-align:left}
 .p-one--math .p-one__d{max-width:40em;margin-inline:0}
 .p-one--math .p-one__d + .p-one__d{margin-top:12px}
-/* the animated card when it stands inside a section */
+/* the animated card when it stands inside a section (between a phone and 768px it keeps a phone's width, as on the
+   first screen: it has the phone layout there) */
 .p-demo{max-width:960px;margin-inline:auto}
+@media (min-width:560px) and (max-width:767px){.p-demo{max-width:480px}}
 .p-demo .pd{box-shadow:var(--shadow-lift)}
 .p-demo + .p-grid{margin-top:clamp(32px,4vw,48px)}
 
@@ -325,6 +336,7 @@
 .p-close__go{position:relative;margin-top:12px}
 .p-close__go::before{content:"";position:absolute;z-index:-1;left:50%;top:50%;width:min(620px,90vw);height:260px;transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(15,122,98,.55),transparent);pointer-events:none}
 .p-close .p-ec{margin-top:12px}
+.p-close .k-ec{--k-focus:var(--accent)}   /* the button stands on the white tray: the night ring (bright green) is 2.1:1 there */
 .p-close .k-ec__err{text-align:center}
 .p-close__f{max-width:34em;font-size:15px;line-height:24px;color:var(--k-muted);text-wrap:balance}
 .p-foot{padding-top:8px}

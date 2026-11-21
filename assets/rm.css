@@ -121,3 +121,5 @@
 .rm-nb{white-space:nowrap}
 /* the headline here sits in a narrow column: its phrases flow as plain text (the centered pages break between them) */
 @media (max-width:599px){.rm-h1 .p-ph{display:inline}}
+/* Windows contrast themes: the gliding fill keeps a system colour (see the kit) */
+@media (forced-colors:active){.rm-fill{forced-color-adjust:none;background:Highlight}}

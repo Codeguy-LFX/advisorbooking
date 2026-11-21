@@ -374,10 +374,10 @@
     var btn;
     (q.fields || []).forEach(function (f) {
       if (f.type === 'checkbox') {
-        var cb = el('input', { type: 'checkbox', id: 'ap-' + f.id, 'aria-describedby': 'ape-' + f.id });
+        var cb = el('input', { type: 'checkbox', id: 'ap-' + f.id });
         cb.checked = !!S.answers[f.id];
         if (f.required && f.gate) cb.addEventListener('change', function () { if (btn) btn.disabled = !cb.checked; });
-        cb.addEventListener('change', function () { if (cb.checked) { var w = $('apf-' + f.id); if (w) w.classList.remove('invalid'); } });
+        cb.addEventListener('change', function () { if (cb.checked) { var w = $('apf-' + f.id); if (w) w.classList.remove('invalid'); cb.setAttribute('aria-invalid', 'false'); cb.removeAttribute('aria-describedby'); } });
         form.appendChild(el('div', { class: 'lp-consent', id: 'apf-' + f.id }, [
           el('div', { class: 'lp-consent__row' }, [cb, el('label', { for: 'ap-' + f.id, id: 'apl-' + f.id, html: f.label })]),
           el('div', { class: 'lp-err', id: 'ape-' + f.id, text: f.error || 'Check the box to continue.' })
@@ -393,7 +393,7 @@
       var srOnly = f.srLabel || (QF && !f.showLabel);
       if (QF && !f.placeholder && !f.srLabel) input.setAttribute('placeholder', String(f.label).replace(/<[^>]+>/g, '') + (f.optional ? ' (optional)' : ''));
       var label = el('label', { class: 'lp-lbl' + (srOnly ? ' sr-only' : ''), for: 'ap-' + f.id, html: f.label + (f.optional ? ' <span class="ap-optional">(optional)</span>' : '') });
-      input.setAttribute('aria-describedby', 'ape-' + f.id);
+      if (!f.optional) input.setAttribute('aria-required', 'true');
       var ctl = f.type === 'tel' ? el('div', { class: 'lp-tel' }, [el('span', { class: 'lp-tel__cc', 'aria-hidden': 'true', text: '+1' }), input]) : input;
       var fieldEl = el('div', { class: 'lp-field', id: 'apf-' + f.id }, [
         label, ctl,
@@ -436,6 +436,8 @@
         }
         wrap.classList.toggle('invalid', bad);
         inp.setAttribute('aria-invalid', bad ? 'true' : 'false');
+        /* the message is hidden until the field is in error, and a hidden message is still read as a description */
+        if (bad) inp.setAttribute('aria-describedby', 'ape-' + f.id); else inp.removeAttribute('aria-describedby');
         if (bad) ok = false;
       });
       if (!ok) {

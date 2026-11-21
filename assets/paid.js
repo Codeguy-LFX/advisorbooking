@@ -33,6 +33,8 @@
     e.preventDefault();
     /* a jump to the action itself lands where it always does: the bar is about to step aside (part 9) */
     if (s.hasAttribute('data-bar-from') || s.hasAttribute('data-bar-hide')) d.documentElement.classList.remove('p-bar-on');
+    /* a jump to a section below the first screen's action: the bar will be up when the page lands, so land clear of it */
+    else if (bar && from && 'IntersectionObserver' in w && (from.compareDocumentPosition(s) & 4) && !from.contains(s) && !s.closest('[data-bar-hide]')) d.documentElement.classList.add('p-bar-on');
     try { s.scrollIntoView({ behavior: Math.abs(s.getBoundingClientRect().top) > 3 * w.innerHeight ? 'instant' : 'auto', block: 'start' }); } catch (x) { s.scrollIntoView(); }
     f = id === 'book' ? $('apQ') : id === 'get' ? $('getEmail') : s;
     if (f) { try { f.focus({ preventScroll: true }); } catch (x) {} }
@@ -40,13 +42,14 @@
 
   /* ---------- 3. The quiz page only (V1) ---------- */
   if ($('apBody') && $('book')) {
-    /* The quiz answers to the letter keys A to G. On a long page that must only happen while the quiz is on screen
-       and nothing outside it has the focus; otherwise a stray key would answer a question and throw the page up. */
+    /* The quiz answers to the letter keys A to G. That must only happen while the quiz is on screen and the focus is
+       inside it (it is, after the first answer and after every jump to the quiz); otherwise a stray key, or a word
+       spoken to voice control, would answer a question. */
     d.addEventListener('keydown', function (e) {
       var b = $('book'), a = d.activeElement, r;
       if (!b || !e.key || e.key.length !== 1) return;
       r = b.getBoundingClientRect();
-      if ((a && a !== d.body && !b.contains(a)) || r.bottom < 0 || r.top > w.innerHeight) e.stopImmediatePropagation();
+      if (!a || !b.contains(a) || r.bottom < 0 || r.top > w.innerHeight) e.stopImmediatePropagation();
     }, true);
     /* The quiz engine turns the browser's own scroll restoring off. Put a reload back where the reader was. */
     try {
@@ -75,7 +78,9 @@
     var input = form.querySelector('input[type=email]'), box = form.querySelector('.k-ec'), err = form.querySelector('.k-ec__err'), btn = form.querySelector('button[type=submit]');
     if (!input || !btn) return;
     var label = btn.querySelector('span'), words = label ? label.textContent : '';
-    function bad(on) { if (box) box.classList.toggle('is-bad', on); if (err) err.hidden = !on; input.setAttribute('aria-invalid', on ? 'true' : 'false'); }
+    /* the error sentence is in the box only while there is an error: hidden text is still read out as a description */
+    var msg = err ? err.textContent : ''; if (err) err.textContent = '';
+    function bad(on) { if (box) box.classList.toggle('is-bad', on); if (err) { err.textContent = on ? msg : ''; err.hidden = !on; } input.setAttribute('aria-invalid', on ? 'true' : 'false'); }
     input.addEventListener('input', function () { if (err && !err.hidden && emailOk(input.value.trim())) bad(false); });
     form.addEventListener('submit', function (e) {
       e.preventDefault(); if (sent) return;
