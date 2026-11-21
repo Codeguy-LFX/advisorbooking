@@ -35,6 +35,7 @@ COMMON = {
     'ec_attrs': '', 'ec_label': 'Get the free Playbook', 'ec_ns': 'send you the Playbook',
     'ec_fine': 'Free: the Past Prospect Playbook, a <span class="p-nb">7-day</span> sequence you can run yourself on the past prospects in your CRM. Then a <span class="p-nb">60-second</span> fit check.',
     'close_h': 'Get the Playbook. Then see if we’re a fit.',
+    'close_f': 'At least 15 attended, qualified meetings in your first 90 days from launch, or we keep working at our cost.',
     'description': 'For independent RIAs with $50M to $250M+ AUM. At least 15 attended, qualified meetings in your first 90 days from launch, or we keep working at our cost. We start with the past prospects already in your CRM.',
 }
 
@@ -161,7 +162,7 @@ PAGES = {
     'ria-linkedin.html': {
         'title': 'The Past Prospect Playbook: a free 7-day guide for independent RIAs | Advisor Booking',
         'css': ['kit', 'paid', 'pd', 'home-sec'], 'body_class': 'p p--email p--home p--v6 p--li',
-        'parts': ['hero-magnet', 'sec-look', 'sec-bridge', 'sec-commitment', 'sec-founder', 'sec-cta', 'sec-how-home', 'sec-gets-home', 'sec-faq-short', 'sec-close-email'],
+        'parts': ['hero-magnet', 'sec-look', 'sec-founder', 'sec-faq-li', 'sec-close-email'],
         'tail': 'tail-home',
         'map': {'hero_action': 'action-email'},
         'vars': {
@@ -171,9 +172,11 @@ PAGES = {
             'def_end': ' You set the criteria before we begin.',
             'cta_href': '#get', 'cta_attrs': '', 'bar_label': 'Get the free Playbook',
             'pb_eyebrow': 'What’s inside',
-            'pb_get': '<strong>How to get it:</strong> <a href="#get">enter your work email</a> and we’ll send it, whether we’re a fit or not.',
+            'pb_get': '<a href="#get">Enter your work email</a> and we’ll send it.',
             'cta1_label': 'Get the free Playbook', 'cta1_fine': '',
-            'ec_fine': 'Free. Next, a <span class="p-nb">60-second</span> fit check. You get the Playbook either way.',
+            'ec_fine': 'Free. Sent to your work email.',
+            'close_h': 'Get the free Playbook.', 'close_f': 'Free. Sent to your work email.',
+            'description': 'A free 7-day guide for independent RIAs: who to pull from your CRM, six emails to copy, and what to say when past prospects reply.',
         },
     },
 }
