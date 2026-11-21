@@ -111,7 +111,7 @@
 .p--v6 .p-hero--home + .p-sec{padding-top:clamp(40px,5vw,72px)}
 .p--v6 #commitment .p-head{display:grid;justify-items:center}
 .p--v6 #commitment .p-head::before{content:"";width:56px;height:2px;margin-bottom:clamp(20px,2.4vw,28px);border-radius:2px;background:var(--accent)}
-.p--v6 #commitment .k-eyebrow{font-size:clamp(13px,1.2vw,15px);letter-spacing:.11em}
+.p--v6 #commitment .k-eyebrow{gap:11px;font-size:clamp(15px,1.5vw,18px);letter-spacing:.1em;font-weight:600}
 .p--v6 #commitment .k-eyebrow + .k-h2{margin-top:clamp(14px,1.6vw,20px)}
 /* the stage */
 .p-stage{position:relative;max-width:calc(960px + 2*var(--gutter));margin-top:clamp(40px,5vw,64px);padding-bottom:clamp(32px,4vw,56px);--p-cut:30%;--p-top:16px}
