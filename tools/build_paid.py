@@ -35,6 +35,7 @@ COMMON = {
     'ec_attrs': '', 'ec_label': 'Get the free Playbook', 'ec_ns': 'send you the Playbook',
     'ec_fine': 'Free: the Past Prospect Playbook, a <span class="p-nb">7-day</span> sequence you can run yourself on the past prospects in your CRM. Then a <span class="p-nb">60-second</span> fit check.',
     'close_h': 'Get the Playbook. Then see if we’re a fit.',
+    'commit_label': 'Our <span class="p-nb">90-day</span> commitment',   # the label over the commitment
     # the step titles of the look inside the Playbook
     'lt1': 'Who to pull from your CRM',
     'lt2': 'The <span class="p-nb">7-day</span> schedule',
@@ -153,6 +154,7 @@ PAGES = {
         'tail': 'tail-home',
         'map': {'hero_action': 'action-email', 'hero_stage': 'stage-demo'},
         'vars': {
+            'commit_label': 'Our guarantee',
             'hero_mode': 'demo', 'facts_note': '', 'founder_new': '', 'founder_receipt': '',
             'cond1': 'Agree on your ideal client and the messages before we start',
             'cond2': 'One meeting every week to track results and improve them',
