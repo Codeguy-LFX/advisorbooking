@@ -31,6 +31,10 @@ COMMON = {
     'founder_receipt': '      <figure class="p-receipt">\n        <div class="p-receipt__img">\n          <picture>\n            <source media="(min-width:700px)" type="image/webp" srcset="/assets/proof-ads-4.webp" width="1142" height="556">\n            <source media="(min-width:700px)" srcset="/assets/proof-ads-4.png" width="1142" height="556">\n            <source type="image/webp" srcset="/assets/proof-ads-3.webp" width="874" height="556">\n            <img src="/assets/proof-ads-3.png" width="874" height="556" alt="A table from Meta Ads Manager. Amount spent on five lines: $791,359.37, $191,145.19, $922,529.15, $1,873.59 and $316.39, with the impressions and reach of each." loading="lazy" decoding="async">\n          </picture>\n        </div>\n        <figcaption><b>Past work in another channel, shown for scale.</b> One of the ad accounts Nick has managed: Meta Ads Manager, Dec 12, 2024 to Dec 12, 2025. Its three largest lines add up to $1.9M. That is one account in one year. The 8 figures is his total across accounts. We run no ads for RIAs, so this is not RIA work and not a result to expect.</figcaption>\n      </figure>',
     'cond1': 'Agree on your ideal client and the messages at kickoff', 'cond2': 'One advisor or owner on the weekly call',
     'def_end': ' You set the criteria in advance. The 90 days start at launch, so compliance review time does not count against them.',
+    # the email box (V4, V5 and V6): its button, the line under it, and what the no-JavaScript line offers
+    'ec_attrs': '', 'ec_label': 'Get the free Playbook', 'ec_ns': 'send you the Playbook',
+    'ec_fine': 'Free: the Past Prospect Playbook, a <span class="p-nb">7-day</span> sequence you can run yourself on the past prospects in your CRM. Then a <span class="p-nb">60-second</span> fit check.',
+    'close_h': 'Get the Playbook. Then see if we’re a fit.',
     'description': 'For independent RIAs with $50M to $250M+ AUM. At least 15 attended, qualified meetings in your first 90 days from launch, or we keep working at our cost. We start with the past prospects already in your CRM.',
 }
 
@@ -130,6 +134,27 @@ PAGES = {
             'pb_eyebrow': 'The free Playbook',
             'pb_get': '<strong>How to get it:</strong> <a href="#get">enter your work email</a> and we’ll send it, whether we’re a fit or not.',
             'cta1_label': 'Get the free Playbook', 'cta1_fine': 'Your work email, then a <span class="p-nb">60-second</span> fit check.',
+        },
+    },
+    # V6: V5 with no lead magnet, for Google Ads. The email box reads "See If You Qualify" and leads to the quiz
+    'ria-v6.html': {
+        'title': 'We fill financial advisors’ calendars | Advisor Booking',
+        'css': ['kit', 'paid', 'pd', 'home-sec'], 'body_class': 'p p--email p--home',
+        # the first screen and its three figures, the commitment right under it, the founder, then the home page's own
+        # "Three steps" and "Everything you get", then the Playbook, what is different, the questions, the email box
+        'parts': ['hero-home', 'sec-commitment', 'sec-founder', 'sec-how-home', 'sec-gets-home', 'sec-faq-v6', 'sec-close-email'],
+        'tail': 'tail-home',
+        'map': {'hero_action': 'action-email', 'hero_stage': 'stage-demo'},
+        'vars': {
+            'hero_mode': 'demo', 'facts_note': '', 'founder_new': '', 'founder_receipt': '',
+            'cond1': 'Agree on your ideal client and the messages before we start',
+            'cond2': 'One meeting every week to track results and improve them',
+            'def_end': ' You set the criteria before we begin.',
+            'cta_href': '#get', 'cta_attrs': '', 'bar_label': 'See If You Qualify',
+            'cta1_label': 'See If You Qualify', 'cta1_fine': 'Your work email, then a <span class="p-nb">60-second</span> fit check.',
+            'ec_attrs': ' data-magnet="" data-cta="qualify"', 'ec_label': 'See If You Qualify', 'ec_ns': 'set up your call',
+            'ec_fine': 'Your work email, then a <span class="p-nb">60-second</span> fit check. If we’re a fit, you pick a time for a <span class="p-nb">20-minute</span> call.',
+            'close_h': 'See if your firm qualifies.',
         },
     },
 }

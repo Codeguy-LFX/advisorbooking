@@ -95,11 +95,11 @@
       if (pre.email !== v) pre.at = Date.now(); pre.email = v; pre.from = location.pathname;
       var told = pre.sent === v; pre.sent = v;   // this email is already with the CRM (Back from the quiz, then the button again)
       try { sessionStorage.setItem('ab_prefill', JSON.stringify(pre)); } catch (x) {}
-      if (!told) post({ stage: 'email_capture', email: v, page_url: location.href, cta: 'playbook-' + (form.getAttribute('data-ec') || ''),
+      if (!told) post({ stage: 'email_capture', email: v, page_url: location.href, cta: (form.getAttribute('data-cta') || 'playbook') + '-' + (form.getAttribute('data-ec') || ''),
         utm_source: utm.utm_source || '', utm_medium: utm.utm_medium || '', utm_campaign: utm.utm_campaign || '', utm_term: utm.utm_term || '',
         utm_content: utm.utm_content || '', gclid: utm.gclid || '', fbclid: utm.fbclid || '', referrer: d.referrer,
         bot_flag: bot ? 'true' : 'false', bot_reason: bot, submitted_at: new Date().toISOString(), funnel_entry: String(C.funnelEntry || ''),
-        lead_magnet: 'Past Prospect Playbook', v: String(w.AB_V || '') });
+        lead_magnet: form.getAttribute('data-magnet') === null ? 'Past Prospect Playbook' : form.getAttribute('data-magnet'), v: String(w.AB_V || '') });
       btn.disabled = true; btn.classList.add('is-busy'); if (label) label.textContent = 'One moment...';
       var next = String(C.playbookNext || '/fit-check'), q = location.search;
       setTimeout(function () { location.href = next + (q && next.indexOf('?') < 0 ? q : ''); }, 250);

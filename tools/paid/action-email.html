@@ -1,12 +1,12 @@
-<form class="p-ec" id="get" method="dialog" onsubmit="return false" novalidate data-ec="hero" data-bar-from>
+<form class="p-ec" id="get" method="dialog" onsubmit="return false" novalidate data-ec="hero"{{ec_attrs}} data-bar-from>
   <div class="k-ec">
     <label class="k-sr-only" for="getEmail">Your work email</label>
     <input type="email" id="getEmail" name="email" placeholder="Your work email" autocomplete="email" inputmode="email" aria-describedby="getErr rmFine">
     <input class="k-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" data-1p-ignore="true" data-lpignore="true">
-    <button class="k-btn k-btn--accent" type="submit"><span>Get the free Playbook</span>{{arrow}}</button>
+    <button class="k-btn k-btn--accent" type="submit"><span>{{ec_label}}</span>{{arrow}}</button>
   </div>
   <p class="k-ec__err" id="getErr" role="alert" hidden>Enter a valid work email.</p>
-  <p class="k-ec__fine" id="rmFine">Free: the Past Prospect Playbook, a <span class="p-nb">7-day</span> sequence you can run yourself on the past prospects in your CRM. Then a <span class="p-nb">60-second</span> fit check.</p>
+  <p class="k-ec__fine" id="rmFine">{{ec_fine}}</p>
   <p class="k-ec__fine p-alt">This box is not working. <a href="/fit-check" onclick="this.href='/fit-check'+location.search">Go straight to the fit check.</a></p>
-  <noscript><p class="k-ec__fine">This box needs JavaScript. Email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will send you the Playbook.</p></noscript>
+  <noscript><p class="k-ec__fine">This box needs JavaScript. Email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will {{ec_ns}}.</p></noscript>
 </form>
