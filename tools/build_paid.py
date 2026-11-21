@@ -35,6 +35,7 @@ COMMON = {
     'ec_attrs': '', 'ec_label': 'Get the free Playbook', 'ec_ns': 'send you the Playbook',
     'ec_fine': 'Free: the Past Prospect Playbook, a <span class="p-nb">7-day</span> sequence you can run yourself on the past prospects in your CRM. Then a <span class="p-nb">60-second</span> fit check.',
     'close_h': 'Get the Playbook. Then see if we’re a fit.',
+    'who_home': 'For independent RIAs with $50M to $250M+ AUM',   # the tag over the home-style headline
     'commit_label': 'Our <span class="p-nb">90-day</span> commitment',   # the label over the commitment
     # the step titles of the look inside the Playbook
     'lt1': 'Who to pull from your CRM',
@@ -152,9 +153,9 @@ PAGES = {
         # "Three steps" and "Everything you get", then the Playbook, what is different, the questions, the email box
         'parts': ['hero-home', 'sec-commitment', 'sec-founder', 'sec-cta', 'sec-how-home', 'sec-gets-home', 'sec-faq-v6', 'sec-close-email'],
         'tail': 'tail-home',
-        'map': {'hero_action': 'action-email', 'hero_stage': 'stage-demo'},
+        'map': {'hero_action': 'action-email', 'hero_stage': 'stage-demo', 'pd': 'pd-home', 'pd-note': 'pd-note-home'},
         'vars': {
-            'commit_label': 'Our guarantee',
+            'commit_label': 'Our guarantee', 'who_home': 'For independent RIAs with $50M+ AUM',
             'hero_mode': 'demo', 'facts_note': '', 'founder_new': '', 'founder_receipt': '',
             'cond1': 'Agree on your ideal client and the messages before we start',
             'cond2': 'One meeting every week to track results and improve them',
@@ -226,7 +227,7 @@ def build(name, page):
     page = dict(page, vars=dict(page['vars']))
     page['vars']['title'] = page['title']
     page['vars']['body_class'] = page['body_class']
-    page['vars']['css'] = '\n'.join('<link rel="stylesheet" href="/assets/%s.css">' % c for c in page['css'])
+    page['vars']['css'] = '\n'.join('<link rel="stylesheet" href="/assets/%s.css%s">' % (c, '?v=4' if c == 'pd' else '') for c in page['css'])   # ?v: a saved older copy of the card's styles must never meet newer markup
     page['vars']['gads'] = '<script src="/assets/gads.js" async></script>'   # not in the part: /tools/paid/page.html must never start the tag
     # scripts the first screen cannot work without are asked for from the head, not when the end of the page arrives
     page['vars']['preconnect'] = (''.join('\n<link rel="preload" as="script" href="/assets/%s.js">' % j for j in page.get('preload', []))
