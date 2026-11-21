@@ -157,6 +157,25 @@ PAGES = {
             'close_h': 'See if your firm qualifies.',
         },
     },
+    # LinkedIn: V6's look and order with the lead magnet first. The free Playbook is the first screen and the action.
+    'ria-linkedin.html': {
+        'title': 'The Past Prospect Playbook: a free 7-day guide for independent RIAs | Advisor Booking',
+        'css': ['kit', 'paid', 'pd', 'home-sec'], 'body_class': 'p p--email p--home p--v6 p--li',
+        'parts': ['hero-magnet', 'sec-look', 'sec-bridge', 'sec-commitment', 'sec-founder', 'sec-cta', 'sec-how-home', 'sec-gets-home', 'sec-faq-short', 'sec-close-email'],
+        'tail': 'tail-home',
+        'map': {'hero_action': 'action-email'},
+        'vars': {
+            'facts_note': '', 'founder_new': '', 'founder_receipt': '',
+            'cond1': 'Agree on your ideal client and the messages before we start',
+            'cond2': 'One meeting every week to track results and improve them',
+            'def_end': ' You set the criteria before we begin.',
+            'cta_href': '#get', 'cta_attrs': '', 'bar_label': 'Get the free Playbook',
+            'pb_eyebrow': 'What’s inside',
+            'pb_get': '<strong>How to get it:</strong> <a href="#get">enter your work email</a> and we’ll send it, whether we’re a fit or not.',
+            'cta1_label': 'Get the free Playbook', 'cta1_fine': '',
+            'ec_fine': 'Free. Next, a <span class="p-nb">60-second</span> fit check. You get the Playbook either way.',
+        },
+    },
 }
 
 
