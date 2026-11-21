@@ -168,7 +168,7 @@ PAGES = {
     'ria-linkedin.html': {
         'title': 'The Past Prospect Playbook: a free 7-day guide for independent RIAs | Advisor Booking',
         'css': ['kit', 'paid', 'pd', 'home-sec'], 'body_class': 'p p--email p--home p--v6 p--li',
-        'parts': ['hero-magnet', 'sec-look', 'sec-founder', 'sec-faq-li', 'sec-close-email'],
+        'parts': ['hero-magnet', 'sec-look', 'sec-cta', 'sec-founder', 'sec-faq-li', 'sec-close-email'],
         'tail': 'tail-home',
         'map': {'hero_action': 'action-email'},
         'vars': {
@@ -181,7 +181,7 @@ PAGES = {
             'lt1': 'Who to reach out to, and who to skip', 'lt2': 'A <span class="p-nb">7-day</span> plan: what to send and when',
             'lt3': 'Messages you can copy and change', 'lt4': 'What to say when they write back so you actually book meetings',
             'lt6': 'A simple tracking sheet plus a checklist for your compliance team',
-            'pb_get': '<a href="#get">Enter your work email</a> and we’ll send it.',
+            'pb_get': '',
             'cta1_label': 'Get the free Playbook', 'cta1_fine': '',
             'ec_fine': 'Free. We email it right away. Next, an optional <span class="p-nb">60-second</span> check to see if we can run it for you and guarantee 15 attended, qualified meetings.',
             'close_h': 'Get the free Playbook.', 'close_f': 'Free. Sent to your work email.',

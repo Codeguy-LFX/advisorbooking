@@ -497,4 +497,7 @@
   .p--li #playbook .p-look__n{background:#fff;box-shadow:inset 0 0 0 1px var(--k-line)}
   .p--li #playbook .p-look__item.is-on .p-look__n{box-shadow:none}
 }
-
+/* the LinkedIn page: a button under the look inside the guide, in place of the text line */
+.p-get:empty{display:none}
+.p--li #playbook{padding-bottom:clamp(28px,3.5vw,40px)}
+.p--li .p-sec--cta .p-cta{margin-top:0}
