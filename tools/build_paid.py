@@ -35,6 +35,7 @@ COMMON = {
     'ec_attrs': '', 'ec_label': 'Get the free Playbook', 'ec_ns': 'send you the Playbook',
     'ec_fine': 'Free: the Past Prospect Playbook, a <span class="p-nb">7-day</span> sequence you can run yourself on the past prospects in your CRM. Then a <span class="p-nb">60-second</span> fit check.',
     'close_h': 'Get the Playbook. Then see if we’re a fit.',
+    'pb_h': 'The Past Prospect Playbook', 'pb_lead': 'A step-by-step guide to finding the meetings that already exist in your CRM. One <span class="p-nb">7-day</span> sequence you can run yourself, without buying a single new lead.',
     'who_home': 'For independent RIAs with $50M to $250M+ AUM',   # the tag over the home-style headline
     'commit_label': 'Our <span class="p-nb">90-day</span> commitment',   # the label over the commitment
     # the step titles of the look inside the Playbook
@@ -169,7 +170,7 @@ PAGES = {
     },
     # LinkedIn: V6's look and order with the lead magnet first. The free Playbook is the first screen and the action.
     'vl.html': {
-        'title': 'The Past Prospect Playbook: a free 7-day guide for independent RIAs | Advisor Booking',
+        'title': 'Free guide for independent RIAs: book a second meeting with prospects who never signed | Advisor Booking',
         'css': ['kit', 'paid', 'pd', 'home-sec'], 'body_class': 'p p--email p--home p--v6 p--li',
         'parts': ['hero-magnet', 'sec-look', 'sec-cta', 'sec-founder', 'sec-faq-li', 'sec-close-email'],
         'tail': 'tail-home',
@@ -179,16 +180,16 @@ PAGES = {
             'cond1': 'Agree on your ideal client and the messages before we start',
             'cond2': 'One meeting every week to track results and improve them',
             'def_end': ' You set the criteria before we begin.',
-            'cta_href': '#get', 'cta_attrs': '', 'bar_label': 'Get the free Playbook',
-            'pb_eyebrow': 'What’s inside',
+            'cta_href': '#get', 'cta_attrs': '', 'bar_label': 'Get the free guide',
+            'pb_eyebrow': 'The Past Prospect Playbook', 'pb_h': 'What’s inside the guide', 'pb_lead': 'Six pages from the guide, word for word. Pick one to see it.',
             'lt1': 'Who to reach out to, and who to skip', 'lt2': 'A <span class="p-nb">7-day</span> plan: what to send and when',
             'lt3': 'Messages you can copy and change', 'lt4': 'What to say when they write back so you actually book meetings',
             'lt6': 'A simple tracking sheet plus a checklist for your compliance team',
             'pb_get': '',
-            'cta1_label': 'Get the free Playbook', 'cta1_fine': '',
-            'ec_fine': 'Free. We email it right away. Then take a <span class="p-nb">60-second</span> quiz to see if you qualify for us to run it for you, with 15 attended, qualified meetings guaranteed in your first <span class="p-nb">90 days</span>.',
-            'close_h': 'Get the free Playbook.', 'close_f': 'Free. Sent to your work email.',
-            'description': 'A free 7-day guide for independent RIAs: who to pull from your CRM, six emails to copy, and what to say when past prospects reply.',
+            'cta1_label': 'Send me the free guide', 'cta1_fine': 'Free. We email it to you. No call needed.',
+            'ec_fine': 'Free. We email it to you right away. No call needed.', 'ec_label': 'Send me the free guide',
+            'close_h': 'Get the free guide.', 'close_f': 'Free. Sent to your work email. No call needed.',
+            'description': 'A free guide for financial advisors who own their firm (independent RIAs, $50M+ in client assets): who to pull from your CRM, 6 emails to send over 7 days, and what to say when prospects who never signed reply.',
         },
     },
 }
