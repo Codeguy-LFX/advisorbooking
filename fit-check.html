@@ -298,6 +298,19 @@ try { sessionStorage.setItem('ab_quiz_from', '/fit-check'); } catch (e) {}</scri
       /* A visitor who has just left an email in the Playbook box (kept for this tab in ab_prefill) is told what happens to it. */
       (function (d) { try { var p = JSON.parse(sessionStorage.getItem('ab_prefill') || '{}') || {}; if (p.email && !/ria-v6/.test(p.from || '')) d.getElementById('raH').textContent = 'We’ll email your Playbook. Now see if we’re a fit.'; } catch (e) {} })(document);
       </script>
+      <!-- The handoff for a visitor from the LinkedIn page who has just left an email for the Playbook: the first promise
+           is closed, then the second offer is made with its reason. Shown on the first question only. -->
+      <div class="ra-handoff" id="raHandoff" hidden>
+        <p class="ra-handoff__ok"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.6 6.3 5 8.6 9.4 3.7"/></svg><span>Your Playbook is on its way to <b id="raHandoffTo">your inbox</b>.</span></p>
+        <p class="ra-handoff__h">Want us to run it for you?</p>
+        <p class="ra-handoff__p">We guarantee at least 15 attended, qualified meetings in your first <span style="white-space:nowrap">90 days</span> from launch, or we keep working at our cost. Answer 5 questions to see if your firm qualifies.</p>
+        <p class="ra-handoff__f">Takes 60 seconds. Optional.</p>
+      </div>
+      <script>
+      (function (d) { try { var p = JSON.parse(sessionStorage.getItem('ab_prefill') || '{}') || {}; if (!p.email || !/ria-linkedin/.test(p.from || '')) return;
+        var h = d.getElementById('raHandoff'); d.getElementById('raHandoffTo').textContent = p.email; d.getElementById('raH').textContent = 'See if your firm qualifies'; h.hidden = false;
+        var c = d.getElementById('apCount'); new MutationObserver(function () { if (c.textContent && !/\b1 of/.test(c.textContent)) h.hidden = true; }).observe(c, { childList: true, characterData: true, subtree: true }); } catch (e) {} })(document);
+      </script>
       <div class="k-quiz k-quiz--labels k-quiz--enter ra-quiz">
         <div id="apBody"><noscript><p>This form needs JavaScript. Email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will set up your call.</p></noscript></div>
         <div class="k-hp" aria-hidden="true"><label for="apHp">Website</label><input type="text" id="apHp" name="website" tabindex="-1" autocomplete="off" data-1p-ignore="true" data-lpignore="true"></div>
