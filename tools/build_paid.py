@@ -25,6 +25,10 @@ ARROW = '<span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true" f
 COMMON = {
     'brand_svg': BRAND, 'arrow': ARROW,
     'sub': 'We work your dormant CRM first, then reach new people by email and LinkedIn. At least 15 attended, qualified meetings in your first <span class="p-nb">90 days</span> from launch, or we keep working at our cost.',
+    # three lines V5 leaves out (the owner's call); every other page keeps them
+    'facts_note': '    <p class="p-facts__note">The first two are our team’s past work, not RIA work. The third is our commitment to you.</p>',
+    'founder_new': '        <p>Advisor Booking is new to RIAs. We have no RIA clients or case studies yet. That is why the commitment is written into your agreement.</p>',
+    'founder_cap': '        <figcaption><b>Past work in another channel, shown for scale.</b> One of the ad accounts Nick has managed: Meta Ads Manager, Dec 12, 2024 to Dec 12, 2025. Its three largest lines add up to $1.9M. That is one account in one year. The 8 figures is his total across accounts. We run no ads for RIAs, so this is not RIA work and not a result to expect.</figcaption>',
     'description': 'For independent RIAs with $50M to $250M+ AUM. At least 15 attended, qualified meetings in your first 90 days from launch, or we keep working at our cost. We start with the past prospects already in your CRM.',
 }
 
@@ -101,6 +105,23 @@ PAGES = {
             'cta_href': '#get', 'cta_attrs': '', 'bar_label': 'Get the free Playbook',
             'pb_sub': 'A step-by-step guide to restarting conversations with the past prospects in your CRM. Free. Tell us where to send it.',
             'pb_fine': 'Yours, fit or not. <a href="#playbook">See what’s inside.</a> Next is a <span class="p-nb">60-second</span> fit check.',
+            'pb_eyebrow': 'The free Playbook',
+            'pb_get': '<strong>How to get it:</strong> <a href="#get">enter your work email</a> and we’ll send it, whether we’re a fit or not.',
+            'cta1_label': 'Get the free Playbook', 'cta1_fine': 'Your work email, then a <span class="p-nb">60-second</span> fit check.',
+        },
+    },
+    # V5: V4 with the home page's first screen (its ground, its changing headline) and the animated card under it
+    'ria-v5.html': {
+        'title': 'We fill financial advisors’ calendars | Advisor Booking',
+        'css': ['kit', 'paid', 'pd', 'home-sec'], 'body_class': 'p p--email p--home',
+        # the first screen and its three figures, the commitment right under it, the founder, then the home page's own
+        # "Three steps" and "Everything you get", then the Playbook, what is different, the questions, the email box
+        'parts': ['hero-home', 'sec-facts', 'sec-commitment', 'sec-founder', 'sec-how-home', 'sec-gets-home', 'sec-look', 'sec-different', 'sec-faq-short', 'sec-close-email'],
+        'tail': 'tail-home',
+        'map': {'hero_action': 'action-email', 'hero_stage': 'stage-demo'},
+        'vars': {
+            'hero_mode': 'demo', 'facts_note': '', 'founder_new': '', 'founder_cap': '',
+            'cta_href': '#get', 'cta_attrs': '', 'bar_label': 'Get the free Playbook',
             'pb_eyebrow': 'The free Playbook',
             'pb_get': '<strong>How to get it:</strong> <a href="#get">enter your work email</a> and we’ll send it, whether we’re a fit or not.',
             'cta1_label': 'Get the free Playbook', 'cta1_fine': 'Your work email, then a <span class="p-nb">60-second</span> fit check.',

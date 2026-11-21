@@ -1,0 +1,15 @@
+<!-- THE FIRST SCREEN OF V5: the home page's own first screen (its ground, its headline with the changing last words,
+     its line), the email box, and the animated card where the home page has its strip of steps. -->
+<section class="p-hero p-hero--demo p-hero--home" aria-labelledby="rmH">
+  <p class="k-brand p-brand">{{brand_svg}}<span>Advisor Booking</span></p>
+  <div class="p-wrap p-hero__copy">
+    <p class="k-eyebrow p-who--home">For independent RIAs with $50M to $250M+ AUM</p>
+    <h1 class="p-h1--home" id="rmH">We fill financial advisors’ calendars with
+      <span class="p-rot" data-words='["HNW individuals.","executives.","your past prospects."]'><span class="p-rot__w">business owners.</span></span>
+    </h1>
+    <p class="p-sub p-sub--home" id="rmS">We work your dormant CRM first, then reach new people by email and LinkedIn. <b>Your Compliance Team approves every message. A real person books every meeting.</b></p>
+    {{> hero_action}}
+    <script>document.documentElement.classList.remove('rm-swap');   /* this page has one headline: nothing to wait for */</script>
+  </div>
+  {{> hero_stage}}
+</section>

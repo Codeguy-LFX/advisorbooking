@@ -92,7 +92,7 @@
       bad(false); sent = true;
       var hp = form.querySelector('input[name=website]'), bot = hp && hp.value ? 'honeypot' : (Date.now() - T0 < 2000 ? 'too_fast' : '');
       var pre = {}; try { pre = JSON.parse(sessionStorage.getItem('ab_prefill') || '{}') || {}; } catch (x) {}
-      if (pre.email !== v) pre.at = Date.now(); pre.email = v;
+      if (pre.email !== v) pre.at = Date.now(); pre.email = v; pre.from = location.pathname;
       var told = pre.sent === v; pre.sent = v;   // this email is already with the CRM (Back from the quiz, then the button again)
       try { sessionStorage.setItem('ab_prefill', JSON.stringify(pre)); } catch (x) {}
       if (!told) post({ stage: 'email_capture', email: v, page_url: location.href, cta: 'playbook-' + (form.getAttribute('data-ec') || ''),
@@ -213,6 +213,26 @@
       w.addEventListener('beforeprint', function () { late.forEach(function (el) { el.classList.add('is-in'); }); });
     }
   }
+  /* ---------- 8b. The changing last words of V5's headline (the home page's, same pace) ----------
+     The other endings are added here, hidden from screen readers, which read the first. Nothing changes while the
+     headline is off screen, the page is in the background, or the visitor has asked for less motion. */
+  Array.prototype.forEach.call(d.querySelectorAll('.p-rot'), function (rot) {
+    var extra = []; try { extra = JSON.parse(rot.getAttribute('data-words') || '[]') || []; } catch (x) {}
+    extra.forEach(function (t) { var s = d.createElement('span'); s.className = 'p-rot__w'; s.setAttribute('aria-hidden', 'true'); s.textContent = t; rot.appendChild(s); });
+    var words = rot.querySelectorAll('.p-rot__w'), i = 0, seen = true;
+    if (!words.length) return;
+    words[0].classList.add('is-on'); rot.classList.add('is-js');
+    if (REDUCE || words.length < 2) { rot.classList.add('p-rot--static'); return; }
+    if ('IntersectionObserver' in w) new IntersectionObserver(function (es) { seen = es[es.length - 1].isIntersecting; }).observe(rot);
+    setInterval(function () {
+      if (d.hidden || !seen) return;
+      var cur = words[i]; i = (i + 1) % words.length; var nx = words[i];
+      cur.classList.remove('is-on'); cur.classList.add('is-out');
+      nx.classList.remove('is-out'); nx.classList.add('is-on');
+      setTimeout(function () { cur.classList.remove('is-out'); }, 650);
+    }, 2400);
+  });
+
   /* ---------- 9. The bar ----------
      Shown once the first screen's action ([data-bar-from]) is wholly above the window; hidden again while a part of
      the page that carries the action itself ([data-bar-hide]: the calendar, the closing section) is on screen.

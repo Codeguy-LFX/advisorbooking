@@ -61,6 +61,37 @@
 /* the line under a green button lies on the button's glow (and, on V4's first screen, on the tray's shadow): the kit's
    muted grey measures 4.0 to 4.4:1 there, so these lines take the darker ink */
 .p-go .k-fine,.p-cta .k-fine,.p-hero .p-ec .k-ec__fine{color:var(--k-ink-2)}
+/* 2b. V5: THE HOME PAGE'S FIRST SCREEN. A white page with the home page's soft green glow rising behind the card, its
+       headline with the changing last words in green, its muted line. No green ground and no band. */
+.p-hero--home::before{content:"";position:absolute;z-index:-3;left:50%;top:clamp(280px,38vw,420px);width:min(1800px,180vw);height:1400px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,var(--accent-soft),rgba(231,243,238,0) 70%);pointer-events:none}
+.p-hero--home .p-stage::before,.p-hero--home .p-stage::after{display:none}
+.p-hero--home .p-glass{background:rgba(255,255,255,.6);box-shadow:inset 0 0 0 1px var(--k-line),0 48px 90px -48px rgba(10,60,45,.35)}
+.p-who--home{margin-top:4px;text-align:center;text-wrap:balance}
+@media (max-width:479px){.p-who--home{font-size:11px;letter-spacing:.05em}}
+/* the home page's headline is large: the copy starts a little higher and the card follows closer, so the card still
+   shows (and plays) on the first screen of a laptop */
+.p-hero--home .p-hero__copy{padding-top:clamp(24px,4vw,44px)}
+.p-hero--home .p-stage{margin-top:clamp(32px,4vw,48px)}
+.p-h1--home{max-width:14.5em;margin:22px auto 0;font-weight:500;font-size:min(max(30px,10vw),max(38px,6vw),min(80px,10.5vh));line-height:1.02;letter-spacing:-.048em;color:var(--ink);text-wrap:balance}
+@media (max-height:520px){.p-h1--home{font-size:min(max(30px,10vw),max(38px,6vw),80px)}}
+.p-rot{display:block;position:relative;height:1.08em;overflow:hidden;color:var(--accent)}
+.p-rot__w{position:absolute;inset:0;display:block;white-space:nowrap;opacity:0;transform:translateY(40%);transition:opacity .5s var(--ease),transform .6s var(--ease)}
+.p-rot__w.is-on{opacity:1;transform:none}
+.p-rot__w.is-out{opacity:0;transform:translateY(-40%)}
+.p-rot:not(.is-js) .p-rot__w:first-child,.p-rot--static .p-rot__w:first-child{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.p-rot__w{transition:none}}
+.p-sub--home{max-width:640px;margin-top:26px;font-size:clamp(17px,1.5vw,19.5px);line-height:1.6;color:var(--muted);text-wrap:pretty}
+.p-sub--home b{color:var(--ink);font-weight:600}
+.p-hero--home .p-ec{margin-top:30px}
+/* on the white page the box is the home page's own: a white tray with a lifted shadow */
+.p-hero--home .p-ec .k-ec{background:#fff;box-shadow:var(--shadow-lift)}
+.p-hero--home .p-ec .k-ec input[type=email]{box-shadow:none}
+.p-hero--home .p-ec .k-ec:focus-within{box-shadow:var(--shadow-lift),0 0 0 3px var(--accent)}
+.p-hero--home .p-ec .k-ec.is-bad{box-shadow:var(--shadow-lift),0 0 0 2px var(--bad)}
+.p-hero--home .p-ec .k-ec__fine{color:var(--k-muted)}
+/* V5 shows the Ads Manager table without a caption beside it: the table takes the block's full width */
+.p--home .p-receipt{grid-template-columns:minmax(0,1fr)}
+.p--home .p-receipt__img{max-width:880px}
 /* the stage */
 .p-stage{position:relative;max-width:calc(960px + 2*var(--gutter));margin-top:clamp(40px,5vw,64px);padding-bottom:clamp(32px,4vw,56px);--p-cut:30%;--p-top:16px}
 .p-stage::before,.p-stage::after{content:"";position:absolute;left:-100vw;right:-100vw;bottom:var(--p-cut);pointer-events:none}

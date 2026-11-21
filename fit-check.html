@@ -277,7 +277,7 @@
  "CARRY_QUERY": true,
  "QUALIFIED_FLAG": "ab_qualified"
 };
-window.AB_APPLY.VARIANT = 'v4-' + window.AB_V;
+window.AB_APPLY.VARIANT = (function () { try { return /ria-v5/.test((JSON.parse(sessionStorage.getItem('ab_prefill') || '{}') || {}).from || '') ? 'v5-' : 'v4-'; } catch (e) { return 'v4-'; } })() + window.AB_V;   /* v5- when the email box was V5's */
 try { sessionStorage.setItem('ab_quiz_from', '/fit-check'); } catch (e) {}</script>
 </head>
 <body>

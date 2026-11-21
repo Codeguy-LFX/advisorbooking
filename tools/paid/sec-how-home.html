@@ -1,0 +1,61 @@
+<!-- HOW IT WORKS: the home page's own section, word for word (index.html), with this page's button under it.
+     Styles in assets/home-sec.css, the marker that follows the scroll in assets/home-sec.js. -->
+<section class="hs how" id="how" aria-labelledby="how-h">
+  <div class="wrap">
+    <div class="how__head"><h2 class="h2" id="how-h">Three steps. <span class="soft">Up and running within 30 days.</span></h2></div>
+    <div class="how__grid">
+      <div class="how__steps" id="steps">
+        <article class="step" data-step="0">
+          <p class="mono step__k">Step 1 · Weeks 1 to 2</p>
+          <h3 class="h3">Build</h3>
+          <p>We build your list of ideal clients and clean up your CRM. We write the messages, and you approve every one before anything is sent. We set up your LinkedIn and email so every message sounds like you, not a robot.</p>
+          <div class="step__vis" aria-hidden="true"><span class="pill">List built</span><span class="pill">CRM cleaned</span><span class="pill">Messages approved by you</span></div>
+        </article>
+        <article class="step" data-step="1">
+          <p class="mono step__k">Step 2 · Weeks 3 to 4</p>
+          <h3 class="h3">Launch</h3>
+          <p>We contact the people already in your CRM first, because they answer fastest. New prospects start getting messages the same week. A real person answers every reply, every day, and books the first meetings onto your calendar.</p>
+          <div class="step__vis" aria-hidden="true"><span class="pill">CRM contacts first</span><span class="pill">New prospects</span><span class="pill">Every reply answered</span><span class="pill">First meetings booked</span></div>
+        </article>
+        <article class="step" data-step="2">
+          <p class="mono step__k">Step 3 · Every week after</p>
+          <h3 class="h3">Grow</h3>
+          <p>Every Monday you get one simple report: messages sent, replies, meetings booked, meetings attended, and what each meeting cost. If a number is off, we fix the list, the messages, or the volume before we ask you to spend more.</p>
+          <div class="mr" aria-hidden="true">
+            <div class="mr__head"><b>Monday report: week 6</b><span class="device__tag">Example</span></div>
+            <div class="mr__row"><span>Messages sent</span><i style="--w:92%"></i></div>
+            <div class="mr__row"><span>Replies</span><i style="--w:34%;--dl:.08s"></i></div>
+            <div class="mr__row"><span>Meetings booked</span><i style="--w:18%;--dl:.16s"></i></div>
+            <div class="mr__row"><span>Meetings attended</span><i style="--w:15%;--dl:.24s"></i></div>
+            <div class="mr__row"><span>Cost per meeting</span><i style="--w:24%;--dl:.32s"></i></div>
+          </div>
+        </article>
+      </div>
+      <div class="how__visual" aria-hidden="true">
+        <div class="loop" id="loop">
+          <svg viewBox="0 0 520 360" id="loopSvg">
+            <defs>
+              <pattern id="dotPat" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="3.5" cy="3.5" r="1.35" fill="#0f7a62" fill-opacity=".3"/></pattern>
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+            </defs>
+            <path id="track" d="M170 40 H350 A130 130 0 0 1 480 170 V190 A130 130 0 0 1 350 320 H170 A130 130 0 0 1 40 190 V170 A130 130 0 0 1 170 40 Z" fill="none" stroke="url(#dotPat)" stroke-width="30"/>
+            <path id="trackDone" d="M170 40 H350 A130 130 0 0 1 480 170 V190 A130 130 0 0 1 350 320 H170 A130 130 0 0 1 40 190 V170 A130 130 0 0 1 170 40 Z" fill="none" stroke="#0f7a62" stroke-width="3" stroke-linecap="round"/>
+            <circle id="markGlow" r="14" fill="#2fbf8f" fill-opacity=".45" filter="url(#glow)"/>
+            <circle id="mark" r="8" fill="#0f7a62" stroke="#fff" stroke-width="3"/>
+          </svg>
+          <span class="loop__tag" data-at="0">List built</span>
+          <span class="loop__tag" data-at=".17">Messages written</span>
+          <span class="loop__tag" data-at=".34">Launch</span>
+          <span class="loop__tag" data-at=".5">Every reply handled</span>
+          <span class="loop__tag" data-at=".67">Meetings booked</span>
+          <span class="loop__tag" data-at=".84">Monday report</span>
+          <div class="loop__core"><span class="loop__n" id="loopN">01</span><span class="loop__l" id="loopL">Build</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="p-cta">
+      <a class="k-btn k-btn--accent k-btn--xl" href="{{cta_href}}"{{cta_attrs}}><span>{{cta1_label}}</span>{{arrow}}</a>
+      <p class="k-fine">{{cta1_fine}}</p>
+    </div>
+  </div>
+</section>
