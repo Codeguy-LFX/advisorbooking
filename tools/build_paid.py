@@ -35,14 +35,14 @@ PAGES = {
     # V1: the quiz on the first screen
     'ria-meetings.html': {
         'title': 'RIA appointment setting. Not leads. Attended meetings. | Advisor Booking',
-        'css': ['kit', 'rm', 'paid', 'pd'], 'body_class': 'p p--quiz',
+        'css': ['kit', 'rm', 'paid', 'pd'], 'body_class': 'p p--quiz', 'preload': ['funnel'],
         'parts': ['hero-quiz'] + LONG, 'tail': 'tail-quiz',
         'map': {'mech_demo': 'stage-demo-inline'},
         'vars': {
             'cta_href': '#book', 'cta_attrs': '', 'bar_label': 'Start the fit check',
             'pb_eyebrow': 'Free with the fit check',
             'pb_get': '<strong>How to get it:</strong> finish the <a href="#book"><span class="p-nb">60-second</span> fit check</a> and we’ll email it to you, whether we’re a fit or not.',
-            'cta1_label': 'Start the <span class="p-nb">60-second</span> fit check', 'cta1_fine': 'Five questions and your contact details. You get the free Past Prospect Playbook, fit or not.',
+            'cta1_label': 'Start the <span class="p-nb">60-second</span> <span class="p-nb">fit check</span>', 'cta1_fine': 'Five questions and your contact details. You get the free Past Prospect Playbook, fit or not.',
             'cta2_label': 'Start the fit check', 'cta2_fine': 'Five questions and your contact details. Then you pick a time for a <span class="p-nb">20-minute</span> call.',
             'cta3_label': 'Start the fit check', 'cta3_fine': 'Takes 60 seconds. You get the free Past Prospect Playbook, fit or not.',
             'faq_next_q': 'What happens after the fit check?',
@@ -144,7 +144,9 @@ def build(name, page):
     page['vars']['body_class'] = page['body_class']
     page['vars']['css'] = '\n'.join('<link rel="stylesheet" href="/assets/%s.css">' % c for c in page['css'])
     page['vars']['gads'] = '<script src="/assets/gads.js" async></script>'   # not in the part: /tools/paid/page.html must never start the tag
-    page['vars']['preconnect'] = '\n<link rel="preconnect" href="https://app.iclosed.io">' if page.get('preconnect') else ''
+    # scripts the first screen cannot work without are asked for from the head, not when the end of the page arrives
+    page['vars']['preconnect'] = (''.join('\n<link rel="preload" as="script" href="/assets/%s.js">' % j for j in page.get('preload', []))
+                                  + ('\n<link rel="preconnect" href="https://app.iclosed.io">' if page.get('preconnect') else ''))
     sections = '\n\n'.join(render('{{> %s}}' % p, page) for p in page['parts'])
     page['vars']['sections'] = sections
     page['vars']['tail'] = render('{{> %s}}' % page['tail'], page)

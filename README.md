@@ -106,7 +106,7 @@ and `assets/route-a.js` (`/fit-check`), `assets/rm-after.css` (the two pages aft
   nothing redrawn), labelled as past work in another channel and not a result to expect. `PROOF SLOT` comments in the
   parts mark where real client proof goes later.
 - **The animated product card** ("Advisor Pipeline") tells one example (a fictional past prospect, labelled
-  "Example") in four scenes: your CRM, the approved message, the real reply, the booked meeting. Its words are in the
+  "Example") in four scenes: your CRM, the approved message, the human reply, the booked meeting. Its words are in the
   part `pd` and reuse the home page's own example sentences. It is HTML and CSS, not a video: `assets/pd.css` holds
   the motion (opacity and transform only), `assets/pd.js` only decides which scene is on. It starts once about a third of it
   is on screen (so it is already moving on most first screens), starts the story again the first time the whole card
@@ -119,16 +119,22 @@ and `assets/route-a.js` (`/fit-check`), `assets/rm-after.css` (the two pages aft
   the brand and the page's one button (part `bar`, part 9 of `assets/paid.js`). It hides again wherever the page
   shows that action itself (the calendar on V3, the closing section).
 - **Links inside the page** move the page without changing the address (on V1 a `#book` address would add a history
-  entry the quiz reads as "back to question 1"). On V1 the quiz answers to the letter keys only while it is on screen.
+  entry the quiz reads as "back to question 1"). The quiz answers to the letter keys only while the focus is inside
+  it (after the first answer, or after a jump to it), on V1 and on `/fit-check`.
 - **Tracking.** The one Google Ads conversion is still the qualified lead on `/qualified` (V1 and V4). V2 and V3 send
   none: the booking happens on iClosed. `email_capture` (V4, once for each email) and `booked` (V3, through `/booked`)
   reach the CRM. So that V2 and V3 bookings can be told apart whatever the ad link carries, the address given to
   iClosed always ends its `utm_content` with the page and the headline: `direct-v2-appt`, `embed-v3-leads`, or after
-  the ad's own value and a dot (`ad_17.direct-v2-alt`).
-- **The email box cannot leak an email.** Its forms have `method="dialog"`, so with the script blocked or JavaScript
-  off the browser does nothing instead of putting the email in the address. After the box, `/fit-check` opens with
-  "We’ll email your Playbook": the CRM must send the guide on the `email_capture` record, because V4 promises it for
-  the email alone.
+  the ad's own value and a dot (`ad_17.direct-v2-alt`). The calendars on `/qualified` and `/not-a-fit` do the same
+  with `utm_term`: it always ends with `L1-q` or `L1-dq`, after the ad's keyword and a dot when the ad link has one
+  (`ria marketing.L1-dq`), so a booking by a lead who did not qualify can always be told from one who did.
+- **The email box cannot leak an email.** Its forms have `method="dialog"` and `onsubmit="return false"`, so with the
+  script blocked or JavaScript off the browser does nothing instead of putting the email in the address. After the
+  box, `/fit-check` opens with "We’ll email your Playbook": the CRM must send the guide on the `email_capture` record,
+  because V4 promises it for the email alone.
+- **When a script does not arrive** the page says what to do instead of standing still: V4's box offers the fit check
+  (or, without JavaScript, the email address), V3's loading sentence links to the scheduler, and the quiz on V1 and
+  `/fit-check` asks for a reload. The animated card moves on by itself if the end of a scene is ever not reported.
 - **Settings.** `assets/config.js` has `iclosedUrlDirect` (the event V2's buttons and V3's calendar use; empty = the
   quiz funnel's event) and `playbookNext` (where the email box goes; empty = `/fit-check`). The same event address is
   the plain link in the markup (`cta_href` in `tools/build_paid.py`), used when the script does not run: change both.

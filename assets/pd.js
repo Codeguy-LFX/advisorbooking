@@ -1,8 +1,9 @@
 /* Advisor Booking: the animated product card (see pd.css).
    The motion itself is CSS. This script only decides which scene is on and whether its timeline runs:
    it plays while the card is on screen and the page is in front, holds where it stands otherwise, and moves
-   on when the bar of the current step has filled. Pausing rests the scene complete. No timers. With reduced motion nothing plays: the last
-   scene is shown complete and the steps switch scenes at once. */
+   on when the bar of the current step has filled. Pausing rests the scene complete. With reduced motion nothing plays:
+   the last scene is shown complete and the steps switch scenes at once. One timer, a safety net only: if the end of a
+   scene is ever not reported, the card moves on by itself a moment later instead of standing empty. */
 (function () {
   'use strict';
   var OUT = 0.28; /* a card at rest starts with the end of its scene (the fade) and then runs that scene from the top: no cut from a complete picture to an empty one */
@@ -18,7 +19,7 @@
         body = root.querySelector('.pd-mail__body'),
         mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null,
         still = !!(mq && mq.matches),
-        scene = 0, user = false, inView = false, started = false, again = false, full = false, t0 = 0;
+        scene = 0, user = false, inView = false, started = false, again = false, full = false, t0 = 0, wd = 0;
     if (!tabs.length || scenes.length !== tabs.length) return;
 
     /* the draft email is written word by word: one span a word */
@@ -46,6 +47,10 @@
       scenes.forEach(function (s, k) { s.classList.toggle('is-on', k === i); });
       caps.forEach(function (c, k) { c.classList.toggle('is-on', k === i); });
     }
+    function len() { return parseFloat(getComputedStyle(root).getPropertyValue('--T')) || 5; }
+    /* the safety net: a scene's end that is never reported must not leave the stage empty */
+    function arm(left) { clearTimeout(wd); wd = setTimeout(function () { if (started && !still && !root.classList.contains('pd--hold')) step(); }, (left + 1.5) * 1000); }
+    function step() { var next = again ? scene : (scene + 1) % scenes.length; again = false; restart(next, 0); }
     /* take the timeline off, switch, and put it back on: every animation of the scene starts again */
     function restart(i, from) {
       root.classList.remove('pd--run');
@@ -54,16 +59,19 @@
       void root.offsetWidth;
       root.classList.add('pd--run');
       started = true; t0 = Date.now();
+      arm(len() - (from || 0));
     }
-    function rest(i) { root.classList.remove('pd--run'); show(i); started = false; again = false; }
+    function rest(i) { clearTimeout(wd); root.classList.remove('pd--run'); show(i); started = false; again = false; }
     function sync() {
       if (still) return;
       var hold = user || !inView || document.hidden;
       root.classList.toggle('pd--hold', hold);
-      if (!hold && !started) {
+      if (hold) clearTimeout(wd);
+      else if (started) arm(len());   /* back from a hold: how far the scene had come is not known, so allow its whole length */
+      else {
         /* a card at rest shows its scene complete: play only the end of that scene (its fade), then the scene from the top */
         again = true;
-        restart(scene, (parseFloat(getComputedStyle(root).getPropertyValue('--T')) || 5) - OUT);
+        restart(scene, len() - OUT);
       }
     }
     /* a scene that cannot play right now is shown complete; it starts from the top once it can */
@@ -99,8 +107,7 @@
       /* !started: the card was put to rest in this very frame (paused, or a step chosen while held); the bar that was
          running can still report its end once before the browser drops it, and that must not start a scene */
       if (e.animationName !== 'pd-bar' || still || !started) return;
-      var next = again ? scene : (scene + 1) % scenes.length;
-      again = false; restart(next, 0);
+      step();
     });
     document.addEventListener('visibilitychange', sync);
     if (mq) { if (mq.addEventListener) mq.addEventListener('change', mode); else if (mq.addListener) mq.addListener(mode); }

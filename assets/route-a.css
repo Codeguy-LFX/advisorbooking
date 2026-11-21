@@ -30,7 +30,7 @@
 /* optional (route-a.js): a copy of the fill that glides with a transform instead of jumping */
 .ra-fill{position:absolute;inset:0;background:var(--k-accent);transform-origin:0 50%;transition:transform var(--k-dur-slow) var(--k-ease)}
 .ra-glide .k-progress__fill{visibility:hidden}
-.ra-eyebrow{display:flex;margin:24px 0 0;line-height:16px}
+.ra-eyebrow{display:flex;margin:24px 0 0;line-height:16px;text-wrap:balance}
 .ra-quiz{margin-top:12px}
 /* answers: a long answer breaks where it reads best ("broker-dealer" stays whole from 360px up).
    Browsers that only know "balance" use that; older ones wrap as usual. */

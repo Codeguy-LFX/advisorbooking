@@ -118,7 +118,8 @@
     if (a.last) u.searchParams.set('iclosedLastName', String(a.last).trim());
     if (a.email) u.searchParams.set('iclosedEmail', a.email);
     if (d.length === 10) u.searchParams.set('iclosedPhone', '+1' + d);
-    if (!u.searchParams.get('utm_term')) u.searchParams.set('utm_term', 'L1-' + LABEL);
+    /* the booking always says which page it came from: after the ad's own keyword and a dot when the ad link has one */
+    var ut = u.searchParams.get('utm_term'); u.searchParams.set('utm_term', (ut ? ut + '.' : '') + 'L1-' + LABEL);
     url = u.toString();
   } catch (e) {}
   var cal = document.getElementById('calendar'), mount = cal.querySelector('.k-cal__mount');

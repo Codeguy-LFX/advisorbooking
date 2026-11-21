@@ -42,7 +42,7 @@
     <p class="k-chip p-who"><span class="k-chip__dot" aria-hidden="true"></span>For independent RIAs with $50M to $250M+ AUM</p>
     <h1 class="k-display p-h1" id="rmH"><span class="p-ph">RIA appointment setting.</span> <span class="p-ph">Not leads.</span> <span class="p-ph">Attended meetings.</span></h1>
     <p class="p-sub" id="rmS">We work your dormant CRM first, then reach new people by email and LinkedIn. At least 15 attended, qualified meetings in your first <span class="p-nb">90 days</span> from launch, or we keep working at our cost.</p>
-    <form class="p-ec" id="get" method="dialog" novalidate data-ec="hero" data-bar-from>
+    <form class="p-ec" id="get" method="dialog" onsubmit="return false" novalidate data-ec="hero" data-bar-from>
       <div class="k-ec">
         <label class="k-sr-only" for="getEmail">Your work email</label>
         <input type="email" id="getEmail" name="email" placeholder="Your work email" autocomplete="email" inputmode="email" aria-describedby="getErr rmFine">
@@ -51,6 +51,7 @@
       </div>
       <p class="k-ec__err" id="getErr" role="alert" hidden>Enter a valid work email.</p>
       <p class="k-ec__fine" id="rmFine">Free: the Past Prospect Playbook, a <span class="p-nb">7-day</span> sequence you can run yourself on the past prospects in your CRM. Then a <span class="p-nb">60-second</span> fit check.</p>
+      <p class="k-ec__fine p-alt">This box did not load. <a href="/fit-check">Go straight to the fit check.</a></p>
       <noscript><p class="k-ec__fine">This box needs JavaScript. Email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will send you the Playbook.</p></noscript>
     </form>
     <script>
@@ -383,8 +384,8 @@
     <div class="p-founder" data-rv>
       <figure class="p-founder__photo">
         <picture>
-          <source type="image/webp" srcset="/assets/nick-panel-600.webp 600w, /assets/nick-panel.webp 900w" sizes="(min-width:960px) 500px, (min-width:700px) 640px, 92vw">
-          <img src="/assets/nick-panel.jpg" srcset="/assets/nick-panel-600.jpg 600w, /assets/nick-panel.jpg 900w" sizes="(min-width:960px) 500px, (min-width:700px) 640px, 92vw" width="900" height="600" alt="Nick De Jesus speaking on stage with a microphone" loading="lazy" decoding="async">
+          <source type="image/webp" srcset="/assets/nick-panel-600.webp 600w, /assets/nick-panel.webp 900w" sizes="(min-width:960px) 500px, (min-width:700px) 42vw, 92vw">
+          <img src="/assets/nick-panel.jpg" srcset="/assets/nick-panel-600.jpg 600w, /assets/nick-panel.jpg 900w" sizes="(min-width:960px) 500px, (min-width:700px) 42vw, 92vw" width="900" height="600" alt="Nick De Jesus speaking on stage with a microphone" loading="lazy" decoding="async">
         </picture>
       </figure>
       <div class="p-founder__body">
@@ -436,7 +437,7 @@
   <div class="p-wrap p-narrow p-close__in">
     <p class="k-eyebrow">Next step</p>
     <h2 class="p-close__h" id="closeH">Get the Playbook. Then see if we’re a fit.</h2>
-    <form class="p-ec p-close__go" method="dialog" novalidate data-ec="close">
+    <form class="p-ec p-close__go" method="dialog" onsubmit="return false" novalidate data-ec="close">
       <div class="k-ec">
         <label class="k-sr-only" for="getEmail2">Your work email</label>
         <input type="email" id="getEmail2" name="email" placeholder="Your work email" autocomplete="email" inputmode="email" aria-describedby="getErr2">
@@ -444,6 +445,7 @@
         <button class="k-btn k-btn--accent" type="submit"><span>Get the free Playbook</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
       </div>
       <p class="k-ec__err" id="getErr2" role="alert" hidden>Enter a valid work email.</p>
+      <p class="k-ec__fine p-alt">This box did not load. <a href="/fit-check">Go straight to the fit check.</a></p>
       <noscript><p class="k-ec__fine">This box needs JavaScript. Email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will send you the Playbook.</p></noscript>
     </form>
     <p class="p-close__f">At least 15 attended, qualified meetings in your first 90 days from launch, or we keep working at our cost.</p>
@@ -463,7 +465,7 @@
   <p class="k-legal__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
 </footer>
 <script src="/assets/config.js"></script>
-<script src="/assets/paid.js" defer></script>
+<script src="/assets/paid.js" defer onerror="document.documentElement.classList.add('p-fail')"></script>
 <script src="/assets/pd.js" defer></script>
 </body>
 </html>

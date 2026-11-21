@@ -80,7 +80,7 @@
     var label = btn.querySelector('span'), words = label ? label.textContent : '';
     /* the error sentence is in the box only while there is an error: hidden text is still read out as a description */
     var msg = err ? err.textContent : ''; if (err) err.textContent = '';
-    function bad(on) { if (box) box.classList.toggle('is-bad', on); if (err) { err.textContent = on ? msg : ''; err.hidden = !on; } input.setAttribute('aria-invalid', on ? 'true' : 'false'); }
+    function bad(on) { form.classList.toggle('is-err', on); if (box) box.classList.toggle('is-bad', on); if (err) { err.textContent = on ? msg : ''; err.hidden = !on; } input.setAttribute('aria-invalid', on ? 'true' : 'false'); }
     input.addEventListener('input', function () { if (err && !err.hidden && emailOk(input.value.trim())) bad(false); });
     form.addEventListener('submit', function (e) {
       e.preventDefault(); if (sent) return;
@@ -132,8 +132,9 @@
      made in the frame is reported by /booked and saved to the CRM, once. */
   var cal = d.querySelector('#calendar[data-embed]');
   if (cal) (function () {
-    var mount = cal.querySelector('.k-cal__mount'), url = iclosed('embed-v3');
+    var mount = cal.querySelector('.k-cal__mount'), url = iclosed('embed-v3'), open = cal.querySelector('a[data-cal-open]');
     if (!mount || !url) return;
+    if (open) open.href = url;   /* the plain link in the loading sentence carries the same tags as the calendar */
     function start() {
       var wd = d.createElement('div'); wd.className = 'iclosed-widget'; wd.setAttribute('data-url', url); wd.setAttribute('title', 'Pick a time for your call'); wd.style.width = '100%';
       mount.appendChild(wd);
@@ -200,7 +201,7 @@
       Array.prototype.forEach.call(rv, function (el) { if (el.getAttribute('data-rv') === 'in') el.classList.add('is-in'); });
       var io = new IntersectionObserver(function (es) {
         es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } });
-      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+      }, { rootMargin: '0px 0px -4% 0px', threshold: 0.05 });
       late.forEach(function (el) { io.observe(el); });
       /* jumps (a far in-page link, the browser restoring a position) can skip the observer's callbacks for a frame: check on scroll end */
       var tick; w.addEventListener('scroll', function () { clearTimeout(tick); tick = setTimeout(function () {

@@ -33,6 +33,7 @@
 })(window, document);
 </script>
 <script src="/assets/gads.js" async></script>
+<link rel="preload" as="script" href="/assets/funnel.js">
 </head>
 <body class="p p--quiz">
 <main id="main">
@@ -402,7 +403,7 @@
       <li class="p-card p-card--tick"><h3>Done for you.</h3><p>No ad spend. No filming. No software to learn.</p></li>
     </ul>
     <div class="p-cta" data-rv>
-      <a class="k-btn k-btn--accent k-btn--xl" href="#book"><span>Start the <span class="p-nb">60-second</span> fit check</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      <a class="k-btn k-btn--accent k-btn--xl" href="#book"><span>Start the <span class="p-nb">60-second</span> <span class="p-nb">fit check</span></span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
       <p class="k-fine">Five questions and your contact details. You get the free Past Prospect Playbook, fit or not.</p>
     </div>
   </div>
@@ -560,8 +561,8 @@
     <div class="p-founder" data-rv>
       <figure class="p-founder__photo">
         <picture>
-          <source type="image/webp" srcset="/assets/nick-panel-600.webp 600w, /assets/nick-panel.webp 900w" sizes="(min-width:960px) 500px, (min-width:700px) 640px, 92vw">
-          <img src="/assets/nick-panel.jpg" srcset="/assets/nick-panel-600.jpg 600w, /assets/nick-panel.jpg 900w" sizes="(min-width:960px) 500px, (min-width:700px) 640px, 92vw" width="900" height="600" alt="Nick De Jesus speaking on stage with a microphone" loading="lazy" decoding="async">
+          <source type="image/webp" srcset="/assets/nick-panel-600.webp 600w, /assets/nick-panel.webp 900w" sizes="(min-width:960px) 500px, (min-width:700px) 42vw, 92vw">
+          <img src="/assets/nick-panel.jpg" srcset="/assets/nick-panel-600.jpg 600w, /assets/nick-panel.jpg 900w" sizes="(min-width:960px) 500px, (min-width:700px) 42vw, 92vw" width="900" height="600" alt="Nick De Jesus speaking on stage with a microphone" loading="lazy" decoding="async">
         </picture>
       </figure>
       <div class="p-founder__body">
@@ -615,7 +616,7 @@
 <section class="k-night p-close" aria-labelledby="closeH" data-bar-hide>
   <div class="p-wrap p-narrow p-close__in">
     <p class="k-eyebrow">Next step</p>
-    <h2 class="p-close__h" id="closeH">At least 15 attended, qualified meetings in your first 90 days from launch, or we keep working at our cost.</h2>
+    <h2 class="p-close__h" id="closeH">At least 15 attended, qualified meetings in your first <span class="p-nb">90 days</span> from launch, or we keep working at our cost.</h2>
     <div class="p-close__go"><a class="k-btn k-btn--accent k-btn--xl" href="#book"><span>Start the fit check</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
     <p class="p-close__f">Takes 60 seconds. You get the free Past Prospect Playbook, fit or not.</p>
   </div>
@@ -884,9 +885,11 @@
  "QUALIFIED_FLAG": "ab_qualified"
 };
 window.AB_APPLY.VARIANT = window.AB_V;
-try { sessionStorage.setItem('ab_quiz_from', '/ria-meetings'); } catch (e) {}</script>
+try { sessionStorage.setItem('ab_quiz_from', '/ria-meetings'); } catch (e) {}
+/* If the quiz's script does not arrive, say so where the question would be (the noscript line covers JavaScript off). */
+window.abQuizFail = function () { var b = document.getElementById('apBody'); if (b && !b.querySelector('.ap-screen')) b.innerHTML = '<p class="ap-screen">The questions did not load. Reload the page, or email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will set up your call.</p>'; };</script>
 <script src="/assets/config.js"></script>
-<script src="/assets/funnel.js" defer></script>
+<script src="/assets/funnel.js" defer onerror="abQuizFail()"></script>
 <script src="/assets/rm.js" defer></script>
 <script src="/assets/paid.js" defer></script>
 <script src="/assets/pd.js" defer></script>

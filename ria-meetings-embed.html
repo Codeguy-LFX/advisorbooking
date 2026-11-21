@@ -74,7 +74,7 @@
     <div class="p-glass">
       <section class="k-cal af-cal p-cal" id="calendar" aria-label="Pick a time for your call" data-embed>
         <div class="k-cal__body">
-          <div class="k-cal__skel"><p class="k-cal__note">Loading the calendar. If it does not appear, email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will send you times.</p></div>
+          <div class="k-cal__skel"><p class="k-cal__note">Loading the calendar. If it does not appear, <a href="https://app.iclosed.io/e/advisorbooking/advisor-booking-meeting" target="_blank" rel="noopener" data-cal-open>open it here</a> or email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will send you times.</p></div>
           <div class="k-cal__mount"></div>
         </div>
       </section>
@@ -548,8 +548,8 @@
     <div class="p-founder" data-rv>
       <figure class="p-founder__photo">
         <picture>
-          <source type="image/webp" srcset="/assets/nick-panel-600.webp 600w, /assets/nick-panel.webp 900w" sizes="(min-width:960px) 500px, (min-width:700px) 640px, 92vw">
-          <img src="/assets/nick-panel.jpg" srcset="/assets/nick-panel-600.jpg 600w, /assets/nick-panel.jpg 900w" sizes="(min-width:960px) 500px, (min-width:700px) 640px, 92vw" width="900" height="600" alt="Nick De Jesus speaking on stage with a microphone" loading="lazy" decoding="async">
+          <source type="image/webp" srcset="/assets/nick-panel-600.webp 600w, /assets/nick-panel.webp 900w" sizes="(min-width:960px) 500px, (min-width:700px) 42vw, 92vw">
+          <img src="/assets/nick-panel.jpg" srcset="/assets/nick-panel-600.jpg 600w, /assets/nick-panel.jpg 900w" sizes="(min-width:960px) 500px, (min-width:700px) 42vw, 92vw" width="900" height="600" alt="Nick De Jesus speaking on stage with a microphone" loading="lazy" decoding="async">
         </picture>
       </figure>
       <div class="p-founder__body">
@@ -603,7 +603,7 @@
 <section class="k-night p-close" aria-labelledby="closeH" data-bar-hide>
   <div class="p-wrap p-narrow p-close__in">
     <p class="k-eyebrow">Next step</p>
-    <h2 class="p-close__h" id="closeH">At least 15 attended, qualified meetings in your first 90 days from launch, or we keep working at our cost.</h2>
+    <h2 class="p-close__h" id="closeH">At least 15 attended, qualified meetings in your first <span class="p-nb">90 days</span> from launch, or we keep working at our cost.</h2>
     <div class="p-close__go"><a class="k-btn k-btn--accent k-btn--xl" href="#schedule"><span>Book your fit call</span><span class="k-btn__chip"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
     <p class="p-close__f">A few questions, then you pick a time. You get the free Past Prospect Playbook, fit or not.</p>
   </div>
@@ -622,7 +622,7 @@
   <p class="k-legal__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
 </footer>
 <script src="/assets/config.js"></script>
-<script src="/assets/paid.js" defer></script>
+<script src="/assets/paid.js" defer onerror="document.documentElement.classList.add('p-fail')"></script>
 <script src="/assets/pd.js" defer></script>
 </body>
 </html>

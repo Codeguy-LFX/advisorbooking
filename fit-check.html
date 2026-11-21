@@ -310,8 +310,12 @@ try { sessionStorage.setItem('ab_quiz_from', '/fit-check'); } catch (e) {}</scri
   <nav class="k-legal__links" aria-label="Footer"><a href="/privacy" target="_blank" rel="noopener">Privacy</a><a href="/terms" target="_blank" rel="noopener">Terms</a></nav>
   <p class="k-legal__disc">Advisor Booking is a marketing and appointment-setting company. We are not an investment adviser. Nothing on this page is investment advice or a promise of new clients, assets, or performance.</p>
 </footer>
+<script>
+/* If the quiz's script does not arrive, say so where the question would be (the noscript line covers JavaScript off). */
+window.abQuizFail = function () { var b = document.getElementById('apBody'); if (b && !b.querySelector('.ap-screen')) b.innerHTML = '<p class="ap-screen">The questions did not load. Reload the page, or email <a href="mailto:info@advisorbooking.com">info@advisorbooking.com</a> and we will set up your call.</p>'; };
+</script>
 <script src="/assets/config.js"></script>
-<script src="/assets/funnel.js" defer></script>
+<script src="/assets/funnel.js" defer onerror="abQuizFail()"></script>
 <script src="/assets/route-a.js" defer></script>
 </body>
 </html>
