@@ -231,10 +231,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
 @media (max-width:767px){.hd{max-width:492px}.hd-glass{margin-inline:-6px;padding:6px;border-radius:28px}}
 /* ---------- Finish: small things that make the page read as one piece. No structure or wording changes. ---------- */
 ::selection{background:#cdeadf;color:var(--ink)}
-/* the nav floats on frosted glass: the page shows through softly instead of being cut off by a white slab */
-.nav__pill{background:rgba(255,255,255,.8);-webkit-backdrop-filter:saturate(1.6) blur(22px);backdrop-filter:saturate(1.6) blur(22px)}
-.nav.is-scrolled .nav__pill{background:rgba(255,255,255,.93)}
-@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.nav__pill,.nav.is-scrolled .nav__pill{background:#fff}}
 /* buttons: a lit top edge and a tight shadow under them, in place of a wide green haze */
 .btn{box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 1px 2px rgba(10,30,22,.18)}
 .btn--accent{background-image:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,0) 62%);
