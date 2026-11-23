@@ -289,3 +289,26 @@
 @media (max-width:339px){.pd--home .pd-tag{padding:3px 6px;font-size:10.5px}.pd--home .pd-row{column-gap:7px}}
 /* the home card's first caption is three lines on the narrowest phones: room for it there, taken from the stage */
 @media (max-width:359px){.pd--home .pd-caps{height:58px}.pd--home .pd-cap{font-size:12.5px;line-height:17px}}
+
+/* THE LINKEDIN STEP IN A WINDOW OF ITS OWN (.pd-lic, the home page): the prospect's name and role over the note, like a
+   message window, so the step fills its frame and cannot be mistaken for the reply step. A page whose card still has
+   the bare thread is not touched by these rules. */
+.pd-lic{width:100%;padding:0 14px 14px;border-radius:12px;background:#fff;box-shadow:0 0 0 1px rgba(13,15,14,.07),0 1px 2px rgba(13,15,14,.04),0 8px 20px -12px rgba(13,15,14,.14)}
+.pd-lic__top{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
+.pd-lic__top .pd-av{grid-area:auto;background:var(--accent-soft);box-shadow:0 0 0 1px rgba(15,122,98,.18);color:var(--accent)}
+.pd-lic__who{display:grid;min-width:0}
+.pd-lic__who b{font-size:13px;line-height:17px;font-weight:500;letter-spacing:-.012em;color:var(--ink)}
+.pd-lic__who span{font-size:12.5px;line-height:16px;color:var(--muted)}
+.pd-lic .pd-thread{width:auto;max-width:none;padding-top:14px}
+.pd-lic .pd-msg{max-width:94%}
+@media (min-width:768px){
+  .pd-lic{max-width:680px;padding:0 28px 26px}
+  .pd-lic__top{column-gap:14px;padding:16px 0}
+  .pd-lic__top .pd-av{width:38px;height:38px;font-size:12px;line-height:38px}
+  .pd-lic__who b{font-size:15.5px;line-height:22px}
+  .pd-lic__who span{font-size:13.5px;line-height:19px}
+  .pd-lic .pd-thread{padding-top:22px;gap:14px}
+  .pd-lic .pd-msg{max-width:100%}
+}
+@media (forced-colors:active){.pd-lic{outline:1px solid CanvasText;outline-offset:-1px}}
+

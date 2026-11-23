@@ -211,7 +211,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
 @media print{.js [data-rv].pre{opacity:1;transform:none;transition:none}.js .how.is-live .step{opacity:1;transition:none}}
 </style>
 <link rel="stylesheet" href="assets/v3.css">
-<link rel="stylesheet" href="assets/pd.css?v=4">
+<link rel="stylesheet" href="assets/pd.css?v=5">
 <style>
 /* The animated card in the first screen (assets/pd.css, assets/pd.js), in the frame it has on /vg. */
 .hd{width:min(980px,100%);margin-top:clamp(20px,4vw,48px);--k-r-lg:22px;--k-r-xl:28px;--k-check-img:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.6 6.3 5 8.6 9.4 3.7' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
@@ -229,6 +229,46 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
 .stats__cta{display:flex;justify-content:center;margin-top:clamp(32px,4vw,48px)}
 .hd-note{margin-top:16px;text-align:center;font-size:14px;line-height:20px;color:var(--muted);text-wrap:balance}
 @media (max-width:767px){.hd{max-width:492px}.hd-glass{margin-inline:-6px;padding:6px;border-radius:28px}}
+/* ---------- Finish: small things that make the page read as one piece. No structure or wording changes. ---------- */
+::selection{background:#cdeadf;color:var(--ink)}
+/* the nav floats on frosted glass: the page shows through softly instead of being cut off by a white slab */
+.nav__pill{background:rgba(255,255,255,.8);-webkit-backdrop-filter:saturate(1.6) blur(22px);backdrop-filter:saturate(1.6) blur(22px)}
+.nav.is-scrolled .nav__pill{background:rgba(255,255,255,.93)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.nav__pill,.nav.is-scrolled .nav__pill{background:#fff}}
+/* buttons: a lit top edge and a tight shadow under them, in place of a wide green haze */
+.btn{box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 1px 2px rgba(10,30,22,.18)}
+.btn--accent{background-image:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,0) 62%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.26),inset 0 0 0 1px rgba(6,60,46,.28),0 1px 2px rgba(6,60,46,.32),0 12px 26px -12px rgba(15,122,98,.62),0 0 46px -20px rgba(47,191,143,.5)}
+.btn--light{box-shadow:inset 0 0 0 1px rgba(255,255,255,.6),0 1px 2px rgba(0,0,0,.3),0 14px 30px -16px rgba(0,0,0,.6)}
+.btn__chip{box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
+.btn--light .btn__chip{box-shadow:inset 0 0 0 1px rgba(10,30,22,.06)}
+/* first screen: less empty air over the headline, so the example card starts inside the first screen on a laptop */
+.hero.v2-hero{padding-top:calc(var(--nav-h) + clamp(56px,7vw,96px))}
+.hd{margin-top:clamp(20px,3.2vw,40px)}
+/* the email box: the hint reads as a hint, not as something already typed */
+.ec input[type=email]::placeholder{color:var(--muted)}
+.ec{box-shadow:var(--shadow-lift),inset 0 1px 0 #fff}
+/* the guarantee: the dark card gets a floor (a rule and a seal over its last line) and a quiet glow, so it no longer
+   ends in empty black; the heading beside it breaks evenly */
+.lp-guar__quote{position:relative;isolation:isolate;overflow:hidden}
+.lp-guar__quote::before{content:"";position:absolute;z-index:-1;right:-18%;bottom:-58%;width:92%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,rgba(47,191,143,.2),rgba(47,191,143,0));pointer-events:none}
+.lp-guar__quote::after{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(rgba(255,255,255,.1) 1px,transparent 1.4px) 0 0/16px 16px;-webkit-mask-image:linear-gradient(315deg,#000,transparent 46%);mask-image:linear-gradient(315deg,#000,transparent 46%);pointer-events:none}
+.lp-guar__quote footer{display:flex;align-items:center;gap:11px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12)}
+.lp-guar__quote footer::before{content:"";flex:0 0 auto;width:20px;height:20px;border-radius:50%;background:var(--accent-bright) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.6 6.3 5 8.6 9.4 3.7' fill='none' stroke='%230a0c0b' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px 12px no-repeat}
+.lp-guar__terms h3{text-wrap:balance}
+/* headings that ran edge to edge get room; last lines no longer end on one stray word */
+#stats-h{font-size:clamp(32px,4.4vw,58px)}
+.stat__label{text-wrap:balance}
+.v2-cta .h2{font-size:clamp(32px,4.3vw,54px)}
+.v2-cta .lead{text-wrap:balance}
+.step p,.gi p,.qa__a p,.how__next{text-wrap:pretty}
+/* the questions: room under the last one (it sat on the footer's line), and the plus answers the pointer */
+.faq{padding-bottom:clamp(56px,7vw,96px)}
+.qa details{transition:box-shadow .3s var(--ease)}
+.qa summary{transition:color .15s}
+@media (hover:hover) and (pointer:fine){.qa summary:hover .qa__x{background:var(--accent-soft)}}
+.qa summary:focus-visible{outline-offset:-4px;border-radius:16px}
+@media (forced-colors:active){.lp-guar__quote footer::before{display:none}}
 </style>
 </head>
 <body data-root="" data-lander="home" data-next="fit-check">
@@ -295,9 +335,12 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 24px)}
     </div>
     <!-- 2. LinkedIn: a short, personal note, and the prospect connects -->
     <div class="pd-scene pd-s3 pd-li">
-      <div class="pd-thread">
-        <p class="pd-msg pd-msg--us" data-a style="--d:.2s"><i>Your firm, on LinkedIn</i><span>Hi Dana, congrats on selling your company. Open to a quick 20-minute call?</span></p>
-        <p class="pd-conn" data-a="pop" style="--d:1.9s"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.6 6.3 5 8.6 9.4 3.7"/></svg>Dana connected</p>
+      <div class="pd-lic" data-a style="--d:0s">
+        <p class="pd-lic__top" data-a="fade" style="--d:.1s"><span class="pd-av">DA</span><span class="pd-lic__who"><b>Dana A.</b><span>Founder, Apex Logistics</span></span></p>
+        <div class="pd-thread">
+        <p class="pd-msg pd-msg--us" data-a style="--d:.55s"><i>Your firm, on LinkedIn</i><span>Hi Dana, congrats on selling your company. Open to a quick 20-minute call?</span></p>
+        <p class="pd-conn" data-a="pop" style="--d:2.1s"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.6 6.3 5 8.6 9.4 3.7"/></svg>Dana connected</p>
+        </div>
       </div>
     </div>
     <!-- 3. Email: the draft writes itself in, then waits, is approved, is sent -->
