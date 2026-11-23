@@ -277,7 +277,10 @@
  "CARRY_QUERY": true,
  "QUALIFIED_FLAG": "ab_qualified"
 };
-window.AB_APPLY.VARIANT = (function () { try { var f = (JSON.parse(sessionStorage.getItem('ab_prefill') || '{}') || {}).from || document.referrer || ''; return /ria-linkedin|\/vl\b/.test(f) ? 'li-' : /ria-v6|\/vg\b/.test(f) ? 'v6-' : /ria-v5/.test(f) ? 'v5-' : 'v4-'; } catch (e) { return 'v4-'; } })() + window.AB_V;   /* v5- or v6- when the email box was V5's or V6's */
+/* The page the visitor came from (saved with the email, or by the home page's buttons; else the referrer) marks the lead:
+   li- the LinkedIn page, v6- the Google page and its sitelink pages, v5- V5, home- the home page, v4- everything else. */
+window.abFromHome = function (f) { try { if (!f) return false; var u = new URL(f, location.origin); return u.origin === location.origin && /^\/(index\.html)?$/.test(u.pathname); } catch (e) { return false; } };
+window.AB_APPLY.VARIANT = (function () { try { var f = (JSON.parse(sessionStorage.getItem('ab_prefill') || '{}') || {}).from || document.referrer || ''; return /ria-linkedin|\/vl\b/.test(f) ? 'li-' : /ria-v6|\/vg\b/.test(f) ? 'v6-' : /ria-v5/.test(f) ? 'v5-' : window.abFromHome(f) ? 'home-' : 'v4-'; } catch (e) { return 'v4-'; } })() + window.AB_V;
 try { sessionStorage.setItem('ab_quiz_from', '/fit-check'); } catch (e) {}</script>
 </head>
 <body>
@@ -295,8 +298,9 @@ try { sessionStorage.setItem('ab_quiz_from', '/fit-check'); } catch (e) {}</scri
       </div>
       <h1 class="k-eyebrow ra-eyebrow" id="raH">See if your firm is a fit</h1>
       <script>
-      /* A visitor who has just left an email in the Playbook box (kept for this tab in ab_prefill) is told what happens to it. */
-      (function (d) { try { var p = JSON.parse(sessionStorage.getItem('ab_prefill') || '{}') || {}; if (p.email && !/ria-v6|\/vg\b/.test(p.from || '')) d.getElementById('raH').textContent = 'We’ll email your Playbook. Now see if we’re a fit.'; } catch (e) {} })(document);
+      /* A visitor who has just left an email in the Playbook box (kept for this tab in ab_prefill) is told what happens to it.
+         The Google page and the home page offer no Playbook, so their visitors keep the page's own heading. */
+      (function (d) { try { var p = JSON.parse(sessionStorage.getItem('ab_prefill') || '{}') || {}; if (p.email && !/ria-v6|\/vg\b/.test(p.from || '') && !window.abFromHome(p.from)) d.getElementById('raH').textContent = 'We’ll email your Playbook. Now see if we’re a fit.'; } catch (e) {} })(document);
       </script>
       <!-- The handoff for a visitor from the LinkedIn page who has just left an email for the Playbook: the first promise
            is closed, then the second offer is made with its reason. Shown on the first question only. -->

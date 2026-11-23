@@ -18,8 +18,9 @@ window.AB_CONFIG = {
   playbookNext: "",
   // iClosed: set the event's confirmation page to this URL with forwarding on, so bookings are detected and reported.
   bookedUrl: "https://advisorbooking.com/booked",
-  // Where the landers' email-first "Book intro call" sends people (relative to the site root): "L1/" is the
-  // qualifying form with the email prefilled; "book.html" skips the form.
+  // Where the landers' email-first box sends people (relative to the site root): "L1/" is the older qualifying form
+  // with the email prefilled; "book.html" skips the form. A page with its own <body data-next> (the home page:
+  // "fit-check", the quiz of the paid pages) goes there instead.
   landerNext: "L1/",
   // Calendly (legacy): the 20-minute event URL, and whether book.html embeds it or links out to it.
   calendlyUrl: "",

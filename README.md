@@ -6,7 +6,7 @@ Static marketing site for Advisor Booking (De Jesus Ventures LLC). No build step
 
 | File | URL | Purpose |
 | --- | --- | --- |
-| `index.html` | `/` | Home page |
+| `index.html` | `/` | Home page. Every call to action (four buttons, two email boxes) goes to the quiz at `/fit-check` (since Nov 23, 2026; before that `/L1/`). `<body data-next="fit-check">` tells `assets/lander.js` where the email boxes go. Leads carry `v` = `home-...`. |
 | `book.html` | `/book` | Booking page for every home-page button: the logo and the iClosed scheduler full width, nothing else (the pilot lander is the other path to test) |
 | `pilot.html` | `/pilot` | Hidden founding-offer landing page for email and LinkedIn outreach (gated form, then the iClosed calendar). `noindex`, not linked from the nav. |
 | `meetings.html` | `/meetings` | Hidden v1 landing page, kept for later use. `noindex`. |
@@ -58,7 +58,7 @@ rules and settings: the `window.AB_APPLY` block at the top of `L1/index.html`.
   address that carries a person's details, or at any other address that merely contains "/qualified".
 - The paid funnel: `/ria-meetings` and `/fit-check` run the same quiz engine and settings as `/L1/` with extra settings
   (`SCROLL_TO`, `VARIANT`, `CARRY_QUERY`, `QUALIFIED_FLAG` in `assets/funnel.js`). They send the CRM the same record
-  plus `v` (the headline variant; `v4-` in front for `/fit-check`), carry the whole query string (click id, `utm_`,
+  plus `v` (the headline variant; in front of it, for `/fit-check`, the page the visitor came from: `li-` `/vl`, `v6-` `/vg` and its sitelink pages, `v5-` `/ria-v5`, `home-` the home page, `v4-` anything else), carry the whole query string (click id, `utm_`,
   `v`) to `/qualified` or `/not-a-fit`, and set `sessionStorage ab_qualified = 1` for a qualified lead. `lander.js`,
   `funnel.js` and `paid.js` also keep the ad click id (`gclid`, `gbraid`, `wbraid`) for 90 days (`ab_click`).
 - CRM: `ghlWebhookUrl` gets two form-encoded posts per lead: `stage=complete` (all answers, contact details,

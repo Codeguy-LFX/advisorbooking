@@ -1,12 +1,14 @@
 /* Advisor Booking landers (/v2/): the email-first CTA, the rotating hero word, the blog topic filter, and campaign
    tag capture. No dependencies; pilot.js handles the nav, smooth scrolling, reveals and the FAQ.
 
-   Email-first CTA ("Ready to talk?"): the visitor gives a work email, then "Book intro call" takes them to the
+   Email-first CTA ("Ready to talk?"): the visitor gives a work email, then the button takes them to the
    qualifying form with that email already filled in. Before leaving it:
-     - saves the email for the form (sessionStorage ab_prefill, this tab only; never put in the URL)
+     - saves the email and the page it was given on for the form (sessionStorage ab_prefill, this tab only; never
+       put in the URL)
      - posts stage=email_capture, email, page and campaign tags (form-encoded) to AB_CONFIG.ghlWebhookUrl when set
      - pushes ab_email_capture to window.dataLayer for GTM (no email in the event)
-   Where it goes: AB_CONFIG.landerNext (default "L1/", the qualifying form), relative to the site root. */
+   Where it goes: the page's own <body data-next> when it has one (the home page: "fit-check", the quiz of the paid
+   pages), else AB_CONFIG.landerNext (default "L1/", the older qualifying form), relative to the site root. */
 (function () {
   'use strict';
   var doc = document, CFG = window.AB_CONFIG || {};
@@ -45,8 +47,9 @@
     var err = form.parentNode.querySelector('.ec__err');
     function bad(on) { form.classList.toggle('is-bad', on); if (err) err.hidden = !on; input.setAttribute('aria-invalid', on ? 'true' : 'false'); }
     input.addEventListener('input', function () { if (form.classList.contains('is-bad') && emailOk(input.value.trim())) bad(false); });
-    var sent = false;
-    window.addEventListener('pageshow', function (ev) { if (ev.persisted && sent) { sent = false; if (btn) { btn.disabled = false; btn.classList.remove('is-wait'); var l0 = btn.querySelector('span'); if (l0) l0.textContent = 'Book intro call'; } } });
+    var sent = false, lab = btn && btn.querySelector('span'), lab0 = lab ? lab.textContent : '';
+    /* Back from the form (a page kept whole by the browser): the button is usable again, with its own words. */
+    window.addEventListener('pageshow', function (ev) { if (ev.persisted && sent) { sent = false; if (btn) { btn.disabled = false; btn.classList.remove('is-wait'); if (lab) lab.textContent = lab0; } } });
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (sent) return;   // a second Enter or tap while the page is leaving
@@ -56,26 +59,37 @@
       var hp = form.querySelector('input[name=website]');
       var bot = (hp && hp.value) ? 'honeypot' : ((Date.now() - T0) < 2000 ? 'too_fast' : '');
       var pre = {}; try { pre = JSON.parse(sessionStorage.getItem('ab_prefill') || '{}') || {}; } catch (x) {}
-      if (pre.email !== v) pre.at = Date.now(); pre.email = v; try { sessionStorage.setItem('ab_prefill', JSON.stringify(pre)); } catch (x) {}
+      if (pre.email !== v) pre.at = Date.now(); pre.email = v; pre.from = location.pathname;   // from: /fit-check marks the lead by the page it came from
+      try { sessionStorage.setItem('ab_prefill', JSON.stringify(pre)); } catch (x) {}
       post({ stage: 'email_capture', email: v, page_url: location.href, cta: form.getAttribute('data-ec') || '',
              utm_source: utm.utm_source || '', utm_medium: utm.utm_medium || '', utm_campaign: utm.utm_campaign || '',
              utm_term: utm.utm_term || '', utm_content: utm.utm_content || '', gclid: utm.gclid || '', fbclid: utm.fbclid || '',
              referrer: doc.referrer, bot_flag: bot ? 'true' : 'false', bot_reason: bot, submitted_at: new Date().toISOString(),
              funnel_entry: String(CFG.funnelEntry || ''), fbp: (function () { var m = document.cookie.match(/(?:^|;\s*)_fbp=([^;]+)/); return m ? decodeURIComponent(m[1]) : ''; })() });
-      var next = String(CFG.landerNext || 'L1/');
+      var next = String(doc.body.getAttribute('data-next') || CFG.landerNext || 'L1/');
       var lander = doc.body.getAttribute('data-lander') || location.pathname, cta = form.getAttribute('data-ec') || '';
-      if (/^(L[0-9]+|fit[0-9]*)\//.test(next)) {   // the qualifying form (L1/)
+      if (/^(L[0-9]+\/|fit[0-9]*\/|fit-check(\.html)?$)/.test(next)) {   // a qualifying form (L1/, or the quiz at /fit-check)
         /* Going to the qualifying form: its tracking gate decides whether this event fires (AUM $50M+ only). */
         try { sessionStorage.setItem('ab_email_capture_pending', JSON.stringify({ lander: lander, cta: cta })); } catch (x) {}
       } else {
         push({ event: 'ab_email_capture', ab_lander: lander, ab_cta: cta });
       }
-      if (btn) { btn.disabled = true; btn.classList.add('is-wait'); var l = btn.querySelector('span'); if (l) l.textContent = 'One moment...'; }
+      if (btn) { btn.disabled = true; btn.classList.add('is-wait'); if (lab) lab.textContent = 'One moment...'; }
       setTimeout(function () { location.href = /^https?:/.test(next) ? next : ROOT + next; }, 250);
     });
   });
 
-  /* Nav and other "Book intro call" links that point at a form: scroll there (pilot.js), then put the cursor in it. */
+  /* A button that goes straight to the quiz at /fit-check (the home page's): the quiz marks its lead by the page the
+     visitor came from, so that page is saved here too. An email left in a box earlier in this tab is kept. */
+  doc.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href]') : null, u;
+    if (!a) return;
+    try { u = new URL(a.getAttribute('href'), location.href); } catch (x) { return; }
+    if (u.origin !== location.origin || !/\/fit-check(\.html)?$/.test(u.pathname)) return;
+    try { var pre = JSON.parse(sessionStorage.getItem('ab_prefill') || '{}') || {}; pre.from = location.pathname; sessionStorage.setItem('ab_prefill', JSON.stringify(pre)); } catch (x) {}
+  });
+
+  /* Nav and other links that point at an email box on the page: scroll there (pilot.js), then put the cursor in it. */
   doc.addEventListener('click', function (e) {
     var a = e.target.closest ? e.target.closest('[data-ec-focus]') : null;
     if (!a) return;
