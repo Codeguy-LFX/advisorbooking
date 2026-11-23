@@ -279,7 +279,7 @@
 };
 /* The page the visitor came from (saved with the email, or by the home page's buttons; else the referrer) marks the lead:
    li- the LinkedIn page, v6- the Google page and its sitelink pages, v5- V5, home- the home page, v4- everything else. */
-window.abFromHome = function (f) { try { if (!f) return false; var u = new URL(f, location.origin); return u.origin === location.origin && /^\/(index\.html)?$/.test(u.pathname); } catch (e) { return false; } };
+window.abFromHome = function (f) { try { if (!f) return false; var u = new URL(f, location.origin); return u.origin === location.origin && /^\/(index(\.html)?)?$/.test(u.pathname); } catch (e) { return false; } };
 window.AB_APPLY.VARIANT = (function () { try { var f = (JSON.parse(sessionStorage.getItem('ab_prefill') || '{}') || {}).from || document.referrer || ''; return /ria-linkedin|\/vl\b/.test(f) ? 'li-' : /ria-v6|\/vg\b/.test(f) ? 'v6-' : /ria-v5/.test(f) ? 'v5-' : window.abFromHome(f) ? 'home-' : 'v4-'; } catch (e) { return 'v4-'; } })() + window.AB_V;
 try { sessionStorage.setItem('ab_quiz_from', '/fit-check'); } catch (e) {}</script>
 </head>
