@@ -64,21 +64,26 @@ def plain(body):
     return re.sub(r"[ \t]+", " ", re.sub(r"\n\s*\n+", "\n", t)).strip()
 
 
-SIG_CUT = re.compile(r"(?im)^(--\s*$|thank you,?$|thanks,?$|best( regards)?,?$|regards,?$|sent from my|this e-?mail|confidentiality notice|important notice|the statements contained herein)")
+SIG_CUT = re.compile(r"(?i)^(--\s*$|thank you,?$|thanks,?$|best( regards)?,?$|regards,?$|sent from my|this e-?mail|confidentiality notice|important notice|the statements contained herein|follow me on|p\.?s\.?\b|\[cid:|<https?://|https?://)")
+SIG_LINE = re.compile(r"(\b\d{3}[\s.)-]+\d{3}[\s.-]\d{4}\b|@|\b(CFP|CFA|CPA|CRPC|ChFC|CLU|AIF|LLC|Inc\.?|Partners?|Advisors?|Planners?|Financial|Wealth|Capital|President|Principal|Founder|Managing|Director|Suite|Road|Street|Ave)\b)")
+NAME_LINE = re.compile(r"^[A-Z][a-zA-Z.'-]*(\s+[A-Z][a-zA-Z.'-]*\.?){1,3},?$")
+WROTE_RE = re.compile(r"(?s)(\bOn (Mon|Tue|Wed|Thu|Fri|Sat|Sun)[a-z]*,? .{0,220}?wrote:|-{2,} ?Original Message|\bFrom: .{0,200}?Sent: )")
 
 
 def own_words(text):
-    """The writer's own words: drop quoted history and the signature block."""
-    t = re.split(r"(?m)^On .{6,120}wrote:\s*$|^-{2,} ?Original Message", text)[0]
-    lines = [l.strip() for l in t.splitlines()]
+    """The writer's own words: drop quoted history, then stop at the signature block."""
+    t = WROTE_RE.split(text or "")[0]
+    t = t.split("\n\n")[0] if "\n\n" in t.strip() else t
     keep = []
-    for i, l in enumerate(lines):
-        if i > 0 and SIG_CUT.match(l):
-            break
-        if l.startswith(">"):
+    for l in (x.strip() for x in t.splitlines()):
+        if not l or l.startswith(">"):
             continue
+        if keep and (SIG_CUT.match(l) or SIG_LINE.search(l) or NAME_LINE.match(l)):
+            break
+        if not keep and SIG_CUT.match(l):
+            break
         keep.append(l)
-    return " ".join(x for x in keep if x).strip()
+    return " ".join(keep).strip()
 
 
 QUOTE_RE = re.compile(r"On (?P<when>[A-Z][a-z]{2}, [A-Z][a-z]{2} \d{1,2}, \d{4} at \d{1,2}:\d{2}\s?[AP]M)[^\n]*?(?:&lt;|<)(?P<email>[^>&\s]+@[^>&\s]+)(?:&gt;|>)\s*wrote:\s*\n(?P<body>.*)", re.S)
@@ -218,7 +223,9 @@ def main():
         for t in gmail_by_email.get(em, []):
             for gmsg in t.get("messages", []):
                 when = ts(gmsg.get("date"))
-                direction = "outbound" if gmsg.get("fromMe") else "inbound"
+                sender = (gmsg.get("from") or "").lower()
+                # Decide from the sender address itself; the bridge's own fromMe flag is not trusted.
+                direction = "outbound" if any(("@" + d) in sender for d in CFG["internalEmailDomains"]) else "inbound"
                 if any(e[0] and when and abs((e[0] - when).total_seconds()) < 180 and e[1] == direction for e in events):
                     continue
                 events.append((when, direction, "email", own_words(gmsg.get("body") or ""), "Gmail", t.get("subject") or ""))

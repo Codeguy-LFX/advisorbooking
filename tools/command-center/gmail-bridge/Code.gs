@@ -22,7 +22,7 @@ function doPost(e) {
       return typeof x === 'string' && /^[^\s@()"]+@[^\s@()"]+\.[a-z]{2,}$/i.test(x);
     }).slice(0, MAX_EMAILS);
     var days = Math.min(Math.max(parseInt(req.days, 10) || 120, 1), 365);
-    var me = Session.getActiveUser().getEmail().toLowerCase();
+    var me = (Session.getEffectiveUser().getEmail() || 'nick@advisorbooking.com').toLowerCase();
     var seen = {}, threads = [];
     emails.forEach(function (addr) {
       var q = '(from:' + addr + ' OR to:' + addr + ' OR cc:' + addr + ') newer_than:' + days + 'd -in:chats';
@@ -38,7 +38,7 @@ function doPost(e) {
           return {
             date: m.getDate().toISOString(),
             from: m.getFrom(),
-            fromMe: from.indexOf(me) > -1 || /@advisorbooking\.com/.test(from),
+            fromMe: /@advisorbooking\.com/.test(from),
             to: m.getTo(),
             body: (m.getPlainBody() || '').slice(0, MAX_BODY)
           };
