@@ -1,0 +1,24 @@
+{
+  "locationId": "OlHSy0ie2GEU9CN03QfE",
+  "businessName": "Advisor Booking",
+  "ownerTimezone": "America/New_York",
+  "staleDays": 14,
+  "internalEmailDomains": [
+    "advisorbooking.com",
+    "advisorbooked.com"
+  ],
+  "internalEmails": [],
+  "internalPhones": [],
+  "foundingSeatsTotal": 5,
+  "foundingSeatsSold": 0,
+  "foundingSeatsAsOf": "2026-10-18",
+  "foundingSeatsSource": "assets/config.js (pilotSeatsTotal, pilotFirmsSigned)",
+  "outsideIcpCountryTlds": [
+    ".au",
+    ".uk",
+    ".ca",
+    ".nz"
+  ],
+  "gmailBridgeDays": 120,
+  "_internalNote": "Your own personal email and phone are passed in CC_INTERNAL (comma separated) when the command runs, so they never sit in this public repo."
+}

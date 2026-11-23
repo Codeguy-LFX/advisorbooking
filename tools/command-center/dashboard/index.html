@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Advisor Booking Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: header with source chips, then the five-people panel (the job of the page), then tiles, then one chart and the quiet list. Stacks to one column under 720px. */
+:root{
+  --bg:#f6f7f6; --surface:#ffffff; --surface-2:#f1f3f2; --line:#e4e7e5; --line-soft:#eef0ef;
+  --ink:#0e0e0e; --ink-2:#4b5563; --ink-3:#8a9199;
+  --accent:#0F7A62; --accent-soft:#E8F4EF; --accent-line:#BFE0D3; --on-accent:#ffffff;
+  --warn:#9a5b00; --warn-soft:#fdf2df; --bad:#b4233c; --bad-soft:#fbe9ec;
+  --grid:#e1e0d9; --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05);
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --font-display:"Inter Tight","Inter",system-ui,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1211; --surface:#171b1a; --surface-2:#1f2523; --line:#2b3331; --line-soft:#232a28;
+    --ink:#eef2f0; --ink-2:#aab4b0; --ink-3:#77817d;
+    --accent:#3cc49a; --accent-soft:#12291f; --accent-line:#24493a; --on-accent:#06130e;
+    --warn:#e3a54a; --warn-soft:#2b2113; --bad:#f0778d; --bad-soft:#321a20;
+    --grid:#2c2c2a; --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.3);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1211; --surface:#171b1a; --surface-2:#1f2523; --line:#2b3331; --line-soft:#232a28;
+  --ink:#eef2f0; --ink-2:#aab4b0; --ink-3:#77817d;
+  --accent:#3cc49a; --accent-soft:#12291f; --accent-line:#24493a; --on-accent:#06130e;
+  --warn:#e3a54a; --warn-soft:#2b2113; --bad:#f0778d; --bad-soft:#321a20;
+  --grid:#2c2c2a; --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.3);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 14px/1.5 var(--font);-webkit-font-smoothing:antialiased}
+.page{max-width:1180px;margin:0 auto;padding:0 16px 40px}
+header.top{border-bottom:1px solid var(--line);background:var(--surface);margin:0 -16px;padding:14px 16px 12px}
+.idrow{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;max-width:1180px;margin:0 auto}
+h1{font:800 20px/1.2 var(--font-display);letter-spacing:-.02em;margin:0;text-wrap:balance}
+.sub{font-size:12.5px;color:var(--ink-2);margin-top:3px}
+.sub b{color:var(--ink);font-weight:600}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:500;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line);padding:3px 9px;border-radius:999px;white-space:nowrap}
+.chip i{width:6px;height:6px;border-radius:50%;background:var(--ink-3)}
+.chip.on i{background:var(--accent)}
+.chip.on{color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px;margin-top:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:var(--shadow);min-width:0}
+.c3{grid-column:span 3}.c5{grid-column:span 5}.c7{grid-column:span 7}.c12{grid-column:span 12}
+.ct{font:700 15px/1.3 var(--font-display);letter-spacing:-.01em;margin:0}
+.cs{font-size:12px;color:var(--ink-2);margin:3px 0 10px}
+.who{border-color:var(--accent-line);background:linear-gradient(170deg,var(--accent-soft) 0%,var(--surface) 55%)}
+.banner{font-size:12.5px;color:var(--ink);background:var(--surface);border:1px solid var(--accent-line);border-radius:10px;padding:9px 12px;margin:2px 0 10px}
+.banner b{font-weight:600}
+.wrow{display:grid;grid-template-columns:24px minmax(0,1.4fr) minmax(0,.8fr) minmax(0,1fr) minmax(0,2.2fr);gap:12px;align-items:center;padding:10px 4px;border-bottom:1px solid var(--line-soft);cursor:pointer;border-radius:8px}
+.wrow:hover{background:color-mix(in srgb,var(--accent) 6%,transparent)}
+.wrow:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrow[aria-expanded="true"]{background:color-mix(in srgb,var(--accent) 9%,transparent)}
+.wn{width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--on-accent);font:600 11px/22px var(--font-mono);text-align:center}
+.wnm{font-weight:600;font-size:14px;overflow-wrap:anywhere}
+.wem{font-size:11.5px;color:var(--ink-2);overflow-wrap:anywhere}
+.caret{font-size:10px;color:var(--ink-3);margin-left:6px;display:inline-block;transition:transform .15s}
+.wrow[aria-expanded="true"] .caret{transform:rotate(90deg)}
+.wv{font:600 13px var(--font-mono)}
+.wv.miss{font:500 11.5px var(--font);color:var(--ink-3)}
+.wq{font-size:12px;color:var(--ink-2)}
+.tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.03em;padding:2px 6px;border-radius:5px;margin-top:3px}
+.tag.them{background:var(--bad-soft);color:var(--bad)}
+.tag.us{background:var(--surface-2);color:var(--ink-2)}
+.wy{font-size:12px;color:var(--ink-2)}
+.drawer{padding:4px 4px 16px 40px;border-bottom:1px solid var(--line-soft)}
+.said{font-size:12.5px;color:var(--ink-2);border-left:2px solid var(--line);padding:2px 0 2px 11px;margin-bottom:11px;max-width:640px}
+.said b{color:var(--ink);font-weight:600}
+.bubble{background:var(--surface);border:1px solid var(--accent-line);border-radius:14px 14px 14px 4px;padding:11px 14px;font-size:13.5px;line-height:1.55;max-width:640px}
+.blab{font:600 10.5px var(--font-mono);text-transform:uppercase;letter-spacing:.07em;color:var(--accent);margin-bottom:6px}
+.subj{font-size:12px;color:var(--ink-2);margin-bottom:6px}
+.lean{font-size:12px;color:var(--ink-2);margin-top:8px;max-width:640px}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.btn{appearance:none;font:600 12.5px var(--font);border-radius:9px;padding:8px 13px;cursor:pointer;border:1px solid transparent;text-decoration:none;display:inline-flex;align-items:center}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn.primary{background:var(--accent);color:var(--on-accent)}
+.btn.ghost{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.hint{font-size:11.5px;color:var(--ink-2);margin-top:9px;max-width:640px}
+.hint code{font-family:var(--font-mono);background:var(--surface-2);padding:2px 6px;border-radius:5px;user-select:all;-webkit-user-select:all;color:var(--ink)}
+.nodraft{font-size:12.5px;color:var(--ink-2)}
+.wfoot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--ink-2);margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.wfoot b{color:var(--ink);font-family:var(--font-mono)}
+.k{font:600 10.5px var(--font-mono);text-transform:uppercase;letter-spacing:.07em;color:var(--ink-2)}
+.v{font:600 26px/1.2 var(--font);letter-spacing:-.02em;margin-top:6px}
+.v.miss{font-size:15px;color:var(--ink-3);letter-spacing:.04em}
+.d{font-size:12px;color:var(--ink-2);margin-top:4px}
+.card.warn{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 35%,transparent)}
+.card.warn .d{color:var(--warn);font-weight:600}
+.chart{position:relative}
+svg{display:block;width:100%;height:auto}
+.axis{font:10px var(--font-mono);fill:var(--ink-3)}
+.dlab{font:600 10.5px var(--font-mono);fill:var(--ink)}
+.gl{stroke:var(--grid);stroke-width:1}
+.tip{position:fixed;pointer-events:none;z-index:50;background:var(--ink);color:var(--bg);font-size:11.5px;padding:7px 9px;border-radius:8px;opacity:0;transition:opacity .1s}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;font:600 10px var(--font-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2);padding:7px 8px;border-bottom:1.5px solid var(--line);white-space:nowrap}
+td{padding:8px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+tr:last-child td{border-bottom:0}
+.tw{overflow-x:auto}
+.miss-note{font-size:12px;color:var(--ink-2)}
+.list{margin:0;padding-left:18px;font-size:12.5px;color:var(--ink-2)}
+.list li{margin:3px 0}
+footer{margin-top:20px;padding-top:12px;border-top:1px solid var(--line);font-size:11.5px;color:var(--ink-3);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.err{padding:20px;border:1px solid var(--bad);border-radius:12px;background:var(--bad-soft);color:var(--bad);margin-top:16px}
+@media (max-width:860px){.c3{grid-column:span 6}.c5,.c7{grid-column:span 12}
+  .wrow{grid-template-columns:24px minmax(0,1fr) auto}.wrow .wq{grid-column:2}.wrow .wy{grid-column:2/-1}}
+@media (max-width:520px){.drawer{padding-left:6px}.v{font-size:22px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="top">
+    <div class="idrow">
+      <div>
+        <h1>Advisor Booking Command Center</h1>
+        <div class="sub" id="sub">Loading</div>
+      </div>
+      <div class="chips" id="chips"></div>
+    </div>
+  </header>
+  <main id="main"></main>
+  <footer>
+    <span>Read only. Nothing on this page sends, schedules or changes anything in GoHighLevel or Gmail. Numbers we cannot find read MISSING.</span>
+    <span id="foot"></span>
+  </footer>
+</div>
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+<script>
+(function(){
+const $=(s,r)=>(r||document).querySelector(s);
+function el(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n;}
+const money=n=>'$'+Math.round(n).toLocaleString('en-US');
+function fmtDate(iso,tz){if(!iso)return 'not in CRM';const d=new Date(iso);return d.toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:tz||'America/New_York'});}
+function fmtStamp(iso,tz){const d=new Date(iso);return d.toLocaleString('en-US',{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZone:tz,timeZoneName:'short'});}
+function daysSince(iso){return Math.floor((Date.now()-new Date(iso).getTime())/86400000);}
+
+fetch('data.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('data.json returned '+r.status);return r.json();}).then(render).catch(e=>{
+  $('#sub').textContent='Could not load the data file';
+  const box=el('div','err','The dashboard data did not load: '+e.message+'. Ask Claude to rebuild the command center.');
+  $('#main').appendChild(box);
+});
+
+function render(D){
+  const tz=D.timezone||'America/New_York';
+  const age=Math.round((Date.now()-new Date(D.builtAt).getTime())/3600000);
+  const sub=$('#sub'); sub.textContent='';
+  sub.append('Built ',el('b',null,fmtStamp(D.builtAt,tz)));
+  if(age>=26) sub.append(el('span',null,'. This is '+age+' hours old, so treat it as stale.'));
+  const chips=$('#chips');
+  Object.entries(D.sources).forEach(([n,s])=>{const c=el('span','chip'+(s==='live'?' on':''));c.append(el('i'),document.createTextNode(n+(s==='live'?'':': '+s)));c.title=n+': '+s;chips.appendChild(c);});
+  $('#foot').textContent='Sources: GoHighLevel sub-account '+(D.sources.Gmail==='live'?'and Gmail (nick@advisorbooking.com)':'only, Gmail not connected yet');
+
+  const g=el('div','grid'); $('#main').appendChild(g);
+
+  /* ---------- Five people to talk to today ---------- */
+  const w=el('section','card c12 who'); w.id='five';
+  w.append(el('h2','ct','Five people to talk to today'));
+  w.append(el('p','cs','From GoHighLevel. Ranked: whoever is waiting on you first, then deal value, then people who wrote back in their own words, then days quiet. Outside-US firms go last.'));
+  if(D.counts.staleCount===0 && D.five.length){
+    const b=el('div','banner'); b.append(el('b',null,'Nobody has been quiet '+D.staleDays+' days yet. '),
+      document.createTextNode('These are the people going quiet, oldest silence first. The first one crosses '+D.staleDays+' days on '+fmtDate(new Date(new Date(D.five.map(p=>p.lastContact).sort()[0]).getTime()+D.staleDays*86400000).toISOString(),tz)+'.'));
+    w.append(b);
+  }
+  if(!D.five.length){ w.append(el('p','miss-note','MISSING: no prospect in GoHighLevel has a conversation on record yet.')); }
+  D.five.forEach((p,i)=>{
+    const r=el('div','wrow'); r.tabIndex=0; r.setAttribute('role','button'); r.setAttribute('aria-expanded','false'); r.setAttribute('aria-controls','draw-'+i); r.id='row-'+i;
+    r.append(el('div','wn',String(i+1)));
+    const nm=el('div'); const t=el('div','wnm',p.name&&p.name!=='not in CRM'?p.name:p.email); t.append(el('span','caret','▶')); nm.append(t);
+    nm.append(el('div','wem',(p.name&&p.name!=='not in CRM')?p.email:'Name not in CRM')); r.append(nm);
+    r.append(p.dealValue?el('div','wv',money(p.dealValue)):el('div','wv miss','No deal in CRM'));
+    const q=el('div','wq',(p.daysQuiet==null?'no conversation':daysSince(p.lastContact)+' days quiet')); q.append(el('br'));
+    q.append(el('span','tag '+(p.spokeLast==='them'?'them':'us'),p.spokeLast==='them'?'THEY SPOKE LAST':'YOU SPOKE LAST')); r.append(q);
+    r.append(el('div','wy',whyLine(p,tz)));
+    w.append(r);
+
+    const dr=el('div','drawer'); dr.id='draw-'+i; dr.hidden=true; dr.setAttribute('aria-labelledby','row-'+i);
+    const said=el('div','said');
+    if(p.theirLastWords){said.append('Last thing they said, ',el('b',null,fmtDate(p.theirLastWordsDate,tz)),': “'+p.theirLastWords+'”');
+      if(p.theirLastWordsSource && p.theirLastWordsSource.indexOf('quoted')>-1) said.append(el('span',null,' (seen quoted in your reply)'));}
+    else said.append('Their own words are not in CRM. Their reply likely sits in Gmail, which is not connected yet.');
+    dr.append(said);
+    const d=p.draft;
+    if(d){
+      const bub=el('div','bubble'); bub.append(el('div','blab','Drafted for you, email'));
+      const sj=el('div','subj','Subject: '+d.subject); bub.append(sj);
+      const tx=el('span','dtext',d.draft); bub.append(tx); dr.append(bub);
+      const lean=el('div','lean',d.lean); dr.append(lean);
+      const acts=el('div','acts');
+      const copy=el('button','btn primary','Copy this draft'); copy.type='button';
+      const open=el('a','btn ghost','Open in Gmail'); open.target='_blank'; open.rel='noopener';
+      const redo=el('button','btn ghost','Write me another'); redo.type='button';
+      acts.append(copy,open,redo); dr.append(acts);
+      let showingAlt=false;
+      const sync=()=>{open.href='https://mail.google.com/mail/?view=cm&fs=1&to='+encodeURIComponent(p.email)+'&su='+encodeURIComponent(d.subject)+'&body='+encodeURIComponent(tx.textContent);};
+      sync();
+      copy.addEventListener('click',async()=>{
+        try{await navigator.clipboard.writeText(tx.textContent);copy.textContent='Copied';setTimeout(()=>copy.textContent='Copy this draft',1500);}
+        catch(e){const rg=document.createRange();rg.selectNodeContents(tx);const s=getSelection();s.removeAllRanges();s.addRange(rg);copy.textContent='Selected, press copy';setTimeout(()=>copy.textContent='Copy this draft',2200);}
+      });
+      redo.addEventListener('click',()=>{showingAlt=!showingAlt;tx.textContent=showingAlt?d.alt:d.draft;lean.textContent=showingAlt?d.altLean:d.lean;sync();});
+      const h=el('div','hint'); h.append('If Gmail does not open from here, copy the draft and email ',el('code',null,p.email),' yourself, signed in as nick@advisorbooking.com. Nothing sends on its own. Send during their business hours.');
+      dr.append(h);
+    } else dr.append(el('p','nodraft','No draft yet. The 7am refresh writes one.'));
+    w.append(dr);
+    const toggle=()=>{const o=r.getAttribute('aria-expanded')==='true';r.setAttribute('aria-expanded',o?'false':'true');dr.hidden=o;};
+    r.addEventListener('click',toggle);
+    r.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});
+  });
+  const tot=D.five.reduce((a,b)=>a+(b.dealValue||0),0);
+  const wf=el('div','wfoot');
+  const s1=el('span'); s1.append(tot?'These five are worth ':'Deal value of these five: ',el('b',null,tot?money(tot):'MISSING'),tot?' together.':' (none has an opportunity in GoHighLevel)');
+  const s2=el('span'); s2.append('Last refresh ',el('b',null,fmtStamp(D.builtAt,tz)));
+  wf.append(s1,s2); w.append(wf);
+  if(D.skipped.length){const sk=el('p','cs','Skipped: '+D.skipped.map(s=>s.name+' ('+s.why+')').join(', ')); w.append(sk);}
+  g.append(w);
+
+  /* ---------- tiles ---------- */
+  const tile=(k,v,dtxt,cls,miss)=>{const c=el('div','card c3'+(cls?' '+cls:''));c.append(el('div','k',k),el('div','v'+(miss?' miss':''),v),el('div','d',dtxt));return c;};
+  const C=D.counts, F=D.foundingSeats;
+  g.append(tile('Prospects in CRM',String(C.prospects),C.prospectsWithConversation+' with a conversation, '+C.newProspectsThisWeek+' added this week'));
+  g.append(tile('Open pipeline',C.openOpportunities?money(C.openPipelineValue):'$0',C.openOpportunities+' open opportunities in Sales'+(C.openOpportunities?'':'. No prospect is in the pipeline yet'),C.openOpportunities?'':'warn'));
+  g.append(tile('Quiet '+D.staleDays+'+ days',C.staleCount?money(C.staleValue)+' / '+C.staleCount:'0',C.staleCount?'deals nobody has touched':'nobody has gone that long yet'));
+  g.append(tile('Founding seats sold',F.sold+' of '+F.total,'from the site counters, as of '+F.asOf));
+
+  /* ---------- chart ---------- */
+  const cc=el('section','card c7'); cc.id='new-prospects';
+  cc.append(el('h2','ct','New prospects added, weekly'),el('p','cs','Contacts created in GoHighLevel per week, your own test contacts left out. Last 8 weeks.'));
+  const ch=el('div','chart'); cc.append(ch); g.append(cc);
+  barChart(ch,D.weeklyNewProspects);
+
+  /* ---------- missing sources ---------- */
+  const ms=el('section','card c5'); ms.id='not-connected';
+  ms.append(el('h2','ct','Not connected yet'),el('p','cs','These read MISSING until the source is connected. No number is estimated.'));
+  const ul=el('ul','list');
+  [['Ad spend and cost per lead','Google Ads, LinkedIn Ads, Meta Ads'],['Booked and attended calls','iClosed or GoHighLevel calendar'],['Their replies in Gmail','the Gmail bridge for nick@advisorbooking.com']].forEach(([a,b])=>{
+    if(a.indexOf('Gmail')>-1 && D.sources.Gmail==='live') return;
+    const li=el('li'); li.append(el('b',null,a+': '),document.createTextNode('MISSING, filled by '+b)); ul.append(li);});
+  ms.append(ul);
+  if(D.notes.length){const n=el('p','cs');n.style.marginTop='10px';n.textContent=D.notes.join(' ');ms.append(n);}
+  g.append(ms);
+
+  /* ---------- quiet list ---------- */
+  const tc=el('section','card c12'); tc.id='quiet-list';
+  tc.append(el('h2','ct','Every prospect quiet '+D.staleDays+'+ days'),el('p','cs','No human message in either direction for '+D.staleDays+' days. Automated emails, reminders and calendar invites do not count.'));
+  if(!D.stale.length){tc.append(el('p','miss-note','None today.'));}
+  else{const tw=el('div','tw');const t=el('table');const th=el('tr');['Contact','Stage','Value','Days quiet','Spoke last','Last thing said'].forEach(h=>th.append(el('th',null,h)));const hd=el('thead');hd.append(th);t.append(hd);const tb=el('tbody');
+    D.stale.forEach(p=>{const tr=el('tr');[p.name!=='not in CRM'?p.name:p.email,p.stage||'not in CRM',p.dealValue?money(p.dealValue):'not in CRM',String(daysSince(p.lastContact)),p.spokeLast==='them'?'They did':'You did',p.theirLastWords?'“'+p.theirLastWords+'”':'not in CRM'].forEach(v=>tr.append(el('td',null,v)));tb.append(tr);});
+    t.append(tb);tw.append(t);tc.append(tw);}
+  g.append(tc);
+}
+
+function whyLine(p,tz){
+  const words=p.theirLastWords;
+  if(p.spokeLast==='them') return 'They wrote last on '+fmtDate(p.lastContact,tz)+' and nobody has answered.';
+  if(words && words.length>6) return 'Wrote back "'+words.slice(0,60)+'" and got the playbook on '+fmtDate(p.lastContact,tz)+'. No follow up since.';
+  if(words) return 'Replied "'+words+'" for the playbook, which you sent '+fmtDate(p.lastContact,tz)+'. No follow up since.';
+  return 'You sent the playbook on '+fmtDate(p.lastContact,tz)+'. Their reply is not in CRM and nothing has gone out since.';
+}
+
+function svg(t,a){const n=document.createElementNS('http://www.w3.org/2000/svg',t);for(const k in a)n.setAttribute(k,a[k]);return n;}
+function barChart(host,rows){
+  const W=640,H=190,P={t:18,r:8,b:24,l:30};
+  const s=svg('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'New prospects per week: '+rows.map(r=>r.week+' '+r.count).join(', ')});
+  const max=Math.max(4,...rows.map(r=>r.count)); const step=Math.ceil(max/4);
+  const top=step*4; const Y=v=>P.t+(1-v/top)*(H-P.t-P.b); const bw=(W-P.l-P.r)/rows.length;
+  const cs=getComputedStyle(document.documentElement); const acc=cs.getPropertyValue('--accent').trim();
+  for(let v=0;v<=top;v+=step){s.append(svg('line',{x1:P.l,x2:W-P.r,y1:Y(v),y2:Y(v),class:'gl'}));const t=svg('text',{x:P.l-8,y:Y(v)+3.5,'text-anchor':'end',class:'axis'});t.textContent=v;s.append(t);}
+  const tip=document.getElementById('tip');
+  rows.forEach((r,i)=>{
+    const bwid=Math.min(24,bw-10), x=P.l+i*bw+(bw-bwid)/2, y=Y(r.count), h=H-P.b-y;
+    if(r.count>0){const rad=Math.min(4,h);s.append(svg('path',{d:'M'+x+' '+(H-P.b)+'V'+(y+rad)+'Q'+x+' '+y+' '+(x+rad)+' '+y+'H'+(x+bwid-rad)+'Q'+(x+bwid)+' '+y+' '+(x+bwid)+' '+(y+rad)+'V'+(H-P.b)+'Z',fill:acc}));
+      const vt=svg('text',{x:x+bwid/2,y:y-6,'text-anchor':'middle',class:'dlab'});vt.textContent=r.count;s.append(vt);}
+    const lab=new Date(r.week+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'});
+    const t=svg('text',{x:x+bwid/2,y:H-7,'text-anchor':'middle',class:'axis'});t.textContent=lab;s.append(t);
+    const hit=svg('rect',{x:P.l+i*bw,y:P.t,width:bw,height:H-P.t-P.b,fill:'transparent'});
+    hit.addEventListener('pointerenter',e=>{tip.textContent='Week of '+lab+': '+r.count+' new';tip.style.opacity=1;mv(e);});
+    hit.addEventListener('pointermove',mv);hit.addEventListener('pointerleave',()=>tip.style.opacity=0);
+    s.append(hit);
+  });
+  function mv(e){const rc=tip.getBoundingClientRect();let x=e.clientX+12,y=e.clientY-rc.height-10;if(x+rc.width>innerWidth-8)x=e.clientX-rc.width-12;if(y<8)y=e.clientY+16;tip.style.left=x+'px';tip.style.top=y+'px';}
+  host.append(s);
+}
+})();
+</script>
+</body>
+</html>
