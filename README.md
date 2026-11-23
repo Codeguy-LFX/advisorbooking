@@ -43,9 +43,10 @@ rules and settings: the `window.AB_APPLY` block at the top of `L1/index.html`.
 - Nobody is turned away: every lead gets the same screens and the calendar. Two labels only: `qualified` (a
   financial advisor, including broker-dealer and wirehouse, at a firm with $50M+ AUM) or `dq` (not a financial
   advisor, or AUM under $50M), with `dq_reasons`. New assets is asked but never decides it.
-- Meta: ONE event on the whole site, `Lead`, fired on `/L1/Q/` once per submission (`metaPixelLeadId`). No PageView,
-  no automatic events, nothing on `/L1/DQ/` or any other page (`metaPixelId` stays empty). The pixel code exists only
-  in `L1/Q/index.html`.
+- Meta: ONE event on the whole site, `Lead`, fired once per qualified submission (`metaPixelLeadId`) on the booking
+  page a qualified lead lands on: `/qualified` (on the same condition as the Google Ads conversion, since Nov 23, 2026)
+  and `/L1/Q/`. No PageView, no automatic events, nothing on `/not-a-fit`, `/L1/DQ/` or any other page (`metaPixelId`
+  stays empty). The pixel code exists only in `qualified.html` and `L1/Q/index.html`.
 - GTM (when `gtmId` is set): same rule. `gtm.js` is included only on `/L1/Q/` (one event, `ab_lead`, once per
   submission) and `/booked` (`ab_booked`, qualified leads only). The form page and `/L1/DQ/` do not include it. Not
   needed for Google Ads.

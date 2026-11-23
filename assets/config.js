@@ -44,8 +44,9 @@ window.AB_CONFIG = {
   googleAdsConversion: "AW-18586476573/Xc55CKqVoLwdEJ3A3J5F",
   // Google Tag Manager container, e.g. "GTM-ABC1234" (events: see assets/gtm.js). Not needed for Google Ads above.
   gtmId: "",
-  // Meta Pixel. ONE event on the whole site: "Lead", fired on /L1/Q/ (the booking page a qualified /L1 lead lands on).
-  // No PageView, nothing on /L1/DQ/ or any other page. metaPixelLeadId is read only by L1/Q/index.html.
+  // Meta Pixel. ONE event on the whole site: "Lead", fired once for each qualified submission on the booking page a
+  // qualified lead lands on: /qualified (the quiz at /fit-check and /ria-meetings) and /L1/Q/ (the older form /L1/).
+  // No PageView, nothing on /not-a-fit, /L1/DQ/ or any other page. metaPixelLeadId is read only by those two pages.
   metaPixelLeadId: "1446221323631843",
   // Legacy site-wide pixel (PageView on every page). Leave empty so Meta only ever sees the Lead event above.
   metaPixelId: "",
