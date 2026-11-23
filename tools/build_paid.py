@@ -248,7 +248,7 @@ def build(name, page):
     page = dict(page, vars=dict(page['vars']))
     page['vars']['title'] = page['title']
     page['vars']['body_class'] = page['body_class']
-    page['vars']['css'] = '\n'.join('<link rel="stylesheet" href="/assets/%s.css%s">' % (c, '?v=4' if c == 'pd' else '') for c in page['css'])   # ?v: a saved older copy of the card's styles must never meet newer markup
+    page['vars']['css'] = '\n'.join('<link rel="stylesheet" href="/assets/%s.css%s">' % (c, '?v=5' if c == 'pd' else '') for c in page['css'])   # ?v: a saved older copy of the card's styles must never meet newer markup
     page['vars']['gads'] = '<script src="/assets/gads.js" async></script>'   # not in the part: /tools/paid/page.html must never start the tag
     # scripts the first screen cannot work without are asked for from the head, not when the end of the page arrives
     page['vars']['preconnect'] = (''.join('\n<link rel="preload" as="script" href="/assets/%s.js">' % j for j in page.get('preload', []))
