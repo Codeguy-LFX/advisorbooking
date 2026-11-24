@@ -130,21 +130,7 @@
       window.fbq('init', String(CFG.metaPixelId));
       window.fbq('track', 'PageView');
     }
-    if (CFG.linkedinPartnerId) {
-      /* LinkedIn Insight Tag */
-      window._linkedin_partner_id = String(CFG.linkedinPartnerId);
-      window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
-      window._linkedin_data_partner_ids.push(window._linkedin_partner_id);
-      if (!window.lintrk) {
-        window.lintrk = function (a, b) { window.lintrk.q.push([a, b]); };
-        window.lintrk.q = [];
-      }
-      var s = doc.getElementsByTagName('script')[0];
-      var b = doc.createElement('script');
-      b.type = 'text/javascript'; b.async = true;
-      b.src = 'https://snap.licdn.com/li.lms-analytics/insight.min.js';
-      s.parentNode.insertBefore(b, s);
-    }
+    /* The LinkedIn Insight Tag is not loaded here: assets/li.js loads it, on the paid funnel pages only. */
   }
 
   /* Webhook (used only for the "booked" event in v5). Form-encoded POST, the same as assets/funnel.js: a "simple"
@@ -331,9 +317,6 @@
       if (!converted) {   /* ad conversions: once per page load, however many times the visitor rebooks */
         converted = true;
         if (typeof window.fbq === 'function') { try { window.fbq('track', 'Schedule'); } catch (err) { /* ignore */ } }
-        if (typeof window.lintrk === 'function' && CFG.linkedinConversionId) {
-          try { window.lintrk('track', { conversion_id: CFG.linkedinConversionId }); } catch (err) { /* ignore */ }
-        }
       }
       /* One flat record, like the /L1 booking pages send: the /booked page's own record when iClosed showed it inside the
          frame (name, email, phone, start time, time zone, campaign tags, forwarded_json), plus where it was booked. */

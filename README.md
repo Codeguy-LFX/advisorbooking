@@ -155,6 +155,7 @@ Numbers, IDs, and contact details live in **`assets/config.js`**. It is the only
 - the scheduler (`iclosed` or `calendly`) and its event link
 - the GoHighLevel inbound webhook URL (empty = bookings and form submissions are not posted anywhere)
 - Meta Pixel and LinkedIn tag IDs (empty = the tags are not loaded; they are also never loaded when a browser sends a Global Privacy Control signal)
+- LinkedIn: `linkedinPartnerId` loads the Insight Tag through `assets/li.js`, only on `/vg` and its sitelink copies (`/vg-how`, `/vg-qualify`, `/vg-guarantee`, `/vg-who`), `/fit-check` and `/qualified`. No other page loads it, and `/not-a-fit` never does. `linkedinQualifiedConversionId` is the one LinkedIn conversion (a qualified lead), sent by `assets/li.js` on `/qualified` on the same condition as the Google Ads conversion. `linkedinConversionId` (the old booking-based one) is no longer read
 - the contact email (`info@advisorbooking.com`), entity, city
 
 The home page (`index.html`) carries its own styles and script inline. Scrolling is the browser's own (the Lenis smooth-scroll library was removed on Nov 8, 2026: it made the wheel lag; `assets/vendor/lenis.min.js` is no longer loaded). It keeps the same attribution rules as `assets/site.js`: campaign tags are stored for the visit and added, with a `src` label, to every link to `book.html`, and ad tags load only when their IDs are set. The other pages still use `assets/styles.css` and `assets/site.js`.
@@ -207,6 +208,6 @@ Calendly remains available as a fallback (`scheduler: "calendly"`, `calendlyUrl`
 ### 5. Before driving traffic
 
 - Set `ghlWebhookUrl` in `assets/config.js` so bookings and landing-page submissions reach the CRM.
-- Add the Meta Pixel and LinkedIn IDs only when ads are running.
+- Add the Meta Pixel ID only when ads are running. The LinkedIn IDs are set (see `assets/li.js`).
 - Register the SMS sending number for 10DLC through your texting provider; the Privacy Policy already carries the consent, STOP/HELP, and no-sharing language that registration asks for.
 - Have counsel read `privacy.html` and `terms.html` once. They are complete and have no placeholders, but a lawyer's review is still the right final step.

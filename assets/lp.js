@@ -145,19 +145,7 @@
         window.fbq('trackSingle', String(AB.metaPixelId), 'PageView');
       } catch (e) {}
     }
-    if (AB.linkedinPartnerId) {
-      try {
-        window._linkedin_partner_id = String(AB.linkedinPartnerId);
-        window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
-        window._linkedin_data_partner_ids.push(window._linkedin_partner_id);
-        if (!window.lintrk) { window.lintrk = function (a, b) { window.lintrk.q.push([a, b]); }; window.lintrk.q = []; }
-        var s0 = doc.getElementsByTagName('script')[0];
-        var b0 = doc.createElement('script');
-        b0.type = 'text/javascript'; b0.async = true;
-        b0.src = 'https://snap.licdn.com/li.lms-analytics/insight.min.js';
-        s0.parentNode.insertBefore(b0, s0);
-      } catch (e) {}
-    }
+    /* The LinkedIn Insight Tag is not loaded here: assets/li.js loads it, on the paid funnel pages only. */
   }
   function fbqSingle(evt, opts) {
     if (!AB.metaPixelId || typeof window.fbq !== 'function') return;
@@ -711,9 +699,6 @@
       send('booked', extra);
       if (!botFlag && tier === 'qualified') {
         fbqSingle('Schedule', { eventID: (sid || EVENT_ID) + '-booked' });
-        if (typeof window.lintrk === 'function' && AB.linkedinConversionId) {
-          try { window.lintrk('track', { conversion_id: AB.linkedinConversionId }); } catch (err) {}
-        }
       }
       firstName = answers.first || (answers.name || '').split(/\s+/)[0] || '';
       bookedFlag = true; stage = 'booked'; answers = {};   // keep only the first name; drop everything else typed

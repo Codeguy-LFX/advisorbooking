@@ -137,6 +137,7 @@ PAGES = {
         'tail': 'tail-home',
         'map': {'hero_action': 'action-email', 'hero_stage': 'stage-demo'},
         'vars': {
+            'h1_who': 'financial advisors’',
             'hero_mode': 'demo', 'facts_note': '', 'founder_new': '', 'founder_receipt': '',
             'cond1': 'Agree on your ideal client and the messages before we start',
             'cond2': 'One meeting every week to track results and improve them',
@@ -151,13 +152,14 @@ PAGES = {
     'vg.html': {
         'title': 'We fill financial advisors’ calendars | Advisor Booking',
         'css': ['kit', 'paid', 'pd', 'home-sec'], 'body_class': 'p p--email p--home p--v6',
+        'li': True,   # the LinkedIn Insight Tag (assets/li.js): /vg and its sitelink copies only
         # the first screen and its three figures, the commitment right under it, the founder, then the home page's own
         # "Three steps" and "Everything you get", then the Playbook, what is different, the questions, the email box
         'parts': ['hero-home', 'sec-commitment', 'sec-founder', 'sec-cta', 'sec-how-home', 'sec-gets-home', 'sec-faq-v6', 'sec-close-email'],
         'tail': 'tail-home',
         'map': {'hero_action': 'action-email', 'hero_stage': 'stage-demo', 'pd': 'pd-home', 'pd-note': 'pd-note-home'},
         'vars': {
-            'commit_label': 'Our guarantee', 'who_home': 'For independent RIAs with $50M+ AUM',
+            'commit_label': 'Our guarantee', 'who_home': 'For independent RIAs with $50M+ AUM', 'h1_who': 'independent RIAs’',
             'hero_mode': 'demo', 'facts_note': '', 'founder_new': '', 'founder_receipt': '',
             'cond1': 'Agree on your ideal client and the messages before we start',
             'cond2': 'One meeting every week to track results and improve them',
@@ -249,7 +251,7 @@ def build(name, page):
     page['vars']['title'] = page['title']
     page['vars']['body_class'] = page['body_class']
     page['vars']['css'] = '\n'.join('<link rel="stylesheet" href="/assets/%s.css%s">' % (c, '?v=5' if c == 'pd' else '') for c in page['css'])   # ?v: a saved older copy of the card's styles must never meet newer markup
-    page['vars']['gads'] = '<script src="/assets/gads.js" async></script>'   # not in the part: /tools/paid/page.html must never start the tag
+    page['vars']['gads'] = '<script src="/assets/gads.js" async></script>' + ('\n<script src="/assets/li.js" async></script>' if page.get('li') else '')   # not in the part: /tools/paid/page.html must never start the tag
     # scripts the first screen cannot work without are asked for from the head, not when the end of the page arrives
     page['vars']['preconnect'] = (''.join('\n<link rel="preload" as="script" href="/assets/%s.js">' % j for j in page.get('preload', []))
                                   + ('\n<link rel="preconnect" href="https://app.iclosed.io">' if page.get('preconnect') else ''))

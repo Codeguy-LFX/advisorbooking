@@ -50,7 +50,12 @@ window.AB_CONFIG = {
   metaPixelLeadId: "1446221323631843",
   // Legacy site-wide pixel (PageView on every page). Leave empty so Meta only ever sees the Lead event above.
   metaPixelId: "",
-  linkedinPartnerId: "",
+  // LinkedIn Insight Tag (assets/li.js): loaded only on /vg and its sitelink copies, /fit-check and /qualified.
+  linkedinPartnerId: "10161178",
+  // The ONE LinkedIn conversion, a qualified lead: sent by assets/li.js on /qualified, on the same condition as the
+  // Google Ads conversion. Nothing on /not-a-fit or any booking page.
+  linkedinQualifiedConversionId: "32508642",
+  // Old booking-based LinkedIn conversion. No longer read by any page. Leave empty.
   linkedinConversionId: "",
   // Hand-updated counters shown on the site.
   pilotSeatsTotal: 5,
