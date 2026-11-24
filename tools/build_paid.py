@@ -137,7 +137,7 @@ PAGES = {
         'tail': 'tail-home',
         'map': {'hero_action': 'action-email', 'hero_stage': 'stage-demo'},
         'vars': {
-            'h1_who': 'financial advisors’',
+            'h1_who': 'financial advisors’', 'how_meet': 'first meetings', 'how_pill': 'First meetings booked',
             'hero_mode': 'demo', 'facts_note': '', 'founder_new': '', 'founder_receipt': '',
             'cond1': 'Agree on your ideal client and the messages before we start',
             'cond2': 'One meeting every week to track results and improve them',
@@ -160,6 +160,7 @@ PAGES = {
         'map': {'hero_action': 'action-email', 'hero_stage': 'stage-demo', 'pd': 'pd-home', 'pd-note': 'pd-note-home'},
         'vars': {
             'commit_label': 'Our guarantee', 'who_home': 'For independent RIAs with $50M+ AUM', 'h1_who': 'independent RIAs’',
+            'how_meet': 'attended, qualified meetings', 'how_pill': 'Attended, qualified meetings booked',
             'hero_mode': 'demo', 'facts_note': '', 'founder_new': '', 'founder_receipt': '',
             'cond1': 'Agree on your ideal client and the messages before we start',
             'cond2': 'One meeting every week to track results and improve them',
