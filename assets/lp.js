@@ -214,6 +214,25 @@
       p.dq_reason = (tier === 'disqualified') ? 'budget' : '';
     }
     if (extra) for (k in extra) if (Object.prototype.hasOwnProperty.call(extra, k)) p[k] = extra[k];
+    /* The same record as every other page (assets/funnel.js), because they all post to the one GHL "Master Lead
+       Entry" webhook, which branches on `stage` and `qualified`. This form's own step goes along as `lp_stage`:
+         contact (details typed, form not finished) -> stage email_capture
+         qualified / disqualified / low_intent       -> stage complete, qualified yes / no
+         booked                                       -> stage booked
+         anything else (exit_book_anyway)             -> stage update: GHL saves the fields and sends nothing */
+    p.lp_stage = st;
+    p.stage = st === 'contact' ? 'email_capture'
+      : (st === 'qualified' || st === 'disqualified' || st === 'low_intent') ? 'complete'
+      : st === 'booked' ? 'booked' : 'update';
+    if (p.stage === 'complete') {
+      p.qualified = st === 'qualified' ? 'yes' : 'no';
+      p.dq_reasons = st === 'qualified' ? '' : (st === 'disqualified' ? 'budget' : 'not ready');
+    }
+    p.form = LP.SOURCE;
+    p.funnel_entry = String(AB.funnelEntry || '');
+    p.sms_consent = A.consent ? 'yes' : 'no';
+    p.consent_at = p.consent_timestamp;
+    if (p.phone_e164) { p.phone_digits = p.phone; p.phone = p.phone_e164; }
     return p;
   }
   /* Form-encoded POST, the same as assets/funnel.js: a "simple" cross-site request (no preflight), so it is delivered
